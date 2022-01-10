@@ -3,14 +3,12 @@ import MainPage from "./components/pages/MainPage";
 import SchedulePage from "./components/pages/SchedulePage";
 import ManagePage from "./components/pages/ManagePage";
 import ThisLoginPage from "./components/pages/ThisLoginPage";
-import AgentContainer from "./components/organisms/AgentContainer";
 
 function App() {
     return (
         <div className="App">
                 <Route exact path="/" component={ThisLoginPage}/>
                 <Route path="/main" component={MainPage}>
-                    <AgentContainer />
                 </Route>
                 <Route path="/schedule" component={SchedulePage}>
                 </Route>
