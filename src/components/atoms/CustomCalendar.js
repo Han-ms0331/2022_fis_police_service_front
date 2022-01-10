@@ -8,10 +8,9 @@ const CustomCalendar = ({setDate}) => {
     return (
         <div>
             <Calendar
-                onChange={(day)=>()=>{
+                onChange={(day)=>{
                     setValue(day);
-                    setDate(value);
-                    console.log(value);
+                    setDate(day);
                 }}
                 value={value}
                 calendarType="ISO 8601"

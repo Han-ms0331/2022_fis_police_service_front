@@ -12,7 +12,6 @@ import Grid from "@material-ui/core/Grid";
 */
 const ScheduleSidebar = () => {
     const [date,setDate] = useState(new Date());
-    console.log(date);
     return (
         <div>
             <Grid container>

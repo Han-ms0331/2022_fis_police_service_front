@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import MessangerList from "./MessangerList";
 
 const MessangerContainer = () => {
     return (
         <Announcement>
             <Header>수정 요청 사항</Header>
+            <MessangerList/>
         </Announcement>
     );
 };
