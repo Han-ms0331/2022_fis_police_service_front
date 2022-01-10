@@ -5,7 +5,7 @@ function SchedulePage(props) {
     return (
         <div>
             <Navigation />
-            This is SchedulePage
+
         </div>
     );
 }
