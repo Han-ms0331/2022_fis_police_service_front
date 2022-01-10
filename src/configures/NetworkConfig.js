@@ -1,5 +1,5 @@
 const NetworkConfig = {
-    networkAddress:"localhost"
+    networkAddress : "localhost"
 }
 
 export default NetworkConfig;
