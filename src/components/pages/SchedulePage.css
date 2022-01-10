@@ -1,0 +1,10 @@
+/*
+===============
+Schdule Page
+===============
+*/
+.schedulepage {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+}
