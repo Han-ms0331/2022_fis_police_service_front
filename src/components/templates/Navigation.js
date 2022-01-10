@@ -6,6 +6,11 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 
+/*
+    날짜: 2022/01/10 3:59 오후
+    작성자: 한명수
+    작성내용: Navigation 1차 완성
+*/
 function Navigation(props) {
     const [currentPage, setCurrentPage] = useState();
     return (
