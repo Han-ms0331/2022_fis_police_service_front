@@ -1,9 +1,8 @@
-import React from 'react';
-import Calendar from "../atoms/Calendar";
+import React,{useState} from 'react';
+import CustomCalendar from "../atoms/CustomCalendar";
 import DateContainer from "../organisms/DateContainer";
 import MessangerContainer from "../organisms/MessangerContainer";
 import { GoChevronLeft,GoChevronRight } from "react-icons/go"; // 접을 때 필요한 아이콘
-
 import Grid from "@material-ui/core/Grid";
 
 /*
@@ -12,16 +11,18 @@ import Grid from "@material-ui/core/Grid";
 작성내용: 사이드바에 해당하는 부분
 */
 const ScheduleSidebar = () => {
+    const [date,setDate] = useState(new Date());
+    console.log(date);
     return (
         <div>
             <Grid container>
 
                 <Grid item xs={12}>
-                <Calendar/>
+                <CustomCalendar setDate={setDate}/>
                 </Grid>
 
                 <Grid item xs ={12}>
-            <DateContainer/>
+            <DateContainer date={date}/>
                 </Grid>
 
                 <Grid item xs = {12}>
@@ -29,6 +30,7 @@ const ScheduleSidebar = () => {
                 </Grid>
 
             </Grid>
+            <GoChevronLeft/>
         </div>
     );
 };
