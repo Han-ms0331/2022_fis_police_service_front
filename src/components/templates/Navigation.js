@@ -11,6 +11,7 @@ function Navigation(props) {
             <Link to={"/manage"}>관리자</Link>
             <br/>
             <Link to={"/"}>로그아웃</Link>
+
         </div>
     );
 }
