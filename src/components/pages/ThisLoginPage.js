@@ -1,11 +1,16 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import LoginTemplate from "../templates/LoginTemplate";
+import {Container, Grid} from "@mui/material";
+import {Box} from "@material-ui/core";
 
 function ThisLoginPage(props) {
     return (
         <div>
-            <Link to={"/main"}>로그인</Link>
-            <span>This is Login Page</span>
+            <Container maxWidth={"sm"}>
+                <LoginTemplate/>
+                    <Link to={"/main"}>로그인</Link>
+            </Container>
         </div>
     );
 }
