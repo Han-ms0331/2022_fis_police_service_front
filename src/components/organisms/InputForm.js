@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import InputContainer from "../molecules/InputContainer";
 import CheckboxContainer from "../molecules/CheckboxContainer";
 
@@ -24,16 +24,20 @@ function InputForm(props) {
         specialInfo: ""
     })
 
+    useEffect(()=>{
+        console.log("1")
+    },[input])
+
     const onChange = (e) => {
-        console.dir(e.target);
+        // console.dir(e.target);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
         setInput({
             ...input, // 기존의 input 객체를 복사한 뒤
             [name]: value // name 키를 가진 값을 value 로 설정
         });
-        console.log(input)
+        console.log("2")
     };
-
+        console.log("rendered")
     return (
         <div>
             <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" height="300px"

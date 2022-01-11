@@ -8,12 +8,17 @@ import {InputLabel} from "@mui/material";
 function CustomInput(props) {
     let element
     if (props.type === "text") {
-        element = <TextField name={props.name} hiddenLabel type={props.type}
-                             style={{width: props.width, height: props.height}}
-                             defaultValue={props.defaultValue} placeholder={props.placeholder}
-                             onChange={props.setValueFunction}
-                             id="outlined-basic"
-                             variant="outlined"/>
+        element = <div style={{width:props.width}}>
+            <TextField name={props.name} hiddenLabel type={props.type}
+                       fullWidth
+                       multiline
+                       rows={4}
+                       defaultValue={props.defaultValue} placeholder={props.placeholder}
+                       onChange={props.setValueFunction}
+                       id="outlined-basic"
+                       variant="outlined"/>
+        </div>
+
     } else if (props.type === "number") {
         element = <TextField name={props.name} type={props.type} style={{width: props.width, height: props.height}}
                              defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
