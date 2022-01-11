@@ -1,4 +1,4 @@
-import {atom} from "recoil";
+import {atom, selector} from "recoil";
 /*
     날짜: 2022/01/11 10:59 오전
     작성자: 한명수
@@ -8,3 +8,12 @@ export const isLoginedState = atom({
     key: 'isLoginedState',
     default: false,
 });
+
+export const isLoginedChangedState = selector({
+    key: 'isLoginedChangedState',
+    get: ({get}) =>{
+        const isLogined = get(isLoginedState);
+        console.log(isLogined);
+        return isLogined;
+    }
+})

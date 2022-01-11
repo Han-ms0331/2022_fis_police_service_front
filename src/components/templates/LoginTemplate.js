@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import LoginForm from "../organisms/LoginForm";
 import {useRecoilState} from "recoil";
 import {isLoginedState} from "../../store/LoginStore";
@@ -9,13 +9,24 @@ import {isLoginedState} from "../../store/LoginStore";
 */
 function LoginTemplate(props) {
     const [isLogined, setIsLogined] = useRecoilState(isLoginedState);   //로그인 상태를 정의하기 위한 isLogined global state
-    // const [loginInfo, setLoginInfo] = useState()
+    const loginCall  = () =>{   //서버와 로그인 통신을 하는 부분
+        return true;
+    }
+
+    const onclick = (e) => {
+        console.log("loginClicked")
+        if(loginCall()){
+            props.setIsLogined(true);
+            console.log("changed")
+        }
+    }
+
     return (
         <div>
             <div>
                 logo
             </div>
-            <LoginForm />
+            <LoginForm onClickFunction={onclick}/>
         </div>
     );
 }

@@ -4,11 +4,14 @@ import ScheduleBody from "../templates/ScheduleBody";
 import ScheduleSidebar from "../templates/ScheduleSidebar";
 import Grid from '@material-ui/core/Grid';
 import './SchedulePage.css';
+import {Redirect} from "react-router-dom";
 
 const SchedulePage = (props)=>{
     return (
+        props.isLogined?    //props로 받은 islogined state에 따라 보여주는 창이 달라짐
+
         <main className="schedulepage">
-            <Grid container spacing={1}>
+            <Grid container columns={16}>
 
                 <Grid item xs={1}>
                 <Navigation />
@@ -18,12 +21,14 @@ const SchedulePage = (props)=>{
                 <ScheduleSidebar />
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={12}>
                 <ScheduleBody/>
                 </Grid>
 
             </Grid>
         </main>
+            :
+            <Redirect to={"/"} />
     );
 }
 

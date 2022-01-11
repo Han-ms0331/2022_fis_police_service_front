@@ -8,8 +8,7 @@ function ThisLoginPage(props) {
     return (
         <div>
             <Container maxWidth={"sm"}>
-                <LoginTemplate/>
-                    <Link to={"/main"}>로그인</Link>
+                <LoginTemplate setIsLogined={props.setIsLogined}/>
             </Container>
         </div>
     );
