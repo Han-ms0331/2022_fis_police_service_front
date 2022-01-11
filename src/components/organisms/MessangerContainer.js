@@ -17,7 +17,7 @@ const MessangerContainer = () => {
 };
 const Announcement = styled.div`
   background: #F8EFBA;
-  margin: 10px;
+  margin: 10px 0;
   border-radius: 10px;
   padding: 3px 7px;
 `;
