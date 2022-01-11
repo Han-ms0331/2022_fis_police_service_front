@@ -6,7 +6,7 @@ import Checkbox from '@mui/material/Checkbox';
 function CheckboxContainer(props) {
     return (
         <FormGroup>
-            <FormControlLabel control={<Checkbox  />} label={props.content} />
+            <FormControlLabel name={props.name} onClick={props.setCheckboxInputFunction}control={<Checkbox  />} label={props.content} />
         </FormGroup>
     );
 }
