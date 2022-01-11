@@ -13,9 +13,9 @@ const DateContainer = ({date}) => {
         <Container>
             <SelectedDate>
                 <Header>선택날짜</Header>
-                <p>{selectedDate}</p>
+                <p style={{fontWeight:"400"}}>{selectedDate}</p>
                 <Header>스케쥴 개수</Header>
-                <p>269건</p>
+                <p style={{fontWeight:"400"}}>269건</p>
 
             </SelectedDate>
 
@@ -28,13 +28,16 @@ const DateContainer = ({date}) => {
 // styled-components
 
 const Container = styled.div`
-height: 23vh;
 background: #F8EFBA;
 margin: 10px;
   border-radius: 10px;
   text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
 `
+
 const SelectedDate = styled.div`
+    padding: 20px 0 10px 0;
 `;
 
 const Header = styled.div`

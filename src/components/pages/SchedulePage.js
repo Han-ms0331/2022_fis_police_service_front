@@ -8,7 +8,7 @@ import './SchedulePage.css';
 const SchedulePage = (props)=>{
     return (
         <main className="schedulepage">
-            <Grid container spacing={1}>
+            <Grid container columns={16}>
 
                 <Grid item xs={1}>
                 <Navigation />
@@ -18,7 +18,7 @@ const SchedulePage = (props)=>{
                 <ScheduleSidebar />
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={12}>
                 <ScheduleBody/>
                 </Grid>
 
