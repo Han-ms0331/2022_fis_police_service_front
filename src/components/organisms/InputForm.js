@@ -24,9 +24,9 @@ function InputForm(props) {
         specialInfo: ""
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("1")
-    },[input])
+    }, [input])
 
     const onChange = (e) => {
         // console.dir(e.target);
@@ -37,34 +37,30 @@ function InputForm(props) {
         });
         console.log("2")
     };
-        console.log("rendered")
+    console.log("rendered")
     return (
         <div>
-            <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" height="300px"
+            <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" row="2"
                             setValueFunction={onChange}/>
             <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px"
-                            height="300px"
+                            row="1"
                             setValueFunction={onChange}/>
-            <InputContainer labelContent="방문날짜: " inputName="visitDate" inputType="date" width="300px" height="300px"
+            <InputContainer labelContent="방문날짜: " inputName="visitDate" inputType="date" width="300px"
                             setValueFunction={onChange}/>
-            <InputContainer labelContent="방문시간: " inputName="visitTime" inputType="time" width="300px" height="300px"
+            <InputContainer labelContent="방문시간: " inputName="visitTime" inputType="time" width="300px"
                             setValueFunction={onChange}/>
             <InputContainer labelContent="예상 인원: " inputName="childrenNumber" inputType="number" width="300px"
-                            height="300px"
                             setValueFunction={onChange}/>
-            <InputContainer labelContent="변경사항: " inputName="changeThing" inputType="text" width="300px"
-                            height="300px"
+            <InputContainer labelContent="변경사항: " inputName="changeThing" inputType="text" width="300px" row="2"
                             setValueFunction={onChange}/>
             <InputContainer labelContent="통화이력: " inputName="callStatus" inputType="select" width="300px"
-                            height="300px"
                             contents={["미완료", "통화완료", "부재중", "통화오류"]} setValueFunction={onChange}
             />
-            <InputContainer labelContent="부재중 횟수" inputType="number" width="300px" height="300px"
+            <InputContainer labelContent="부재중 횟수: " inputType="number" width="300px"
                             setValueFunction={onChange}/>
             <InputContainer labelContent="통화오류 사유: " inputName="errorReason" inputType="text" width="300px"
-                            height="300px" setValueFunction={onChange}/>
+                            setValueFunction={onChange}/>
             <InputContainer labelContent="특이사항: " inputName="specialInfo" inputType="text" width="300px"
-                            height="300px"
                             setValueFunction={onChange}/>
             <CheckboxContainer content="신청서 완료"/>
             <CheckboxContainer content="장소 마련 완료"/>

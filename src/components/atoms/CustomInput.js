@@ -8,11 +8,11 @@ import {InputLabel} from "@mui/material";
 function CustomInput(props) {
     let element
     if (props.type === "text") {
-        element = <div style={{width:props.width}}>
+        element = <div style={{width: props.width}}>
             <TextField name={props.name} hiddenLabel type={props.type}
                        fullWidth
                        multiline
-                       rows={4}
+                       rows={props.row}
                        defaultValue={props.defaultValue} placeholder={props.placeholder}
                        onChange={props.setValueFunction}
                        id="outlined-basic"
@@ -26,7 +26,7 @@ function CustomInput(props) {
         element = <TextField name={props.name} type={props.type} style={{width: props.width, height: props.height}}
                              defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
     } else if (props.type === "date") {
-        element = <TextField type="date" style={{width: props.width, height: props.height}}
+        element = <TextField  type="date" style={{width: props.width, height: props.height}}
                              defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
     } else if (props.type === "select") {
         // element = <FormControl
@@ -53,7 +53,7 @@ function CustomInput(props) {
                 onChange={props.setValueFunction}
             >
                 {props.contents.map((content) => {
-                    return <MenuItem key={content}  value={content}>{content}</MenuItem>;
+                    return <MenuItem key={content} value={content}>{content}</MenuItem>;
                 })}
             </Select>
         </FormControl>

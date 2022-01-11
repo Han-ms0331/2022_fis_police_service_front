@@ -5,10 +5,11 @@ import InputForm from "../organisms/InputForm";
 
 function MainPage(props) {
     return (
-        <div>
-            <Navigation/>
-            <InputForm />
-        </div>
+        <InputForm/>
+        // <div>
+        //     <Navigation/>
+        // </div>
+
     );
 }
 

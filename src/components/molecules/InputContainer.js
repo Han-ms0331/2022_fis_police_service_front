@@ -4,9 +4,9 @@ import CustomInput from "../atoms/CustomInput";
 
 function InputContainer(props) {
     return (
-        <div style={{display:"flex"}}>
+        <div style={{display:"flex", alignItems: "center", marginBottom: "20px"}}>
             <CustomLabel content={props.labelContent}/>
-            <CustomInput name={props.inputName} type={props.inputType} width={props.width} height={props.width}
+            <CustomInput name={props.inputName} type={props.inputType} width={props.width} row={props.row}
                          contents={props.contents} setValueFunction={props.setValueFunction}
             />
         </div>);
