@@ -5,6 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CustomMap from "../molecules/CustomMap";
 
 /*
     날짜: 2022/01/10 3:59 오후
