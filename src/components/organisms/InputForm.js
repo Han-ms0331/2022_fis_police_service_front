@@ -3,14 +3,6 @@ import InputContainer from "../molecules/InputContainer";
 import CheckboxContainer from "../molecules/CheckboxContainer";
 
 function InputForm(props) {
-    // const [centerInfo, setCenterInfo]= React.useState("")
-    // const [agentCode, setAgentCode]= React.useState("")
-    // const [centerInfo, setCenterInfo]= React.useState("")
-    // const [centerInfo, setCenterInfo]= React.useState("")
-    // const [centerInfo, setCenterInfo]= React.useState("")
-    // const [centerInfo, setCenterInfo]= React.useState("")
-    // const [centerInfo, setCenterInfo]= React.useState("")
-    // const [centerInfo, setCenterInfo]= React.useState("")
     const [input, setInput] = useState({
         centerInfo: "",
         agentCode: "",
@@ -24,9 +16,15 @@ function InputForm(props) {
         specialInfo: ""
     })
 
-    useEffect(() => {
-        console.log("1")
-    }, [input])
+    const [checkboxInput, setCheckBoxInput] = useState({
+        applicationForm: false,
+        placeArrangement:false,
+        visitDateConfirm:false
+    })
+
+    // useEffect(() => {
+    //     console.log("1")
+    // }, [input])
 
     const onChange = (e) => {
         // console.dir(e.target);
@@ -35,9 +33,18 @@ function InputForm(props) {
             ...input, // 기존의 input 객체를 복사한 뒤
             [name]: value // name 키를 가진 값을 value 로 설정
         });
-        console.log("2")
     };
-    console.log("rendered")
+
+    const onClick = (e)=>{
+        // console.dir(e.target)
+        const {checked, name} = e.target;
+        setCheckBoxInput({
+            ...checkboxInput, // 기존의 input 객체를 복사한 뒤
+            [name]: checked // name 키를 가진 값을 value 로 설정
+        });
+        // console.log(checkboxInput)
+    }
+
     return (
         <div>
             <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" row="2"
@@ -62,9 +69,9 @@ function InputForm(props) {
                             setValueFunction={onChange}/>
             <InputContainer labelContent="특이사항: " inputName="specialInfo" inputType="text" width="300px"
                             setValueFunction={onChange}/>
-            <CheckboxContainer content="신청서 완료"/>
-            <CheckboxContainer content="장소 마련 완료"/>
-            <CheckboxContainer content="방문일정 확인 완료"/>
+            <CheckboxContainer name="applicationForm" setCheckboxInputFunction={onClick} content="신청서 완료"/>
+            <CheckboxContainer name="placeArrangement" setCheckboxInputFunction={onClick} content="장소 마련 완료"/>
+            <CheckboxContainer name="visitDateConfirm" setCheckboxInputFunction={onClick} content="방문일정 확인 완료"/>
 
         </div>
     );
