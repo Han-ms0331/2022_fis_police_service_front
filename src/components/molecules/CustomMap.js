@@ -6,7 +6,7 @@ import {Map, MapMarker} from "react-kakao-maps-sdk";
     날짜 : 2022/01/11 4:34 PM
     작성자 : 지상은
     작성내용 : Map을 띄워준다
-             center, zoomlevel, size 설정 필요
+             ->size 설정 필요
 */
 
 function CustomMap(props){
