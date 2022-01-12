@@ -3,6 +3,8 @@ import Navigation from "../templates/Navigation";
 import ScheduleModifyInputForm from "../organisms/ScheduleModifyInputForm";
 import AgentManageInputForm from "../organisms/AgentManageInputForm";
 import UserManageInputForm from "../organisms/UserManageInputForm";
+import CenterManageInputForm from "../organisms/CenterManageInputForm";
+
 
 
 function MainPage(props) {
@@ -12,8 +14,8 @@ function MainPage(props) {
         // </div>
         // <ScheduleModifyInputForm />
         // <AgentManageInputForm />
-        <UserManageInputForm />
-
+        // <UserManageInputForm />
+        <CenterManageInputForm />
 
     );
 }

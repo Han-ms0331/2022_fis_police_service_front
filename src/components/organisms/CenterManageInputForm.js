@@ -2,13 +2,12 @@ import React, {useState} from 'react';
 import InputContainer from "../molecules/InputContainer";
 import CustomButton from "../atoms/CustomButton";
 
-function UserManageInputForm(props) {
+function CenterManageInputForm(props) {
     const [input, setInput] = useState({
-        userName: "",
-        userId: "",
-        userPassword: "",
-        userPhone: "",
-        userAuth: "",
+        centerInfo: "",
+        centerId: "",
+        centerPhone: "",
+        centerAddress: ""
     })
 
     const onChange = (e) => {
@@ -19,8 +18,8 @@ function UserManageInputForm(props) {
             [name]: value // name 키를 가진 값을 value 로 설정
         });
         // console.log(input);
-
     }
+
     return (
         <div style={{
             width: "70vw",
@@ -31,18 +30,14 @@ function UserManageInputForm(props) {
             justifyContent: "center",
             border: "1px solid black"
         }}>
-            <InputContainer labelContent="이름: " inputName="userName" inputType="text" width="300px" rows="1"
+            <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="1"
                             setValueFunction={onChange}/>
-            <InputContainer labelContent="아이디: " inputName="userId" inputType="text" width="300px" rows="1"
+            <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="300px" rows="1"
                             setValueFunction={onChange}/>
-            <InputContainer labelContent="비밀번호: " inputName="userPassword" inputType="text" width="300px" rows="1"
+            <InputContainer labelContent="전화번호: " inputName="centerPhone" inputType="text" width="300px" rows="1"
                             setValueFunction={onChange}/>
-            <InputContainer labelContent="전화번호: " inputName="userPhone" inputType="text" width="300px" rows="1"
+            <InputContainer labelContent="시설 주소: " inputName="centerAddress" inputType="text" width="300px" rows="2"
                             setValueFunction={onChange}/>
-            <InputContainer labelContent="권한: " inputName="userAuth" inputType="select" width="300px"
-                            contents={["관리자", "일반직원"]} setValueFunction={onChange}
-            />
-
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>
                     <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
@@ -59,4 +54,4 @@ function UserManageInputForm(props) {
     );
 }
 
-export default UserManageInputForm;
+export default CenterManageInputForm;
