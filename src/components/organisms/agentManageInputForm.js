@@ -41,7 +41,7 @@ function AgentManageInputForm(props) {
             <InputContainer labelContent="차량여부:" inputName="agentHasCar" inputType="select" width="300px"
                             contents={["자차", "도보"]} setValueFunction={onChange}
             />
-            <InputContainer labelContent="전화번호: " inputName="agentAddress" inputType="text" width="300px" row="1"
+            <InputContainer labelContent="자택주소: " inputName="agentAddress" inputType="text" width="300px" rows="2"
                             setValueFunction={onChange}/>
 
 
