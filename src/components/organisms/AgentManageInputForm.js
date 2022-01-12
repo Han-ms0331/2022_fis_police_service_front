@@ -26,26 +26,37 @@ function AgentManageInputForm(props) {
             border: "1px solid black",
             padding: "30px 0px",
             display: "flex",
-            flexDirection:"column",
-            alignItems:"center",
-            justifyContent:"center"
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center"
         }}>
-            <InputContainer labelContent="이름: " inputName="agentName" inputType="text" width="300px" row="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="아이디: " inputName="agentId" inputType="text" width="300px" row="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px" row="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="전화번호: " inputName="agentPhone" inputType="text" width="300px" row="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="차량여부:" inputName="agentHasCar" inputType="select" width="300px"
-                            contents={["자차", "도보"]} setValueFunction={onChange}
-            />
-            <InputContainer labelContent="자택주소: " inputName="agentAddress" inputType="text" width="300px" rows="2"
-                            setValueFunction={onChange}/>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="이름: " inputName="agentName" inputType="text" width="300px" row="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="아이디: " inputName="agentId" inputType="text" width="300px" row="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px" row="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="전화번호: " inputName="agentPhone" inputType="text" width="300px" row="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="차량여부:" inputName="agentHasCar" inputType="select" width="300px"
+                                contents={["자차", "도보"]} setValueFunction={onChange}
+                />
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="자택주소: " inputName="agentAddress" inputType="text" width="300px" rows="2"
+                                setValueFunction={onChange}/>
+            </div>
 
-
-            <div style={{ display: "flex", marginTop:"20px"}}>
+            <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>
                     <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
                                   border="1px solid #FFE400"
