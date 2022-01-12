@@ -25,10 +25,10 @@ function AgentManageInputForm(props) {
             height: "70vh",
             border: "1px solid black",
             padding: "30px 0px",
-            position: "relative",
             display: "flex",
             flexDirection:"column",
-            alignItems:"center"
+            alignItems:"center",
+            justifyContent:"center"
         }}>
             <InputContainer labelContent="이름: " inputName="agentName" inputType="text" width="300px" row="1"
                             setValueFunction={onChange}/>
@@ -45,16 +45,16 @@ function AgentManageInputForm(props) {
                             setValueFunction={onChange}/>
 
 
-            <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>
-                <div style={{marginRight: "20px"}}>
-                    <CustomButton type="reverse" width="100px" height="30px" content="취소" color="black"
+            <div style={{ display: "flex", marginTop:"20px"}}>
+                <div style={{marginRight: "30px"}}>
+                    <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
                                   border="1px solid #FFE400"
-                                  borderRadius="15px" backgroundColor="white" onClick={props.onClickFunction}/>
+                                  borderRadius="10px" backgroundColor="white" onClick={props.onClickFunction}/>
                 </div>
 
                 <div>
-                    <CustomButton type="normal" width="100px" height="30px" content="저장" color="black"
-                                  borderRadius="15px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
+                    <CustomButton type="normal" width="150px" height="40px" content="저장" color="black"
+                                  borderRadius="10px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
                 </div>
             </div>
 
