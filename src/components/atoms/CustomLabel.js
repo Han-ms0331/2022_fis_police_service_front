@@ -9,7 +9,6 @@ function CustomLabel(props) {
                 lineHeight: "50px",
                 textAlign: "right",
                 marginRight: "10px",
-                display: props.disabled
             }}>{props.content}</div>
         </>
     );

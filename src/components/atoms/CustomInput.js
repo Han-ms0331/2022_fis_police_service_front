@@ -9,7 +9,7 @@ function CustomInput(props) {
 
     let element
     if (props.type === "text") {
-        element =  <TextField sx={{width: props.width, display: props.disabled}}
+        element =  <TextField sx={{width: props.width}}
             name={props.name} hiddenLabel type={props.type}
             fullWidth
             multiline
@@ -20,7 +20,7 @@ function CustomInput(props) {
             variant="outlined"/>
 
     } else if (props.type === "number") {
-        element = <TextField name={props.name} type={props.type} sx={{width: props.width, display: props.disabled}}
+        element = <TextField name={props.name} type={props.type} sx={{width: props.width}}
                               defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
     } else if (props.type === "time") {
         element = <TextField name={props.name} type={props.type} style={{width: props.width}}

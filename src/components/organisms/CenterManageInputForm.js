@@ -30,14 +30,22 @@ function CenterManageInputForm(props) {
             justifyContent: "center",
             border: "1px solid black"
         }}>
-            <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="300px" rows="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="전화번호: " inputName="centerPhone" inputType="text" width="300px" rows="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="시설 주소: " inputName="centerAddress" inputType="text" width="300px" rows="2"
-                            setValueFunction={onChange}/>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="300px" rows="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="전화번호: " inputName="centerPhone" inputType="text" width="300px" rows="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="시설 주소: " inputName="centerAddress" inputType="text" width="300px" rows="2"
+                                setValueFunction={onChange}/>
+            </div>
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>
                     <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
