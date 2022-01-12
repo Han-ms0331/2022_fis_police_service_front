@@ -13,12 +13,10 @@ const DateContainer = ({date}) => {
         <Container>
             <SelectedDate>
                 <Header>선택날짜</Header>
-                <p style={{fontWeight:"400"}}>{selectedDate}</p>
+                <p>{selectedDate}</p>
                 <Header>스케쥴 개수</Header>
-                <p style={{fontWeight:"400"}}>269건</p>
-
+                <p>269건</p>
             </SelectedDate>
-
             </Container>
             );
 };
@@ -32,12 +30,15 @@ background: #F8EFBA;
 margin: 10px 0;
   border-radius: 10px;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.9vw;
   font-weight: 600;
 `
 
 const SelectedDate = styled.div`
     padding: 20px 0 10px 0;
+  &> p{
+    font-weight: 400;
+  }
 `;
 
 const Header = styled.div`
