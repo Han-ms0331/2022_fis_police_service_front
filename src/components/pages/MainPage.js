@@ -1,13 +1,14 @@
 import React from 'react';
 import Navigation from "../templates/Navigation";
-import InputForm from "../organisms/InputForm";
+import ScheduleModifyInputForm from "../organisms/ScheduleModifyInputForm";
 
 
 function MainPage(props) {
     return (
-        <div>
-            <Navigation/>
-        </div>
+        // <div>
+        //     <Navigation/>
+        // </div>
+        <ScheduleModifyInputForm />
 
     );
 }
