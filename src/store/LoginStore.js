@@ -14,6 +14,9 @@ export const isLoginedChangedState = selector({
     get: ({get}) =>{
         const isLogined = get(isLoginedState);
         console.log(isLogined);
-        return isLogined;
+        if(isLogined){
+            return true
+        }
+        return false;
     }
 })

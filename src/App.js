@@ -5,14 +5,21 @@ import ManagePage from "./components/pages/ManagePage";
 import ThisLoginPage from "./components/pages/ThisLoginPage";
 import {useState} from "react";
 function App() {
-    const [isLogined, setIsLogined] = useState(false);  //로그인 상태를 관리하기 위한 state
 
+    localStorage.setItem("loginStatus", "false");
     return (
+        // <div className="App">
+        //     <Route exact path="/" component={() => <ThisLoginPage setIsLogined={setIsLogined}/>}/>
+        //     <Route path="/main" component={() => <MainPage isLogined={isLogined}/>}/>
+        //     <Route path="/schedule" component={() => <SchedulePage isLogined={isLogined}/>}/>
+        //     <Route path="/manage" component={() => <ManagePage isLogined={isLogined}/>}/>
+        // </div>
+
         <div className="App">
-            <Route exact path="/" component={() => <ThisLoginPage setIsLogined={setIsLogined}/>}/>
-            <Route path="/main" component={() => <MainPage isLogined={isLogined}/>}/>
-            <Route path="/schedule" component={() => <SchedulePage isLogined={isLogined}/>}/>
-            <Route path="/manage" component={() => <ManagePage isLogined={isLogined}/>}/>
+            <Route exact path="/" component={ThisLoginPage}/>
+            <Route path="/main" component={MainPage}/>
+            <Route path="/schedule" component={SchedulePage}/>
+            <Route path="/manage" component={ManagePage}/>
         </div>
     );
 }
