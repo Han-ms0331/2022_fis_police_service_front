@@ -6,6 +6,7 @@ import {Redirect} from "react-router-dom";
 
 function MainPage(props) {
     return (
+
         props.isLogined?    //props로 받은 islogined state에 따라 보여주는 창이 달라짐
             (
         <div>
