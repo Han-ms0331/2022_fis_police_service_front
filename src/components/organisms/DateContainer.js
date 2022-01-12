@@ -29,7 +29,7 @@ const DateContainer = ({date}) => {
 
 const Container = styled.div`
 background: #F8EFBA;
-margin: 10px;
+margin: 10px 0;
   border-radius: 10px;
   text-align: center;
   font-size: 1rem;
