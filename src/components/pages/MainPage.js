@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from "../templates/Navigation";
 import ScheduleModifyInputForm from "../organisms/ScheduleModifyInputForm";
+import AgentManageInputForm from "../organisms/agentManageInputForm";
 
 
 function MainPage(props) {
@@ -8,7 +9,9 @@ function MainPage(props) {
         // <div>
         //     <Navigation/>
         // </div>
-        <ScheduleModifyInputForm />
+        // <LoginInputForm />
+        // <ScheduleModifyInputForm />
+        <AgentManageInputForm />
 
     );
 }

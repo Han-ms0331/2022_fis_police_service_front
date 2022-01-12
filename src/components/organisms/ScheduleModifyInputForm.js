@@ -74,9 +74,6 @@ function ScheduleModifyInputForm(props) {
     }
 
 
-    const absentCountRef = useRef(null)
-    const errorReason = useRef(null)
-
     return (
         <div style={{
             width: "70vw",
@@ -127,7 +124,7 @@ function ScheduleModifyInputForm(props) {
                     </div>
 
                     <div>
-                        <CustomButton type="reverse" width="100px" height="30px" content="저장" color="black"
+                        <CustomButton type="normal" width="100px" height="30px" content="저장" color="black"
                                       borderRadius="15px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
                     </div>
                 </div>

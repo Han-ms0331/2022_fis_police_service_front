@@ -33,9 +33,8 @@ function CustomInput(props) {
         element = <FormControl style={{width: props.width}}>
             {/*<InputLabel id="demo-simple-select-label">{props.labelContent}</InputLabel>*/}
             <Select
-
                 name={props.name}
-                defaultValue={"미완료"}
+                defaultValue={props.contents[0]}
                 onChange={props.setValueFunction}
             >
                 {props.contents.map((content) => {
