@@ -7,13 +7,14 @@ import LoginForm from "../organisms/LoginForm";
     작성자: 한명수
     작성내용: loginTemple, 로그인 페이지를 구성함, 로그인 api 호출
 */
+
 function LoginTemplate(props) {
     const loginCall  = () =>{   //서버와 로그인 통신을 하는 부분
         return true;
     }
 
     const onclick = (e) => {
-        if(loginCall)
+        if(loginCall()===true)
         localStorage.setItem("loginStatus","true")
     }
 
