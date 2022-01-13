@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import styled from "styled-components";
 import LoginForm from "../organisms/LoginForm";
 
 /*
@@ -17,13 +18,9 @@ function LoginTemplate(props) {
     }
 
     return (
-        <div>
-            <div>
-                logo
-            </div>
+        <>
             <LoginForm onClickFunction={onclick}/>
-        </div>
+        </>
     );
 }
-
 export default LoginTemplate;
