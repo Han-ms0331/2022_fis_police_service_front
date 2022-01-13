@@ -24,7 +24,7 @@ const Announcement = styled.div`
 const Header = styled.div`
 color: #6D5A00;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.9vw;
   font-weight: 600;
   padding: 20px;
 `

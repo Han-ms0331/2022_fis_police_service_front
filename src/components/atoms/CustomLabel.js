@@ -7,9 +7,6 @@ function CustomLabel(props) {
                 width: "100px",
                 height: "50px",
                 lineHeight: "50px",
-                textAlign: "right",
-                marginRight: "10px",
-                display: props.disabled
             }}>{props.content}</div>
         </>
     );

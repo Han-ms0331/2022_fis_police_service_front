@@ -6,7 +6,6 @@ import ThisLoginPage from "./components/pages/ThisLoginPage";
 import {useState} from "react";
 function App() {
     const [isLogined, setIsLogined] = useState(false);  //로그인 상태를 관리하기 위한 state
-
     return (
         <div className="App">
             <Route exact path="/" component={() => <ThisLoginPage setIsLogined={setIsLogined}/>}/>

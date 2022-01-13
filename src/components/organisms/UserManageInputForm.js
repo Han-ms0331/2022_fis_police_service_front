@@ -31,18 +31,26 @@ function UserManageInputForm(props) {
             justifyContent: "center",
             border: "1px solid black"
         }}>
-            <InputContainer labelContent="이름: " inputName="userName" inputType="text" width="300px" rows="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="아이디: " inputName="userId" inputType="text" width="300px" rows="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="비밀번호: " inputName="userPassword" inputType="text" width="300px" rows="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="전화번호: " inputName="userPhone" inputType="text" width="300px" rows="1"
-                            setValueFunction={onChange}/>
-            <InputContainer labelContent="권한: " inputName="userAuth" inputType="select" width="300px"
-                            contents={["관리자", "일반직원"]} setValueFunction={onChange}
-            />
-
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="이름: " inputName="userName" inputType="text" width="300px" rows="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="아이디: " inputName="userId" inputType="text" width="300px" rows="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="비밀번호: " inputName="userPassword" inputType="text" width="300px" rows="1"
+                                setValueFunction={onChange}/></div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="전화번호: " inputName="userPhone" inputType="text" width="300px" rows="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="권한: " inputName="userAuth" inputType="select" width="300px"
+                                contents={["관리자", "일반직원"]} setValueFunction={onChange}
+                />
+            </div>
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>
                     <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
@@ -56,7 +64,8 @@ function UserManageInputForm(props) {
                 </div>
             </div>
         </div>
-    );
+    )
+        ;
 }
 
 export default UserManageInputForm;
