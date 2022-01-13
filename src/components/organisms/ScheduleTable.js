@@ -28,8 +28,11 @@ import TableHead from "@mui/material/TableHead";
 import ScheduleTableSearch from "../molecules/ScheduleTableSearch";
 import { useRecoilValue } from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
+import CustomButton from "../atoms/CustomButton";
+import CheckboxContainer from "../molecules/CheckboxContainer";
 
-const useStyles1 = makeStyles((theme) => ({
+
+const useStyles1 = makeStyles((theme) => ({ // Table Pagination의 style
     root: {
         flexShrink: 0,
         marginLeft: theme.spacing(2.5),
@@ -103,40 +106,41 @@ function createData(checkbox, No, agent, center, etc, change, call, notice, edit
 }
 
 const rows = [
-    createData(<CheckBox />, '1', "안양 안철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n","신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '2', "안양 이철수", "B시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '3', "안양 박철수", "C시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '4', "가산 최철수", "D시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '5', "안양 윤철수", "E시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '6', "안양 김철수", "F시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '7', "구로 이철수", "G시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '8', "안양 박철수", "H시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '9', "안양 최철수", "I시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '10', "가산 윤철수", "J시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '11', "안양 김철수", "K시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '12', "안양 이철수", "L시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '13', "안양 박철수", "M시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '14', "구로 최철수", "N시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '15', "안양 윤철수", "가시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '16', "안양 김철수", "나시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '17', "안양 이철수", "다시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '18', "가산 박철수", "라시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '19', "안양 최철수", "마시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '20', "안양 윤철수", "바시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '21', "구로 김철수", "사시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '22', "안양 이철수", "ㄱ시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '23', "안양 박철수", "ㄴ시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '24', "안양 최철수", "ㄷ시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '25', "가산 윤철수", "ㄹ시설", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '26', "안양 이철수", "L시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '27', "구로 이철수", "G시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckBox />, '28', "가산 이철수", "G시설", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '1', "안양 안철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n","신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '2', "안양 이철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '3', "안양 박철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '4', "가산 최철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '5', "안양 윤철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '6', "안양 김철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '7', "구로 이철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '8', "안양 박철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '9', "안양 최철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '10', "가산 윤철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '11', "안양 김철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '12', "안양 이철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '13', "안양 박철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '14', "구로 최철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '15', "안양 윤철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '16', "안양 김철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '17', "안양 이철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '18', "가산 박철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '19', "안양 최철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '20', "안양 윤철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '21', "구로 김철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '22', "안양 이철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '23', "안양 박철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '24', "안양 최철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '25', "가산 윤철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '26', "안양 이철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '27', "구로 이철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '28', "가산 이철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
 
 ];
 
-const useStyles2 = makeStyles({
+const useStyles2 = makeStyles({ // TableContainer의 style
     table: {
         minWidth: 500,
+
     },
 });
 
@@ -178,7 +182,9 @@ export default function ScheduleTable() {
             <TableCell align="right">{row.change}</TableCell>
             <TableCell align="right">{row.call}</TableCell>
             <TableCell align="right">{row.notice}</TableCell>
-            <TableCell align="right"><button>수정</button></TableCell>
+            <TableCell align="right">
+                <CustomButton type="normal" content="수정" backgroundColor='rgba(255, 212, 0, 0.5)' />
+            </TableCell>
         </TableRow>
     )
 
@@ -262,7 +268,7 @@ export default function ScheduleTable() {
 
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -276,8 +282,9 @@ export default function ScheduleTable() {
     };
 
     return (
+        <div style={{margin: '25px'}}>
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="custom pagination table">
+            <Table style={{ width: '100%', height: '100%' }} className={classes.table} aria-label="custom pagination table">
                 <ScheduleTableSearch />
                 <TableHead style={{backgroundColor:'rgba(255, 212, 0, 0.5)',}}>
                     <TableRow>
@@ -311,7 +318,7 @@ export default function ScheduleTable() {
                         <TableCell align="right">변경 사항</TableCell>
                         <TableCell align="right">통화 이력</TableCell>
                         <TableCell align="right">일정 공지</TableCell>
-                        <TableCell align="right">수정</TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -330,7 +337,12 @@ export default function ScheduleTable() {
                 <TableFooter>
                     <TableRow>
                         <TableCell align={"center"}>
-                            <button onClick={()=>console.log(checkedList)}>일정공지(임시)</button>
+                            <CustomButton
+                                type="normal"
+                                content="일정공지"
+                                backgroundColor='rgba(255, 212, 0, 0.5)'
+                                onClick={()=>console.log(checkedList)}
+                            />
                         </TableCell>
                         <TableCell />
                         <TableCell />
@@ -338,7 +350,7 @@ export default function ScheduleTable() {
                         <TableCell />
                         <TableCell />
                             <TablePagination // MUI - Pagination 기능
-                                rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
+                                rowsPerPageOptions={[5, 10, 20, { label: 'All', value: -1 }]}
                                 colSpan={3}
                                 count={count}
                                 rowsPerPage={rowsPerPage}
@@ -355,5 +367,6 @@ export default function ScheduleTable() {
                 </TableFooter>
             </Table>
         </TableContainer>
+        </div>
     );
 }

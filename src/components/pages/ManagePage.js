@@ -14,6 +14,7 @@ import AgentManageTemplate from "../templates/AgentManageTemplate";
 작성내용: manage page 작성
 */
 
+
 function ManagePage(props) {
     let isLogined;      //로그인 상태에 따라 랜더링을 결정하는 변수
     if (localStorage.getItem("loginStatus") === "true") //localstorage에서 loginStatus가 true일때 isLogined를 true로 바꿔줌
@@ -52,12 +53,12 @@ function ManagePage(props) {
                         <Content>
                             {renderTab(whichTab)}
                         </Content>
-
                     </Container>
         </Main>
     )   :
             <Redirect to={"/"} />
     )
+
 }
 const Main = styled.div`
     display: grid;

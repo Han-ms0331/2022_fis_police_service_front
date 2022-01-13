@@ -11,6 +11,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
+import TextField from '@material-ui/core/TextField';
 
 
 function ScheduleTableSearch() {
@@ -26,15 +27,14 @@ function ScheduleTableSearch() {
     return (
             <TableHead>
                 <TableRow>
-                        <TableCell align="center">검색:</TableCell>
-                        <TableCell><input id="No" type="text" placeholder="No." onChange={handleChange}/></TableCell>
-                        <TableCell align="right"><input id="agent" type="text" placeholder="현장요원" onChange={handleChange}/></TableCell>
-                        <TableCell align="right"><input id="center" type="text" placeholder="시설정보" onChange={handleChange}/></TableCell>
-                        <TableCell align="right"><input id="etc" type="text" placeholder="특이사항" onChange={handleChange}/></TableCell>
-                        <TableCell align="right"><input id="change" type="text" placeholder="변경 사항" onChange={handleChange}/></TableCell>
-                        <TableCell align="right"><input id="call" type="text" placeholder="통화 이력" onChange={handleChange}/></TableCell>
-                        <TableCell align="right"><input id="notice" type="text" placeholder="일정 공지" onChange={handleChange}/></TableCell>
-                        <TableCell align="right"><button onClick={() => console.log(tmp)}>검색</button></TableCell>
+                        <TableCell align="center" size="medium">검색 :</TableCell>
+                        <TableCell align="left"><TextField size="small" id="No" label="No." variant="outlined" onChange={handleChange}/></TableCell>
+                        <TableCell align="right"><TextField size="small" id="agent" label="현장요원" variant="outlined" onChange={handleChange}/></TableCell>
+                        <TableCell align="right"><TextField size="small" id="center" label="시설정보" variant="outlined" onChange={handleChange}/></TableCell>
+                        <TableCell align="right"><TextField size="small" id="etc" label="특이사항" variant="outlined" onChange={handleChange}/></TableCell>
+                        <TableCell align="right"><TextField size="small" id="change" label="변경 사항" variant="outlined" onChange={handleChange}/></TableCell>
+                        <TableCell align="right"><TextField size="small" id="call" label="통화 이력" variant="outlined" onChange={handleChange}/></TableCell>
+                        <TableCell align="right"><TextField size="small" id="notice" label="일정 공지" variant="outlined" onChange={handleChange}/></TableCell>
                 </TableRow>
             </TableHead>
     );
