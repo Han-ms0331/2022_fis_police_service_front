@@ -5,8 +5,6 @@ import { BiUser } from "react-icons/bi";
 import {RiLockPasswordLine} from "react-icons/ri"
 import {Link} from "react-router-dom";
 import CustomButton from "../atoms/CustomButton";
-// import {Button, Container} from "@mui/material";
-import {Box} from "@material-ui/core";
 
 /*
     날짜: 2022/01/11 10:44 오전
@@ -32,7 +30,7 @@ const LoginForm = (props) => {
                     <div className="icon"><RiLockPasswordLine/></div>
                     <input id="password" type="password" placeholder="비밀번호"/>
                 </InputRow>
-                <Link to={"/main"}><button onClick={props.onClickFunction}>로그인</button></Link>
+                <Link to={"/main"}><CustomButton  type = "normal" width="100%" height= "40px" borderRadius="6px" color="#fff" backgroundColor="#FFD400" content="로그인" onClick={props.onClickFunction}/></Link>
             </Container>
         </Main>
     );
@@ -44,20 +42,6 @@ const Main = styled.div`
       left: 49.5%;
       top: 19%;
       width: 200px;
-    }
-  & button{
-    height: 40px;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 6px;
-    font-size: 20px;
-    cursor: pointer;
-    background: #fff;
-    color: #fff;
-    background: #FFD400;
-    }
-    & button:hover {
-      transform: scale(1.02);
     }
 `;
 const Container = styled.div`
@@ -76,6 +60,9 @@ const Container = styled.div`
   font-size: 20px;
   padding: 20px;
   background-color: rgba(255,255,255,0.13);
+  & a{
+    text-decoration: none;
+  }
 `;
 
 const InputRow = styled.div`
@@ -86,6 +73,7 @@ const InputRow = styled.div`
   width: 100%;
   height: 40px;
   border-radius: 6px;
+  
   & .icon{
     justify-self: center;
     align-self: center;
@@ -103,30 +91,4 @@ const InputRow = styled.div`
   }
 `;
 export default LoginForm;
-// function LoginForm(props) {
-//     const {onClickFunction} = props;
-//
-//     return (
-//         <div>
-//             <Container maxWidth={"sm"}>
-//                 <span>아이디 :</span>
-//                 <input/>
-//             </Container>
-//             <br/>
-//             <br/>
-//             <Container maxWidth={"sm"}>
-//                 <span>비밀번호 :</span>
-//                 <input/>
-//             </Container>
-//             <br/>
-//             <br/>
-//             <br/>
-//             <Container maxWidth={"sm"}>
-//                 <Link to={"/main"} style={{textDecoration: 'none'}}>
-//                     <CustomButton width={"10vw"} height={"3vh"} backgroundColor={"#FFD400"} type={"normal"} content={"로그인"} onClick={onClickFunction}/>
-//                 </Link>
-//             </Container>
-//         </div>
-//     );
-// }
 

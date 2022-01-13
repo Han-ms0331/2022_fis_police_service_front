@@ -21,7 +21,9 @@ function CustomButton(props) {
                         color: props.color,
                         borderRadius: props.borderRadius,
                         backgroundColor: props.backgroundColor,
+                        border: props.border
                         fontSize:props.fontSize
+
                     }}
                     onClick={props.onClick}
             >{props.content}</Button>
