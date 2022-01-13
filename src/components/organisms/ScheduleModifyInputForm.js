@@ -83,56 +83,56 @@ function ScheduleModifyInputForm(props) {
         }}>
             <div style={{marginRight: "30px"}}>
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="2"
-                                    setValueFunction={onChange}/>
+                    <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="20vw" rows="2"
+                                    setValueFunction={onChange}  />
                 </div>
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px"
+                    <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="20vw"
                                     rows="1"
                                     setValueFunction={onChange}/>
                 </div>
 
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="방문날짜: " inputName="visitDate" inputType="date" width="300px"
+                    <InputContainer labelContent="방문날짜: " inputName="visitDate" inputType="date" width="20vw"
                                     setValueFunction={onChange}/>
                 </div>
 
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="방문시간: " inputName="visitTime" inputType="time" width="300px"
+                    <InputContainer labelContent="방문시간: " inputName="visitTime" inputType="time" width="20vw"
                                     setValueFunction={onChange}/>
                 </div>
 
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="예상 인원: " inputName="childrenNumber" inputType="number" width="300px"
+                    <InputContainer labelContent="예상 인원: " inputName="childrenNumber" inputType="number" width="20vw"
                                     setValueFunction={onChange}/>
                 </div>
 
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="변경사항: " inputName="changeThing" inputType="text" width="300px"
-                                    rows="2"
+                    <InputContainer labelContent="변경사항: " inputName="changeThing" inputType="text" width="20vw"
+                                    rows="3"
                                     setValueFunction={onChange}/>
                 </div>
 
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="통화이력: " inputName="callStatus" inputType="select" width="300px"
+                    <InputContainer labelContent="통화이력: " inputName="callStatus" inputType="select" width="20vw"
                                     contents={["미완료", "통화완료", "부재중", "통화오류"]} setValueFunction={onChange}
                     />
                 </div>
 
                 <div style={{marginBottom: "20px", display: `${disable.absentCount}`}}>
-                    <InputContainer labelContent="부재중 횟수: " inputType="number" width="300px"
+                    <InputContainer labelContent="부재중 횟수: " inputType="number" width="20vw"
                                     setValueFunction={onChange}/>
                 </div>
 
                 <div style={{marginBottom: "20px", display: `${disable.errorReason}`}}>
-                    <InputContainer labelContent="통화오류 사유: " inputName="errorReason" inputType="text" width="300px"
+                    <InputContainer labelContent="통화오류 사유: " inputName="errorReason" inputType="text" width="20vw"
                                     setValueFunction={onChange}/>
                 </div>
             </div>
             <div style={{position: "relative"}}>
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="특이사항: " inputName="specialInfo" inputType="text" width="300px"
-                                    rows="2"
+                    <InputContainer labelContent="특이사항: " inputName="specialInfo" inputType="text" width="20vw"
+                                    rows="3"
                                     setValueFunction={onChange}/>
                 </div>
 
