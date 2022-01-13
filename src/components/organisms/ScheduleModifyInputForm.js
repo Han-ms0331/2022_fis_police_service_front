@@ -42,17 +42,17 @@ function ScheduleModifyInputForm(props) {
         });
         // console.log(input);
         if (name === "callStatus") {
-            if(value==="통화완료" ||value==="미완료"){
+            if (value === "통화완료" || value === "미완료") {
                 setDisable({
                     absentCount: "none",
                     errorReason: "none",
                 })
-            }else if(value==="부재중"){
+            } else if (value === "부재중") {
                 setDisable({
                     absentCount: "block",
                     errorReason: "none",
                 })
-            }else if(value==="통화오류"){
+            } else if (value === "통화오류") {
                 setDisable({
                     absentCount: "none",
                     errorReason: "block"
@@ -84,30 +84,60 @@ function ScheduleModifyInputForm(props) {
             justifyContent: "center",
         }}>
             <div style={{marginRight: "30px"}}>
-                <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="2"
-                                setValueFunction={onChange}/>
-                <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px"
-                                rows="1"
-                                setValueFunction={onChange}/>
-                <InputContainer labelContent="방문날짜: " inputName="visitDate" inputType="date" width="300px"
-                                setValueFunction={onChange}/>
-                <InputContainer labelContent="방문시간: " inputName="visitTime" inputType="time" width="300px"
-                                setValueFunction={onChange}/>
-                <InputContainer labelContent="예상 인원: " inputName="childrenNumber" inputType="number" width="300px"
-                                setValueFunction={onChange}/>
-                <InputContainer labelContent="변경사항: " inputName="changeThing" inputType="text" width="300px" rows="2"
-                                setValueFunction={onChange}/>
-                <InputContainer labelContent="통화이력: " inputName="callStatus" inputType="select" width="300px"
-                                contents={["미완료", "통화완료", "부재중", "통화오류"]} setValueFunction={onChange}
-                />
-                <InputContainer labelContent="부재중 횟수: " inputType="number" width="300px"
-                                setValueFunction={onChange} disabled={disable.absentCount}/>
-                <InputContainer labelContent="통화오류 사유: " inputName="errorReason" inputType="text" width="300px"
-                                setValueFunction={onChange} disabled={disable.errorReason}/>
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="2"
+                                    setValueFunction={onChange}/>
+                </div>
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px"
+                                    rows="1"
+                                    setValueFunction={onChange}/>
+                </div>
+
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="방문날짜: " inputName="visitDate" inputType="date" width="300px"
+                                    setValueFunction={onChange}/>
+                </div>
+
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="방문시간: " inputName="visitTime" inputType="time" width="300px"
+                                    setValueFunction={onChange}/>
+                </div>
+
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="예상 인원: " inputName="childrenNumber" inputType="number" width="300px"
+                                    setValueFunction={onChange}/>
+                </div>
+
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="변경사항: " inputName="changeThing" inputType="text" width="300px"
+                                    rows="2"
+                                    setValueFunction={onChange}/>
+                </div>
+
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="통화이력: " inputName="callStatus" inputType="select" width="300px"
+                                    contents={["미완료", "통화완료", "부재중", "통화오류"]} setValueFunction={onChange}
+                    />
+                </div>
+
+                <div style={{marginBottom: "20px", display: `${disable.absentCount}`}}>
+                    <InputContainer labelContent="부재중 횟수: " inputType="number" width="300px"
+                                    setValueFunction={onChange}/>
+                </div>
+
+                <div style={{marginBottom: "20px", display: `${disable.errorReason}`}}>
+                    <InputContainer labelContent="통화오류 사유: " inputName="errorReason" inputType="text" width="300px"
+                                    setValueFunction={onChange}/>
+                </div>
             </div>
             <div style={{position: "relative"}}>
-                <InputContainer labelContent="특이사항: " inputName="specialInfo" inputType="text" width="300px" rows="2"
-                                setValueFunction={onChange}/>
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="특이사항: " inputName="specialInfo" inputType="text" width="300px"
+                                    rows="2"
+                                    setValueFunction={onChange}/>
+                </div>
+
 
                 <div style={{marginLeft: "80px"}}>
                     <CheckboxContainer name="applicationForm" setCheckboxInputFunction={onClick} content="신청서 완료"/>
