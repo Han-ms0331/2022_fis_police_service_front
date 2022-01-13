@@ -1,0 +1,32 @@
+.field_name {
+    margin-right: 1vw;
+}
+
+.field_value {
+
+}
+
+.field_container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-content: center;
+}
+
+.recorder_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    width: 5vw;
+    border-left: 1px solid #6D5A00;
+    border-top: 1px solid #6D5A00;
+    border-right: 1px solid #6D5A00;
+    padding: 1%;
+    text-align: center;
+}
+
+.info_container {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    border: 1px solid #6D5A00;
+    padding: 0.5vw;
+}
