@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Navigation from "../templates/Navigation";
 import Grid from "@material-ui/core/Grid";
 import {Redirect} from "react-router-dom";
+import MainInfoTemplate from "../templates/MainInfoTemplate";
 
 
 function MainPage(props) {
@@ -22,7 +23,7 @@ function MainPage(props) {
                 </Grid>
 
                 <Grid item xs={3}>
-                    main info template
+                    <MainInfoTemplate />
                 </Grid>
             </Grid>
         </div>
