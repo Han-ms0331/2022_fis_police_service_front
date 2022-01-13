@@ -23,6 +23,12 @@ function CenterManageTemp(props) {
         //api 요청
     }
 
+    const handleModifyButtonClick = (e) => {
+        // button이 관리페이지의 정보 수정 버튼일 시...
+
+        console.dir(e)
+    }
+
 
     let headerContent = [
         "시설아이디", "시설이름", "참여여부", "전화번호", "시설주소"
@@ -56,7 +62,7 @@ function CenterManageTemp(props) {
                 <SearchForm onSubmitFunction={showList} setSearch={onChange} width="100%" height="100%"/>
             </div>
             <ListContainer style={{width: "100%", height: "100%"}} headerContents={headerContent} contents={contents}
-                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정"/>
+                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정" clickFunction={handleModifyButtonClick}/>
         </div>
     );
 }
