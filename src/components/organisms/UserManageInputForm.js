@@ -55,7 +55,7 @@ function UserManageInputForm(props) {
                 <div style={{marginRight: "30px"}}>
                     <CustomButton type="reverse" width="10vw" height="5vh" content="취소" color="black"
                                   border="1px solid #FFE400"
-                                  borderRadius="10px" backgroundColor="white" onClick={props.onClickFunction}/>
+                                  borderRadius="10px" backgroundColor="white" onClick={props.handleClose}/>
                 </div>
 
                 <div>
