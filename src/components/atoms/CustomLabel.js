@@ -5,9 +5,8 @@ function CustomLabel(props) {
         <>
             <div style={{
                 width: "100px",
-                height: "50px",
-                lineHeight: "50px",
-            }}>{props.content}</div>
+                padding: "5px 0px"
+           }}>{props.content}</div>
         </>
     );
 }

@@ -5,38 +5,23 @@ import CustomButton from "../atoms/CustomButton";
 
 function ListContainer(props) {
     const handleClick = (e) => {
+        // button이 mainbodytemplate의 선택버튼일 시 시설 정보를 전역상태로 관리...?
+
+        // button이 관리페이지의 정보 수정 버튼일 시...
 
     }
 
-    let contents = [{
-        centerId: "test1",
-        centerAddress: "서울시 노원구 동일로 215길 48",
-        centerPhone: "010-2105-7345",
-        participation: "참여",
-        visit: "완료"
-    }
-        , {
-            centerId: "test2",
-            centerAddress: "서울시 광진구 동일로 215길 48",
-            centerPhone: "010-2105-6207",
-            participation: "참여",
-            visit: "완료"
-        }]
-    let headerContent = [
-        "시설명", "주소", "전화번호", "연락기록", "방문여부"
-    ]
     return (
-
         <div style={{
             width: props.width,
             height: props.height,
         }}>
-            <List type="list" type="listHeader" width="100%" height="100%" content={headerContent}
+            <List type="list" type="listHeader" width="100%" height="100%" contents={props.headerContents}
                   gridRatio={props.gridRatio}/>
-            {contents.map((content) => {
-                return <List key={Object.values(content)[0]} type="list" width="100%" height="100%" content={content}
+            {props.contents.map((content) => {
+                return <List key={Object.values(content)[0]} type="list" width="100%" height="100%" contents={content}
                              gridRatio={props.gridRatio}
-                             onClickFunction={handleClick}/>
+                             buttonContent={props.buttonContent} onClickFunction={handleClick}/>
             })}
         </div>
     );
