@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../media/logo.png'
-import { BiUser } from "react-icons/bi";
+import {BiUser} from "react-icons/bi";
 import {RiLockPasswordLine} from "react-icons/ri"
 import {Link} from "react-router-dom";
 import CustomButton from "../atoms/CustomButton";
@@ -21,7 +21,7 @@ import {Box} from "@material-ui/core";
 const LoginForm = (props) => {
     return (
         <Main>
-                <img src={logo}/>
+            <img src={logo}/>
             {BiUser}
             <Container>
                 <InputRow>
@@ -32,20 +32,23 @@ const LoginForm = (props) => {
                     <div className="icon"><RiLockPasswordLine/></div>
                     <input id="password" type="password" placeholder="비밀번호"/>
                 </InputRow>
-                <button>로그인</button>
+                <Link to={"/main"} style={{width:"100%", textDecoration: 'none'}}>
+                    <button onClick={props.onClickFunction}>로그인</button>
+                </Link>
             </Container>
         </Main>
     );
 }
 const Main = styled.div`
-    & img{ /*fis logo*/
-      position: fixed;
-      transform: translate(-50%, -50%);
-      left: 49.5%;
-      top: 19%;
-      width: 200px;
-    }
-  & button{
+  & img { /*fis logo*/
+    position: fixed;
+    transform: translate(-50%, -50%);
+    left: 49.5%;
+    top: 19%;
+    width: 200px;
+  }
+
+  & button {
     height: 40px;
     box-sizing: border-box;
     border: none;
@@ -55,10 +58,11 @@ const Main = styled.div`
     background: #fff;
     color: #fff;
     background: #FFD400;
-    }
-    & button:hover {
-      transform: scale(1.02);
-    }
+  }
+
+  & button:hover {
+    transform: scale(1.02);
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -75,24 +79,26 @@ const Container = styled.div`
   top: 50%;
   font-size: 20px;
   padding: 20px;
-  background-color: rgba(255,255,255,0.13);
+  background-color: rgba(255, 255, 255, 0.13);
 `;
 
 const InputRow = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 9fr;
-    border: 1px solid #dadada;
+  border: 1px solid #dadada;
   margin-bottom: 20px;
   width: 100%;
   height: 40px;
   border-radius: 6px;
-  & .icon{
+
+  & .icon {
     justify-self: center;
     align-self: center;
     width: 20px;
     height: 20px;
     color: #8a8a8a;
   }
+
   & input {
     width: 98%;
     justify-self: start;

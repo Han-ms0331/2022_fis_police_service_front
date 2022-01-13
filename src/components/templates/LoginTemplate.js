@@ -13,8 +13,8 @@ function LoginTemplate(props) {
     }
 
     const onclick = (e) => {
-        if(loginCall)
-        localStorage.setItem("loginStatus","true")
+        if(loginCall() === true)
+            localStorage.setItem("loginStatus","true")
     }
 
     return (
