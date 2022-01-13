@@ -32,7 +32,7 @@ const LoginForm = (props) => {
                     <div className="icon"><RiLockPasswordLine/></div>
                     <input id="password" type="password" placeholder="비밀번호"/>
                 </InputRow>
-                <button>로그인</button>
+                <Link to={"/main"}><button onClick={props.onClickFunction}>로그인</button></Link>
             </Container>
         </Main>
     );
