@@ -43,27 +43,23 @@ function ManagePage(props) {
             (
                 <Main>
                     <Navigation/>
-                    manage
-                </Main>
-            ) :
-            <Redirect to={"/"}/>
-
                     <Container>
                         <NavigationTab>
                             <div className="btnContainer">
-                            <CustomButton  class= "userManage" type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#F8EFBA" content="콜직원관리" onClick={()=>handdleClick("userManage")}/>
-                            <CustomButton  class= "agentManage" type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#F8EFBA" content="현장요원관리" onClick={()=>handdleClick("agentManage")}/>
-                            <CustomButton  class= "centerManage" type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#F8EFBA" content="시설정보수정" onClick={()=>handdleClick("centerManage")}/>
+                                <CustomButton  class= "userManage" type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#F8EFBA" content="콜직원관리" onClick={()=>handdleClick("userManage")}/>
+                                <CustomButton  class= "agentManage" type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#F8EFBA" content="현장요원관리" onClick={()=>handdleClick("agentManage")}/>
+                                <CustomButton  class= "centerManage" type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#F8EFBA" content="시설정보수정" onClick={()=>handdleClick("centerManage")}/>
                             </div>
-                            </NavigationTab>
+                        </NavigationTab>
                         <Content>
                             {renderTab(whichTab)}
                         </Content>
                     </Container>
-        </Main>
-    )   :
-            <Redirect to={"/"} />
-    )
+                </Main>
+            ) :
+            <Redirect to={"/"}/>
+
+    );
 
 }
 
