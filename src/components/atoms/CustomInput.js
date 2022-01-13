@@ -9,11 +9,11 @@ function CustomInput(props) {
 
     let element
     if (props.type === "text") {
-        element =  <TextField sx={{width: props.width}}
+        element =  <TextField sx={{width: props.width, padding:"0px"}}
             name={props.name} hiddenLabel type={props.type}
             fullWidth
             multiline
-            rows={props.rows}
+            rows={1}
             defaultValue={props.defaultValue} placeholder={props.placeholder}
             onChange={props.setValueFunction}
             id="outlined-basic"

@@ -31,8 +31,8 @@ function CenterManageInputForm(props) {
             border: "1px solid black"
         }}>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="1"
-                                setValueFunction={onChange}/>
+                <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="60%" rows="1"
+                                setValueFunction={onChange} />
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="300px" rows="1"

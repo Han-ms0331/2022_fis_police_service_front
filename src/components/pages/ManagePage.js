@@ -4,6 +4,8 @@ import Navigation from "../templates/Navigation";
 import {Redirect} from "react-router-dom";
 import CenterManageTemp from "../templates/CenterManageTemp";
 import centerManageTemp from "../templates/CenterManageTemp";
+import ScheduleModifyInputForm from "../organisms/ScheduleModifyInputForm";
+import CenterManageInputForm from "../organisms/CenterManageInputForm";
 
 function ManagePage(props) {
     // let isLogined;      //로그인 상태에 따라 랜더링을 결정하는 변수
@@ -21,7 +23,8 @@ function ManagePage(props) {
     // )   :
     //         <Redirect to={"/"} />
     // )
-    return <CenterManageTemp />
+    // return <CenterManageTemp />
+    return <CenterManageInputForm />
 }
 const Main = styled.div`
     display: grid;

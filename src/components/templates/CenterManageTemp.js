@@ -27,6 +27,10 @@ function CenterManageTemp(props) {
         // button이 관리페이지의 정보 수정 버튼일 시...
 
         console.dir(e)
+
+
+
+
     }
 
 
