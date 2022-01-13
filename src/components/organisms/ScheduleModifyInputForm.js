@@ -59,8 +59,6 @@ function ScheduleModifyInputForm(props) {
                 })
             }
         }
-
-
     };
 
     const onClick = (e) => {

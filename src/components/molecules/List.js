@@ -8,12 +8,12 @@ function List(props) {
             width: props.width,
             height: props.height,
             display: "grid",
-            gridTemplateColumns: "1fr 3fr 2fr 1fr 1fr 1fr",
+            gridTemplateColumns: props.gridRatio,
             alignItems: "center",
             padding: "5px 0px"
         }}>
             {
-                props.content.map((columnContent) => {
+                props.contents.map((columnContent) => {
                         return <div key={columnContent}
                                     style={{display: "flex", justifyContent: "center"}}>{columnContent}</div>
                     }
@@ -29,19 +29,19 @@ function List(props) {
             border: "1px solid #6D5A00",
             borderRadius: "15px",
             display: "grid",
-            gridTemplateColumns: "1fr 3fr 2fr 1fr 1fr 1fr",
+            gridTemplateColumns: props.gridRatio,
             alignItems: "center",
             marginBottom: "15px",
             padding: "5px 0px"
         }}>
             {
-                Object.values(props.content).map((value) => {
+                Object.values(props.contents).map((value) => {
                     return <div key={value} style={{display: "flex", justifyContent: "center"}}>{value}</div>
                 })
             }
             <div style={{display: "flex", justifyContent: "center"}}>
-                <CustomButton type="reverse" width="10px" height="40px" color="black" border="1px solid #FFD400"
-                              backgroundColor="white" borderRadius="10px" content="선택"
+                <CustomButton type="reverse" width="85px" height="40px" color="black" border="1px solid #FFD400"
+                              backgroundColor="white" borderRadius="10px" content={props.buttonContent}
                               onClick={props.onClickFunction}/>
             </div>
 
