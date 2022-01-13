@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
+import styled from 'styled-components';
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import CenterManageInputForm from "../organisms/CenterManageInputForm";
+import CustomButton from "../atoms/CustomButton";
+
 
 function CenterManageTemp(props) {
     const [input, setInput] = useState({
@@ -8,6 +16,10 @@ function CenterManageTemp(props) {
         centerAddress: "",
         centerPhone: "",
     })
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const onChange = (e) => {
         // console.log(e);
@@ -23,16 +35,9 @@ function CenterManageTemp(props) {
         //api 요청
     }
 
-    const handleModifyButtonClick = (e) => {
-        // button이 관리페이지의 정보 수정 버튼일 시...
-
-        console.dir(e)
-
-
-
-
+    const handleSaveButton = () => {
+        handleClose();
     }
-
 
     let headerContent = [
         "시설아이디", "시설이름", "참여여부", "전화번호", "시설주소"
@@ -66,12 +71,39 @@ function CenterManageTemp(props) {
                 <SearchForm onSubmitFunction={showList} setSearch={onChange} width="100%" height="100%"/>
             </div>
             <ListContainer style={{width: "100%", height: "100%"}} headerContents={headerContent} contents={contents}
-                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정" clickFunction={handleModifyButtonClick}/>
+                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정" onClickFuncction={handleOpen}/>
+
+
+            <CustomButton type="normal" width="100px" height="50px" content="시설추가" color="black" borderRadius="10px"
+                          backgroundColor="#FFE400"/>
+
+            <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <CenterManageInputForm onClickSave={handleSaveButton} onClickCancel={handleClose}/>
+                </Box>
+            </Modal>
+
         </div>
     );
 }
 
 export default CenterManageTemp;
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: "50vw",
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+};
+
 
 /*
     날짜 : 2022/01/13 11:40 AM
