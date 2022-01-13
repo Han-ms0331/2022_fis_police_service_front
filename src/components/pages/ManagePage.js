@@ -1,6 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
 import Navigation from "../templates/Navigation";
-import Grid from "@material-ui/core/Grid";
 import {Redirect} from "react-router-dom";
 
 function ManagePage(props) {
@@ -12,20 +12,17 @@ function ManagePage(props) {
     return (
         isLogined ?     //isLogined가 false면 redirect를 시킴
             (
-        <div>
-            <Grid container spacing={1}>
-                <Grid item xs={1}>
+        <Main>
                     <Navigation/>
-                </Grid>
-                <Grid item xs={11}>
                     manage
-                </Grid>
-            </Grid>
-        </div>
-    )
-            :
+        </Main>
+    )   :
             <Redirect to={"/"} />
     )
 }
-
+const Main = styled.div`
+    display: grid;
+  grid-template-columns: 3% 97%;
+  height: 100vh;
+`;
 export default ManagePage;
