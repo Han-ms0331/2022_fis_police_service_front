@@ -74,8 +74,11 @@ function CenterManageTemp(props) {
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정" onClickFuncction={handleOpen}/>
 
 
-            <CustomButton type="normal" width="100px" height="50px" content="시설추가" color="black" borderRadius="10px"
-                          backgroundColor="#FFE400"/>
+            <div style={{position:"fixed", bottom:"20px", right:"10vw"}}>
+                <CustomButton type="normal" width="100px" height="50px" content="시설추가" color="black" borderRadius="10px"
+                              backgroundColor="#FFE400" onClick={handleOpen}/>
+            </div>
+
 
             <Modal
                 open={open}
