@@ -32,7 +32,7 @@ const UserManageTemplate = () => {
     return (
         <Main>
             <ListContainer style={{width: "100%", height: "100%"}} headerContents={headerContent} contents={contents}
-                           gridRatio="1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" clickFunction={handleModifyButtonClick}/>
+                           gridRatio="1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" onClickFunction={handleModifyButtonClick}/>
             <CustomButton  type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#FFD400" content="콜직원 추가" onClick={()=>setOpen(true)}/>
             <Modal
                 open={open}
@@ -51,7 +51,6 @@ const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    width: "50vw",
     transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
     boxShadow: 24,

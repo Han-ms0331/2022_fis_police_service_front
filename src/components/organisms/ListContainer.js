@@ -16,7 +16,7 @@ function ListContainer(props) {
             {props.contents.map((content) => {
                 return <List key={Object.values(content)[0]} type="list"  contents={content}
                              gridRatio={props.gridRatio}
-                             buttonContent={props.buttonContent} onClickFunction={props.onClickFuncction}/>
+                             buttonContent={props.buttonContent} onClickFunction={props.onClickFunction}/>
             })}
         </div>
     );
