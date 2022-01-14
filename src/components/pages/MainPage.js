@@ -36,7 +36,7 @@ function MainPage(props) {
 
 const Main = styled.div`
   display: grid;
-  grid-template-columns: 3% 60% 37%;
+  grid-template-columns: 67px 1600px auto;
   height: 100vh;
 `;
 export default MainPage;

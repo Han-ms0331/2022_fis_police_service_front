@@ -4,8 +4,6 @@ import InputContainer from "../molecules/InputContainer";
 import CustomButton from "../atoms/CustomButton";
 
 function ListContainer(props) {
-
-
     return (
         <div style={{
             width: props.width,
