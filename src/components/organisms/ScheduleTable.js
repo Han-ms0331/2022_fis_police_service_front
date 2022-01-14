@@ -6,16 +6,9 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import CheckBox from "../atoms/CheckBox";
 import TableHead from "@mui/material/TableHead";
 import ScheduleTableSearch from "../molecules/ScheduleTableSearch";
 import {useRecoilValue} from "recoil";
@@ -23,7 +16,7 @@ import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import TransitionsModal from "./TransitionModal";
 import CustomButton from "../atoms/CustomButton";
 import CheckboxContainer from "../molecules/CheckboxContainer";
-import {lighten} from "@mui/material";
+import {FormControlLabel, lighten, Switch, TableSortLabel} from "@mui/material";
 
 function createData(checkbox, No, agent, center, etc, change, call, notice, edit) {
     return { checkbox, No, agent, center, etc, change, call, notice, edit };
@@ -148,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ScheduleTable() {
-    const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴.
+    const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
 
     const isSearch = () => { // 사용자가 검색창에 키워드를 입력한 상태인지 검사하는 함수
         for (let value in keywordProps) {
