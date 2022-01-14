@@ -29,28 +29,28 @@ function AgentManageInputForm(props) {
         }}>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="이름: " inputName="agentName" inputType="text" width="300px" row="1"
-                                setValueFunction={onChange}/>
+                                setValueFunction={onChange} defaultValue={props.currentInfo['agentName']} />
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="아이디: " inputName="agentId" inputType="text" width="300px" row="1"
-                                setValueFunction={onChange}/>
+                                setValueFunction={onChange} defaultValue={props.currentInfo['agentId']} />
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px" row="1"
-                                setValueFunction={onChange}/>
+                                setValueFunction={onChange} defaultValue={props.currentInfo['agentCode']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="전화번호: " inputName="agentPhone" inputType="text" width="300px" row="1"
-                                setValueFunction={onChange}/>
+                                setValueFunction={onChange} defaultValue={props.currentInfo['agentPhone']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="차량여부:" inputName="agentHasCar" inputType="select" width="300px"
-                                contents={["자차", "도보"]} setValueFunction={onChange}
+                                contents={["자차", "도보"]} setValueFunction={onChange} defaultValue={props.currentInfo['agentHasCar']}
                 />
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="자택주소: " inputName="agentAddress" inputType="text" width="300px" rows="2"
-                                setValueFunction={onChange}/>
+                                setValueFunction={onChange} defaultValue={props.currentInfo['agentAddress']}/>
             </div>
 
             <div style={{display: "flex", marginTop: "20px"}}>
