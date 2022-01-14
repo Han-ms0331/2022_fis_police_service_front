@@ -31,6 +31,7 @@ import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import CustomButton from "../atoms/CustomButton";
 import CheckboxContainer from "../molecules/CheckboxContainer";
 import TransitionsModal from "./TransitionModal";
+import {TableSortLabel} from "@mui/material";
 
 
 const useStyles1 = makeStyles((theme) => ({ // Table Pagination의 style
@@ -313,7 +314,20 @@ export default function ScheduleTable() {
                             }
                         </TableCell>
                         <TableCell>No.</TableCell>
-                        <TableCell align="right">현장요원</TableCell>
+                        <TableCell align="right">
+                {/*            <TableSortLabel*/}
+                {/*                active={orderBy === headCell.id}*/}
+                {/*                direction={orderBy === headCell.id ? order : 'asc'}*/}
+                {/*                onClick={createSortHandler(headCell.id)}*/}
+                {/*            >*/}
+                {/*                {headCell.label}*/}
+                {/*                {orderBy === headCell.id ? (*/}
+                {/*                    <span className={classes.visuallyHidden}>*/}
+                {/*  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}*/}
+                {/*</span>*/}
+                {/*                ) : null}*/}
+                {/*            </TableSortLabel>*/}
+                        </TableCell>
                         <TableCell align="right">시설 정보</TableCell>
                         <TableCell align="right">특이사항</TableCell>
                         <TableCell align="right">변경 사항</TableCell>

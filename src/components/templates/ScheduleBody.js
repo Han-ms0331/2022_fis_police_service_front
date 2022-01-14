@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button} from "@mui/material";
 import ScheduleModifyInputForm from "../organisms/ScheduleModifyInputForm";
 import ScheduleTable from "../organisms/ScheduleTable";
+import EnhancedTable from "../organisms/EnhancedTable";
 
 /*
 날짜: 2022/01/10 3:49 PM
@@ -11,6 +12,7 @@ import ScheduleTable from "../organisms/ScheduleTable";
 const ScheduleBody = () => {
     return (
         <div>
+            <EnhancedTable />
             <ScheduleTable />
         </div>
     );
