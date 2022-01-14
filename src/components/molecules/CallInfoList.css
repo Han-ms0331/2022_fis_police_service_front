@@ -1,16 +1,20 @@
 .field_name {
-    margin-right: 1vw;
+    margin-right: 0.5vw;
+    color: rgba(0,0,0,0.5);
 }
 
 .field_value {
-
+    text-align: start;
 }
 
 .field_container {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     justify-content: center;
+    align-items: start;
 }
+
+
 
 .recorder_container {
     display: grid;
@@ -26,19 +30,7 @@
 
 .info_container {
     display: grid;
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: 1fr 1fr;
     border: 1px solid #6D5A00;
     padding: 0.5vw;
 }
-
-
-/*style={{*/
-/*    height: "40px",*/
-/*    boxSizing: "border-box",*/
-/*    border: "none",*/
-/*    borderRadius: "6px",*/
-/*    fontSize: "20px",*/
-/*    cursor: "pointer",*/
-/*    color: "#fff",*/
-/*    background: "#FFD400"*/
-/*}}*/
