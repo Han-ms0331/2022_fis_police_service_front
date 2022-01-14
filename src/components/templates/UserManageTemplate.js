@@ -26,7 +26,7 @@ const UserManageTemplate = () => {
     const handleClose = () => setOpen(false);
     return (
         <Main>
-            <ListContainer style={{width: "100%", height: "100%"}} headerContents={headerContent} contents={contents}
+            <ListContainer width="1500px" height="100vh" headerContents={headerContent} contents={contents}
                            gridRatio="1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" onClickFunction={handleModifyButtonClick}/>
             <CustomButton  type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#FFD400" content="콜직원 추가" onClick={()=>setOpen(true)}/>
             <Modal
@@ -52,6 +52,8 @@ const style = {
     p: 4,
 };
 const Main = styled.div`
+  display: flex;
+  justify-content: center;
 & >button{
   position: fixed;
   bottom: 50px;
