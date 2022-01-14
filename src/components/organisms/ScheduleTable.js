@@ -26,7 +26,6 @@ import {useRecoilValue} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import TransitionsModal from "./TransitionModal";
 import CustomButton from "../atoms/CustomButton";
-import TableFooter from "@material-ui/core/TableFooter";
 
 function createData(checkbox, No, agent, center, etc, change, call, notice, edit) {
     return { checkbox, No, agent, center, etc, change, call, notice, edit };
