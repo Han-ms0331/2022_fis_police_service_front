@@ -65,7 +65,7 @@ function ManagePage(props) {
 
 const Main = styled.div`
   display: grid;
-  grid-template-columns: 3% 97%;
+  grid-template-columns: 67px auto;
   height: 100vh;
 `;
 const Container = styled.div`
