@@ -11,12 +11,12 @@ function ListContainer(props) {
             width: props.width,
             height: props.height,
         }}>
-            <List type="list" type="listHeader" width="100%" height="100%" contents={props.headerContents}
+            <List type="list" type="listHeader"  contents={props.headerContents}
                   gridRatio={props.gridRatio}/>
-            {props.contents.map((content) => {
-                return <List key={Object.values(content)[0]} type="list" width="100%" height="100%" contents={content}
+            {props.contents.map((content, index) => {
+                return <List key={Object.values(content)[0]} type="list"  contents={content}
                              gridRatio={props.gridRatio}
-                             buttonContent={props.buttonContent} onClickFunction={props.onClickFuncction}/>
+                             buttonContent={props.buttonContent} onClickFunction={props.onClickFunction} keyValue={index}/>
             })}
         </div>
     );

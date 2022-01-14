@@ -19,6 +19,8 @@ import CustomButton from "../atoms/CustomButton";
 const LoginForm = (props) => {
     return (
         <Main>
+            <img src={logo}/>
+            {BiUser}
             <Container>
                 <img src={logo}/>
                 <div className="inputContainer">

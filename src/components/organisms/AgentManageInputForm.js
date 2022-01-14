@@ -23,7 +23,6 @@ function AgentManageInputForm(props) {
         <div style={{
             width: "70vw",
             height: "70vh",
-            border: "1px solid black",
             padding: "30px 0px",
             display: "flex",
             flexDirection: "column",

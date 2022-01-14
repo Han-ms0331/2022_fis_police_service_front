@@ -32,6 +32,7 @@ const Navigation = () => {
     const onLogout = (e) => {
         if (window.confirm("정말 로그아웃 하시겠습니까?")) {
             localStorage.removeItem("loginStatus"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
+            localStorage.removeItem("userName"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
             setIsLogout(true)   //로그아웃 flag를 true로 변환하여 redirect시킴
         }
     }
