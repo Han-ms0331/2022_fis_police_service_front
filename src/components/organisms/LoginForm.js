@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../media/logo.png'
-import { BiUser } from "react-icons/bi";
+import {BiUser} from "react-icons/bi";
 import {RiLockPasswordLine} from "react-icons/ri"
 import {Link} from "react-router-dom";
 import CustomButton from "../atoms/CustomButton";
@@ -19,7 +19,7 @@ import CustomButton from "../atoms/CustomButton";
 const LoginForm = (props) => {
     return (
         <Main>
-                <img src={logo}/>
+            <img src={logo}/>
             {BiUser}
             <Container>
                 <InputRow>
@@ -68,7 +68,7 @@ const Container = styled.div`
 const InputRow = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 9fr;
-    border: 1px solid #dadada;
+  border: 1px solid #dadada;
   margin-bottom: 20px;
   width: 100%;
   height: 40px;
@@ -81,6 +81,7 @@ const InputRow = styled.div`
     height: 20px;
     color: #8a8a8a;
   }
+
   & input {
     width: 98%;
     justify-self: start;
