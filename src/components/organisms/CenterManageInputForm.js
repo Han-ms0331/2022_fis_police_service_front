@@ -6,22 +6,6 @@ import Box from '@mui/material/Box';
 
 
 function CenterManageInputForm(props) {
-    const [input, setInput] = useState({
-        centerInfo: "",
-        centerId: "",
-        centerPhone: "",
-        centerAddress: ""
-    })
-
-    const onChange = (e) => {
-        // console.log(e);
-        const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
-        setInput({
-            ...input, // 기존의 input 객체를 복사한 뒤
-            [name]: value // name 키를 가진 값을 value 로 설정
-        });
-        // console.log(input);
-    }
 
     return (
             <div style={{
@@ -32,31 +16,31 @@ function CenterManageInputForm(props) {
             }}>
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="20vw" rows="2"
-                                    setValueFunction={onChange}/>
+                                    setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['centerInfo']}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="20vw" rows="1"
-                                    setValueFunction={onChange}/>
+                                    setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['centerId']}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="전화번호: " inputName="centerPhone" inputType="text" width="20vw" rows="1"
-                                    setValueFunction={onChange}/>
+                                    setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['centerPhone']}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="시설 주소: " inputName="centerAddress" inputType="text" width="20vw"
                                     rows="2"
-                                    setValueFunction={onChange}/>
+                                    setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['centerAddress']}/>
                 </div>
                 <div style={{display: "flex", marginTop: "20px"}}>
                     <div style={{marginRight: "30px"}}>
                         <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
                                       border="1px solid #FFE400"
-                                      borderRadius="10px" backgroundColor="white" onClick={props.onClickCancel}/>
+                                      borderRadius="10px" backgroundColor="white" onClick={props.handleClose}/>
                     </div>
 
                     <div>
                         <CustomButton type="normal" width="150px" height="40px" content="저장" color="black"
-                                      borderRadius="10px" backgroundColor="#FFE400" onClick={props.onClickSave}/>
+                                      borderRadius="10px" backgroundColor="#FFE400" onClick={props.handleClickSave} />
                     </div>
                 </div>
             </div>
