@@ -20,7 +20,10 @@ function CustomButton(props) {
                         height: props.height,
                         color: props.color,
                         borderRadius: props.borderRadius,
-                        backgroundColor: props.backgroundColor
+                        backgroundColor: props.backgroundColor,
+                        border: props.border,
+                        fontSize:props.fontSize
+
                     }}
                     onClick={props.onClick}
             >{props.content}</Button>
@@ -35,6 +38,7 @@ function CustomButton(props) {
                         border: props.border,
                         borderRadius: props.borderRadius,
                         backgroundColor: props.backgroundColor,
+                        fontSize:props.fontSize
                     }}
                     onClick={props.onClick}
             >{props.content}</Button>);

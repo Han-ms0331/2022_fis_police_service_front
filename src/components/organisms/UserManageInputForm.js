@@ -29,37 +29,36 @@ function UserManageInputForm(props) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            border: "1px solid black"
         }}>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="이름: " inputName="userName" inputType="text" width="300px" rows="1"
+                <InputContainer labelContent="이름: " inputName="userName" inputType="text" width="20vw" rows="1"
                                 setValueFunction={onChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="아이디: " inputName="userId" inputType="text" width="300px" rows="1"
+                <InputContainer labelContent="아이디: " inputName="userId" inputType="text" width="20vw" rows="1"
                                 setValueFunction={onChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="비밀번호: " inputName="userPassword" inputType="text" width="300px" rows="1"
+                <InputContainer labelContent="비밀번호: " inputName="userPassword" inputType="text" width="20vw" rows="1"
                                 setValueFunction={onChange}/></div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="전화번호: " inputName="userPhone" inputType="text" width="300px" rows="1"
+                <InputContainer labelContent="전화번호: " inputName="userPhone" inputType="text" width="20vw" rows="1"
                                 setValueFunction={onChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="권한: " inputName="userAuth" inputType="select" width="300px"
+                <InputContainer labelContent="권한: " inputName="userAuth" inputType="select" width="20vw"
                                 contents={["관리자", "일반직원"]} setValueFunction={onChange}
                 />
             </div>
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>
-                    <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
+                    <CustomButton type="reverse" width="10vw" height="5vh" content="취소" color="black"
                                   border="1px solid #FFE400"
-                                  borderRadius="10px" backgroundColor="white" onClick={props.onClickFunction}/>
+                                  borderRadius="10px" backgroundColor="white" onClick={props.handleClose}/>
                 </div>
 
                 <div>
-                    <CustomButton type="normal" width="150px" height="40px" content="저장" color="black"
+                    <CustomButton type="normal" width="10vw" height="5vh" content="저장" color="black"
                                   borderRadius="10px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
                 </div>
             </div>

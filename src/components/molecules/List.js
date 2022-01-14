@@ -40,7 +40,7 @@ function List(props) {
                 })
             }
             <div style={{display: "flex", justifyContent: "center"}}>
-                <CustomButton type="reverse" width="85px" height="40px" color="black" border="1px solid #FFD400"
+                <CustomButton type="reverse" width="5vw" height="40px" color="black" border="1px solid #FFD400"
                               backgroundColor="white" borderRadius="10px" content={props.buttonContent}
                               onClick={props.onClickFunction}/>
             </div>
