@@ -106,11 +106,12 @@ function CenterManageTemp(props) {
         handleClose();
     }
     return (
+        <Main>
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{marginBottom: "30px"}}>
                 <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%" height="100%"/>
             </div>
-            <ListContainer headerContents={headerContent} contents={contents} width="80vw" height={"90vh"}
+            <ListContainer headerContents={headerContent} contents={contents} width="1000px" height={"90vh"}
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
 
@@ -139,6 +140,7 @@ function CenterManageTemp(props) {
             </Modal>
 
         </div>
+        </Main>
     );
 }
 
@@ -153,6 +155,15 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+
+const Main = styled.div`
+& >button{
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translate(-50%,0);
+}
+`;
 
 
 /*
