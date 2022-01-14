@@ -23,7 +23,7 @@ function SearchForm(props) {
             </div>
 
             <div>
-                <CustomButton type="normal" width="5vw" height="4vh" content="검색" color="black"
+                <CustomButton type="normal" width="100px" height="40px" content="검색" color="black"
                               borderRadius="10px" backgroundColor="#FFE400" onClick={props.onSubmitFunction}/>
             </div>
 

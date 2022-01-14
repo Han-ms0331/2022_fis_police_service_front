@@ -23,7 +23,7 @@ const MessangerList = () => {
 
 const Header = styled.div`
 text-align: unset;
-  font-size: 0.7vw;
+  font-size: 16px;
   background: #f7e98b;
   padding: 3px 7px;
 `;
@@ -32,16 +32,15 @@ const Content = styled.div`
     background: #fff9d6;
     padding: 0px 5px;
   &>p{
-    margin: 2px;
-    font-size: 0.8vw;
+    margin: 0;
+    font-size: 17px;
     text-align: unset;
   }
   &>div{
     text-align: center;
-    text-align: center;
   }
   & svg{
-    font-size: 0.8vw;
+    font-size: 17px;
   }
 `;
 
@@ -49,10 +48,9 @@ const Button =  styled.button`
   background:#f7e98b;
   border: 1.5px solid #c9b034;
   border-radius: 7px;
-  font-size: 0.65vw;
+  font-size: 15px;
   text-align: center;
-  margin: 5px;
-  //padding: 5px;
+  margin: 9px;
   &:hover{
     transform: scale(1.1);
     cursor: pointer;

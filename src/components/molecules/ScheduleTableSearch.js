@@ -11,8 +11,9 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 
+import TextField from "@mui/material/TextField";
 
 function ScheduleTableSearch() {
 

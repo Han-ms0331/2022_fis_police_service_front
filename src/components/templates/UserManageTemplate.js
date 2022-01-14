@@ -23,12 +23,7 @@ const UserManageTemplate = () => {
         console.dir(e)
     }
 
-    const handdleClick=()=>{
-        console.log("clicked")
-    }
     const handleClose = () => setOpen(false);
-
-
     return (
         <Main>
             <ListContainer style={{width: "100%", height: "100%"}} headerContents={headerContent} contents={contents}

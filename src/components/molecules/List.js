@@ -23,7 +23,9 @@ function List(props) {
 
 
     } else if (props.type === "list") {
-        element = <div style={{
+        element = <div
+            key={props.keyValue}
+            style={{
             width: props.width,
             height: props.height,
             border: "1px solid #6D5A00",
@@ -35,12 +37,12 @@ function List(props) {
             padding: "5px 0px"
         }}>
             {
-                Object.values(props.contents).map((value) => {
-                    return <div key={value} style={{display: "flex", justifyContent: "center"}}>{value}</div>
+                Object.values(props.contents).map((value, index) => {
+                    return <div key={index} style={{display: "flex", justifyContent: "center"}}>{value}</div>
                 })
             }
             <div style={{display: "flex", justifyContent: "center"}}>
-                <CustomButton type="reverse" width="5vw" height="40px" color="black" border="1px solid #FFD400"
+                <CustomButton name={props.keyValue} type="reverse" width="100px" height="40px" color="black" border="1px solid #FFD400"
                               backgroundColor="white" borderRadius="10px" content={props.buttonContent}
                               onClick={props.onClickFunction}/>
             </div>

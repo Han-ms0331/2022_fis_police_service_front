@@ -15,6 +15,7 @@ function CustomButton(props) {
     if (props.type === 'normal') {
         return (//width height color borderRadius backgroundColor content 를 필요로 함
             <Button variant="contained"
+                    name={props.name}
                     style={{
                         width: props.width,
                         height: props.height,
@@ -31,6 +32,7 @@ function CustomButton(props) {
     } else if (props.type === 'reverse')
         return (//width height color borderRadius backgroundColor content + border 값을 추가로 필요로 함
             <Button variant="outlined"
+                    name={props.name}
                     style={{
                         width: props.width,
                         height: props.height,

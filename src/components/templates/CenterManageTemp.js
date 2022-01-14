@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
@@ -11,33 +11,67 @@ import CustomButton from "../atoms/CustomButton";
 
 
 function CenterManageTemp(props) {
-    const [input, setInput] = useState({
+    const [open, setOpen] = React.useState(false);
+    const [searchInput, setSearchInput] = useState({
         centerName: "",
         centerAddress: "",
         centerPhone: "",
     })
+    const [currentInfo, setCurrentInfo] = useState({
+        centerId: "",
+        centerName: "",
+        centerPhone: "",
+        centerAddress: ""
+    })
 
-    const [open, setOpen] = React.useState(false);
+
+    const showList = () => {
+        //검색버튼 눌렀을 때 api 요청
+    }
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const onChange = (e) => {
+    const handleSearchInputChange = (e) => {
         // console.log(e);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
-        setInput({
-            ...input, // 기존의 input 객체를 복사한 뒤
+        setSearchInput({
+            ...searchInput, // 기존의 input 객체를 복사한 뒤
             [name]: value // name 키를 가진 값을 value 로 설정
         });
-        console.log(input);
+        console.log(searchInput);
     }
 
-    const showList = () => {
-        //api 요청
+    const handleInputFormChange = (e) => {
+        // console.log(e);
+        const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
+        setCurrentInfo({
+            ...currentInfo, // 기존의 input 객체를 복사한 뒤
+            [name]: value // name 키를 가진 값을 value 로 설정
+        });
+        // console.log(currentInfo);
     }
 
-    const handleSaveButton = () => {
 
-        handleClose();
+    // useEffect(() => {
+    //     console.log(currentInfo);
+    // }, [currentInfo])
+
+    const handleModifyButtonClick = (e) => {
+        //inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오기 => 1월 14일 오늘 구현하기.
+        console.log(e.target.name);
+        setCurrentInfo(contents[parseInt(e.target.name)])
+        handleOpen();
+    }
+
+    const handleAddButtonClick = (e) =>{
+        setCurrentInfo({
+            centerId: "",
+            centerName: "",
+            centerPhone: "",
+            centerAddress: ""
+        });
+        handleOpen();
     }
 
     let headerContent = [
@@ -60,15 +94,26 @@ function CenterManageTemp(props) {
             centerPhone: "010-2105-7345",
             centerAddress: "서울시 노원구 동일로 215길 48"
         }
-        ]
+    ]
 
+
+    const handleClickSave = () => {
+        //api 수정 요청 보냄,,?
+        //input state 에 적혀있는 것으로 수정,,,?
+
+        console.log("hi");
+
+        handleClose();
+    }
     return (
+        <Main>
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{marginBottom: "30px"}}>
-                <SearchForm onSubmitFunction={showList} setSearch={onChange} width="100%" height="100%"/>
+                <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%" height="100%"/>
             </div>
-            <ListContainer headerContents={headerContent} contents={contents} width="80vw" height={"90vh"}
-                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정" onClickFunction={handleOpen}/>
+            <ListContainer headerContents={headerContent} contents={contents} width="1000px" height={"90vh"}
+                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정"
+                           onClickFunction={handleModifyButtonClick}/>
 
 
             <div style={{
@@ -78,7 +123,7 @@ function CenterManageTemp(props) {
                 transform: "translate(-50%,0)"
             }}>
                 <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
-                              backgroundColor="#FFD400" content="시설 추가" onClick={handleOpen}/>
+                              backgroundColor="#FFD400" content="시설 추가" onClick={handleAddButtonClick}/>
             </div>
 
 
@@ -88,12 +133,14 @@ function CenterManageTemp(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <CenterManageInputForm onClickSave={handleSaveButton} onClickCancel={handleClose}/>
+                    <CenterManageInputForm handleClose={handleClose} handleClickSave={handleClickSave}
+                                           handleInputFormChange={handleInputFormChange} currentInfo={currentInfo}/>
                 </Box>
 
             </Modal>
 
         </div>
+        </Main>
     );
 }
 
@@ -108,6 +155,15 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+
+const Main = styled.div`
+& >button{
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translate(-50%,0);
+}
+`;
 
 
 /*
