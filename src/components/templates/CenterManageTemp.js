@@ -36,6 +36,7 @@ function CenterManageTemp(props) {
     }
 
     const handleSaveButton = () => {
+
         handleClose();
     }
 
@@ -43,20 +44,23 @@ function CenterManageTemp(props) {
         "시설아이디", "시설이름", "참여여부", "전화번호", "시설주소"
     ]
 
-    let contents = [{
-        centerId: "test1",
-        centerName: "동그라미유치원",
-        participation: "참여",
-        centerPhone: "010-2105-7345",
-        centerAddress: "서울시 노원구 동일로 215길 48"
-    }
-        , {
+    let contents = [
+        {
+            centerId: "test1",
+            centerName: "동그라미유치원",
+            participation: "참여",
+            centerPhone: "010-2105-7345",
+            centerAddress: "서울시 노원구 동일로 215길 48"
+        }
+        ,
+        {
             centerId: "test2",
             centerName: "하이유치원",
             participation: "참여",
             centerPhone: "010-2105-7345",
             centerAddress: "서울시 노원구 동일로 215길 48"
-        }]
+        }
+        ]
 
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -64,7 +68,7 @@ function CenterManageTemp(props) {
                 <SearchForm onSubmitFunction={showList} setSearch={onChange} width="100%" height="100%"/>
             </div>
             <ListContainer headerContents={headerContent} contents={contents} width="80vw" height={"90vh"}
-                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정" onClickFuncction={handleOpen}/>
+                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정" onClickFunction={handleOpen}/>
 
 
             <div style={{

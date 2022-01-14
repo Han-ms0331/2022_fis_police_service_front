@@ -29,7 +29,6 @@ function UserManageInputForm(props) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            border: "1px solid black"
         }}>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="이름: " inputName="userName" inputType="text" width="20vw" rows="1"
