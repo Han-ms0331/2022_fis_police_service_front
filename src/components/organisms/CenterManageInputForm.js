@@ -15,19 +15,19 @@ function CenterManageInputForm(props) {
                 justifyContent: "center",
             }}>
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="20vw" rows="2"
+                    <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="2"
                                     setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['centerInfo']}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="20vw" rows="1"
+                    <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="300px" rows="1"
                                     setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['centerId']}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="전화번호: " inputName="centerPhone" inputType="text" width="20vw" rows="1"
+                    <InputContainer labelContent="전화번호: " inputName="centerPhone" inputType="text" width="300px" rows="1"
                                     setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['centerPhone']}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="시설 주소: " inputName="centerAddress" inputType="text" width="20vw"
+                    <InputContainer labelContent="시설 주소: " inputName="centerAddress" inputType="text" width="300px"
                                     rows="2"
                                     setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['centerAddress']}/>
                 </div>
