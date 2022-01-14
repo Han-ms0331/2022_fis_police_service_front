@@ -30,6 +30,7 @@ import { useRecoilValue } from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import CustomButton from "../atoms/CustomButton";
 import CheckboxContainer from "../molecules/CheckboxContainer";
+import TransitionsModal from "./TransitionModal";
 
 
 const useStyles1 = makeStyles((theme) => ({ // Table Pagination의 style
@@ -106,7 +107,7 @@ function createData(checkbox, No, agent, center, etc, change, call, notice, edit
 }
 
 const rows = [
-    createData(<CheckboxContainer />, '1', "안양 안철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n","신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
+    createData(<CheckboxContainer />, '1', "안양 안철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n","신청서 완료", "시간 조정\n10:00 ~ 11:00", "통화 완료", "미공지", "수정버튼"),
     createData(<CheckboxContainer />, '2', "안양 이철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
     createData(<CheckboxContainer />, '3', "안양 박철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
     createData(<CheckboxContainer />, '4', "가산 최철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
@@ -183,7 +184,7 @@ export default function ScheduleTable() {
             <TableCell align="right">{row.call}</TableCell>
             <TableCell align="right">{row.notice}</TableCell>
             <TableCell align="right">
-                <CustomButton type="normal" content="수정" backgroundColor='rgba(255, 212, 0, 0.5)' />
+                <TransitionsModal />
             </TableCell>
         </TableRow>
     )
