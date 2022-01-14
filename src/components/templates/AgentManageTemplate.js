@@ -89,8 +89,6 @@ const style = {
 };
 
 
-// ================ style ================
-
 const Main = styled.div`
   display: flex;
   justify-content: center;
