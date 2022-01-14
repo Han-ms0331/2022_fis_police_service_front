@@ -62,4 +62,5 @@ const Main = styled.div`
   transform: translate(-50%,0);
 }
 `;
+
 export default AgentManageTemplate;

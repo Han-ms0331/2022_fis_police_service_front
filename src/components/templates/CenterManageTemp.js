@@ -59,24 +59,22 @@ function CenterManageTemp(props) {
         }]
 
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: props.width,
-            height: props.height
-        }}>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{marginBottom: "30px"}}>
                 <SearchForm onSubmitFunction={showList} setSearch={onChange} width="100%" height="100%"/>
             </div>
-            <ListContainer style={{width: "100%", height: "100%"}} headerContents={headerContent} contents={contents}
+            <ListContainer headerContents={headerContent} contents={contents} width="80vw" height={"90vh"}
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정" onClickFuncction={handleOpen}/>
 
 
-            <div style={{position:"fixed", bottom:"20px", right:"10vw"}}>
-                <CustomButton type="normal" width="100px" height="50px" content="시설추가" color="black" borderRadius="10px"
-                              backgroundColor="#FFE400" onClick={handleOpen}/>
+            <div style={{
+                position: "fixed",
+                bottom: "50px",
+                left: "50%",
+                transform: "translate(-50%,0)"
+            }}>
+                <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
+                              backgroundColor="#FFD400" content="시설 추가" onClick={handleOpen}/>
             </div>
 
 
@@ -88,6 +86,7 @@ function CenterManageTemp(props) {
                 <Box sx={style}>
                     <CenterManageInputForm onClickSave={handleSaveButton} onClickCancel={handleClose}/>
                 </Box>
+
             </Modal>
 
         </div>
@@ -100,7 +99,6 @@ const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    width: "50vw",
     transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
     boxShadow: 24,
@@ -115,5 +113,16 @@ const style = {
     contents는 api 요청해서 받아온 걸 listContainer에 prop로 넘겨줌..?
     일단은 api요청을 못하는 상태이므로 CenterManageTemp에서 선언하여 listContainer에 prop로 넘겨줌.
 
-    width, height 문제...
+ */
+
+/*
+    날짜 : 2022/01/14 10:11 AM
+    작성자 : 신은수
+    작성내용 : inputForm 상위 컴포넌트에서 width랑 height를 inputForm에 props로 줘서 inputForm의 가장 상위? div에서
+            props로 받아온 width와 height를 width와 height로 두고싶었는데
+            생각보다 별로여서..?,
+
+            inputForm안에 있는 InputContainer의 크기가 커지면 그것을 감싸고 있는 div도 커지게 하고 싶어서
+            props width랑 height를 줄 필요가 없게 됨.
+
  */
