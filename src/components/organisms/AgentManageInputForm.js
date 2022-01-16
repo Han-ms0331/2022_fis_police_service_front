@@ -52,6 +52,14 @@ function AgentManageInputForm(props) {
                 <InputContainer labelContent="자택주소: " inputName="agentAddress" inputType="text" width="300px" rows="2"
                                 setValueFunction={onChange}/>
             </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="장비번호: " inputName="agentAddress" inputType="text" width="300px" rows="1"
+                                setValueFunction={onChange}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="장비 수령날짜: " inputName="agentAddress" inputType="date" width="300px"
+                                setValueFunction={onChange} />
+            </div>
 
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>

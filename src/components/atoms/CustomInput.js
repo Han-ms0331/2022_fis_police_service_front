@@ -17,7 +17,7 @@ function CustomInput(props) {
                              multiline
                              size="small"
                              rows={props.rows}
-                             defaultValue={props.defaultValue} placeholder={props.placeholder}
+                             defaultValue={props.defaultValue} placeholder={props.placeholder} disabled={props.disabled}
                              onChange={props.setValueFunction}
                              id="outlined-basic"
                              variant="outlined"/>
@@ -37,7 +37,7 @@ function CustomInput(props) {
             {/*<InputLabel id="demo-simple-select-label">{props.labelContent}</InputLabel>*/}
             <Select
                 name={props.name}
-                defaultValue={props.contents[0]}
+                defaultValue={props.defaultValue}
                 onChange={props.setValueFunction}
             >
                 {props.contents.map((content) => {
