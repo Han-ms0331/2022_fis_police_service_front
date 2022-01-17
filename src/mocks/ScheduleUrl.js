@@ -15,5 +15,32 @@ export const scheduleHandlers = [
                 authority:"admin"
             })
         )
+    }),
+    rest.get('/messenger', async(req, res, ctx)=>{
+        return res(
+            ctx.json({
+                result: "success",
+                name: "Han",
+                authority:"admin"
+            })
+        )
+    }),
+    rest.post('/messenger', async(req, res, ctx)=>{
+        return res(
+            ctx.json({
+                result: "success",
+                name: "Han",
+                authority:"admin"
+            })
+        )
+    }),
+    rest.delete('/messenger', async(req, res, ctx)=>{
+        return res(
+            ctx.json({
+                result: "success",
+                name: "Han",
+                authority:"admin"
+            })
+        )
     })
 ];

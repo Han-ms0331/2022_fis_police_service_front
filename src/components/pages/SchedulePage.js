@@ -21,7 +21,6 @@ const SchedulePage = (props) => {
 
     const toggleSideBar=()=>{ /*사이드바 토글 함수*/
         setIsSidebarOpen(!isSidebarOpen);
-        console.log(isSidebarOpen);
     }
 
     if (localStorage.getItem("loginStatus") === "true") //localstorage에서 loginStatus가 true일때 isLogined를 true로 바꿔줌
@@ -35,7 +34,6 @@ const SchedulePage = (props) => {
                 <Navigation/>
                 <div className="sidebar" isSidebarOpen={isSidebarOpen}>
                         <ScheduleSidebar isSidebarOpen={isSidebarOpen}/>
-
                         {isSidebarOpen ? <GoChevronLeft className="icon" onClick={toggleSideBar}/> :
                                             <GoChevronRight className="icon" onClick={toggleSideBar}/>}
                 </div>

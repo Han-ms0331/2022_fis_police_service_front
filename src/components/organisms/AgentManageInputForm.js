@@ -46,18 +46,14 @@ function AgentManageInputForm(props) {
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="차량여부:" inputName="agentHasCar" inputType="select" width="300px"
-                                contents={["자차", "도보"]} setValueFunction={props.handleInputFormChange}  />
+                                contents={["자차", "도보"]} setValueFunction={props.handleInputFormChange}defaultValue={props.currentInfo['agentHasCar']}  />
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="자택주소: " inputName="agentAddress" inputType="text" width="300px" rows="2"
                                 setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentAddress']}/>
 
             </div>
-            
-            <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="장비 수령날짜: " inputName="agentAddress" inputType="date" width="300px"
-                                setValueFunction={onChange} />
-            </div>
+
 
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>
