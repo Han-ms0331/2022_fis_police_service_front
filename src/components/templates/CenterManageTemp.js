@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import CenterManageInputForm from "../organisms/CenterManageInputForm";
 import CustomButton from "../atoms/CustomButton";
 import {center} from "../../store/dummy-data/center";
+import axios from "axios";
 
 
 function CenterManageTemp(props) {
@@ -34,8 +35,11 @@ function CenterManageTemp(props) {
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
-    const showList = () => {
-        //검색버튼 눌렀을 때 api 요청
+    const showList = async () => {   //서버와 로그인 통신을 하는 부분
+       await axios.get("/manage/center?c_name={value}&c_address={value} &c_ph={value}")
+            .then((res) => {
+                console.log(res.data);
+            })
     }
 
     // form이 보이고 안보이고에 대한 함수 정의
@@ -95,7 +99,6 @@ function CenterManageTemp(props) {
 
         handleClose();
     }
-
 
 
     return (
