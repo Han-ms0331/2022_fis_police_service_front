@@ -36,7 +36,7 @@ function CenterManageTemp(props) {
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     const showList = async () => {   //서버와 로그인 통신을 하는 부분
-       await axios.get("/manage/center?c_name={value}&c_address={value} &c_ph={value}")
+       await axios.get("/main/center/search?c_name={value}&c_address={value} &c_ph={value}")
             .then((res) => {
                 console.log(res.data);
             })
