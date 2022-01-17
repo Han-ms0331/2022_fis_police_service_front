@@ -24,6 +24,13 @@ export const manageHandlers = [
                             participation: "보류",
                             c_ph: "031-123-456",
                             c_address: "경기도 안양시 동안구 동안로 111"
+                        },
+                        {
+                            center_id: "3",
+                            center_name: "딩동댕 유치원",
+                            participation: "보류",
+                            c_ph: "031-123-456",
+                            c_address: "경기도 안양시 동안구 동안로 111"
                         }
                     ],
                     result: "success"
