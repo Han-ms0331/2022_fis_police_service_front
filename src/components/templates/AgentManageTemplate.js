@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {agent} from "../../store/dummy-data/agent";
 import ListContainer from "../organisms/ListContainer";
 import styled from "styled-components";
@@ -17,11 +17,45 @@ const AgentManageTemplate = () => {
     const [open,setOpen] = useState(false);
     const contents=agent;
     const headerContent = ["이름","아이디","현장요원코드","전화번호","차량여부","자택주소","장비번호","장비 수령날짜"]
-    const handleClose = () =>{setOpen(false)}
+    const [currentInfo, setCurrentInfo] = useState({
+        agentName: "",
+        agentId: "",
+        agentCode: "",
+        agentPhone: "",
+        agentHasCar: "",
+        agentAddress: "",
+    });
+    const handleOpen = () =>{setOpen(true)};
+    const handleClose = () =>{setOpen(false)};
+    const handleInputFormChange = (e) => {
+        // console.log(e);
+        const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
+            setCurrentInfo({
+                ...currentInfo, // 기존의 input 객체를 복사한 뒤
+                [name]: value // name 키를 가진 값을 value 로 설정
+            });
+        };
+
+        // useEffect(()=>{
+        //     console.log(currentInfo)}
+        // ,[currentInfo]);
+
+    const handleClickSave = () => {
+        //api 수정 요청 보냄,,?
+        //input state 에 적혀있는 것으로 수정,,,?
+        console.log(currentInfo);
+        console.log("saved");
+        handleClose();
+    };
+
     const handleModifyButtonClick = (e) => {
         // button이 관리페이지의 정보 수정 버튼일 시...
-
-        console.dir(e)
+        console.log(e.target.name);
+        const changeContent = {...contents[parseInt(e.target.name)]};
+        delete changeContent['device'];
+        delete  changeContent['receivedate'];
+        setCurrentInfo(changeContent);
+        handleOpen();
     }
     return (
         <Main>
@@ -34,12 +68,16 @@ const AgentManageTemplate = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <AgentManageInputForm handleClose={handleClose}/>
+                    <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo} handleInputFormChange={handleInputFormChange} handleClickSave={handleClickSave}/>
                 </Box>
             </Modal>
         </Main>
     );
 };
+
+
+// ================ style ================
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -49,9 +87,6 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
-
-// ================ style ================
 
 const Main = styled.div`
   display: flex;

@@ -19,6 +19,7 @@ function AgentManageInputForm(props) {
         });
         console.log(input);
     }
+    console.log(props.currentInfo['agentHasCar'])
     return (
         <div style={{
             padding: "30px 0px",
@@ -29,28 +30,27 @@ function AgentManageInputForm(props) {
         }}>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="이름: " inputName="agentName" inputType="text" width="300px" row="1"
-                                setValueFunction={onChange}/>
+                                setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentName']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="아이디: " inputName="agentId" inputType="text" width="300px" row="1"
-                                setValueFunction={onChange}/>
+                                setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentId']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px" row="1"
-                                setValueFunction={onChange}/>
+                                setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentCode']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="전화번호: " inputName="agentPhone" inputType="text" width="300px" row="1"
-                                setValueFunction={onChange}/>
+                                setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentPhone']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="차량여부:" inputName="agentHasCar" inputType="select" width="300px"
-                                contents={["자차", "도보"]} setValueFunction={onChange}
-                />
+                                contents={["자차", "도보"]} setValueFunction={props.handleInputFormChange}  />
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="자택주소: " inputName="agentAddress" inputType="text" width="300px" rows="2"
-                                setValueFunction={onChange}/>
+                                setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentAddress']}/>
             </div>
 
             <div style={{display: "flex", marginTop: "20px"}}>
@@ -62,7 +62,7 @@ function AgentManageInputForm(props) {
 
                 <div>
                     <CustomButton type="normal" width="150px" height="40px" content="저장" color="black"
-                                  borderRadius="10px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
+                                  borderRadius="10px" backgroundColor="#FFE400" onClick={props.handleClickSave}/>
                 </div>
             </div>
 
