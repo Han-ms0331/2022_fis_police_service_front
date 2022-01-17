@@ -1,6 +1,6 @@
 import React from 'react';
-import CustomButton from "./CustomButton";
-import CustomLabel from "./CustomLabel";
+import CustomLabel from "../atoms/CustomLabel";
+import CustomButton from "../atoms/CustomButton";
 
 /*
     날짜 : 2022/01/12 2:14 PM
