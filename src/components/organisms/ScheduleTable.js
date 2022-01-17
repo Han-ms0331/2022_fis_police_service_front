@@ -25,29 +25,8 @@ import TransitionsModal from "./TransitionModal";
 import CustomButton from "../atoms/CustomButton";
 import CheckboxContainer from "../molecules/CheckboxContainer";
 import {FormControlLabel, lighten, Switch, TableSortLabel} from "@mui/material";
+import axios from "axios";
 
-function createData(checkbox, No, agent, center, etc, change, call, notice, edit) {
-    return { checkbox, No, agent, center, etc, change, call, notice, edit };
-}
-
-const rows = [
-    createData(<CheckboxContainer />, '1', "안양 안철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n","신청서 완료", "시간 조정\n10:00 ~ 11:00", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '2', "안양 이철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '3', "안양 박철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '4', "가산 최철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '5', "안양 윤철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '6', "안양 김철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '7', "구로 이철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '8', "안양 박철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '9', "안양 최철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '10', "가산 윤철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '11', "안양 김철수", "네모 유치원\n[경기도 안양시 동안구 동안로 222]\n031-123-456\n10:00\n30명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '12', "안양 이철수", "세모 유치원\n[경기도 안양시 동안구 동안로 333]\n031-123-456\n09:00\n9명", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '13', "안양 박철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 완료", "미공지", "수정버튼"),
-    createData(<CheckboxContainer />, '14', "구로 최철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
-];
-
-// 더미데이터 생성
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -114,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ScheduleTable() {
+export default function ScheduleTable({ rows }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
     let count = rows.length;
 
@@ -142,7 +121,7 @@ export default function ScheduleTable() {
                 role="checkbox"
                 aria-checked={isItemSelected}
                 tabIndex={-1}
-                key={row.No}
+                key={row.schedule_id}
                 selected={isItemSelected}
             >
                 <TableCell padding="checkbox">
@@ -154,14 +133,14 @@ export default function ScheduleTable() {
                     />
                 </TableCell>
                 <TableCell component="th" id={labelId} scope="row" padding="none">
-                    {row.No}
+                    {row.a_name}
                 </TableCell>
-                <TableCell align="right">{row.agent}</TableCell>
-                <TableCell align="right"><pre>{row.center}</pre></TableCell>
-                <TableCell align="right"><pre>{row.etc}</pre></TableCell>
-                <TableCell align="right"><pre>{row.change}</pre></TableCell>
-                <TableCell align="right"><pre>{row.call}</pre></TableCell>
-                <TableCell align="right"><pre>{row.notice}</pre></TableCell>
+                <TableCell align="right">{row.a_code}</TableCell>
+                <TableCell align="right"><pre>{row.c_name}</pre></TableCell>
+                <TableCell align="right"><pre>{row.total_etc}</pre></TableCell>
+                <TableCell align="right"><pre>{row.modified_info}</pre></TableCell>
+                <TableCell align="right"><pre>{row.call_check}</pre></TableCell>
+                <TableCell align="right"><pre>{row.call_check_info}</pre></TableCell>
                 <TableCell align="right">
                     <TransitionsModal />
                 </TableCell>
@@ -178,13 +157,13 @@ export default function ScheduleTable() {
     }
 
     const handleFilter = (el) => { // 검색 키워드 필터링해주는 함수
-        return el.No.includes(keywordProps.No) &&
-            el.agent.includes(keywordProps.agent) &&
-            el.center.includes(keywordProps.center) &&
-            el.etc.includes(keywordProps.etc) &&
-            el.change.includes(keywordProps.change) &&
-            el.call.includes(keywordProps.call) &&
-            el.notice.includes(keywordProps.notice)
+        return el.a_name.includes(keywordProps.a_name) &&
+            el.a_code.includes(keywordProps.a_code) &&
+            el.c_name.includes(keywordProps.c_name) &&
+            el.total_etc.includes(keywordProps.total_etc) &&
+            el.modified_info.includes(keywordProps.modified_info) &&
+            el.call_check.includes(keywordProps.call_check) &&
+            el.call_check_info.includes(keywordProps.call_check_info)
             ;
     }
 
@@ -416,7 +395,13 @@ export default function ScheduleTable() {
                                 content="일정공지"
                                 backgroundColor='rgba(255, 212, 0, 0.5)'
                                 color='black'
-                                onClick={()=>console.log(checkedList)}
+                                onClick={ async() => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
+                                    await axios.post('/schedule/announce')
+                                        .then((res) => {
+                                            console.log(res.data);
+                                        })
+                                    }
+                                }
                             />
                         </div>
                         <TablePagination
