@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
+import axios from "axios";
 
 
 const roadInfo = [
@@ -85,6 +86,13 @@ const roadInfo = [
         c_longitude: "126.55392992730667",
     },
 ]
+
+/*const roadInfo=async () => {   //서버와 로그인 통신을 하는 부분
+    await axios.get("/center/{center_id}/range?range={value}")
+        .then((res) => {
+            console.log(res.data);
+        })
+}*/
 
 const agentInfo = [
     {
@@ -271,6 +279,8 @@ function MapView() {
     );
 }
 
+export default MapView;
+
 const styles = {
     sButton: {
         marginLeft:"1186px",
@@ -286,4 +296,3 @@ const styles = {
 }
 
 
-export default MapView;
