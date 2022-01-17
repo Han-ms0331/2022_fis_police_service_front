@@ -6,8 +6,8 @@ import {rest} from "msw";
     작성내용: 테스트용 핸들러 작성
 */
 
-export const handlers = [
-    rest.get('/test', async(req, res, ctx)=>{
+export const manageHandlers = [
+    rest.get('/managetest', async(req, res, ctx)=>{
         return res(
             ctx.json({
                 result: "success",

@@ -9,7 +9,7 @@ import axios from "axios";
 */
 function LoginTemplate(props) {
     const onLogin = async () => {   //서버와 로그인 통신을 하는 부분
-        await axios.get("/test")
+        await axios.get("/login")
             .then((res) => {
                 console.log(res.data.result);
                 if (res.data.result === "success")

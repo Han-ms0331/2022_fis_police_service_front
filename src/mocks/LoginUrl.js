@@ -3,11 +3,11 @@ import {rest} from "msw";
 /*
     날짜: 2022/01/17 1:52 오후
     작성자: 한명수
-    작성내용: 테스트용 핸들러 작성
+    작성내용: 로그인에 필요한 url모아놓은 loginhandler작성
 */
 
-export const handlers = [
-    rest.get('/test', async(req, res, ctx)=>{
+export const loginHandlers = [
+    rest.get('/login', async(req, res, ctx)=>{
         return res(
             ctx.json({
                 result: "success",
