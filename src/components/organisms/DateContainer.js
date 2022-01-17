@@ -30,7 +30,7 @@ background: #F8EFBA;
 margin: 10px 0;
   border-radius: 10px;
   text-align: center;
-  font-size: 0.9vw;
+  font-size: 21px;
   font-weight: 600;
 `
 
@@ -43,12 +43,6 @@ const SelectedDate = styled.div`
 
 const Header = styled.div`
 color: #6D5A00;
-`
-
-
-const Announcement = styled.div`
-
 `;
-
 
 export default DateContainer;

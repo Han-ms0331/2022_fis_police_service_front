@@ -12,17 +12,15 @@ import LogoutIcon from '@mui/icons-material/Logout';
     작성자: 한명수
     작성내용: Navigation 1차 완성
 */
-
-/*
-날짜: 2022/01/12 11:56 AM
-작성자: 정도식
-작성내용: Navigation 2차 작성
-*/
-
 /*
     날짜: 2022/01/13 10:28 오전
     작성자: 한명수
     작성내용: Navigation 로그아웃 기능 수정
+*/
+/*
+날짜: 2022/01/14 11:06 AM
+작성자: 정도식
+작성내용: Navigation 픽셀로 고정
 */
 const Navigation = () => {
         const [isLogout, setIsLogout] = useState(false);    //로그아웃의 flag
@@ -34,6 +32,7 @@ const Navigation = () => {
     const onLogout = (e) => {
         if (window.confirm("정말 로그아웃 하시겠습니까?")) {
             localStorage.removeItem("loginStatus"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
+            localStorage.removeItem("userName"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
             setIsLogout(true)   //로그아웃 flag를 true로 변환하여 redirect시킴
         }
     }
@@ -61,7 +60,7 @@ const Container = styled.div`
   padding: 0px;
   & .icon {
     color: #FFD400;
-    font-size: 1.8vw;
+    font-size: 42px;
   }
   & .icon:hover {
     transform: scale(1.2);
@@ -73,12 +72,12 @@ const Upper = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   justify-self: center;
-  margin-top: 3vh;
+  margin-top: 50px;
 `;
 
 const Bottom = styled.div`
   align-self: end;
   justify-self: center;
-  margin-bottom: 2rem;
+  margin-bottom: 45px;
 `;
 export default Navigation;

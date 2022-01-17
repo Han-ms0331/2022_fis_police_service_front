@@ -1,5 +1,5 @@
 /*global kakao*/
-import React from 'react';
+import React, {useState} from 'react';
 import {MapMarker} from "react-kakao-maps-sdk";
 
 
@@ -11,6 +11,9 @@ import {MapMarker} from "react-kakao-maps-sdk";
  */
 
 function CustomMarker(props) {
+
+    const [isOpen,setIsOpen]=useState(false)
+
     if (props.type === 'center') {
         return (
             <MapMarker
@@ -21,10 +24,18 @@ function CustomMarker(props) {
                         width: 30,
                         height: 30,
                     },
-                }}>
-                <div style={{padding: "3px", color: "#000"}}>
+                }}
+                clickable={true}
+                onMouseOver={
+                    ()=>setIsOpen(true)
+                }
+                onMouseOut={
+                    ()=>setIsOpen(false)
+                }
+            >
+                {isOpen && <div style={{padding: "3px", color: "#000" }}>
                     {props.content}
-                </div>
+                </div>}
             </MapMarker>
         )
     } else if (props.type === 'agent') {

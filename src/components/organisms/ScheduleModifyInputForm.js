@@ -59,8 +59,6 @@ function ScheduleModifyInputForm(props) {
                 })
             }
         }
-
-
     };
 
     const onClick = (e) => {
@@ -76,9 +74,6 @@ function ScheduleModifyInputForm(props) {
 
     return (
         <div style={{
-            width: "70vw",
-            height: "70vh",
-            border: "1px solid black",
             padding: "30px 0px",
             display: "flex",
             justifyContent: "center",
@@ -86,7 +81,7 @@ function ScheduleModifyInputForm(props) {
             <div style={{marginRight: "30px"}}>
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="시설정보: " inputName="centerInfo" inputType="text" width="300px" rows="2"
-                                    setValueFunction={onChange}/>
+                                    setValueFunction={onChange}  />
                 </div>
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px"
@@ -111,7 +106,7 @@ function ScheduleModifyInputForm(props) {
 
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="변경사항: " inputName="changeThing" inputType="text" width="300px"
-                                    rows="2"
+                                    rows="3"
                                     setValueFunction={onChange}/>
                 </div>
 
@@ -134,7 +129,7 @@ function ScheduleModifyInputForm(props) {
             <div style={{position: "relative"}}>
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="특이사항: " inputName="specialInfo" inputType="text" width="300px"
-                                    rows="2"
+                                    rows="3"
                                     setValueFunction={onChange}/>
                 </div>
 
@@ -145,16 +140,20 @@ function ScheduleModifyInputForm(props) {
                     <CheckboxContainer name="visitDateConfirm" setCheckboxInputFunction={onClick} content="방문일정 확인 완료"/>
                 </div>
 
+                <div style={{marginTop: "30px", display: 'flex',  justifyContent:'center'}}>
+                    <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="black"
+                                  borderRadius="15px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
+                </div>
 
                 <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>
                     <div style={{marginRight: "20px"}}>
-                        <CustomButton type="reverse" width="100px" height="30px" content="취소" color="black"
+                        <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
                                       border="1px solid #FFE400"
                                       borderRadius="15px" backgroundColor="white" onClick={props.onClickFunction}/>
                     </div>
 
                     <div>
-                        <CustomButton type="normal" width="100px" height="30px" content="저장" color="black"
+                        <CustomButton type="normal" width="150px" height="40px" content="저장" color="black"
                                       borderRadius="15px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
                     </div>
                 </div>

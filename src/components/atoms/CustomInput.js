@@ -4,37 +4,40 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {InputLabel} from "@mui/material";
+import styled from "styled-components";
+
 
 function CustomInput(props) {
 
     let element
     if (props.type === "text") {
-        element =  <TextField sx={{width: props.width}}
-            name={props.name} hiddenLabel type={props.type}
-            fullWidth
-            multiline
-            rows={props.rows}
-            defaultValue={props.defaultValue} placeholder={props.placeholder}
-            onChange={props.setValueFunction}
-            id="outlined-basic"
-            variant="outlined"/>
+        element = <TextField sx={{width: props.width}}
+                             name={props.name} hiddenLabel type={props.type}
+                             fullWidth
+                             multiline
+                             size="small"
+                             rows={props.rows}
+                             defaultValue={props.defaultValue} placeholder={props.placeholder} disabled={props.disabled}
+                             onChange={props.setValueFunction}
+                             id="outlined-basic"
+                             variant="outlined"/>
 
     } else if (props.type === "number") {
-        element = <TextField name={props.name} type={props.type} sx={{width: props.width}}
-                              defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
+        element = <TextField name={props.name} type={props.type} sx={{width: props.width}} size="small"
+                             defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
     } else if (props.type === "time") {
-        element = <TextField name={props.name} type={props.type} style={{width: props.width}}
+        element = <TextField name={props.name} type={props.type} style={{width: props.width}} size="small"
                              defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
     } else if (props.type === "date") {
-        element = <TextField type="date" style={{width: props.width}}
+        element = <TextField type="date" style={{width: props.width}} size="small"
                              defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
     } else if (props.type === "select") {
 
-        element = <FormControl style={{width: props.width}}>
+        element = <FormControl style={{width: props.width}} size="small">
             {/*<InputLabel id="demo-simple-select-label">{props.labelContent}</InputLabel>*/}
             <Select
                 name={props.name}
-                defaultValue={props.contents[0]}
+                defaultValue={props.defaultValue}
                 onChange={props.setValueFunction}
             >
                 {props.contents.map((content) => {
@@ -53,3 +56,4 @@ function CustomInput(props) {
 }
 
 export default CustomInput;
+

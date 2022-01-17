@@ -20,42 +20,30 @@ const ScheduleSidebar = () => {
     const [date, setDate] = useState(new Date());
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-    const toggleSideBar = ()=>{ /*사이드바 토글 함수*/
+    const toggleSideBar = ()=>{
         setIsSidebarOpen(!isSidebarOpen)
     }
-    console.log((isSidebarOpen))
+
     return (
-        <Container style={{transform: `${isSidebarOpen ? 'translate(0)' : 'translate(-100%)'}`}}>
-            <Items className={isSidebarOpen ? "sidebar-visible":"sidebar-invisible"}>
+        <Container>
+            <Items>
             <CustomCalendar className="calendar" setDate={setDate}/>
             <DateContainer date={date}/>
             <MessangerContainer/>
-                </Items>
-            {isSidebarOpen ? <GoChevronLeft className="icon" onClick={toggleSideBar}/> :
-                <GoChevronRight className="icon" onClick={toggleSideBar}/>}
+            </Items>
         </Container>
     );
 };
 
 const Container = styled.div`
-  border-right: 2px solid #eee;
+  //border-right: 2px solid #eee;
   padding: 0 15px;
   position: relative;
   transition: 1s ease-out;
-  
-  & .sidebar-visible {
-    opacity: 100;
-    transition: 1s;
-  }
-
-  & .sidebar-invisible {
-    opacity: 0;
-    transition: 0.8s;
-  }
 
   & .icon {    /*화살표 아이콘*/
     color: #999999;
-    font-size: 1.4rem;
+    font-size: 29px;
     position: absolute;
     top: 50%;
     right: -16px;
@@ -69,7 +57,7 @@ const Container = styled.div`
 
 const Items = styled.div`
 display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr 1fr 1fr;
   &>div {
     min-width: 0;
     align-self: center;
