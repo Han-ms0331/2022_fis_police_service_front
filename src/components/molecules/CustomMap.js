@@ -45,7 +45,7 @@ function CustomMap(props){
                     }
                 })}
             >
-                <div style={{marginLeft:"-950px"}}>
+                <div style={{marginTop:"5px"}}>
                     <CustomButton type={"normal"} width={"20px"} height={"20px"} color={"white"} borderRadius={"2"}
                                   backgroundColor={"orange"} content={"return"}
                                   onClick={() =>
@@ -66,6 +66,7 @@ function CustomMap(props){
                 />
                 {props.cdata.map((position, index) => (
                     <CustomMarker
+                        key={index}
                         type={position.type}
                         position={position.latlng} // 마커를 표시할 위치
                         content={position.contents} // type이 center일 경우 전달받은 시설정보를 띄워준다
@@ -74,6 +75,7 @@ function CustomMap(props){
                 ))}
                 {props.adata.map((position, index) => (
                     <CustomMarker
+                        key={index}
                         type={position.type}
                         position={position.latlng} // 마커를 표시할 위치
                     />
