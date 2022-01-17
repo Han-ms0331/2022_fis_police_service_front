@@ -4,7 +4,7 @@ import MapView from "../organisms/MapView";
 function MainBodyTemplate(props) {
     return (
         <div>
-            <MapView/>
+                <MapView/>
         </div>
     );
 }
