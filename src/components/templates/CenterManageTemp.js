@@ -111,7 +111,7 @@ function CenterManageTemp(props) {
             <div style={{marginBottom: "30px"}}>
                 <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%" height="100%"/>
             </div>
-            <ListContainer headerContents={headerContent} contents={contents} width="1000px" height={"90vh"}
+            <ListContainer headerContents={headerContent} contents={contents} width="1500px" height="100vh"
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
 
@@ -157,6 +157,8 @@ const style = {
 };
 
 const Main = styled.div`
+  display: flex;
+  justify-content: center;
 & >button{
   position: fixed;
   bottom: 50px;

@@ -1,4 +1,12 @@
-import React, {useCallback, useState} from 'react';
+/*
+    작성시간: 2022/01/13 1:31 PM
+    이름: 이창윤
+    작성내용: ScheduleTable 전체를 포함하는 컴포넌트, 검색 기능,
+    체크박스 선택 및 일정공지 기능, 테이블 정렬 기능
+    수정 기능
+*/
+
+import React, {useCallback, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -39,6 +47,8 @@ const rows = [
     createData(<CheckboxContainer />, '14', "구로 최철수", "동그라미 유치원\n[경기도 안양시 동안구 동안로 111]\n031-123-456\n9:00\n50명\n", "신청서 완료", "변경사항", "통화 미완료", "미공지", "수정버튼"),
 ];
 
+// 더미데이터 생성
+
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -65,6 +75,8 @@ function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
+// MUI 정렬 기능
+
 const headCells = [
     { id: 'No', numeric: false, disablePadding: true, label: 'No.' },
     { id: 'agent', numeric: true, disablePadding: false, label: '현장요원' },
@@ -76,45 +88,7 @@ const headCells = [
     { id: 'edit', numeric: true, disablePadding: false, label: '' },
 ];
 
-
-
-
-const useToolbarStyles = makeStyles((theme) => ({
-    root: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(1),
-    },
-    highlight:
-        theme.palette.type === 'light'
-            ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-            }
-            : {
-                color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark,
-            },
-    title: {
-        flex: '1 1 100%',
-    },
-}));
-
-const EnhancedTableToolbar = (props) => {
-    const classes = useStyles();
-    const { numSelected } = props;
-
-    return (
-                <Table className={classes.root} >
-                    <TableBody>
-                        <ScheduleTableSearch />
-                    </TableBody>
-                </Table>
-    );
-};
-
-EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-};
+// 테이블 헤더 정보
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -142,6 +116,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScheduleTable() {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
+    let count = rows.length;
+
+    useEffect( () => {
+        setPage(0);
+    }, [keywordProps]);
 
     const isSearch = () => { // 사용자가 검색창에 키워드를 입력한 상태인지 검사하는 함수
         for (let value in keywordProps) {
@@ -153,9 +132,7 @@ export default function ScheduleTable() {
     }
 
 
-    let count = rows.length;
-
-    const ScheduleList = (row, index) => {
+    const ScheduleList = (row, index) => { // Schedule List를 띄워주는 함수
         const isItemSelected = isSelected(row.No);
         const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -192,8 +169,7 @@ export default function ScheduleTable() {
         );
     }
 
-
-    const showList = () => {
+    const showList = () => { // 정렬 기능과 함께 Schedule List 여러 개를 띄워주는 함수
         return (
             stableSort(rows, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -212,9 +188,9 @@ export default function ScheduleTable() {
             ;
     }
 
-    const filteredShowList = () => { // 검색결과 List를 여러개 보여주는 함수
+    const filteredShowList = () => { // 정렬 기능과 함께 검색결과 List를 여러 개 보여주는 함수
 
-        count = rows.filter(handleFilter).length;
+        count = rows.filter(handleFilter).length; // 사용자가 검색했을 때 전체 rows의 개수를 검색된 결과의 rows 개수로 바꿔줌
         return (
             stableSort(rows, getComparator(order, orderBy))
                 .filter(handleFilter)
@@ -266,7 +242,7 @@ export default function ScheduleTable() {
         [rows.filter(handleFilter)]
     );
 
-    function EnhancedTableHead(props) {
+    function EnhancedTableHead(props) { // 테이블 헤더 컴포넌트 (전체 선택용 체크박스 기능)
         const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
         const createSortHandler = (property) => (event) => {
             onRequestSort(event, property);
@@ -276,7 +252,7 @@ export default function ScheduleTable() {
             <TableHead style={{backgroundColor:'rgba(255, 212, 0, 0.5)'}}>
                 <TableRow>
                     <TableCell padding="checkbox">
-                        {isSearch() ? // 검색창에 무언가 입력되어있는 상태라면 전체 선택 체크박스가 검색된 결과 리스트 모두 선택
+                        {isSearch() ? // 검색창에 무언가 입력되어있는 상태라면 전체 선택용 체크박스가 검색된 결과의 리스트들만 모두 선택함
                             <input
                                 type="checkbox"
                                 onChange = {(e) => onCheckedAllFiltered(e.target.checked)}
@@ -286,7 +262,7 @@ export default function ScheduleTable() {
                                         : checkedList.length === rows.filter(handleFilter).length
                                 }
                             />
-                            : // 검색을 안할 경우 리스트 전체 선택
+                            : // 검색을 안할 경우 전체 선택용 체크박스가 리스트들을 모두 전체 선택함
                             <input
                                 type="checkbox"
                                 onChange = {(e) => onCheckedAll(e.target.checked)}
@@ -298,7 +274,7 @@ export default function ScheduleTable() {
                             />
                         }
                     </TableCell>
-                    {headCells.map((headCell) => (
+                    {headCells.map((headCell) => ( // 테이블 헤더 정보 mapping
                         <TableCell
                             key={headCell.id}
                             align={headCell.numeric ? 'right' : 'left'}
@@ -377,6 +353,8 @@ export default function ScheduleTable() {
         setSelected(newSelected);
     };
 
+    // MUI에 있는 체크박스 선택 기능 함수들 - 사용하지 않음
+
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -386,9 +364,12 @@ export default function ScheduleTable() {
         setPage(0);
     };
 
-    const handleChangeDense = (event) => {
+    // 페이지 변경 함수, 페이지 하나 당 row 개수 변경 함수
+
+    const handleChangeDense = (event) => { // 간격 붙이는 DensePadding 기능
         setDense(event.target.checked);
     };
+
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -410,7 +391,7 @@ export default function ScheduleTable() {
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
+                            onSelectAllClick={handleSelectAllClick} // 사용하지 않는 기능
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
@@ -434,6 +415,7 @@ export default function ScheduleTable() {
                                 type="normal"
                                 content="일정공지"
                                 backgroundColor='rgba(255, 212, 0, 0.5)'
+                                color='black'
                                 onClick={()=>console.log(checkedList)}
                             />
                         </div>
