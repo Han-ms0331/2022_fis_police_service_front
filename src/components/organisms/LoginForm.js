@@ -19,22 +19,20 @@ import CustomButton from "../atoms/CustomButton";
 const LoginForm = (props) => {
     return (
         <Main>
-            <img src={logo}/>
-            {BiUser}
             <Container>
-                <img src={logo}/>
+                <img src={logo}/> {/*회사로고*/}
                 <div className="inputContainer">
-                    <InputRow>
+                    <InputRow> {/*아이디*/}
                         <div className="icon"><BiUser/></div>
                         <input id="username" type="text" placeholder="아이디"/>
                     </InputRow>
-                    <InputRow>
+                    <InputRow> {/*비밀번호*/}
                         <div className="icon"><RiLockPasswordLine/></div>
                         <input id="password" type="password" placeholder="비밀번호"/>
                     </InputRow>
                     <Link to={"/main"}><CustomButton type="normal" width="100%" height="40px" borderRadius="6px"
                                                      color="#fff" backgroundColor="#FFD400" content="로그인"
-                                                     onClick={props.onClickFunction}/></Link>
+                                                     onClick={props.onClickFunction}/></Link> {/*로그인 버튼*/}
                 </div>
             </Container>
         </Main>
@@ -56,7 +54,7 @@ const Container = styled.div`
   border: 1px solid #dadada;
   box-shadow: 1.5px 2px #dadada;
   border-radius: 20px;
-  position: fixed;
+  position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
@@ -90,7 +88,6 @@ const InputRow = styled.div`
     width: 98%;
     justify-self: start;
     color: #222;
-    cursor: pointer;
     box-sizing: content-box;
     border: none;
   }
