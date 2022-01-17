@@ -34,8 +34,9 @@ function CustomMap(props){
                 }
                 style={{
                     // 지도의 크기
-                    width: "65%",
-                    height: "590px",
+                    width: "110%",
+                    height: "1000px",
+                    /*marginLeft:"50px"*/
                 }}
                 level={props.level} // 지도의 확대 레벨
                 onCenterChanged={(map) => setPosition({
