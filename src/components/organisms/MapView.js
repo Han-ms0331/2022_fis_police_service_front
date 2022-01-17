@@ -273,7 +273,7 @@ function MapView() {
 
 const styles = {
     sButton: {
-        marginLeft:"683px",
+        marginLeft:"1186px",
         marginTop:"90px",
         flexDirection: 'column',
     },
