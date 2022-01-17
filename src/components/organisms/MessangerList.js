@@ -1,20 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import CallEndOutlinedIcon from '@mui/icons-material/CallEndOutlined';
+import axios from "axios";
 /*
 날짜: 2022/01/11 11:27 AM
 작성자: 정도식
 작성내용: 각각의 수정요청 사항 1차 뷰
 */
 const MessangerList = () => {
+    const [message,setMessage]=useState('')
+    const data = async () =>{
+        await axios.get("/messenger").then((res)=>{
+            setMessage(res.data.message)
+        })
+    }
+
     return (
         <div>
             <Header>10:34오전</Header>
+        <h2>{message}</h2>
             <Content>
                 <p>원보라(<CallEndOutlinedIcon/>):</p>
                 <p>무언가 잘못했어요. 고쳐주세요.</p>
                 <div>
-                <Button>수정완료</Button>
+                <Button onClick={()=>data()}>수정완료</Button>
                 </div>
             </Content>
         </div>

@@ -12,7 +12,7 @@ export const scheduleHandlers = [
             ctx.json({
                 result: "success",
                 name: "Han",
-                authority:"admin"
+                authority:"user"
             })
         )
     }),
@@ -20,8 +20,9 @@ export const scheduleHandlers = [
         return res(
             ctx.json({
                 result: "success",
-                name: "Han",
-                authority:"admin"
+                message: "무언가 잘 못했어요. 고쳐주세요.",
+                user:"원보라",
+                authority:"user"
             })
         )
     }),
@@ -29,16 +30,16 @@ export const scheduleHandlers = [
         return res(
             ctx.json({
                 result: "success",
-                name: "Han",
-                authority:"admin"
+                message: "무언가 잘 못했어요. 고쳐주세요.",
+                user:"원보라",
+                authority:"user"
             })
         )
     }),
     rest.delete('/messenger', async(req, res, ctx)=>{
         return res(
             ctx.json({
-                result: "success",
-                name: "Han",
+                result: "delete success",
                 authority:"admin"
             })
         )
