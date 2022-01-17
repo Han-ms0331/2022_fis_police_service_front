@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Navigation from "../templates/Navigation";
 import {Redirect} from "react-router-dom";
 import MainInfoTemplate from "../templates/MainInfoTemplate";
+import MainBodyTemplate from "../templates/MainBodyTemplate";
 
 /*
     날짜: 2022/01/13 10:36 오전
@@ -21,7 +22,7 @@ function MainPage(props) {
                 <Main>
                     <Navigation/>
                     <div style={{height: "100vh", borderRight: "1px solid #6D5A00"}}>
-                        main body template
+                        <MainBodyTemplate/>
                     </div>
 
                     <div>

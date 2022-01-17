@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import RangeController from "./RangeController";
-import MapApp from "./KakaoMap";
+import RangeController from "../molecules/RangeController";
+import CustomMap from "../molecules/CustomMap";
+
 
 const roadInfo = [
     {
@@ -263,7 +264,7 @@ function MapView() {
                 </div>
             </>
             <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
-                <MapApp cdata={cInfo} adata={agentInfo} rdata={road} lat={center[0].lat} lng={center[0].lng}
+                <CustomMap cdata={cInfo} adata={agentInfo} rdata={road} lat={center[0].lat} lng={center[0].lng}
                         level={range} />
             </div>
         </>
