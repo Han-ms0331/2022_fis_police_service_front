@@ -140,6 +140,10 @@ function ScheduleModifyInputForm(props) {
                     <CheckboxContainer name="visitDateConfirm" setCheckboxInputFunction={onClick} content="방문일정 확인 완료"/>
                 </div>
 
+                <div style={{marginTop: "30px", display: 'flex',  justifyContent:'center'}}>
+                    <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="black"
+                                  borderRadius="15px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
+                </div>
 
                 <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>
                     <div style={{marginRight: "20px"}}>

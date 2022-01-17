@@ -1,6 +1,6 @@
 import React from 'react';
-import CustomButton from "./CustomButton";
-import CustomLabel from "./CustomLabel";
+import CustomLabel from "../atoms/CustomLabel";
+import CustomButton from "../atoms/CustomButton";
 
 /*
     날짜 : 2022/01/12 2:14 PM
@@ -11,11 +11,16 @@ import CustomLabel from "./CustomLabel";
 function RangeController(props) {
     return (
         <>
-            <div style={{display: 'flex'}}>
-                <CustomLabel content={"주변시설"}/>
-                <CustomButton type={"normal"} width={"10px"} height={"10px"} color={"white"} borderRadius={"2"} backgroundColor={"orange"} name={"250"} content={"250m"} onClick={props.onClickFunc}/>
-                <CustomButton type={"normal"} width={"10px"} height={"10px"} color={"white"} borderRadius={"2"} backgroundColor={"orange"} name={"500"} content={"500m"} onClick={props.onClickFunc}/>
-                <CustomButton type={"normal"} width={"10px"} height={"10px"} color={"white"} borderRadius={"2"} backgroundColor={"orange"} name={"1000"} content={"1km"} onClick={props.onClickFunc}/>
+            <div style={{marginBottom:"30px", marginLeft:"135px"}}>
+                <div style={{display: 'flex'}}>
+                    <span>주변시설</span>
+                    <CustomButton type={"normal"} width={"10px"} height={"10px"} color={"white"} borderRadius={"2"}
+                                  backgroundColor={"orange"} name={"250"} content={"250m"} onClick={props.onClickFunc}/>
+                    <CustomButton type={"normal"} width={"10px"} height={"10px"} color={"white"} borderRadius={"2"}
+                                  backgroundColor={"orange"} name={"500"} content={"500m"} onClick={props.onClickFunc}/>
+                    <CustomButton type={"normal"} width={"10px"} height={"10px"} color={"white"} borderRadius={"2"}
+                                  backgroundColor={"orange"} name={"1000"} content={"1km"} onClick={props.onClickFunc}/>
+                </div>
             </div>
         </>
     );

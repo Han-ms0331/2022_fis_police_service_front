@@ -3,20 +3,27 @@ import styled from 'styled-components';
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CenterManageInputForm from "../organisms/CenterManageInputForm";
 import CustomButton from "../atoms/CustomButton";
+import {center} from "../../store/dummy-data/center";
 
 
 function CenterManageTemp(props) {
+    const headerContent = ["시설아이디", "시설이름", "참여여부", "전화번호", "시설주소"]
+    const contents = center
+
+    //form이 열리고 닫히고에 관련된 state 정의
     const [open, setOpen] = React.useState(false);
+
+    //검색 창에 검색어에 대한 상태 정의
     const [searchInput, setSearchInput] = useState({
         centerName: "",
         centerAddress: "",
         centerPhone: "",
     })
+
+    //선택한 시설에 대한 정보들을 관리할 상태 정의
     const [currentInfo, setCurrentInfo] = useState({
         centerId: "",
         centerName: "",
@@ -25,29 +32,34 @@ function CenterManageTemp(props) {
     })
 
 
+    // 여기서 부터 함수 정의
+    // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     const showList = () => {
         //검색버튼 눌렀을 때 api 요청
     }
 
+    // form이 보이고 안보이고에 대한 함수 정의
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    // 검색 창에 검색어가 바뀌면, 바뀐 검색어를 위에서 정의한 searchInput이라는 상태에 저장하는 함수 정의
     const handleSearchInputChange = (e) => {
         // console.log(e);
-        const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
+        const {value, name} = e.target;
         setSearchInput({
-            ...searchInput, // 기존의 input 객체를 복사한 뒤
-            [name]: value // name 키를 가진 값을 value 로 설정
+            ...searchInput,
+            [name]: value
         });
         console.log(searchInput);
     }
 
+    // inputForm의 입력창에 글씨가 바뀌면, 위에서 정의한 currentInfo 상태에 입력창에 적힌 글씨를 저장하는 함수 정의
     const handleInputFormChange = (e) => {
         // console.log(e);
-        const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
+        const {value, name} = e.target;
         setCurrentInfo({
-            ...currentInfo, // 기존의 input 객체를 복사한 뒤
-            [name]: value // name 키를 가진 값을 value 로 설정
+            ...currentInfo,
+            [name]: value
         });
         // console.log(currentInfo);
     }
@@ -57,14 +69,16 @@ function CenterManageTemp(props) {
     //     console.log(currentInfo);
     // }, [currentInfo])
 
+
+    // 정보 수정 버튼을 누르면 inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오는 함수
     const handleModifyButtonClick = (e) => {
-        //inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오기 => 1월 14일 오늘 구현하기.
         console.log(e.target.name);
         setCurrentInfo(contents[parseInt(e.target.name)])
         handleOpen();
     }
 
-    const handleAddButtonClick = (e) =>{
+    // 시설 추가 버튼을 누르면 일어나는 일에 대한 함수. 시설을 선택한 것이 아니므로 currentInfo의 정보를 모두 null로 set함
+    const handleAddButtonClick = (e) => {
         setCurrentInfo({
             centerId: "",
             centerName: "",
@@ -74,72 +88,52 @@ function CenterManageTemp(props) {
         handleOpen();
     }
 
-    let headerContent = [
-        "시설아이디", "시설이름", "참여여부", "전화번호", "시설주소"
-    ]
-
-    let contents = [
-        {
-            centerId: "test1",
-            centerName: "동그라미유치원",
-            participation: "참여",
-            centerPhone: "010-2105-7345",
-            centerAddress: "서울시 노원구 동일로 215길 48"
-        }
-        ,
-        {
-            centerId: "test2",
-            centerName: "하이유치원",
-            participation: "참여",
-            centerPhone: "010-2105-7345",
-            centerAddress: "서울시 노원구 동일로 215길 48"
-        }
-    ]
-
-
+    // inputForm에서 저장버튼 눌렀을 때에 대한 함수 정의
     const handleClickSave = () => {
-        //api 수정 요청 보냄,,?
-        //input state 에 적혀있는 것으로 수정,,,?
-
-        console.log("hi");
+        //api 요청 보냄.
+        //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
 
         handleClose();
     }
+
+
+
     return (
         <Main>
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <div style={{marginBottom: "30px"}}>
-                <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%" height="100%"/>
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <div style={{marginBottom: "30px"}}>
+                    <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
+                                height="100%"/>
+                </div>
+                <ListContainer headerContents={headerContent} contents={contents} width="1500px" height="100vh"
+                               gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정"
+                               onClickFunction={handleModifyButtonClick}/>
+
+
+                <div style={{
+                    position: "fixed",
+                    bottom: "50px",
+                    left: "50%",
+                    transform: "translate(-50%,0)"
+                }}>
+                    <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
+                                  backgroundColor="#FFD400" content="시설 추가" onClick={handleAddButtonClick}/>
+                </div>
+
+
+                <Modal
+                    open={open}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <CenterManageInputForm handleClose={handleClose} handleClickSave={handleClickSave}
+                                               handleInputFormChange={handleInputFormChange} currentInfo={currentInfo}/>
+                    </Box>
+
+                </Modal>
+
             </div>
-            <ListContainer headerContents={headerContent} contents={contents} width="1500px" height="100vh"
-                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정"
-                           onClickFunction={handleModifyButtonClick}/>
-
-
-            <div style={{
-                position: "fixed",
-                bottom: "50px",
-                left: "50%",
-                transform: "translate(-50%,0)"
-            }}>
-                <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
-                              backgroundColor="#FFD400" content="시설 추가" onClick={handleAddButtonClick}/>
-            </div>
-
-
-            <Modal
-                open={open}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <CenterManageInputForm handleClose={handleClose} handleClickSave={handleClickSave}
-                                           handleInputFormChange={handleInputFormChange} currentInfo={currentInfo}/>
-                </Box>
-
-            </Modal>
-
-        </div>
         </Main>
     );
 }
@@ -159,12 +153,13 @@ const style = {
 const Main = styled.div`
   display: flex;
   justify-content: center;
-& >button{
-  position: fixed;
-  bottom: 50px;
-  left: 50%;
-  transform: translate(-50%,0);
-}
+
+  & > button {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
 `;
 
 
@@ -178,13 +173,13 @@ const Main = styled.div`
  */
 
 /*
-    날짜 : 2022/01/14 10:11 AM
+    날짜 : 2022/01/16 11:11 PM
     작성자 : 신은수
-    작성내용 : inputForm 상위 컴포넌트에서 width랑 height를 inputForm에 props로 줘서 inputForm의 가장 상위? div에서
-            props로 받아온 width와 height를 width와 height로 두고싶었는데
-            생각보다 별로여서..?,
-
-            inputForm안에 있는 InputContainer의 크기가 커지면 그것을 감싸고 있는 div도 커지게 하고 싶어서
-            props width랑 height를 줄 필요가 없게 됨.
+    작성내용 :
+    inputForm에 대한 정보를 원래 inputForm에서 state로 관리를 하려고 했고,
+    searchForm에 대한 정보도 searchForm에서 state로 관리 하려고 했음.
+    ->but, inputForm과 searchForm의 정보를 form의 상위 컴포넌트인 centerManageTemp에서 state로 관리하는 것이 낫겠다는
+    판단이 들어 centerManageTemp에서 searchInput이라는 상태와 currentInfo라는 상태를 정의함.
+    inputForm에 currentInfo를 props로 전달한다.
 
  */

@@ -34,7 +34,7 @@ export default function TransitionsModal() {
 
     return (
         <div>
-            <CustomButton type="normal" backgroundColor='rgba(255, 212, 0, 0.5)' content="수정" onClick={handleOpen} />
+            <CustomButton type="normal" color='black' backgroundColor='rgba(255, 212, 0, 0.5)' content="수정" onClick={handleOpen} />
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -49,7 +49,7 @@ export default function TransitionsModal() {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <ScheduleModifyInputForm />
+                        <ScheduleModifyInputForm onClickFunction={handleClose} />
                     </div>
                 </Fade>
             </Modal>

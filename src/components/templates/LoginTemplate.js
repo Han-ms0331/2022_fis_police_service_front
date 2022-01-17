@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import styled from "styled-components";
 import LoginForm from "../organisms/LoginForm";
+import axios from "axios";
 import {useRecoilState} from "recoil";
 import {AuthorityState} from "../../store/AuthorityStore";
 
@@ -11,26 +12,23 @@ import {AuthorityState} from "../../store/AuthorityStore";
 */
 
 function LoginTemplate(props) {
-    const [authority, setAuthority] = useRecoilState(AuthorityState);
-
-    const loginCall  = () =>{   //서버와 로그인 통신을 하는 부분
-        return true;
+    const onLogin = async () => {   //서버와 로그인 통신을 하는 부분
+        await axios.get("/login")
+            .then((res) => {
+                console.log(res.data.result);
+                if (res.data.result === "success")
+                    localStorage.setItem("loginStatus", "true")
+            })
     }
 
-    const onclick = (e) => {
-
-        if(loginCall() === true){
-            localStorage.setItem("loginStatus","true")
-            localStorage.setItem("userName", "한명수");
-            setAuthority("admin");
-        }
-
-    }
 
     return (
-        <>
-            <LoginForm onClickFunction={onclick}/>
-        </>
+        <div>
+            <div>
+                logo
+            </div>
+            <LoginForm onClickFunction={onLogin}/>
+        </div>
     );
 }
 export default LoginTemplate;
