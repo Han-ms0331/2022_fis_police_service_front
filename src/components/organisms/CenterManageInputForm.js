@@ -17,7 +17,7 @@ function CenterManageInputForm(props) {
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="300px" rows="1"
                                 setValueFunction={props.handleInputFormChange}
-                                defaultValue={props.currentInfo['centerId']} disabled="true"
+                                defaultValue={props.currentInfo['centerId']} disabled={true}
 
                 />
             </div>

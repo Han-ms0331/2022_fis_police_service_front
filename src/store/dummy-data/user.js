@@ -6,7 +6,7 @@
 export const user = [
     {
         name: "한명수",
-        username: "fs001",
+        username: "fs014",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -15,7 +15,7 @@ export const user = [
     },
     {
         name: "한명수",
-        username: "fs001",
+        username: "fs013",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -24,7 +24,7 @@ export const user = [
     },
     {
         name: "한명수",
-        username: "fs001",
+        username: "fs012",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -32,7 +32,7 @@ export const user = [
         today: 70,
     },{
         name: "한명수",
-        username: "fs001",
+        username: "fs0",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -50,7 +50,7 @@ export const user = [
     },
     {
         name: "한명수",
-        username: "fs001",
+        username: "fs02",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -58,7 +58,7 @@ export const user = [
         today: 70,
     },{
         name: "한명수",
-        username: "fs001",
+        username: "fs009",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -67,7 +67,7 @@ export const user = [
     },
     {
         name: "한명수",
-        username: "fs001",
+        username: "fs008",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -76,7 +76,7 @@ export const user = [
     },
     {
         name: "한명수",
-        username: "fs001",
+        username: "fs007",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -84,7 +84,7 @@ export const user = [
         today: 70,
     },{
         name: "한명수",
-        username: "fs001",
+        username: "fs004",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -93,7 +93,7 @@ export const user = [
     },
     {
         name: "한명수",
-        username: "fs001",
+        username: "fs03",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",
@@ -102,7 +102,7 @@ export const user = [
     },
     {
         name: "한명수",
-        username: "fs001",
+        username: "fs005",
         password: "abcde",
         start: "2021/11/13",
         hp: "010-1234-1234",

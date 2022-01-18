@@ -13,16 +13,15 @@ import {MapMarker} from "react-kakao-maps-sdk";
 function CustomMarker(props) {
 
     const [isOpen,setIsOpen]=useState(false)
-
     if (props.type === 'center') {
         return (
             <MapMarker
                 position={props.position}
                 image={{
-                    src: "https://ifh.cc/g/mcKSN3.png",
+                    src: "https://ifh.cc/g/keEB1A.png",
                     size: {
-                        width: 30,
-                        height: 30,
+                        width: 40,
+                        height: 40,
                     },
                 }}
                 clickable={true}
@@ -43,10 +42,10 @@ function CustomMarker(props) {
             <MapMarker
                 position={props.position}
                 image={{
-                    src: "https://ifh.cc/g/QRQ7cN.png",
+                    src: "https://ifh.cc/g/tkZYb6.png",
                     size: {
-                        width: 30,
-                        height: 30,
+                        width: 35,
+                        height: 35,
                     },
                 }}
             />
@@ -56,10 +55,10 @@ function CustomMarker(props) {
             <MapMarker
                 position={props.position}
                 image={{
-                    src: "https://ifh.cc/g/gFpslz.png",
+                    src: "https://ifh.cc/g/9RnV0H.png",
                     size: {
-                        width: 30,
-                        height: 30,
+                        width: 35,
+                        height: 35,
                     },
                 }}
             />
