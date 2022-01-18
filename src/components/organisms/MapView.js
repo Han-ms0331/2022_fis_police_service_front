@@ -4,8 +4,6 @@ import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
 
 
-
-
 const roadInfo = [
     {
         c_id: "1",
@@ -88,7 +86,6 @@ const roadInfo = [
         c_longitude: "126.55392992730667",
     },
 ]
-
 
 
 const agentInfo = [
@@ -190,10 +187,9 @@ roadInfo.forEach((arr, index, buf) => {
 })
 
 
-
 function MapView() {
     const [range, setRange] = useState(2);
-    const [centerInfo,setCenterInfo]= useState("");
+    const [centerInfo, setCenterInfo] = useState("");
     /*const [position, setPosition] = useState({
         center: {lat: center[0].lat, lng: center[0].lng}
     })*/
@@ -298,14 +294,15 @@ function MapView() {
     return (
 
         <>
-            <>
+            <div style={{marginLeft:"30px"}}>
                 <div style={styles.sButton}>
                     <RangeController onClickFunc={changeRange}/>
                 </div>
-            </>
-            <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
-                <CustomMap cdata={cInfo} adata={agentInfo} rdata={road} lat={center[0].lat} lng={center[0].lng}
-                           level={range}/>
+
+                <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
+                    <CustomMap cdata={cInfo} adata={agentInfo} rdata={road} lat={center[0].lat} lng={center[0].lng}
+                               level={range}/>
+                </div>
             </div>
         </>
     );
@@ -316,14 +313,13 @@ export default MapView;
 
 const styles = {
     sButton: {
-        marginLeft: "1186px",
-        marginTop: "90px",
+        marginLeft: "1368px",
+        marginTop: "170px",
         flexDirection: 'column',
     },
     MapView: {
-        marginTop:"-33px",
-        marginLeft:"334px",
-        marginBottom:"50px",
+        marginTop: "7px",
+        marginLeft: "369px",
         width: "70%",
         height: "550px",
     }

@@ -34,8 +34,8 @@ function CustomMap(props){
                 }
                 style={{
                     // 지도의 크기
-                    width: "80%",
-                    height: "730px",
+                    width: "95%",
+                    height: "950px",
                 }}
                 level={props.level} // 지도의 확대 레벨
                 onCenterChanged={(map) => setPosition({ // 드래그로 인해 바뀌는 지도의 센터 값 추적
