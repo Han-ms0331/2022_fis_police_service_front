@@ -134,5 +134,26 @@ export const mainHandlers = [
             )
         )
     }),
+    rest.post('/call', async (req, res, ctx) => {
+        return res(
+            ctx.json({
+                result: "success"
+            })
+        )
+    }),
+    rest.get('/mail/send', async (req, res, ctx) => {
+        return res(
+            ctx.json({
+                result: "success"
+            })
+        )
+    }),
+    rest.post('/schedule', async (req, res, ctx) => {
+        return res(
+            ctx.json({
+                result: "success"
+            })
+        )
+    }),
 
 ];
