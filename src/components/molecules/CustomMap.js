@@ -4,6 +4,8 @@ import {Map, MapMarker} from "react-kakao-maps-sdk";
 import CustomButton from "../atoms/CustomButton";
 import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
+import {positionState} from "../../store/MapCenterPositionStore";
+import {useRecoilState} from "recoil";
 
 /*
     날짜 : 2022/01/11 4:34 PM
@@ -13,10 +15,13 @@ import CustomMarker from "../atoms/CustomMarker";
 */
 
 function CustomMap(props){
-    const [position, setPosition] = useState({ //   지도의 바뀌는 센터 값 추적
-        center: {lat: props.lat, lng: props.lng},
-        isPanto: true,
-    })
+    /*const [position, setPosition] = useRecoilState(positionState);*///   지도의 바뀌는 센터 값 추적
+    const [position, setPosition] = useState(
+        {
+            center: {lat: props.lat, lng: props.lng},
+            isPanto: true,
+        }
+    )
     return (
         <>
             <Map // 지도를 표시할 Container

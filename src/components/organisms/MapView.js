@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
+import {useRecoilState} from "recoil";
+import {positionState} from "../../store/MapCenterPositionStore";
 
 
 const roadInfo = [
@@ -194,7 +196,6 @@ roadInfo.forEach((arr, index, buf) => {
 
 
 function MapView() {
-
     const [range, setRange] = useState(2);
     /*const [position, setPosition] = useState({
         center: {lat: center[0].lat, lng: center[0].lng}
