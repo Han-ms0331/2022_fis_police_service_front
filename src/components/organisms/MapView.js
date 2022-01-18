@@ -90,7 +90,7 @@ const roadInfo = [
 /*const roadInfo=async () => {   //서버와 로그인 통신을 하는 부분
     await axios.get("/center/{center_id}/range?range={value}")
         .then((res) => {
-            console.log(res.data);
+            console.log(res.data.cdata);
         })
 }*/
 
@@ -289,7 +289,8 @@ const styles = {
     },
     MapView: {
         marginTop:"-33px",
-        marginLeft:"337px",
+        marginLeft:"334px",
+        marginBottom:"50px",
         width: "70%",
         height: "550px",
     }

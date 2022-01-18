@@ -34,8 +34,8 @@ function CustomMap(props){
                 }
                 style={{
                     // 지도의 크기
-                    width: "110%",
-                    height: "1000px",
+                    width: "80%",
+                    height: "730px",
                     /*marginLeft:"50px"*/
                 }}
                 level={props.level} // 지도의 확대 레벨
