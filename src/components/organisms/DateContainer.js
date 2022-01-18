@@ -1,21 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useRecoilValue} from "recoil";
+import {rowCount} from "../../store/DateSelectedRowsStore";
 
 const DateContainer = ({date}) => {
-    const localDateString = date.toLocaleString().split(' ');
-    const enWeekday = date.toDateString().split((' '))[0];
-    const koWeekday = {'Mon':'월요일','Tue':'화요일','Wed':'수요일','Thu':'목요일','Fri':'금요일','Sat':'토요일','Sun':'일요일',}
-    const weekday = koWeekday[enWeekday];
-    let [year,month,day]=localDateString;
-    year=year.slice(0,-1); month = month.slice(0,-1); day = day.slice(0,-1);
-    const selectedDate = year+'년 '+month+'월 '+day+'일 '+weekday
+    function getSelectedDate() { // 선택날짜를 ----년-월-일-요일 형식으로 구하는 함수
+        const localDateString = date.toLocaleString().split(' ');
+        const enWeekday = date.toDateString().split((' '))[0];
+        const koWeekday = {'Mon':'월요일','Tue':'화요일','Wed':'수요일','Thu':'목요일','Fri':'금요일','Sat':'토요일','Sun':'일요일',}
+        const weekday = koWeekday[enWeekday];
+        let [year,month,day]=localDateString;
+        year=year.slice(0,-1); month = month.slice(0,-1); day = day.slice(0,-1);
+        return year+'년 '+month+'월 '+day+'일 '+weekday
+    }
+       const selectedDate =getSelectedDate();
+
+    const rows = useRecoilValue(rowCount); /*해당 날짜에 검색되는 스케줄 수*/
     return (
         <Container>
             <SelectedDate>
                 <Header>선택날짜</Header>
                 <p>{selectedDate}</p>
                 <Header>스케쥴 개수</Header>
-                <p>269건</p>
+                <p>{rows}건</p>
             </SelectedDate>
             </Container>
             );

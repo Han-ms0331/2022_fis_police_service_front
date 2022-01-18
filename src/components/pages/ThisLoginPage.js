@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import {Link} from "react-router-dom";
 import LoginTemplate from "../templates/LoginTemplate";
 import {Container, Grid} from "@mui/material";
 
