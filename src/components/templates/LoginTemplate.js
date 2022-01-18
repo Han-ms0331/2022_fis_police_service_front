@@ -13,7 +13,10 @@ import {AuthorityState} from "../../store/AuthorityStore";
 
 function LoginTemplate(props) {
     const onLogin = async () => {   //서버와 로그인 통신을 하는 부분
-        await axios.get("/login")
+        await axios.post("/login", {
+            id: "1234",
+            password:"1234"
+        })
             .then((res) => {
                 console.log(res.data.result);
                 if (res.data.result === "success")
@@ -31,4 +34,5 @@ function LoginTemplate(props) {
         </div>
     );
 }
+
 export default LoginTemplate;
