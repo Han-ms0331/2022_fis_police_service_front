@@ -11,12 +11,21 @@ import {atom} from "recoil";
 export const searchKeyword = atom({
     key: 'searchKeyword',
     default: {
-        No: "",
-        agent: "",
-        center: "",
-        etc: "",
-        change: "",
-        call: "",
-        notice: "",
-    }
+        schedule_id: "",              // 스케쥴 id
+        a_code: "",                // 현장요원 코드
+        a_name: "",                // 현장요원 이름
+        center_id: "",             // 센터 id
+        c_name: "",                // 센터 이름
+        c_address: "",       // 센터 주소
+        c_ph: "",                     // 센터 전화번호
+        estimate_num: 0,               // 예상 인원
+        visit_date: "",        // 방분 날짜
+        visit_time: "",               // 방문 시간
+        center_etc: "",                    // 센터 특이사항
+        agent_etc: "",                     // 현장요원 특이사항
+        modified_info: "",                  // 변경사항
+        total_etc: "",                      // 스케쥴 특이사항
+        call_check: "",                     // 최근 통화 상태
+        call_check_info: "",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
+    },
 });

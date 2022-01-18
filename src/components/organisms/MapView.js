@@ -4,6 +4,8 @@ import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
 
 
+
+
 const roadInfo = [
     {
         c_id: "1",
@@ -87,13 +89,7 @@ const roadInfo = [
     },
 ]
 
-/*const roadInfo = async () => {   //서버와 로그인 통신을 하는 부분
-    await axios.get('/center/{center_id}/range?range={value}')
-        .then((res) => {
-                console.log(res.data.cdata);
-            }
-        )
-}*/
+
 
 const agentInfo = [
     {
@@ -195,7 +191,6 @@ roadInfo.forEach((arr, index, buf) => {
 
 
 function MapView() {
-
     const [range, setRange] = useState(2);
     /*const [position, setPosition] = useState({
         center: {lat: center[0].lat, lng: center[0].lng}
@@ -253,19 +248,6 @@ function MapView() {
 
     return (
         <>
-            {/*<button
-                onClick={() =>
-                    setPosition({
-                        center: {
-                            lat: center[0].lat,
-                            lng: center[0].lng,
-                        },
-                        isPanto: true,
-                    })
-                }
-            >
-                지도 중심좌표 이동시키기
-            </button>*/}
             <>
                 <div style={styles.sButton}>
                     <RangeController onClickFunc={changeRange}/>
@@ -279,6 +261,8 @@ function MapView() {
     );
 }
 
+export default MapView;
+
 const styles = {
     sButton: {
         marginLeft: "1186px",
@@ -286,12 +270,12 @@ const styles = {
         flexDirection: 'column',
     },
     MapView: {
-        marginTop: "-33px",
-        marginLeft: "337px",
+        marginTop:"-33px",
+        marginLeft:"334px",
+        marginBottom:"50px",
         width: "70%",
         height: "550px",
     }
 }
 
 
-export default MapView;

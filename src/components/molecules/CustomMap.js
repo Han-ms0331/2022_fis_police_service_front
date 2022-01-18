@@ -5,6 +5,7 @@ import CustomButton from "../atoms/CustomButton";
 import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
 
+
 /*
     날짜 : 2022/01/11 4:34 PM
     작성자 : 지상은
@@ -13,14 +14,13 @@ import CustomMarker from "../atoms/CustomMarker";
 */
 
 function CustomMap(props){
-    const [position, setPosition] = useState({
-        center: {lat: props.lat, lng: props.lng},
-        isPanto: true,
-    })
-    /*const [mid,setMid]=useState({
-        center:{lat: 33.450492180670004, lng: 126.5716140938378},
-        isPanto:false,
-    })*/
+    /*const [position, setPosition] = useRecoilState(positionState);*///   지도의 바뀌는 센터 값 추적
+    const [position, setPosition] = useState(
+        {
+            center: {lat: props.lat, lng: props.lng},
+            isPanto: true,
+        }
+    )
     return (
         <>
             <Map // 지도를 표시할 Container
@@ -34,12 +34,11 @@ function CustomMap(props){
                 }
                 style={{
                     // 지도의 크기
-                    width: "110%",
-                    height: "1000px",
-                    /*marginLeft:"50px"*/
+                    width: "80%",
+                    height: "730px",
                 }}
                 level={props.level} // 지도의 확대 레벨
-                onCenterChanged={(map) => setPosition({
+                onCenterChanged={(map) => setPosition({ // 드래그로 인해 바뀌는 지도의 센터 값 추적
                     center: {
                         lat: map.getCenter().getLat(),
                         lng: map.getCenter().getLng(),
@@ -59,12 +58,12 @@ function CustomMap(props){
                                       })
                                   }
                     />
-                </div>
+                </div> {/*return 버튼*/}
                 <CustomPolyLine
                     path={[
                         props.rdata,
                     ]}
-                />
+                /> {/*선택된 현장 요원의 동선 표시*/}
                 {props.cdata.map((position, index) => (
                     <CustomMarker
                         key={index}
@@ -73,16 +72,15 @@ function CustomMap(props){
                         content={position.contents} // type이 center일 경우 전달받은 시설정보를 띄워준다
 
                     />
-                ))}
+                ))} {/*선택된 센터의 주변 시설 정보 표시*/}
                 {props.adata.map((position, index) => (
                     <CustomMarker
                         key={index}
                         type={position.type}
                         position={position.latlng} // 마커를 표시할 위치
                     />
-                ))}
+                ))} {/*선택된 현장 요원과 주변 현장 요원 표시*/}
             </Map>
-            {/*{position && <p>{'변경된 지도 중심좌표는 ' + position.lat + ' 이고, 경도는 ' + position.lng + ' 입니다'}</p>}*/}
         </>
     )
 }
