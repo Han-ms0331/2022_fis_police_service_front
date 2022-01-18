@@ -67,7 +67,7 @@ const UserManageTemplate = () => {
         delete changeContent['avg']; /*평균통화건수 제외*/
         let date =changeContent['start'].replaceAll('/','-');
         changeContent['start']= date;
-        setCurrentInfo(changeContent);
+        setCurrentInfo(changeContent)
         handleOpen(); /*수정창을 오픈한다*/
     }
 

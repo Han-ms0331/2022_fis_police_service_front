@@ -11,8 +11,8 @@ export const agent = [
         agentPhone: "010-1234-1212",
         agentHasCar:"자차",
         agentAddress:"경기도 안양시 동안구 흥안대로 414번길 20 101동 2203호",
-        device: "001",
-        receivedate: "2021/11/13",
+        deviceNumber: "001",
+        receiveDate: "2021/11/13",
     },
     {
         agentName: "한명수",
@@ -21,8 +21,8 @@ export const agent = [
         agentPhone: "010-1234-12123",
         agentHasCar:"자차",
         agentAddress:"경기도 안양시 동안구 흥안대로 414번길 20 101동 2203호",
-        device: "001",
-        receivedate: "2021/11/13",
+        deviceNumber: "001",
+        receiveDate: "2021/11/13",
     },{
         agentName: "한명수",
         agentId: "fs003",
@@ -30,7 +30,7 @@ export const agent = [
         agentPhone: "010-1234-1234",
         agentHasCar:"도보",
         agentAddress:"경기도 안양시 동안구 흥안대로 414번길 20 101동 2203호",
-        device: "001",
-        receivedate: "2021/11/13",
+        deviceNumber: "001",
+        receiveDate: "2021/11/13",
     },
     ]

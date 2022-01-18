@@ -24,6 +24,8 @@ const AgentManageTemplate = () => {
         agentPhone: "",
         agentHasCar: "",
         agentAddress: "",
+        deviceNumber:"",
+        receiveDate:""
     });
     const handleOpen = () =>{setOpen(true)};
     const handleClose = () =>{setOpen(false)};
@@ -52,8 +54,8 @@ const AgentManageTemplate = () => {
         // button이 관리페이지의 정보 수정 버튼일 시...
         console.log(e.target.name);
         const changeContent = {...contents[parseInt(e.target.name)]};
-        delete changeContent['device'];
-        delete  changeContent['receivedate'];
+        let date =changeContent['receiveDate'].replaceAll('/','-');
+        changeContent['receiveDate']= date;
         setCurrentInfo(changeContent);
         handleOpen();
     }
