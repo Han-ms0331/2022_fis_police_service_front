@@ -16,6 +16,7 @@ function CustomButton(props) {
         return (//width height color borderRadius backgroundColor content 를 필요로 함
             <Button variant="contained"
                     name={props.name}
+                    type={props.submitType}
                     style={{
                         width: props.width,
                         height: props.height,
@@ -24,7 +25,9 @@ function CustomButton(props) {
                         backgroundColor: props.backgroundColor,
                         border: props.border,
                         fontSize:props.fontSize,
-                        boxSizing:"border-box"
+                        boxSizing:"border-box",
+                        padding:props.padding,
+                        margin:props.margin
                     }}
                     onClick={props.onClick}
             >{props.content}</Button>
@@ -40,7 +43,10 @@ function CustomButton(props) {
                         border: props.border,
                         borderRadius: props.borderRadius,
                         backgroundColor: props.backgroundColor,
-                        fontSize:props.fontSize
+                        fontSize:props.fontSize,
+                        boxSizing:"border-box",
+                        padding:props.padding,
+                        margin:props.margin
                     }}
                     onClick={props.onClick}
             >{props.content}</Button>);
