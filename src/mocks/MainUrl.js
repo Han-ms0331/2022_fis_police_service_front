@@ -4,6 +4,11 @@ import {rest} from "msw";
     작성자: 한명수
     작성내용: main page에서 필요한 mainhandler작성
 */
+
+const center_id="1"
+
+const value="4"
+
 export const mainHandlers = [
     rest.get('/main', async (req, res, ctx) => {
         return res(
@@ -47,7 +52,7 @@ export const mainHandlers = [
             })
         )
     }),
-    rest.get('/center/{center_id}/range?range={value}', async (req, res, ctx) => {
+    rest.get(`/main/center/${center_id}/range?range=${value}`, async (req, res, ctx) => {
         return res(
             ctx.json({
                     cdata: [

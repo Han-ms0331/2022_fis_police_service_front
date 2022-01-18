@@ -2,9 +2,12 @@ import React, {useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
+import CenterInfo from "./CenterInfo";
 
+let center_id = "1"
+let value = "4"
 
-const roadInfo = [
+/*const roadInfo = [
     {
         c_id: "1",
         c_address: "제즈더",
@@ -85,7 +88,7 @@ const roadInfo = [
         c_latitude: "33.42466652636361",
         c_longitude: "126.55392992730667",
     },
-]
+]*/
 
 
 const agentInfo = [
@@ -159,6 +162,7 @@ selCenter.forEach((arr, index, buf) => {
     })
 })
 
+/*
 roadInfo.forEach((arr, index, buf) => {
     selCenter.forEach((arr1, index1, buf1) => {
         if (arr.c_id === arr1.c_id) {
@@ -185,35 +189,87 @@ roadInfo.forEach((arr, index, buf) => {
             </div>
     })
 })
+*/
 
 
 function MapView() {
+
+    const buffer=[]
     const [range, setRange] = useState(2);
     const [centerInfo, setCenterInfo] = useState("");
+    const loadInfo = async () => {
+        await axios.get(`/main/center/${center_id}/range?range=${value}`)
+            .then((res) => {
+                console.log("done")
+                setCenterInfo(res.data.cdata)
+                console.log(centerInfo)
+                let list = centerInfo
+                list.forEach((arr, index, buf) => {
+                    selCenter.forEach((arr1, index1, buf1) => {
+                        if (arr.c_id === arr1.c_id) {
+                            list.push({
+                                ...arr,
+                                c_order: (index1 + 1)
+                            })
+                        }
+                    })
+                })
+                setCenterInfo(list);
+                let list1=centerInfo
+                list1.forEach((arr, index, buf) => {
+                    cInfo.push({
+                        ...arr,
+                        latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
+                        type: "center",
+                        contents:
+                            <div>
+                                <div>{arr.c_order}</div>
+                                <div>시설 이름: {arr.c_name}</div>
+                                <div>예상 인원: {}</div>
+                                <div>방문 예정 시간: {}</div>
+                            </div>
+                    })
+                })
+                setCenterInfo(list1);
+                console.log("complete");
+                console.log(centerInfo)
+            })
+
+    }
     /*const [position, setPosition] = useState({
         center: {lat: center[0].lat, lng: center[0].lng}
     })*/
 
-    /*const loadInfo=async () => {
-        await axios.get('/center/{center_id}/range?range={value}')
-            .then((res) =>{
-                console.log(res.data)
+   /* const loadInfo = async () => {
+        await axios.get(`/main/center/${center_id}/range?range=${value}`)
+            .then((res) => {
+                console.log("done")
                 setCenterInfo(res.data.cdata)
+                /!*for(let i=0;i<res.data.cdata.length;i++) {
+                    buffer.push(res.data.cdata[i]);
+                }*!/
             })
-        }
-    loadInfo().then((res)=>{
 
-        centerInfo.forEach((arr, index, buf) => {
+    }
+
+
+    loadInfo().then((res) => {
+        console.log("done")
+        /!*setCenterInfo(buffer)*!/
+        let list = centerInfo
+        list.forEach((arr, index, buf) => {
             selCenter.forEach((arr1, index1, buf1) => {
                 if (arr.c_id === arr1.c_id) {
-                    centerInfo.push({
+                    list.push({
                         ...arr,
                         c_order: (index1 + 1)
                     })
                 }
             })
         })
-        centerInfo.forEach((arr, index, buf) => {
+        setCenterInfo(list);
+        let list1=centerInfo
+        list1.forEach((arr, index, buf) => {
             cInfo.push({
                 ...arr,
                 latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
@@ -227,65 +283,61 @@ function MapView() {
                     </div>
             })
         })
-       /!* centerInfo.forEach((arr, index, buf) => {
-            selCenter.forEach((arr1, index1, buf1) => {
-                if (arr.c_id === arr1.c_id) {
-                    centerInfo.push({
-                        ...arr,
-                        c_order: (index1 + 1)
-                    })
-                }
-            })
-        })*!/
-
-    });
-*/
+        setCenterInfo(list1);
+        console.log("done")
+    });*/
 
 
+
+    /*let list = centerInfo
+    list.forEach((arr, index, buf) => {
+        selCenter.forEach((arr1, index1, buf1) => {
+            if (arr.c_id === arr1.c_id) {
+                list.push({
+                    ...arr,
+                    c_order: (index1 + 1)
+                })
+            }
+        })
+    })
+    list.forEach((arr, index, buf) => {
+        cInfo.push({
+            ...arr,
+            latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
+            type: "center",
+            contents:
+                <div>
+                    <div>{arr.c_order}</div>
+                    <div>시설 이름: {arr.c_name}</div>
+                    <div>예상 인원: {}</div>
+                    <div>방문 예정 시간: {}</div>
+                </div>
+        })
+    })
+    setCenterInfo(list);*/
     const changeRange = (e) => {
         console.log(e.target)
         if (e.target.textContent === "250m") {
             setRange(2)
-            console.log('250m')
-            /* setPosition({
-                 center: {lat: center[0].lat, lng: center[0].lng},
-             })*/
-            {/*axios.get(url).then(response => {
-                setData(response.data)
-            })
-              data.forEach((arr,index,buf)=>{
-                rangeData.push(arr.latlng)
-              }
-           */
-            }
+
+            console.log('250m');
+            loadInfo().then((res)=>{
+                console.log("success")
+            });
         } else if (e.target.textContent === "500m") {
             setRange(3)
+
             console.log('500m')
-            /*setPosition({
-                center: {lat: center[0].lat, lng: center[0].lng},
-            })*/
-            {/*axios.get(url).then(response => {
-                setData(response.data)
-            })
-              data.forEach((arr,index,buf)=>{
-                rangeData.push(arr.latlng)
-              }
-            */
-            }
+            loadInfo().then((res)=>{
+                console.log("success")
+            });
         } else if (e.target.textContent === "1km") {
             setRange(4)
+
             console.log('1000m')
-            /*setPosition({
-                center: {lat: center[0].lat, lng: center[0].lng},
-            })*/
-            {/*axios.get(url).then(response => {
-                setData(response.data)
-            })
-              data.forEach((arr,index,buf)=>{
-                rangeData.push(arr.latlng)
-              }
-            */
-            }
+            loadInfo().then((res)=>{
+                console.log("success")
+            });
         }
 
     }
@@ -294,7 +346,7 @@ function MapView() {
     return (
 
         <>
-            <div style={{marginLeft:"30px"}}>
+            <div style={{marginLeft: "30px"}}>
                 <div style={styles.sButton}>
                     <RangeController onClickFunc={changeRange}/>
                 </div>
