@@ -4,8 +4,7 @@ import {Map, MapMarker} from "react-kakao-maps-sdk";
 import CustomButton from "../atoms/CustomButton";
 import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
-import {positionState} from "../../store/MapCenterPositionStore";
-import {useRecoilState} from "recoil";
+
 
 /*
     날짜 : 2022/01/11 4:34 PM

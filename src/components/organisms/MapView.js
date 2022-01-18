@@ -3,7 +3,7 @@ import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
 import {useRecoilState} from "recoil";
-import {positionState} from "../../store/MapCenterPositionStore";
+
 
 
 const roadInfo = [
