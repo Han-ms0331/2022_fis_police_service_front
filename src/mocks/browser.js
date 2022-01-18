@@ -13,4 +13,3 @@ import {scheduleHandlers} from "./ScheduleUrl";
 
 
 export const worker = setupWorker(...handlers,...mainHandlers,...loginHandlers,...manageHandlers,...scheduleHandlers);
-

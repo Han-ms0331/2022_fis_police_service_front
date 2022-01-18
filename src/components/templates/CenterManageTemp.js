@@ -12,7 +12,7 @@ import axios from "axios";
 
 function CenterManageTemp(props) {
     const [contents,setContents]=useState("")
-    const headerContent = ["시설아이디", "시설이름", "참여여부", "전화번호", "시설주소"]
+    const headerContent = ["시설이름", "참여여부", "전화번호", "시설주소"]
 
     //form이 열리고 닫히고에 관련된 state 정의
     const [open, setOpen] = React.useState(false);
@@ -26,7 +26,6 @@ function CenterManageTemp(props) {
 
     //선택한 시설에 대한 정보들을 관리할 상태 정의
     const [currentInfo, setCurrentInfo] = useState({
-        centerId: "",
         centerName: "",
         centerPhone: "",
         centerAddress: ""
@@ -86,7 +85,6 @@ function CenterManageTemp(props) {
     // 시설 추가 버튼을 누르면 일어나는 일에 대한 함수. 시설을 선택한 것이 아니므로 currentInfo의 정보를 모두 null로 set함
     const handleAddButtonClick = (e) => {
         setCurrentInfo({
-            centerId: "",
             centerName: "",
             centerPhone: "",
             centerAddress: ""
@@ -119,7 +117,7 @@ function CenterManageTemp(props) {
                                 height="100%"/>
                 </div>
                 <ListContainer headerContents={headerContent} contents={contents} width="1500px" height="100vh"
-                               gridRatio="1fr 1fr 1fr 1fr 3fr 1fr" buttonContent="정보수정"
+                               gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/>
 
 

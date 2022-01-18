@@ -47,6 +47,7 @@ export const scheduleHandlers = [
         )
     }),
     rest.get(`/schedule?date=${value}`, async(req, res, ctx)=>{
+        console.log(req.params);
         return res(
             ctx.json([
                 {
@@ -64,7 +65,7 @@ export const scheduleHandlers = [
                     agent_etc: "현장 요원 방문시 발열체크 및 백신패스 필수",                     // 현장요원 특이사항
                     modified_info: "시간 조정\n >10:00-11:00",                  // 변경사항
                     total_etc: "신청서 완료",                      // 스케쥴 특이사항
-                    call_check: "통화 완료",                     // 최근 통화 상태
+                    call_check: "통화완료",                     // 최근 통화 상태
                     call_check_info: "null",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
                 },
                 {
@@ -83,7 +84,7 @@ export const scheduleHandlers = [
                     modified_info: "null",
                     total_etc: "null",
                     call_check: "부재중",
-                    call_check_info: "3건",
+                    call_check_info: "3",
                 },
                 {
                     schedule_id: 18,
@@ -107,20 +108,24 @@ export const scheduleHandlers = [
         )
     }),
     rest.patch('/schedule', async(req, res, ctx)=>{
-        const originalResponse = await ctx.axios.get(req);
-        const originalResponseData = await originalResponse.json();
+        const { visit_date, visit_time, estimate_num, modified_info, call_check, total_etc } = req.body;
+
         return res(
             ctx.json({
-                estimate_num: originalResponseData.estimate_num,
-                modified_info: originalResponseData.modified_info,
+                visit_date: visit_date,
+                visit_time: visit_time,
+                estimate_num: estimate_num,
+                modified_info: modified_info,
+                call_check: call_check,
+                total_etc: total_etc,
             })
         )
     }),
     rest.post('/schedule/announce', async(req, res, ctx)=>{
-        const { center_id } = req.params;
+        const { checkedList } = req.body;
         return res(
             ctx.json({
-                center_id: center_id,
+                checkedList,
             })
         )
     }),

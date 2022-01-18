@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function TransitionsModal() {
+export default function TransitionsModal({ defaultInput }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -33,12 +33,6 @@ export default function TransitionsModal() {
         setOpen(false);
     };
 
-    const onPatch = async() => {
-        await axios.patch('/schedule')
-            .then((res) => {
-                console.log(res.data);
-            })
-    }
 
     return (
         <div>
@@ -57,7 +51,7 @@ export default function TransitionsModal() {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <ScheduleModifyInputForm onClickFunction={handleClose} />
+                        <ScheduleModifyInputForm defaultInput={defaultInput} onClickFunction={handleClose} />
                     </div>
                 </Fade>
             </Modal>

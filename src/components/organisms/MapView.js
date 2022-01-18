@@ -4,8 +4,6 @@ import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
 
 
-
-
 const roadInfo = [
     {
         c_id: "1",
@@ -88,7 +86,6 @@ const roadInfo = [
         c_longitude: "126.55392992730667",
     },
 ]
-
 
 
 const agentInfo = [
@@ -192,9 +189,57 @@ roadInfo.forEach((arr, index, buf) => {
 
 function MapView() {
     const [range, setRange] = useState(2);
+    const [centerInfo, setCenterInfo] = useState("");
     /*const [position, setPosition] = useState({
         center: {lat: center[0].lat, lng: center[0].lng}
     })*/
+
+    /*const loadInfo=async () => {
+        await axios.get('/center/{center_id}/range?range={value}')
+            .then((res) =>{
+                console.log(res.data)
+                setCenterInfo(res.data.cdata)
+            })
+        }
+    loadInfo().then((res)=>{
+
+        centerInfo.forEach((arr, index, buf) => {
+            selCenter.forEach((arr1, index1, buf1) => {
+                if (arr.c_id === arr1.c_id) {
+                    centerInfo.push({
+                        ...arr,
+                        c_order: (index1 + 1)
+                    })
+                }
+            })
+        })
+        centerInfo.forEach((arr, index, buf) => {
+            cInfo.push({
+                ...arr,
+                latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
+                type: "center",
+                contents:
+                    <div>
+                        <div>{arr.c_order}</div>
+                        <div>시설 이름: {arr.c_name}</div>
+                        <div>예상 인원: {}</div>
+                        <div>방문 예정 시간: {}</div>
+                    </div>
+            })
+        })
+       /!* centerInfo.forEach((arr, index, buf) => {
+            selCenter.forEach((arr1, index1, buf1) => {
+                if (arr.c_id === arr1.c_id) {
+                    centerInfo.push({
+                        ...arr,
+                        c_order: (index1 + 1)
+                    })
+                }
+            })
+        })*!/
+
+    });
+*/
 
 
     const changeRange = (e) => {
@@ -247,32 +292,34 @@ function MapView() {
 
 
     return (
+
         <>
-            <>
+            <div style={{marginLeft:"30px"}}>
                 <div style={styles.sButton}>
                     <RangeController onClickFunc={changeRange}/>
                 </div>
-            </>
-            <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
-                <CustomMap cdata={cInfo} adata={agentInfo} rdata={road} lat={center[0].lat} lng={center[0].lng}
-                           level={range}/>
+
+                <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
+                    <CustomMap cdata={cInfo} adata={agentInfo} rdata={road} lat={center[0].lat} lng={center[0].lng}
+                               level={range}/>
+                </div>
             </div>
         </>
     );
 }
 
+
 export default MapView;
 
 const styles = {
     sButton: {
-        marginLeft: "1186px",
-        marginTop: "90px",
+        marginLeft: "1368px",
+        marginTop: "170px",
         flexDirection: 'column',
     },
     MapView: {
-        marginTop:"-33px",
-        marginLeft:"334px",
-        marginBottom:"50px",
+        marginTop: "7px",
+        marginLeft: "369px",
         width: "70%",
         height: "550px",
     }
