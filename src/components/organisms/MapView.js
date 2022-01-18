@@ -253,19 +253,6 @@ function MapView() {
 
     return (
         <>
-            {/*<button
-                onClick={() =>
-                    setPosition({
-                        center: {
-                            lat: center[0].lat,
-                            lng: center[0].lng,
-                        },
-                        isPanto: true,
-                    })
-                }
-            >
-                지도 중심좌표 이동시키기
-            </button>*/}
             <>
                 <div style={styles.sButton}>
                     <RangeController onClickFunc={changeRange}/>
