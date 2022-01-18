@@ -21,15 +21,15 @@ export const mainHandlers = [
                     {
                         center_id: "1",
                         c_name: "동그라미 유치원",
-                        c_ph: "010-2105-7346",
                         participation: "참여",
+                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
                     },
                     {
                         center_id: "2",
                         c_name: "딩동댕 유치원",
-                        c_ph: "010-2105-7346",
                         participation: "참여",
+                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
                     }
                 ],
@@ -40,10 +40,42 @@ export const mainHandlers = [
     rest.get('/main/center/select?center_id={value}', async (req, res, ctx) => {
         return res(
             ctx.json({
-                lists: [
-                    //연락기록, 방문일정, 위도경도 데이터 어떻게 줄지 몰라서 못함 ㅠㅠ -신은수
-                ],
-                result: "success"
+                id:"10",
+                c_sido: null,
+                c_sigungu: null,
+                c_name: "111",
+                c_type: null,
+                c_status: null,
+                c_address: "분당구 불정로 6",
+                c_zipcode: null,
+                c_faxNum: null,
+                c_people: null,
+                c_hpAddress: null,
+                c_latitude: 123.0,
+                c_longitude: null,
+                participation: null,
+                visited: null,
+                callList: [],
+                scheduleList: [
+                    {
+                        id: 16,
+                        user: {
+                            user_id: 13,
+                            user_name : 111
+                        },
+                        user_id: 13,
+                        agent: {
+                            agent_id: 7,
+                            agent_name: "asd"
+                        },
+                        receipt_date: "2022-01-18T13:34:46.626173",
+                        visit_date: "2021-01-18",
+                        estimate_num: 123,
+                        center_etc: "111",
+                        agent_etc: "111",
+                        total_etc: null
+                    }
+                ]
             })
         )
     }),

@@ -16,10 +16,6 @@ function AgentManageInputForm(props) {
                                 setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentName']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="아이디: " inputName="agentId" inputType="text" width="300px" row="1"
-                                setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentId']}/>
-            </div>
-            <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="현장요원코드: " inputName="agentCode" inputType="text" width="300px" row="1"
                                 setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentCode']}/>
             </div>
