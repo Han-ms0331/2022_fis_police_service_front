@@ -29,7 +29,7 @@ function CustomInput(props) {
         element = <TextField name={props.name} type={props.type} style={{width: props.width}} size="small"
                              defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
     } else if (props.type === "date") {
-        element = <TextField type="date" style={{width: props.width}} size="small"
+        element = <TextField name={props.name} type="date" style={{width: props.width}} size="small"
                              defaultValue={props.defaultValue} onChange={props.setValueFunction}/>
     } else if (props.type === "select") {
 

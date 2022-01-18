@@ -14,9 +14,9 @@ import AgentManageInputForm from "../organisms/AgentManageInputForm";
 작성내용: 현장요원관리 탭
 */
 const AgentManageTemplate = () => {
-    const [open,setOpen] = useState(false);
-    const contents=agent;
-    const headerContent = ["이름","아이디","현장요원코드","전화번호","차량여부","자택주소","장비번호","장비 수령날짜"]
+    const [open, setOpen] = useState(false);
+    const contents = agent;
+    const headerContent = ["이름", "아이디", "현장요원코드", "전화번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜"]
     const [currentInfo, setCurrentInfo] = useState({
         agentName: "",
         agentId: "",
@@ -24,21 +24,29 @@ const AgentManageTemplate = () => {
         agentPhone: "",
         agentHasCar: "",
         agentAddress: "",
+        deviceNumber: "",
+        receiveDate: ""
     });
-    const handleOpen = () =>{setOpen(true)};
-    const handleClose = () =>{setOpen(false)};
+    const handleOpen = () => {
+        setOpen(true)
+    };
+    const handleClose = () => {
+        setOpen(false)
+    };
     const handleInputFormChange = (e) => {
         // console.log(e);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
-            setCurrentInfo({
-                ...currentInfo, // 기존의 input 객체를 복사한 뒤
-                [name]: value // name 키를 가진 값을 value 로 설정
-            });
-        };
+        setCurrentInfo({
+            ...currentInfo, // 기존의 input 객체를 복사한 뒤
+            [name]: value // name 키를 가진 값을 value 로 설정
+        });
 
-        // useEffect(()=>{
-        //     console.log(currentInfo)}
-        // ,[currentInfo]);
+        // console.log(currentInfo)
+    };
+
+    // useEffect(()=>{
+    //     console.log(currentInfo)}
+    // ,[currentInfo]);
 
     const handleClickSave = () => {
         //api 수정 요청 보냄,,?
@@ -52,23 +60,27 @@ const AgentManageTemplate = () => {
         // button이 관리페이지의 정보 수정 버튼일 시...
         console.log(e.target.name);
         const changeContent = {...contents[parseInt(e.target.name)]};
-        delete changeContent['device'];
-        delete  changeContent['receivedate'];
+        let date = changeContent['receiveDate'].replaceAll('/', '-');
+        changeContent['receiveDate'] = date;
         setCurrentInfo(changeContent);
         handleOpen();
     }
     return (
         <Main>
             <ListContainer width="1500px" height="100vh" headerContents={headerContent} contents={contents}
-                           gridRatio="1fr 1fr 1fr 2fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정" onClickFunction={handleModifyButtonClick}/>
-            <CustomButton  type = "normal" width="150px" height= "35px" borderRadius="3px" color="#222" backgroundColor="#FFD400" content="현장요원 추가" onClick={()=>setOpen(true)}/>
+                           gridRatio="1fr 1fr 1fr 2fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정"
+                           onClickFunction={handleModifyButtonClick}/>
+            <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
+                          backgroundColor="#FFD400" content="현장요원 추가" onClick={() => setOpen(true)}/>
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo} handleInputFormChange={handleInputFormChange} handleClickSave={handleClickSave}/>
+                    <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo}
+                                          handleInputFormChange={handleInputFormChange}
+                                          handleClickSave={handleClickSave}/>
                 </Box>
             </Modal>
         </Main>
@@ -91,12 +103,13 @@ const style = {
 const Main = styled.div`
   display: flex;
   justify-content: center;
-& >button{
-  position: fixed;
-  bottom: 50px;
-  left: 50%;
-  transform: translate(-50%,0);
-}
+
+  & > button {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
 `;
 
 export default AgentManageTemplate;

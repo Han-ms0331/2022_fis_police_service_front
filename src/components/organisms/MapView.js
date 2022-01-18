@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
+import axios from "axios";
+
+
 
 
 const roadInfo = [
@@ -85,6 +88,8 @@ const roadInfo = [
         c_longitude: "126.55392992730667",
     },
 ]
+
+
 
 const agentInfo = [
     {
@@ -178,20 +183,18 @@ roadInfo.forEach((arr, index, buf) => {
             <div>
                 <div>{arr.c_order}</div>
                 <div>시설 이름: {arr.c_name}</div>
-                <div>예상 인원: {arr.c_count}</div>
-                <div>방문 예정 시간: {arr.c_time}</div>
+                <div>예상 인원: {}</div>
+                <div>방문 예정 시간: {}</div>
             </div>
     })
 })
 
 
 function MapView() {
-
     const [range, setRange] = useState(2);
     /*const [position, setPosition] = useState({
         center: {lat: center[0].lat, lng: center[0].lng}
     })*/
-
 
 
     const changeRange = (e) => {
@@ -245,19 +248,6 @@ function MapView() {
 
     return (
         <>
-            {/*<button
-                onClick={() =>
-                    setPosition({
-                        center: {
-                            lat: center[0].lat,
-                            lng: center[0].lng,
-                        },
-                        isPanto: true,
-                    })
-                }
-            >
-                지도 중심좌표 이동시키기
-            </button>*/}
             <>
                 <div style={styles.sButton}>
                     <RangeController onClickFunc={changeRange}/>
@@ -265,25 +255,27 @@ function MapView() {
             </>
             <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
                 <CustomMap cdata={cInfo} adata={agentInfo} rdata={road} lat={center[0].lat} lng={center[0].lng}
-                        level={range} />
+                           level={range}/>
             </div>
         </>
     );
 }
 
+export default MapView;
+
 const styles = {
     sButton: {
-        marginLeft:"683px",
-        marginTop:"90px",
+        marginLeft: "1186px",
+        marginTop: "90px",
         flexDirection: 'column',
     },
     MapView: {
         marginTop:"-33px",
-        marginLeft:"337px",
+        marginLeft:"334px",
+        marginBottom:"50px",
         width: "70%",
         height: "550px",
     }
 }
 
 
-export default MapView;

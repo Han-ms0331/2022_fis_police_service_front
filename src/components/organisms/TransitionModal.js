@@ -5,6 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ScheduleModifyInputForm from "./ScheduleModifyInputForm";
 import CustomButton from "../atoms/CustomButton";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -31,6 +32,13 @@ export default function TransitionsModal() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const onPatch = async() => {
+        await axios.patch('/schedule')
+            .then((res) => {
+                console.log(res.data);
+            })
+    }
 
     return (
         <div>

@@ -11,4 +11,6 @@ import {scheduleHandlers} from "./ScheduleUrl";
     작성내용: mocking에 필요한 worker작성
 */
 
+
 export const worker = setupWorker(...handlers,...mainHandlers,...loginHandlers,...manageHandlers,...scheduleHandlers);
+
