@@ -19,6 +19,8 @@ import Grid from "@material-ui/core/Grid";
 const ScheduleSidebar = () => {
     const [date, setDate] = useState(new Date());
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`
+
 
     const toggleSideBar = ()=>{
         setIsSidebarOpen(!isSidebarOpen)
