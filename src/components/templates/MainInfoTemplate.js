@@ -4,6 +4,7 @@ import CenterInfo from "../organisms/CenterInfo";
 import InfoContainer from "../organisms/InfoContainer";
 import CustomButton from "../atoms/CustomButton";
 import axios from "axios";
+import CallInputForm from "../organisms/CallInputForm";
 
 const CallList = [
     {
@@ -55,46 +56,102 @@ const AgentList = [
 
 function MainInfoTemplate(props) {
     const [isOpen, setIsOpen] = useState(false);
-    const onAdd = () => {
-        setIsOpen((prev) => !prev);
+    const [currentInfo, setCurrentInfo] = useState({
+        u_name: "",
+        in_out: "",
+        dateTime: "",
+        participation: "",
+        c_manager: "",
+        m_ph: "",
+        m_email: "",
+        center_etc: "",
+        agent_etc: ""
+    })
+    const [callList, setCallList] = useState([]);
+    const [agentList, setAgentList] = useState([]);
+
+
+
+
+    /*
+        날짜: 2022/01/18 1:52 오후
+        작성자: 한명수
+        작성내용: sendMail - 서버와 메일전송 통신을 하는 부분
+    */
+    const sendMail = async () => {
+        if (window.confirm("메일을 전송하시겠습니까?")) {
+            const result = await axios.get('/mail/send')
+                .then((res) => {
+                    if (res.data.result === "success") {
+                        alert("메일 전송에 성공하였습니다.")
+                    } else {
+                        alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
+                    }
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
     }
 
-    const onMail = async () => {
-        if(window.confirm("정말"))
-        await axios.get('/center')
-            .then((res) => {
-                console.log(res.data)
-            })
+    /*
+        날짜: 2022/01/18 1:51 오후
+        작성자: 한명수
+        작성내용: onClick- 각 버튼들이 클릭되었을 때 실행하는 로직을 담고있음
+    */
+
+    const onClick = (e) => {
+        if (e.target.name === "open") {
+            setIsOpen(true);
+        } else if (e.target.name === "mail") {
+            sendMail()
+        } else if (e.target.name === "cancel") {
+            if (window.confirm("작성을 취소하시겠습니까?"))
+                setIsOpen(false);
+        } else if (e.target.name === "save") {
+            if (window.confirm("저장하시겠습니까?"))
+                setIsOpen(false);
+        }
     }
 
-return (
-    <div style={{display: "flex", flexDirection: "column", justifyContent: "space-around", height: "100vh"}}>
-        <Container fixed>
-            <CenterInfo/>
-        </Container>
-        <Container fixed>
-            <InfoContainer type={"call"} content={CallList} u_name={localStorage.getItem("userName")}/>
-            {isOpen ?
-                <div style={{marginTop: "20px", display: "flex", justifyContent: "space-around"}}>
-                    <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
-                                  backgroundColor="#FFD400" content="취소" onClick={onAdd}/>
-                    <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
-                                  backgroundColor="#FFD400" content="저장" onClick={onAdd}/>
-                </div>
-                :
-                <div style={{marginTop: "20px", display: "flex", justifyContent: "space-around"}}>
-                    <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
-                                  backgroundColor="#FFD400" content="연락기록 추가" onClick={onAdd}/>
-                    <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
-                                  backgroundColor="#FFD400" content="메일 전송" onClick={onMail}/>
-                </div>
-            }
-        </Container>
-        <Container fixed>
-            <InfoContainer type={"apply"} content={AgentList} u_name={localStorage.getItem("userName")}/>
-        </Container>
-    </div>
-);
+    return (
+        <div style={{display: "flex", flexDirection: "column", height: "99vh", overflow: "auto", width: "550px"}}>
+            <Container fixed sx={{marginBottom: "50px"}}>
+                <CenterInfo/>
+            </Container>
+            <Container fixed sx={{marginBottom: "50px"}}>
+                <InfoContainer type={"call"} content={CallList} u_name={localStorage.getItem("userName")}/>
+                {isOpen ?
+                    <div>
+                        <div>
+                            <CallInputForm data={CallList[1]} currentInfo={currentInfo} setCurrentInfo={setCurrentInfo}/>
+                        </div>
+                        <div style={{margin: "20px 0px", display: "flex", justifyContent: "space-around"}}>
+                            <CustomButton name="cancel" type="normal" width="150px" height="35px" borderRadius="3px"
+                                          color="#222"
+                                          backgroundColor="#FFD400" content="취소" onClick={onClick}/>
+                            <CustomButton name="save" type="normal" width="150px" height="35px" borderRadius="3px"
+                                          color="#222"
+                                          backgroundColor="#FFD400" content="저장" onClick={onClick}/>
+                        </div>
+                    </div>
+                    :
+                    <div style={{marginTop: "20px", display: "flex", justifyContent: "space-around"}}>
+                        <CustomButton name="open" type="normal" width="150px" height="35px" borderRadius="3px"
+                                      color="#222"
+                                      backgroundColor="#FFD400" content="연락기록 추가" onClick={onClick}/>
+                        <CustomButton name="mail" type="normal" width="150px" height="35px" borderRadius="3px"
+                                      color="#222"
+                                      backgroundColor="#FFD400" content="메일 전송" onClick={onClick}/>
+                    </div>
+                }
+            </Container>
+            <Container fixed>
+                <InfoContainer type={"apply"} content={AgentList} u_name={localStorage.getItem("userName")}/>
+            </Container>
+        </div>
+    );
 }
 
 export default MainInfoTemplate;
