@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
-import {useRecoilState} from "recoil";
+
 
 
 
@@ -89,12 +89,7 @@ const roadInfo = [
     },
 ]
 
-/*const roadInfo=async () => {   //서버와 로그인 통신을 하는 부분
-    await axios.get("/center/{center_id}/range?range={value}")
-        .then((res) => {
-            console.log(res.data.cdata);
-        })
-}*/
+
 
 const agentInfo = [
     {
@@ -188,8 +183,8 @@ roadInfo.forEach((arr, index, buf) => {
             <div>
                 <div>{arr.c_order}</div>
                 <div>시설 이름: {arr.c_name}</div>
-                <div>예상 인원: {arr.c_count}</div>
-                <div>방문 예정 시간: {arr.c_time}</div>
+                <div>예상 인원: {}</div>
+                <div>방문 예정 시간: {}</div>
             </div>
     })
 })
@@ -200,7 +195,6 @@ function MapView() {
     /*const [position, setPosition] = useState({
         center: {lat: center[0].lat, lng: center[0].lng}
     })*/
-
 
 
     const changeRange = (e) => {
@@ -261,7 +255,7 @@ function MapView() {
             </>
             <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
                 <CustomMap cdata={cInfo} adata={agentInfo} rdata={road} lat={center[0].lat} lng={center[0].lng}
-                        level={range} />
+                           level={range}/>
             </div>
         </>
     );
@@ -271,8 +265,8 @@ export default MapView;
 
 const styles = {
     sButton: {
-        marginLeft:"1186px",
-        marginTop:"90px",
+        marginLeft: "1186px",
+        marginTop: "90px",
         flexDirection: 'column',
     },
     MapView: {
