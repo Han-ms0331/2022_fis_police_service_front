@@ -7,11 +7,12 @@ import Modal from '@mui/material/Modal';
 import CenterManageInputForm from "../organisms/CenterManageInputForm";
 import CustomButton from "../atoms/CustomButton";
 import {center} from "../../store/dummy-data/center";
+import axios from "axios";
 
 
 function CenterManageTemp(props) {
+    const [contents,setContents]=useState("")
     const headerContent = ["시설아이디", "시설이름", "참여여부", "전화번호", "시설주소"]
-    const contents = center
 
     //form이 열리고 닫히고에 관련된 state 정의
     const [open, setOpen] = React.useState(false);
@@ -34,8 +35,13 @@ function CenterManageTemp(props) {
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
-    const showList = () => {
-        //검색버튼 눌렀을 때 api 요청
+    const showList = async () => {   //서버와 로그인 통신을 하는 부분
+       await axios.get("/main/center/search?c_name={value}&c_address={value} &c_ph={value}")
+            .then((res) => {
+                // contents = res.data.lists
+                console.log(res.data.lists)
+              setContents(res.data.lists);
+            })
     }
 
     // form이 보이고 안보이고에 대한 함수 정의
@@ -61,7 +67,7 @@ function CenterManageTemp(props) {
             ...currentInfo,
             [name]: value
         });
-        // console.log(currentInfo);
+        console.log(currentInfo);
     }
 
 
@@ -72,7 +78,7 @@ function CenterManageTemp(props) {
 
     // 정보 수정 버튼을 누르면 inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오는 함수
     const handleModifyButtonClick = (e) => {
-        console.log(e.target.name);
+        // console.log(e.target.name);
         setCurrentInfo(contents[parseInt(e.target.name)])
         handleOpen();
     }
@@ -89,14 +95,21 @@ function CenterManageTemp(props) {
     }
 
     // inputForm에서 저장버튼 눌렀을 때에 대한 함수 정의
-    const handleClickSave = () => {
-        //api 요청 보냄.
-        //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
+    // const handleClickSave = () => {
+    //     //api 요청 보냄.
+    //     //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
+    //     handleClose();
+    // }
 
+
+    const handleClickSave = async () => {   //서버와 로그인 통신을 하는 부분
+        await axios.post("/manage/center")
+            .then((res) => {
+                console.log(res.data);
+            })
         handleClose();
+
     }
-
-
 
     return (
         <Main>

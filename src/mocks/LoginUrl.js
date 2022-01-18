@@ -7,7 +7,7 @@ import {rest} from "msw";
 */
 
 export const loginHandlers = [
-    rest.get('/login', async(req, res, ctx)=>{
+    rest.post('/login', async(req, res, ctx)=>{
         return res(
             ctx.json({
                 result: "success",

@@ -5,16 +5,17 @@ import CustomButton from "../atoms/CustomButton";
 
 function ListContainer(props) {
     return (
-        <div style={{
+        props.contents === "" ? null : <div style={{
             width: props.width,
             height: props.height,
         }}>
-            <List type="list" type="listHeader"  contents={props.headerContents}
+            <List type="list" type="listHeader" contents={props.headerContents}
                   gridRatio={props.gridRatio}/>
             {props.contents.map((content, index) => {
-                return <List key={Object.values(content)[0]} type="list"  contents={content}
+                return <List key={Object.values(content)[1]} type="list" contents={content}
                              gridRatio={props.gridRatio}
-                             buttonContent={props.buttonContent} onClickFunction={props.onClickFunction} keyValue={index}/>
+                             buttonContent={props.buttonContent} onClickFunction={props.onClickFunction}
+                             keyValue={index}/>
             })}
         </div>
     );
