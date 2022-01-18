@@ -15,27 +15,27 @@ function CenterManageInputForm(props) {
             justifyContent: "center",
         }}>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="시설 아이디: " inputName="centerId" inputType="text" width="300px" rows="1"
+                <InputContainer labelContent="시설 아이디: " inputName="center_id" inputType="text" width="300px" rows="1"
                                 setValueFunction={props.handleInputFormChange}
-                                defaultValue={props.currentInfo['centerId']} disabled={true}
+                                defaultValue={props.currentInfo['center_id']} disabled={true}
 
                 />
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="시설 이름: " inputName="centerName" inputType="text" width="300px" rows="2"
+                <InputContainer labelContent="시설 이름: " inputName="c_name" inputType="text" width="300px" rows="2"
                                 setValueFunction={props.handleInputFormChange}
-                                defaultValue={props.currentInfo['centerName']}/>
+                                defaultValue={props.currentInfo['c_name']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="전화번호: " inputName="centerPhone" inputType="text" width="300px" rows="1"
+                <InputContainer labelContent="전화번호: " inputName="c_ph" inputType="text" width="300px" rows="1"
                                 setValueFunction={props.handleInputFormChange}
-                                defaultValue={props.currentInfo['centerPhone']}/>
+                                defaultValue={props.currentInfo['c_ph']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="시설 주소: " inputName="centerAddress" inputType="text" width="300px"
+                <InputContainer labelContent="시설 주소: " inputName="c_address" inputType="text" width="300px"
                                 rows="2"
                                 setValueFunction={props.handleInputFormChange}
-                                defaultValue={props.currentInfo['centerAddress']}/>
+                                defaultValue={props.currentInfo['c_address']}/>
             </div>
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>

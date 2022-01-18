@@ -3,23 +3,6 @@ import InputContainer from "../molecules/InputContainer";
 import CustomButton from "../atoms/CustomButton";
 
 function AgentManageInputForm(props) {
-    const [input, setInput] = useState({
-        agentName: "",
-        agentId: "",
-        agentCode: "",
-        agentPhone: "",
-        agentHasCar: "",
-        agentAddress: "",
-    })
-    const onChange = (e) => {
-        const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
-        setInput({
-            ...input, // 기존의 input 객체를 복사한 뒤
-            [name]: value // name 키를 가진 값을 value 로 설정
-        });
-        console.log(input);
-    }
-    console.log(props.currentInfo['agentHasCar'])
     return (
         <div style={{
             padding: "30px 0px",
@@ -52,6 +35,15 @@ function AgentManageInputForm(props) {
                 <InputContainer labelContent="자택주소: " inputName="agentAddress" inputType="text" width="300px" rows="2"
                                 setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['agentAddress']}/>
 
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="장비번호: " inputName="deviceNumber" inputType="text" width="300px" rows="1"
+                                setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['deviceNumber']}/>
+
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="장비수령날짜: " inputName="receiveDate" inputType="date" width="300px"
+                                setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['receiveDate']}/>
             </div>
 
 

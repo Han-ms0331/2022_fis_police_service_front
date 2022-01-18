@@ -19,16 +19,18 @@ export const mainHandlers = [
             ctx.json({
                 lists: [
                     {
+                        center_id: "1",
                         c_name: "동그라미 유치원",
-                        c_address: "서울시 노원구 동일로 215길 48",
                         c_ph: "010-2105-7346",
                         participation: "참여",
+                        c_address: "서울시 노원구 동일로 215길 48",
                     },
                     {
+                        center_id: "2",
                         c_name: "딩동댕 유치원",
-                        c_address: "서울시 광진구 동일로 215길 48",
                         c_ph: "010-2105-7346",
                         participation: "참여",
+                        c_address: "서울시 광진구 동일로 215길 48",
                     }
                 ],
                 result: "success"

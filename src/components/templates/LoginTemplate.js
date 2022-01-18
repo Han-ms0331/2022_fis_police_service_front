@@ -27,9 +27,6 @@ function LoginTemplate(props) {
 
     return (
         <div>
-            <div>
-                logo
-            </div>
             <LoginForm onClickFunction={onLogin}/>
         </div>
     );
