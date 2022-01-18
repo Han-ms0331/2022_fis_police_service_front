@@ -11,8 +11,8 @@ import axios from "axios";
 
 
 function CenterManageTemp(props) {
+    const [contents,setContents]=useState("")
     const headerContent = ["시설아이디", "시설이름", "참여여부", "전화번호", "시설주소"]
-    const contents = center
 
     //form이 열리고 닫히고에 관련된 state 정의
     const [open, setOpen] = React.useState(false);
@@ -38,7 +38,9 @@ function CenterManageTemp(props) {
     const showList = async () => {   //서버와 로그인 통신을 하는 부분
        await axios.get("/main/center/search?c_name={value}&c_address={value} &c_ph={value}")
             .then((res) => {
-                console.log(res.data);
+                // contents = res.data.lists
+                console.log(res.data.lists)
+              setContents(res.data.lists);
             })
     }
 
