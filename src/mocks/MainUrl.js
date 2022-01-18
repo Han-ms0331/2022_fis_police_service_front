@@ -55,7 +55,41 @@ export const mainHandlers = [
                 c_longitude: null,
                 participation: null,
                 visited: null,
-                callList: [],
+                callList: [
+                    {
+                        u_name: "한명수",
+                        in_out: "인",
+                        dateTime: "2022-01-13",
+                        participation: "참여",
+                        c_manager: "홍길동",
+                        m_ph: "010-1234-1234",
+                        m_email: "fisolution@hotmail.com",
+                        center_etc: "점심시간에 걸리지않게 약속 잡아달라하심ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ",
+                        agent_etc: "현장요원 방문시 발열체크 및 백신패스 필수"
+                    },
+                    {
+                        u_name: "한명수",
+                        in_out: "인",
+                        dateTime: "2022-01-13",
+                        participation: "참여",
+                        c_manager: "홍길동",
+                        m_ph: "010-1234-1234",
+                        m_email: "fisolution@google.com",
+                        center_etc: "점심시간에 걸리지않게 약속 잡아달라하심",
+                        agent_etc: "현장요원 방문시 발열체크 및 백신패스 필수"
+                    },
+                    {
+                        u_name: "한명수",
+                        in_out: "인",
+                        dateTime: "2022-01-13",
+                        participation: "참여",
+                        c_manager: "홍길동",
+                        m_ph: "010-1234-1234",
+                        m_email: "fisolution@coolmail.com",
+                        center_etc: "점심시간에 걸리지않게 약속 잡아달라하심",
+                        agent_etc: "현장요원 방문시 발열체크 및 백신패스 필수"
+                    }
+                ],
                 scheduleList: [
                     {
                         id: 16,
