@@ -117,7 +117,7 @@ export const scheduleHandlers = [
                     visit_time: "14:40:31",               // 방문 시간
                     center_etc: "점심시간에 걸리지 않게 약속 잡아달라하심",                    // 센터 특이사항
                     agent_etc: "현장 요원 방문시 발열체크 및 백신패스 필수",                     // 현장요원 특이사항
-                    modified_info: "개인적인 사정으로 불참",                  // 변경사항
+                    modified_info: "개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참",                  // 변경사항
                     total_etc: "신청서 완료",                      // 스케쥴 특이사항
                     call_check: "통화완료",                     // 최근 통화 상태
                     call_check_info: "null",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
@@ -159,7 +159,7 @@ export const scheduleHandlers = [
                     call_check_info: "없는 번호",
                 },
                 {
-                    schedule_id: 16,              // 스케쥴 id
+                    schedule_id: 22,              // 스케쥴 id
                     a_code: "111",                // 현장요원 코드
                     a_name: "김철수",                // 현장요원 이름
                     center_id: "123",             // 센터 id
@@ -177,7 +177,7 @@ export const scheduleHandlers = [
                     call_check_info: "null",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
                 },
                 {
-                    schedule_id: 17,
+                    schedule_id: 23,
                     a_code: "222",
                     a_name: "이철수",
                     center_id: "124",
@@ -195,7 +195,7 @@ export const scheduleHandlers = [
                     call_check_info: "3",
                 },
                 {
-                    schedule_id: 16,              // 스케쥴 id
+                    schedule_id: 24,              // 스케쥴 id
                     a_code: "111",                // 현장요원 코드
                     a_name: "김철수",                // 현장요원 이름
                     center_id: "123",             // 센터 id
@@ -213,7 +213,7 @@ export const scheduleHandlers = [
                     call_check_info: "null",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
                 },
                 {
-                    schedule_id: 17,
+                    schedule_id: 25,
                     a_code: "222",
                     a_name: "이철수",
                     center_id: "124",
@@ -231,7 +231,7 @@ export const scheduleHandlers = [
                     call_check_info: "3",
                 },
                 {
-                    schedule_id: 16,              // 스케쥴 id
+                    schedule_id: 26,              // 스케쥴 id
                     a_code: "111",                // 현장요원 코드
                     a_name: "김철수",                // 현장요원 이름
                     center_id: "123",             // 센터 id
@@ -249,7 +249,7 @@ export const scheduleHandlers = [
                     call_check_info: "null",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
                 },
                 {
-                    schedule_id: 17,
+                    schedule_id: 27,
                     a_code: "222",
                     a_name: "이철수",
                     center_id: "124",
@@ -267,7 +267,7 @@ export const scheduleHandlers = [
                     call_check_info: "3",
                 },
                 {
-                    schedule_id: 16,              // 스케쥴 id
+                    schedule_id: 28,              // 스케쥴 id
                     a_code: "111",                // 현장요원 코드
                     a_name: "김철수",                // 현장요원 이름
                     center_id: "123",             // 센터 id
@@ -285,7 +285,7 @@ export const scheduleHandlers = [
                     call_check_info: "null",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
                 },
                 {
-                    schedule_id: 17,
+                    schedule_id: 29,
                     a_code: "222",
                     a_name: "이철수",
                     center_id: "124",
@@ -303,7 +303,7 @@ export const scheduleHandlers = [
                     call_check_info: "3",
                 },
                 {
-                    schedule_id: 16,              // 스케쥴 id
+                    schedule_id: 30,              // 스케쥴 id
                     a_code: "111",                // 현장요원 코드
                     a_name: "김철수",                // 현장요원 이름
                     center_id: "123",             // 센터 id
@@ -321,7 +321,7 @@ export const scheduleHandlers = [
                     call_check_info: "null",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
                 },
                 {
-                    schedule_id: 17,
+                    schedule_id: 31,
                     a_code: "222",
                     a_name: "이철수",
                     center_id: "124",
