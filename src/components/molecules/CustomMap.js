@@ -15,9 +15,9 @@ import CustomMarker from "../atoms/CustomMarker";
 
 function CustomMap(props) {
     /*const [position, setPosition] = useRecoilState(positionState);*///   지도의 바뀌는 센터 값 추적
-    let scheduleData = []
+    /*let scheduleData = []
     const [firstInfo, setFirstInfo] = useState("");
-    const [firstLocation, setFirstLocation] = useState([]);
+    const [firstLocation, setFirstLocation] = useState([]);*/
     const [position, setPosition] = useState(
         {
             center: {lat: props.lat, lng: props.lng},
@@ -60,7 +60,7 @@ function CustomMap(props) {
     })*/
 
     let cInfo = []
-    props.cdata.forEach((arr, index, buf) => {
+    /*props.cdata.forEach((arr, index, buf) => {
         props.sdata.forEach((arr1, index1, buf1) => {
             if (arr.c_id === arr1.c_id) {
                 props.cdata.push({
@@ -69,7 +69,7 @@ function CustomMap(props) {
                 })
             }
         })
-    })
+    })*/
 
 
     props.cdata.forEach((arr, index, buf) => {
