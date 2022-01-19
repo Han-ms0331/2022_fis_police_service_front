@@ -1,3 +1,4 @@
+
 const colors = {
     option1: {
         color1: "#FCF6F5",  //오트밀색
@@ -16,7 +17,9 @@ const colors = {
         color2: "#DCE2F0"   //회보라색..?
     }
 };
+const font = {
 
+}
 export const Style = {
     color1:colors.option1.color1,
     color2:colors.option1.color2
