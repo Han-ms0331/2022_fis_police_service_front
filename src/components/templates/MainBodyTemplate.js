@@ -12,6 +12,7 @@ import {
 } from "../../store/SelectedCenterStore";
 import CustomCalendar from "../atoms/CustomCalendar";
 import AgentContainer from "../organisms/AgentContainer";
+import styled from "styled-components";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -44,7 +45,7 @@ function MainBodyTemplate(props) {
                     c_name: res.data.c_name,
                     c_address: res.data.c_address,
                     c_ph: res.data.c_ph,
-                    c_people:res.data.c_people
+                    c_people: res.data.c_people
                 })
                 setSelectedCenterCallList(res.data.callList)//callList에서 뜰 리스트 저장
                 setSelectedCenterScheduleList(res.data.scheduleList)//scheduleList에서 뜰 내용 저장
@@ -88,24 +89,31 @@ function MainBodyTemplate(props) {
 
     return (
         <div>
-            <div>
 
-                <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange} width="100%"
-                            height="100%"/>
+            <div style={{width: "100%", display: "flex", justifyContent: "center", margin: "30px 0px 40px 0px"}}>
+                <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange}/>
             </div>
+
             {isSelected ?
-                <div style={{display: "flex"}}>
-                    <div>
-                        <CustomCalendar width={"200px"}/>
-                        <AgentContainer/>
-                    </div>
-                    <div >
+
+                <Container>
+                    <Left>
+                        <div style={{marginBottom: "20px", marginLeft: "20px"}}>
+                            <CustomCalendar/>
+                        </div>
+                        <div>
+                            <AgentContainer/>
+
+                        </div>
+                    </Left>
+                    <Right>
                         <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}
                                  thisCenterLocation={centerLocation}/>
-                    </div>
-                </div>
+                    </Right>
+
+                </Container>
                 :
-                <div>
+                <div style={{display: "flex", justifyContent: "center"}}>
                     <ListContainer width="1500px" height="100vh" headerContents={headerContent} contents={centerList}
                                    gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
                                    onClickFunction={onSelect}/>
@@ -116,5 +124,21 @@ function MainBodyTemplate(props) {
 
     );
 }
+
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 270px auto;
+`;
+const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+`;
+const Right = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default MainBodyTemplate;
