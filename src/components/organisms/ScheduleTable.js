@@ -147,11 +147,11 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                         style={{zoom: 2.0}}
                     />
                 </TableCell>
-                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} component="th" id={labelId} scope="row" padding="none">
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} component="th" id={labelId} scope="row" padding="none">
                     {page*rowsPerPage + (index+1)}
                 </TableCell>
-                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">{row.a_name}</TableCell>
-                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">{row.a_name}</TableCell>
+                <TableCell style={{ width:'20%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
                     <details style={{padding:"10px 0"}}>
                     <summary>{row.c_name}</summary>
                     <div style={{fontSize: '13pt'}}>{row.c_address}</div>
@@ -160,11 +160,11 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                     <div style={{fontSize: '13pt'}}>{row.estimate_num}명</div>
                     </details>
                 </TableCell>
-                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><pre>{row.total_etc}</pre></TableCell>
-                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><pre>{row.modified_info}</pre></TableCell>
-                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><pre>{row.call_check}</pre></TableCell>
-                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><pre>일정공지여부</pre></TableCell>
-                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
+                <TableCell style={{ width:'20%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
+                <TableCell style={{ width:'20%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{ padding: '10px 0' }}>{row.modified_info}</div></TableCell>
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.call_check}</div></TableCell>
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>일정공지여부</div></TableCell>
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
                     <TransitionsModal defaultInput={row} backgroundColor={buttonColor} />
                 </TableCell>
             </TableRow>
