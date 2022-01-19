@@ -74,7 +74,7 @@ function MainBodyTemplate(props) {
     */
 
     const onSearch = async () => {
-        await axios.get('/main/center/search?c_name={currentInfo.centerName}&c_address={currentInfo.centerAddress} &c_ph={currentInfo.centerPhone}')
+        await axios.get('/main/center/search?c_name={value}&c_address={value} &c_ph={value}')
             .then((res) => {
                 setCenterList(res.data.lists);
                 setIsSelected(false);
