@@ -11,7 +11,7 @@ import CustomButton from "../atoms/CustomButton";
 function RangeController(props) {
     return (
         <>
-            <div style={{marginTop:"50px", marginLeft:"-208px"}}>
+
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <div style={{marginRight:"5px"}}>주변시설</div>
                     <CustomButton type={"normal"} width={"10px"} height={"20px"} color={"white"} borderRadius={"2"}
@@ -21,7 +21,7 @@ function RangeController(props) {
                     <CustomButton type={"normal"} width={"10px"} height={"20px"} color={"white"} borderRadius={"2"}
                                   backgroundColor={"orange"} name={"1000"} content={"1km"} onClick={props.onClickFunc}/>
                 </div>
-            </div>
+
         </>
     );
 }

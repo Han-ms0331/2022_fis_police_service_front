@@ -83,6 +83,13 @@ const useStyles = makeStyles((theme) => ({
     ),
     root: {
         width: '100%',
+        '&$active': {
+            color: '#FCF6F5', // sort label 누르면 색깔 변경
+        },
+    },
+    active: {},
+    icon: {
+        color: 'inherit !important'
     },
     paper: {
         width: '100%',
@@ -278,6 +285,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                         >
                             <TableSortLabel
                                 active={orderBy === headCell.id}
+                                classes={{ root: classes.root, active: classes.active, icon: classes.icon}}
                                 direction={orderBy === headCell.id ? order : 'asc'}
                                 onClick={createSortHandler(headCell.id)}
                             >
@@ -305,7 +313,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
         rowCount: PropTypes.number.isRequired,
     };
 
-    const colorVariable = { headerbackgroundColor: headerColor, bodybackgroundColor: bodyColor };
+    const colorVariable = { headerbackgroundColor: headerColor, bodybackgroundColor: bodyColor, activeColor: bodyColor };
     const classes = useStyles(colorVariable);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');

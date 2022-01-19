@@ -8,6 +8,7 @@ import CenterManageInputForm from "../organisms/CenterManageInputForm";
 import CustomButton from "../atoms/CustomButton";
 import {center} from "../../store/dummy-data/center";
 import axios from "axios";
+import {Style} from "../../Style";
 
 
 function CenterManageTemp(props) {
@@ -128,8 +129,8 @@ function CenterManageTemp(props) {
                     left: "50%",
                     transform: "translate(-50%,0)"
                 }}>
-                    <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
-                                  backgroundColor="#FFD400" content="시설 추가" onClick={handleAddButtonClick}/>
+                    <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color={Style.color1}
+                                  backgroundColor={Style.color2} content="시설 추가" onClick={handleAddButtonClick}/>
                 </div>
 
 

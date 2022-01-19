@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import CustomButton from "../atoms/CustomButton";
 import InputContainer from "../molecules/InputContainer";
+import {Style} from "../../Style";
 
 function SearchForm(props) {
     return (<div style={{display: "flex", alignItems: "flex-end", width: props.width, height: props.height}}>
@@ -23,8 +24,8 @@ function SearchForm(props) {
             </div>
 
             <div>
-                <CustomButton type="normal" width="120px" height="47px" content="검색" color="black"
-                              borderRadius="10px" backgroundColor="#FFE400" onClick={props.onSubmitFunction}/>
+                <CustomButton type="normal" width="120px" height="42px" content="검색" color={Style.color1}
+                              borderRadius="10px" backgroundColor={Style.color2} onClick={props.onSubmitFunction}/>
             </div>
 
         </div>
