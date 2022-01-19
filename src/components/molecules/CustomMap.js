@@ -13,8 +13,10 @@ import CustomMarker from "../atoms/CustomMarker";
              center, zoomlevel, size 설정 필요
 */
 
-function CustomMap(props){
+function CustomMap(props) {
     /*const [position, setPosition] = useRecoilState(positionState);*///   지도의 바뀌는 센터 값 추적
+    let scheduleData = []
+    const [selCenter, setSelCenter] = useState("");
     const [position, setPosition] = useState(
         {
             center: {lat: props.lat, lng: props.lng},
@@ -22,7 +24,38 @@ function CustomMap(props){
         }
     )
 
-    let cInfo=[]
+    /*
+        props.fdata().then((res)=>{
+            console.log(props.fcdata)
+            setSelCenter(props.fcdata)
+        })*/
+    /*selCenter.forEach((arr) => {
+        selCenter.push({
+            ...selCenter,
+            latlng: {lat: props.floc.lat, lng: props.floc.lng},
+            type: "center",
+            contents:
+                <div>
+                    <div>시설 이름: {props.fcdata.c_name}</div>
+                    <div>예상 인원: {}</div>
+                    <div>방문 예정 시간: {}</div>
+                </div>
+        })
+
+    })*/
+    /*selCenter.push({
+        ...selCenter,
+        latlng:{lat:props.floc.lat,lng:props.floc.lng},
+        type:"center",
+        contents:
+            <div>
+                <div>시설 이름: {props.fcdata.c_name}</div>
+                <div>예상 인원: {}</div>
+                <div>방문 예정 시간: {}</div>
+            </div>
+    })*/
+
+    let cInfo = []
     props.cdata.forEach((arr, index, buf) => {
         props.sdata.forEach((arr1, index1, buf1) => {
             if (arr.c_id === arr1.c_id) {
@@ -35,7 +68,7 @@ function CustomMap(props){
     })
 
 
-   props.cdata.forEach((arr, index, buf) => {
+    props.cdata.forEach((arr, index, buf) => {
         cInfo.push({
             ...arr,
             latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
@@ -49,8 +82,6 @@ function CustomMap(props){
                 </div>
         })
     })
-
-
 
 
     return (
@@ -77,7 +108,7 @@ function CustomMap(props){
                     }
                 })}
             >
-                <div style={{marginTop:"5px"}}>
+                <div style={{marginTop: "5px"}}>
                     <CustomButton type={"normal"} width={"20px"} height={"20px"} color={"white"} borderRadius={"2"}
                                   backgroundColor={"orange"} content={"return"}
                                   onClick={() =>
@@ -90,12 +121,19 @@ function CustomMap(props){
                                       })
                                   }
                     />
-                </div> {/*return 버튼*/}
+                </div>
+                {/*return 버튼*/}
                 <CustomPolyLine
                     path={[
                         props.rdata,
                     ]}
                 /> {/*선택된 현장 요원의 동선 표시*/}
+                {/*<CustomMarker
+                    key="main"
+                    type={selCenter.type}
+                    position={selCenter.latlng}
+                    color={selCenter.contents}
+                />*/}
                 {cInfo.map((position, index) => (
                     <CustomMarker
                         key={index}

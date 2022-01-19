@@ -47,7 +47,10 @@ function MainBodyTemplate(props) {
                 })
                 setSelectedCenterCallList(res.data.callList)//callList에서 뜰 리스트 저장
                 setSelectedCenterScheduleList(res.data.scheduleList)//scheduleList에서 뜰 내용 저장
-                setCenterLocation([res.data.c_latitude, res.data.c_longitude]);
+                setCenterLocation(/*[res.data.c_latitude, res.data.c_longitude]*/{
+                    lat: res.data.c_latitude,
+                    lng: res.data.c_longitude,
+                });
                 setIsSelected(true);
             })
     }
@@ -93,13 +96,14 @@ function MainBodyTemplate(props) {
                             height="100%"/>
             </div>
             {isSelected ?
-                <div style={{display:"flex"}}>
+                <div style={{display: "flex"}}>
                     <div>
                         <CustomCalendar width={"200px"}/>
                         <AgentContainer/>
                     </div>
                     <div>
-                        <MapView/>
+                        <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}
+                                 thisCenterLocation={centerLocation}/>
                     </div>
                 </div>
                 :

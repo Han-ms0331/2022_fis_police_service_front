@@ -7,7 +7,7 @@ import CenterInfo from "./CenterInfo";
 let center_id = "1"
 let value = "4"
 
-const roadInfo = [
+/*const roadInfo = [
     {
         c_id: "1",
         c_address: "제즈더",
@@ -88,7 +88,7 @@ const roadInfo = [
         c_latitude: "33.42466652636361",
         c_longitude: "126.55392992730667",
     },
-]
+]*/
 
 
 const agentInfo = [
@@ -162,7 +162,7 @@ selCenter.forEach((arr, index, buf) => {
     })
 })
 
-roadInfo.forEach((arr, index, buf) => {
+/*roadInfo.forEach((arr, index, buf) => {
     selCenter.forEach((arr1, index1, buf1) => {
         if (arr.c_id === arr1.c_id) {
             roadInfo.push({
@@ -187,12 +187,11 @@ roadInfo.forEach((arr, index, buf) => {
                 <div>방문 예정 시간: {}</div>
             </div>
     })
-})
+})*/
 
 
-function MapView() {
+function MapView(props) {
 
-    const buffer=[]
     const [range, setRange] = useState(2);
     const [centerInfo, setCenterInfo] = useState([]);
     const loadInfo = async () => {
@@ -202,87 +201,8 @@ function MapView() {
                 console.log(res.data.cdata)
                 setCenterInfo(res.data.cdata)
             })
-
-    }
-    /*const [position, setPosition] = useState({
-        center: {lat: center[0].lat, lng: center[0].lng}
-    })*/
-
-   /* const loadInfo = async () => {
-        await axios.get(`/main/center/${center_id}/range?range=${value}`)
-            .then((res) => {
-                console.log("done")
-                setCenterInfo(res.data.cdata)
-                /!*for(let i=0;i<res.data.cdata.length;i++) {
-                    buffer.push(res.data.cdata[i]);
-                }*!/
-            })
-
     }
 
-
-    loadInfo().then((res) => {
-        console.log("done")
-        /!*setCenterInfo(buffer)*!/
-        let list = centerInfo
-        list.forEach((arr, index, buf) => {
-            selCenter.forEach((arr1, index1, buf1) => {
-                if (arr.c_id === arr1.c_id) {
-                    list.push({
-                        ...arr,
-                        c_order: (index1 + 1)
-                    })
-                }
-            })
-        })
-        setCenterInfo(list);
-        let list1=centerInfo
-        list1.forEach((arr, index, buf) => {
-            cInfo.push({
-                ...arr,
-                latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
-                type: "center",
-                contents:
-                    <div>
-                        <div>{arr.c_order}</div>
-                        <div>시설 이름: {arr.c_name}</div>
-                        <div>예상 인원: {}</div>
-                        <div>방문 예정 시간: {}</div>
-                    </div>
-            })
-        })
-        setCenterInfo(list1);
-        console.log("done")
-    });*/
-
-
-
-    /*let list = centerInfo
-    list.forEach((arr, index, buf) => {
-        selCenter.forEach((arr1, index1, buf1) => {
-            if (arr.c_id === arr1.c_id) {
-                list.push({
-                    ...arr,
-                    c_order: (index1 + 1)
-                })
-            }
-        })
-    })
-    list.forEach((arr, index, buf) => {
-        cInfo.push({
-            ...arr,
-            latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
-            type: "center",
-            contents:
-                <div>
-                    <div>{arr.c_order}</div>
-                    <div>시설 이름: {arr.c_name}</div>
-                    <div>예상 인원: {}</div>
-                    <div>방문 예정 시간: {}</div>
-                </div>
-        })
-    })
-    setCenterInfo(list);*/
     const changeRange = (e) => {
         console.log(e.target)
         if (e.target.textContent === "250m") {
@@ -320,7 +240,7 @@ function MapView() {
                 </div>
 
                 <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
-                    <CustomMap cdata={centerInfo} adata={agentInfo} rdata={road} sdata={selCenter} lat={center[0].lat} lng={center[0].lng}
+                    <CustomMap cdata={centerInfo} adata={agentInfo} rdata={road} sdata={selCenter} fdata={props.thisCenter} fcdata={props.thisCenterInfo} floc={props.thisCenterLocation} lat={center[0].lat} lng={center[0].lng}
                                level={range}/>
                 </div>
             </div>
