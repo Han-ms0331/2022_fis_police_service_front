@@ -66,7 +66,7 @@ const AgentManageTemplate = () => {
     }
     return (
         <Main>
-            <ListContainer width="1500px" height="100vh" headerContents={headerContent} contents={contents}
+            <ListContainer width="1500px" height="100%" headerContents={headerContent} contents={contents}
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
             <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
