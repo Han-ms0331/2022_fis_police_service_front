@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ScheduleTable({ rows, headerColor, bodyColor }) {
+export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
     let count = rows.length;
 
@@ -155,7 +155,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor }) {
                 <TableCell align="right"><pre>{row.call_check}</pre></TableCell>
                 <TableCell align="right"><pre>일정공지여부</pre></TableCell>
                 <TableCell align="right">
-                    <TransitionsModal defaultInput={row} />
+                    <TransitionsModal defaultInput={row} backgroundColor={buttonColor} />
                 </TableCell>
             </TableRow>
         );
@@ -270,7 +270,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor }) {
                     </TableCell>
                     {headCells.map((headCell) => ( // 테이블 헤더 정보 mapping
                         <TableCell
-                            style={{ color: '#02343F', fontSize: '15pt' }}
+                            style={{ color: '#2E3C7E', fontSize: '14pt', fontWeight: 'bold' }}
                             key={headCell.id}
                             align={headCell.numeric ? 'right' : 'left'}
                             padding={headCell.disablePadding ? 'none' : 'normal'}
@@ -373,7 +373,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor }) {
 
     return (
         <div className={classes.root} style={{margin: '15px'}}>
-            <Paper className={classes.paper} style={{backgroundColor: 'grey'}}>
+            <Paper className={classes.paper} style={{backgroundColor: 'white'}}>
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -391,18 +391,18 @@ export default function ScheduleTable({ rows, headerColor, bodyColor }) {
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
-                        <TableBody style={{ backgroundColor: 'pink' }} className={classes.body}>
+                        <TableBody style={{ backgroundColor: bodyColor }} className={classes.body}>
                             {isSearch() // 검색 상태라면 검색결과를 보여주고 아니라면 리스트 전체를 보여줌.
                                 ?
                                 filteredShowList()
                                 :
                                 showList()
                             }
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
+                            {/*{emptyRows > 0 && (*/}
+                            {/*    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>*/}
+                            {/*        <TableCell colSpan={6} />*/}
+                            {/*    </TableRow>*/}
+                            {/*)}*/}
                         </TableBody>
                     </Table>
                     <div>
@@ -410,8 +410,8 @@ export default function ScheduleTable({ rows, headerColor, bodyColor }) {
                             <CustomButton
                                 type="normal"
                                 content="일정공지"
-                                backgroundColor='rgba(255, 212, 0, 0.5)'
-                                color='black'
+                                backgroundColor={buttonColor}
+                                color='white'
                                 onClick={ async() => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
                                         console.log(checkedList);
                                         await axios.post('/schedule/announce', {

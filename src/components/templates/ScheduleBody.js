@@ -15,11 +15,12 @@ import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 const ScheduleBody = () => {
     const resultRows = useRecoilValue(dateSelectedRows);
     // const backgroundColor = 'rgba(255, 212, 0, 0.5)';
-    const backgroundColor = '#F0EDCC';
-    const backgroundColor2 = 'white';
+    const backgroundColor = '#fcefed';
+    const backgroundColor2 = '#FCF6F5';
+    const backgroundColor3 = '#2E3C7E';
     return (
         <div>
-            <ScheduleTable headerColor={backgroundColor} bodyColor={backgroundColor2} rows={resultRows}/>
+            <ScheduleTable headerColor={backgroundColor} bodyColor={backgroundColor2} buttonColor={backgroundColor3} rows={resultRows}/>
             {/*테이블 헤더 색깔 여기에 넣으면 됩니다.*/}
         </div>
     );

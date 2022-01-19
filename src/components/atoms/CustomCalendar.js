@@ -22,13 +22,17 @@ const CustomCalendar = ({setDate}) => {
                 setRows(res.data);
             })
     }
+
+    useEffect(() => {
+        onData(); // 날짜를 선택한 경우에 함수 실행
+    }, [value])
     return (
         <div>
             <Calendar
                 onChange={(day)=>{
                     setValue(day);
                     setDate(day);
-                    onData(); // 날짜를 선택한 경우에 onLogin 함수 실행
+                    // onData(); 여기에 넣으면 setState가 늦게 되어버림..
                 }}
                 value={value}
                 calendarType="ISO 8601"
