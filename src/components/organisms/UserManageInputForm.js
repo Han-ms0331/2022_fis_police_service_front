@@ -47,8 +47,8 @@ function UserManageInputForm(props) {
                                 setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['hp']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="권한: " inputName="userAuth" inputType="select" width="300px"
-                                contents={["관리자", "일반직원"]} setValueFunction={onChange}
+                <InputContainer labelContent="권한: " inputName="auth" inputType="select" width="300px"
+                                contents={["관리자", "일반직원"]} setValueFunction={props.handleInputFormChange} defaultValue={props.currentInfo['auth']}
                 />
             </div>
             <div style={{display: "flex", marginTop: "20px"}}>

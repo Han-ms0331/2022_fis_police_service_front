@@ -5,8 +5,8 @@
 */
 export const agent = [
     {
+        agent_id: "1",
         agentName: "한명수",
-        agentId: "fs001",
         agentCode: "안양1",
         agentPhone: "010-1234-1212",
         agentHasCar:"자차",
@@ -15,8 +15,8 @@ export const agent = [
         receiveDate: "2021/11/13",
     },
     {
+        agent_id: "2",
         agentName: "한명수",
-        agentId: "fs002",
         agentCode: "안양1",
         agentPhone: "010-1234-12123",
         agentHasCar:"자차",
@@ -24,8 +24,8 @@ export const agent = [
         deviceNumber: "001",
         receiveDate: "2021/11/13",
     },{
+        agent_id: "3",
         agentName: "한명수",
-        agentId: "fs003",
         agentCode: "안양1",
         agentPhone: "010-1234-1234",
         agentHasCar:"도보",
