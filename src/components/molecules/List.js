@@ -37,9 +37,9 @@ function List(props) {
                 })
             }
             <div style={{display: "flex", justifyContent: "center"}}>
-                <CustomButton name={props.keyValue} type="normal" width="90px" height="30px" color="white"
+                <CustomButton name={props.keyValue} type="normal" width="90px" height="30px" color={Style.color1}
 
-                              backgroundColor="#2E3C7E" borderRadius="10px" content={props.buttonContent}
+                              backgroundColor={Style.color2} borderRadius="10px" content={props.buttonContent}
                               onClick={props.onClickFunction}/>
             </div>
 

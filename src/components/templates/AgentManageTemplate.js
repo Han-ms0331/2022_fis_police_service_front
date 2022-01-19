@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import UserManageInputForm from "../organisms/UserManageInputForm";
 import Modal from "@mui/material/Modal";
 import AgentManageInputForm from "../organisms/AgentManageInputForm";
+import {Style} from "../../Style";
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -69,8 +70,8 @@ const AgentManageTemplate = () => {
             <ListContainer width="1500px" height="100%" headerContents={headerContent} contents={contents}
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
-            <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
-                          backgroundColor="#FFD400" content="현장요원 추가" onClick={() => setOpen(true)}/>
+            <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color={Style.color1}
+                          backgroundColor={Style.color2} content="현장요원 추가" onClick={() => setOpen(true)}/>
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
