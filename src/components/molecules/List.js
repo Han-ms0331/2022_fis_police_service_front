@@ -1,6 +1,7 @@
 import React from 'react';
 import CustomButton from "../atoms/CustomButton";
 import styled from 'styled-components';
+import {Style} from "../../Style";
 
 function List(props) {
     let element
@@ -58,10 +59,10 @@ const ListElement = styled.div`
   display: grid;
   padding: 5px 0px;
   margin-bottom: 5px;
-  background-color: #FCF6F5;
+  background-color: ${Style.option1.color1};
   align-items: center;
   border-radius: 15px;
-  color: #2E3C7E;
+  color: ${Style.option1.color2};
 
   &:hover {
     transform: scale(1.005);

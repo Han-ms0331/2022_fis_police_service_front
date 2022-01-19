@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Link, Redirect} from "react-router-dom";
 import styled from 'styled-components';
-import {Button, IconButton} from "@material-ui/core";
 import HomeIcon from '@mui/icons-material/Home';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
@@ -55,7 +54,7 @@ const Navigation = () => {
 }
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 345px auto;
   border-right: 2px solid #eee;
   padding: 0px;
   & .icon {

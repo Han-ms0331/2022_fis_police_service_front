@@ -6,6 +6,7 @@ import CenterManageTemp from "../templates/CenterManageTemp";
 import CustomButton from "../atoms/CustomButton";
 import UserManageTemplate from "../templates/UserManageTemplate";
 import AgentManageTemplate from "../templates/AgentManageTemplate";
+import {Style} from "../../Style";
 
 /*
 날짜: 2022/01/13 3:53 PM
@@ -62,13 +63,13 @@ function ManagePage(props) {
                         <NavigationTab>
                             <div className="btnContainer">
                                 <CustomButton class="userManage" type="normal" width="150px" height="35px"
-                                              borderRadius="3px" color="#FCF6F5" backgroundColor="#2E3C7E"
+                                              borderRadius="3px" color={Style.option1.color1} backgroundColor={Style.option1.color2}
                                               content="콜직원관리" onClick={(event) => handdleClick("userManage", event)}/>
                                 <CustomButton class="agentManage" type="normal" width="150px" height="35px"
-                                              borderRadius="3px" color="#2E3C7E" backgroundColor="#FCF6F5"
+                                              borderRadius="3px" color={Style.option1.color2} backgroundColor={Style.option1.color1}
                                               content="현장요원관리" onClick={(event) => handdleClick("agentManage", event)}/>
                                 <CustomButton class="centerManage" type="normal" width="150px" height="35px"
-                                              borderRadius="3px" color="#2E3C7E" backgroundColor="#FCF6F5"
+                                              borderRadius="3px" color={Style.option1.color2} backgroundColor={Style.option1.color1}
                                               content="시설정보수정"
                                               onClick={(event) => handdleClick("centerManage", event)}/>
                             </div>
@@ -93,14 +94,8 @@ const Main = styled.div`
   background-color: white;
 `;
 const Container = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 12fr;
-  //background-color: #EBF1F6;
-  //margin: 15px;
-  //padding: 10px;
-  //border-radius: 10px;
-  //box-shadow : 3px 4px 5px 0px rgba(112, 112, 107, 0.16)
-
+display: grid;
+  grid-template-rows: 125px auto;
 `;
 const NavigationTab = styled.div`
   border-bottom: 2px solid #dadada;

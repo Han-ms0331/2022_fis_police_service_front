@@ -11,6 +11,8 @@ import MainBodyTemplate from "../templates/MainBodyTemplate";
     작성내용:   MainInfoTemplate 적용
 */
 function MainPage(props) {
+    const [isSelected, setIsSelected] = useState(false);
+
     let isLogined;      //로그인 상태에 따라 랜더링을 결정하는 변수
     if (localStorage.getItem("loginStatus") === "true") //localstorage에서 loginStatus가 true일때 isLogined를 true로 바꿔줌
         isLogined = true;
@@ -22,11 +24,11 @@ function MainPage(props) {
                 <Main>
                     <Navigation/>
                     <div style={{height: "100vh", borderRight: "1px solid #6D5A00"}}>
-                        <MainBodyTemplate/>
+                        <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected}/>
                     </div>
 
                     <div>
-                       <MainInfoTemplate />
+                       <MainInfoTemplate isSelected={isSelected} />
                     </div>
                 </Main>
             )
