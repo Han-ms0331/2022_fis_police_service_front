@@ -16,10 +16,9 @@ import AgentManageInputForm from "../organisms/AgentManageInputForm";
 const AgentManageTemplate = () => {
     const [open, setOpen] = useState(false);
     const contents = agent;
-    const headerContent = ["이름", "아이디", "현장요원코드", "전화번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜"]
+    const headerContent = ["이름", "현장요원코드", "전화번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜"]
     const [currentInfo, setCurrentInfo] = useState({
         agentName: "",
-        agentId: "",
         agentCode: "",
         agentPhone: "",
         agentHasCar: "",
@@ -68,7 +67,7 @@ const AgentManageTemplate = () => {
     return (
         <Main>
             <ListContainer width="1500px" height="100vh" headerContents={headerContent} contents={contents}
-                           gridRatio="1fr 1fr 1fr 2fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정"
+                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
             <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color="#222"
                           backgroundColor="#FFD400" content="현장요원 추가" onClick={() => setOpen(true)}/>

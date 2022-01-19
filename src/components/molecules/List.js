@@ -38,7 +38,7 @@ function List(props) {
         }}>
             {
                 Object.values(props.contents).map((value, index) => {
-                    return <div key={index} style={{display: "flex", justifyContent: "center"}}>{value}</div>
+                    return index === 0 ? null :  <div key={index} style={{display: "flex", justifyContent: "center"}}>{value}</div>
                 })
             }
             <div style={{display: "flex", justifyContent: "center"}}>

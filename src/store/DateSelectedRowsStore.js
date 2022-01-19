@@ -18,7 +18,7 @@ export const dateSelectedRows = atom({
             agent_etc: "현장 요원 방문시 발열체크 및 백신패스 필수",                     // 현장요원 특이사항
             modified_info: "시간 조정\n >10:00-11:00",                  // 변경사항
             total_etc: "신청서 완료",                      // 스케쥴 특이사항
-            call_check: "통화 완료",                     // 최근 통화 상태
+            call_check: "통화완료",                     // 최근 통화 상태
             call_check_info: "dd",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
         },
         {
@@ -36,7 +36,7 @@ export const dateSelectedRows = atom({
             agent_etc: "현장 요원 방문시 발열체크 및 백신패스 필수",                     // 현장요원 특이사항
             modified_info: "시간 조정\n >10:00-11:00",                  // 변경사항
             total_etc: "신청서 완료",                      // 스케쥴 특이사항
-            call_check: "통화 완료",                     // 최근 통화 상태
+            call_check: "통화완료",                     // 최근 통화 상태
             call_check_info: "dd",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
         },
         {

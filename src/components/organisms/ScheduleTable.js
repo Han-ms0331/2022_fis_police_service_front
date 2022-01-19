@@ -57,12 +57,12 @@ function stableSort(array, comparator) {
 // MUI 정렬 기능
 
 const headCells = [
-    { id: 'No', numeric: false, disablePadding: true, label: 'No.' },
-    { id: 'agent', numeric: true, disablePadding: false, label: '현장요원' },
-    { id: 'center', numeric: true, disablePadding: false, label: '시설정보' },
-    { id: 'etc', numeric: true, disablePadding: false, label: '특이사항' },
-    { id: 'change', numeric: true, disablePadding: false, label: '변경 사항' },
-    { id: 'call', numeric: true, disablePadding: false, label: '통화 이력' },
+    { id: 'index', numeric: false, disablePadding: true, label: 'No.' },
+    { id: 'a_code', numeric: true, disablePadding: false, label: '현장요원' },
+    { id: 'c_name', numeric: true, disablePadding: false, label: '시설정보' },
+    { id: 'total_etc', numeric: true, disablePadding: false, label: '특이사항' },
+    { id: 'modified_info', numeric: true, disablePadding: false, label: '변경 사항' },
+    { id: 'call_check', numeric: true, disablePadding: false, label: '통화 이력' },
     { id: 'notice', numeric: true, disablePadding: false, label: '일정 공지' },
     { id: 'edit', numeric: true, disablePadding: false, label: '' },
 ];
@@ -112,37 +112,37 @@ export default function ScheduleTable({ rows }) {
 
 
     const ScheduleList = (row, index) => { // Schedule List를 띄워주는 함수
-        const isItemSelected = isSelected(row.No);
+        // const isItemSelected = isSelected(row.No);
         const labelId = `enhanced-table-checkbox-${index}`;
 
         return (
             <TableRow
                 hover
                 role="checkbox"
-                aria-checked={isItemSelected}
+                // aria-checked={isItemSelected}
                 tabIndex={-1}
                 key={row.schedule_id}
-                selected={isItemSelected}
+                // selected={isItemSelected}
             >
                 <TableCell padding="checkbox">
                     <input
-                        key={row.No}
+                        key={row.schedule_id}
                         type="checkbox"
                         onChange={(e) => onCheckedElement(e.target.checked, row)}
                         checked={checkedList.includes(row)}
                     />
                 </TableCell>
                 <TableCell component="th" id={labelId} scope="row" padding="none">
-                    {row.a_name}
+                    {index+1}
                 </TableCell>
-                <TableCell align="right">{row.a_code}</TableCell>
-                <TableCell align="right"><pre>{row.c_name}</pre></TableCell>
+                <TableCell align="right">{row.a_name}</TableCell>
+                <TableCell align="right"><pre>{`${row.c_name}\n ${row.c_address}\n ${row.c_ph}\n ${row.visit_time}\n ${row.estimate_num}명`}</pre></TableCell>
                 <TableCell align="right"><pre>{row.total_etc}</pre></TableCell>
                 <TableCell align="right"><pre>{row.modified_info}</pre></TableCell>
                 <TableCell align="right"><pre>{row.call_check}</pre></TableCell>
-                <TableCell align="right"><pre>{row.call_check_info}</pre></TableCell>
+                <TableCell align="right"><pre>일정공지여부</pre></TableCell>
                 <TableCell align="right">
-                    <TransitionsModal />
+                    <TransitionsModal defaultInput={row} />
                 </TableCell>
             </TableRow>
         );
@@ -396,10 +396,11 @@ export default function ScheduleTable({ rows }) {
                                 backgroundColor='rgba(255, 212, 0, 0.5)'
                                 color='black'
                                 onClick={ async() => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-                                    await axios.post('/schedule/announce')
-                                        .then((res) => {
-                                            console.log(res.data);
+                                        console.log(checkedList);
+                                        await axios.post('/schedule/announce', {
+                                            checkedList
                                         })
+                                            .then((res) => console.log(res.data))
                                     }
                                 }
                             />
