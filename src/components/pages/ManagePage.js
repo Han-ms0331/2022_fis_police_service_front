@@ -66,7 +66,7 @@ const Main = styled.div`
 `;
 const Container = styled.div`
 display: grid;
-  grid-template-rows: 1fr 12fr;
+  grid-template-rows: 125px auto;
 `;
 const NavigationTab = styled.div`
 border-bottom: 2px solid #dadada;

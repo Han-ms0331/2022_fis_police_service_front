@@ -116,7 +116,7 @@ function CenterManageTemp(props) {
                     <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
                                 height="100%"/>
                 </div>
-                <ListContainer headerContents={headerContent} contents={contents} width="1500px" height="100vh"
+                <ListContainer headerContents={headerContent} contents={contents} width="1500px" height="100%"
                                gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/>
 
