@@ -21,6 +21,38 @@ function CustomMap(props){
             isPanto: true,
         }
     )
+
+    let cInfo=[]
+    props.cdata.forEach((arr, index, buf) => {
+        props.sdata.forEach((arr1, index1, buf1) => {
+            if (arr.c_id === arr1.c_id) {
+                props.cdata.push({
+                    ...arr,
+                    c_order: (index1 + 1)
+                })
+            }
+        })
+    })
+
+
+   props.cdata.forEach((arr, index, buf) => {
+        cInfo.push({
+            ...arr,
+            latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
+            type: "center",
+            contents:
+                <div>
+                    <div>{arr.c_order}</div>
+                    <div>시설 이름: {arr.c_name}</div>
+                    <div>예상 인원: {}</div>
+                    <div>방문 예정 시간: {}</div>
+                </div>
+        })
+    })
+
+
+
+
     return (
         <>
             <Map // 지도를 표시할 Container
@@ -64,7 +96,7 @@ function CustomMap(props){
                         props.rdata,
                     ]}
                 /> {/*선택된 현장 요원의 동선 표시*/}
-                {props.cdata.map((position, index) => (
+                {cInfo.map((position, index) => (
                     <CustomMarker
                         key={index}
                         type={position.type}
