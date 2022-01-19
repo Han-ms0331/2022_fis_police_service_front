@@ -63,13 +63,13 @@ function ManagePage(props) {
                         <NavigationTab>
                             <div className="btnContainer">
                                 <CustomButton class="userManage" type="normal" width="150px" height="35px"
-                                              borderRadius="3px" color={Style.option1.color1} backgroundColor={Style.option1.color2}
+                                              borderRadius="3px" color={Style.color1} backgroundColor={Style.color2}
                                               content="콜직원관리" onClick={(event) => handdleClick("userManage", event)}/>
                                 <CustomButton class="agentManage" type="normal" width="150px" height="35px"
-                                              borderRadius="3px" color={Style.option1.color2} backgroundColor={Style.option1.color1}
+                                              borderRadius="3px" color={Style.color2} backgroundColor={Style.color1}
                                               content="현장요원관리" onClick={(event) => handdleClick("agentManage", event)}/>
                                 <CustomButton class="centerManage" type="normal" width="150px" height="35px"
-                                              borderRadius="3px" color={Style.option1.color2} backgroundColor={Style.option1.color1}
+                                              borderRadius="3px" color={Style.color2} backgroundColor={Style.color1}
                                               content="시설정보수정"
                                               onClick={(event) => handdleClick("centerManage", event)}/>
                             </div>

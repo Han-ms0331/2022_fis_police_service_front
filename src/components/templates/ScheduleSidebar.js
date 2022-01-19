@@ -34,7 +34,7 @@ const ScheduleSidebar = () => {
 };
 
 // 디자인 비교를 위한 변수
-const [color1,color2]= [Style.option1.color1,Style.option1.color2];
+const [color1,color2]= [Style.color1,Style.color2];
 
 
 const Container = styled.div`
