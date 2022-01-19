@@ -4,43 +4,25 @@ import CustomButton from "../atoms/CustomButton";
 import axios from "axios";
 
 const SendMessage = () => {
-    var ws;
+    let ws;
     const [message,setMessage] = useState('안녕');
 
     function openWebSocket() {
-        ws = new WebSocket('ws://192.168.0.178:8080/chating'); //웹소켓으로 연결
-       console.log("객체 생성 완료")
-        console.log(ws)
-        // wsEvt();
-        ws.onopen=()=>{
-            console.log("연결완료");
-        }
-        ws.onerror=(e)=>{
-            console.log(e);
-        }
-    }
-    function wsEvt() {
+        ws = new WebSocket("ws://" + "192.168.0.178:8080" + "/chating");
         ws.onopen= (e) =>{
-            console.log("연결됨")
-            console.log(e)
+            console.log("연결완료");
+            console.log(ws);
+            ws.send("hi server");
         }
-        ws.onmessage = (data) =>{
-            console.log(data);
-            let msg = data.data;
-            // if(msg != null && msg.trim() != ''){
-            // console.log(msg);
-            // }
-        }
-        ws.onclose=(e)=>{
-            console.log("closed");
+        ws.onmessage=(data)=>{
+            console.log("서버에서 받은 데이터"+data.data);
         }
     }
-    useEffect(()=>{openWebSocket()},[]);
-
 
     const handleSend=(e)=>{ /*보내기 버튼을 눌렀을 때 실행되는 함수*/
         e.preventDefault();
-        console.log("sent");
+        console.log("message sent");
+        openWebSocket();
         e.target.reset();
     }
 
@@ -96,6 +78,7 @@ const Content = styled.form`
     width: 100%;
     overflow-y: hidden;
     margin-bottom: 30px;
+    resize: none;
   }
   &>button{ /*보내기 버튼*/
     position: absolute;
