@@ -59,10 +59,10 @@ const ListElement = styled.div`
   display: grid;
   padding: 5px 0px;
   margin-bottom: 5px;
-  background-color: ${Style.option1.color1};
+  background-color: ${Style.color1};
   align-items: center;
   border-radius: 15px;
-  color: ${Style.option1.color2};
+  color: ${Style.color2};
 
   &:hover {
     transform: scale(1.005);

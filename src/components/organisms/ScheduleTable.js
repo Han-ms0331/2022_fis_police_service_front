@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor }) {
+export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
     let count = rows.length;
 
@@ -270,7 +270,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                     </TableCell>
                     {headCells.map((headCell) => ( // 테이블 헤더 정보 mapping
                         <TableCell
-                            style={{ color: '#2E3C7E', fontSize: '14pt', fontWeight: 'bold' }}
+                            style={{ color: headerFontColor, fontSize: '14pt', fontWeight: 'bold' }}
                             key={headCell.id}
                             align={headCell.numeric ? 'right' : 'left'}
                             padding={headCell.disablePadding ? 'none' : 'normal'}
