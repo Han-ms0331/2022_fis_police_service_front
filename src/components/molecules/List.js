@@ -26,9 +26,10 @@ function List(props) {
         element = <ListElement
             key={props.keyValue}
             style={{
-                // width: props.width,
+                width: props.width,
                 height: props.height,
                 gridTemplateColumns: props.gridRatio,
+                borderRadius:props.borderRadius
             }}>
             {
                 Object.values(props.contents).map((value, index) => {
@@ -37,7 +38,7 @@ function List(props) {
                 })
             }
             <div style={{display: "flex", justifyContent: "center"}}>
-                <CustomButton name={props.keyValue} type="normal" width="90px" height="30px" color={Style.color1}
+                <CustomButton name={props.keyValue} type="normal" width="auto" height="38px" color={Style.color1}
 
                               backgroundColor={Style.color2} borderRadius="10px" content={props.buttonContent}
                               onClick={props.onClickFunction}/>

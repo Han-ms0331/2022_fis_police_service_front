@@ -67,10 +67,10 @@ const AgentManageTemplate = () => {
     }
     return (
         <Main>
-            <ListContainer width="1500px" height="100%" headerContents={headerContent} contents={contents}
+            <ListContainer width="1800px" height="100%" headerContents={headerContent} contents={contents}
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
-            <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color={Style.color1}
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
                           backgroundColor={Style.color2} content="현장요원 추가" onClick={() => setOpen(true)}/>
             <Modal
                 open={open}
@@ -103,6 +103,7 @@ const style = {
 const Main = styled.div`
   display: flex;
   justify-content: center;
+  padding-top: 25px;
 
   & > button {
     position: fixed;
