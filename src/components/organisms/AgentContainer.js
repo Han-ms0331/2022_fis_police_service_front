@@ -20,10 +20,10 @@ const Container = styled.div`
 `;
 
 const tempAgent = [
-    {id: 1, Name: "가산1 김철수" , Color: "green"},
-    {id: 2, Name: "가산2 박철수" , Color: "red"},
-    {id: 3, Name: "가산3 최철수" , Color: "green"},
-    {id: 4, Name: "가산4 이철수" , Color: "red"},
+    {id: 1, Name: "가산1 김철수" , Color: "#4cd137"},
+    {id: 2, Name: "가산2 박철수" , Color: "#e55039"},
+    {id: 3, Name: "가산3 최철수" , Color: "#4cd137"},
+    {id: 4, Name: "가산4 이철수" , Color: "#e55039"},
 ];
  // tempAgent - 더미 데이터
 

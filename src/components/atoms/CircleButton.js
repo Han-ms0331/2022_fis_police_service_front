@@ -13,15 +13,16 @@ const Button = styled.button` // css
   border-color: black;
   border-radius: 60%;
   padding: 5%;
-  box-shadow: 1px 4px 0 rgb(0, 0, 0, 0.5);
+  box-shadow: 0.1px 0.1px 0 rgb(0, 0, 0, 0.5);
   margin: 1px;
   &:hover {
-    background-color: orange;
+    transform: scale(1.1);
+    cursor: pointer;
   }
   &:active {
-    box-shadow: 1px 1px 0 rgb(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 0 rgb(0, 0, 0, 0.5);
     position: relative;
-    top: 2px;
+    top: 1px;
   }
 `;
 
@@ -29,7 +30,7 @@ export default function CircleButton({bgColor, handleClick}) { // bgColor로 버
     return (
         <>
             {
-                bgColor === "green"
+                bgColor === "#3dc1d3"
                 ? <Button bgColor={bgColor} onClick={handleClick}></Button>
                     : <Button bgColor={bgColor}></Button>
                 // 초록색 버튼일 경우 Click Event 활성화
