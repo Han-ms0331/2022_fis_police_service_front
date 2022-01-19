@@ -20,8 +20,8 @@ function CustomMarker(props) {
                 image={{
                     src: "https://ifh.cc/g/TgJfMo.png",
                     size: {
-                        width: 60,
-                        height: 60,
+                        width: 70,
+                        height: 70,
                     },
                 }}
                 clickable={true}
@@ -42,10 +42,10 @@ function CustomMarker(props) {
             <MapMarker
                 position={props.position}
                 image={{
-                    src: "https://ifh.cc/g/NHHpb7.png",
+                    src: "https://ifh.cc/g/TSz6dP.png",
                     size: {
-                        width: 60,
-                        height: 60,
+                        width: 40,
+                        height: 40,
                     },
                 }}
             />
@@ -57,8 +57,8 @@ function CustomMarker(props) {
                 image={{
                     src: "https://ifh.cc/g/TSz6dP.png",
                     size: {
-                        width: 60,
-                        height: 60,
+                        width: 70,
+                        height: 70,
                     },
                 }}
             />

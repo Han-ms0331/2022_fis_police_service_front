@@ -164,13 +164,15 @@ function MapView(props) {
 
     const [range, setRange] = useState(2);
     const [centerInfo, setCenterInfo] = useState([]);
+
     const center = [
         {
             lat: props.thisCenterLocation[0],
             lng: props.thisCenterLocation[1],
         }
     ]
-
+    /*const [date,setDate] = useState(119)
+    const [selAgent, setSelAgent] = useState(agentInfo[1]);*/
 
     const loadInfo = async () => {
         await axios.get(`/main/center/${center_id}/range?range=${value}`)
