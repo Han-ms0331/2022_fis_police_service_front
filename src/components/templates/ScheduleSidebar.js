@@ -42,7 +42,6 @@ const Container = styled.div`
   padding: 0 15px;
   position: relative;
   transition: 1s ease-out;
-  background-color: ${color1};
 
   & .icon {    /*화살표 아이콘*/
     color: #999999;
