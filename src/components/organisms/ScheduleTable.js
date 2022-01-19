@@ -83,11 +83,7 @@ const useStyles = makeStyles((theme) => ({
     ),
     root: {
         width: '100%',
-        '&$active': {
-            color: '#FCF6F5', // sort label 누르면 색깔 변경
-        },
     },
-    active: {},
     icon: {
         color: 'inherit !important'
     },
@@ -133,7 +129,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     const ScheduleList = (row, index) => { // Schedule List를 띄워주는 함수
         // const isItemSelected = isSelected(row.No);
         const labelId = `enhanced-table-checkbox-${index}`;
-
         return (
             <TableRow
                 hover
@@ -152,16 +147,24 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                         style={{zoom: 2.0}}
                     />
                 </TableCell>
-                <TableCell component="th" id={labelId} scope="row" padding="none">
+                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} component="th" id={labelId} scope="row" padding="none">
                     {page*rowsPerPage + (index+1)}
                 </TableCell>
-                <TableCell align="right">{row.a_name}</TableCell>
-                <TableCell align="right"><pre>{`${row.c_name}\n ${row.c_address}\n ${row.c_ph}\n ${row.visit_time}\n ${row.estimate_num}명`}</pre></TableCell>
-                <TableCell align="right"><pre>{row.total_etc}</pre></TableCell>
-                <TableCell align="right"><pre>{row.modified_info}</pre></TableCell>
-                <TableCell align="right"><pre>{row.call_check}</pre></TableCell>
-                <TableCell align="right"><pre>일정공지여부</pre></TableCell>
-                <TableCell align="right">
+                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">{row.a_name}</TableCell>
+                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
+                    <details style={{padding:"10px 0"}}>
+                    <summary>{row.c_name}</summary>
+                    <div style={{fontSize: '13pt'}}>{row.c_address}</div>
+                    <div style={{fontSize: '13pt'}}>{row.c_ph}</div>
+                    <div style={{fontSize: '13pt'}}>{row.visit_time}</div>
+                    <div style={{fontSize: '13pt'}}>{row.estimate_num}명</div>
+                    </details>
+                </TableCell>
+                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><pre>{row.total_etc}</pre></TableCell>
+                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><pre>{row.modified_info}</pre></TableCell>
+                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><pre>{row.call_check}</pre></TableCell>
+                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><pre>일정공지여부</pre></TableCell>
+                <TableCell style={{ color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
                     <TransitionsModal defaultInput={row} backgroundColor={buttonColor} />
                 </TableCell>
             </TableRow>
@@ -288,6 +291,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                                 classes={{ root: classes.root, active: classes.active, icon: classes.icon}}
                                 direction={orderBy === headCell.id ? order : 'asc'}
                                 onClick={createSortHandler(headCell.id)}
+                                style={{ color: '#fff' }}
                             >
                                 {headCell.label}
                                 {orderBy === headCell.id ? (
@@ -320,7 +324,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -431,7 +435,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                             />
                         </div>
                         <TablePagination
-                            rowsPerPageOptions={[5, 10, 25]}
+                            rowsPerPageOptions={[10, 25]}
                             component="div"
                             count={count}
                             rowsPerPage={rowsPerPage}
