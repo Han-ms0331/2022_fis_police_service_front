@@ -6,6 +6,7 @@ import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
 import {useRecoilState} from "recoil";
 import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
+import {Style} from "../../Style";
 
 
 /*
@@ -67,7 +68,7 @@ function CustomMap(props) {
             >
                 <div style={{marginTop: "5px"}}>
                     <CustomButton type={"normal"} width={"20px"} height={"20px"} color={"white"} borderRadius={"2"}
-                                  backgroundColor={"orange"} content={"return"}
+                                  backgroundColor={Style.color2} content={"return"}
                                   onClick={() =>
                                       setPosition({
                                           center: {
