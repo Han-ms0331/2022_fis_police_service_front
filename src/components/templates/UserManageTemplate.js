@@ -70,6 +70,7 @@ const UserManageTemplate = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     return (<Main>
+
         <ListContainer width="1500px" height="100%" headerContents={headerContent} contents={contents}
                        gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정"
                        onClickFunction={handleModifyButtonClick}/>

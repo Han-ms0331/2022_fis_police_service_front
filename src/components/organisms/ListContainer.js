@@ -13,7 +13,7 @@ function ListContainer(props) {
                   gridRatio={props.gridRatio}/>
             {props.contents.map((content, index) => {
                 return <List key={Object.values(content)[0]} type="list" contents={content}
-                             gridRatio={props.gridRatio}
+                             gridRatio={props.gridRatio} height="50px"
                              buttonContent={props.buttonContent} onClickFunction={props.onClickFunction}
                              keyValue={index}/>
             })}
