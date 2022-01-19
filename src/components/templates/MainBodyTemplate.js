@@ -43,7 +43,8 @@ function MainBodyTemplate(props) {
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
                     c_name: res.data.c_name,
                     c_address: res.data.c_address,
-                    c_ph: res.data.c_ph
+                    c_ph: res.data.c_ph,
+                    c_people:res.data.c_people
                 })
                 setSelectedCenterCallList(res.data.callList)//callList에서 뜰 리스트 저장
                 setSelectedCenterScheduleList(res.data.scheduleList)//scheduleList에서 뜰 내용 저장
