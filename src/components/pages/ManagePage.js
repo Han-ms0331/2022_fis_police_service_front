@@ -6,6 +6,8 @@ import CenterManageTemp from "../templates/CenterManageTemp";
 import CustomButton from "../atoms/CustomButton";
 import UserManageTemplate from "../templates/UserManageTemplate";
 import AgentManageTemplate from "../templates/AgentManageTemplate";
+import {useRecoilValue} from "recoil";
+import {isLoginedState} from "../../store/LoginStore";
 
 /*
 날짜: 2022/01/13 3:53 PM
@@ -14,11 +16,7 @@ import AgentManageTemplate from "../templates/AgentManageTemplate";
 */
 
 function ManagePage(props) {
-    let isLogined;      //로그인 상태에 따라 랜더링을 결정하는 변수
-    if (localStorage.getItem("loginStatus") === "true") //localstorage에서 loginStatus가 true일때 isLogined를 true로 바꿔줌
-        isLogined = true;
-    else
-        isLogined = false;
+    const isLogined = useRecoilValue(isLoginedState);
 
     const [whichTab,setWhichTab] = useState("userManage");
     const renderTab = (tab) =>{
@@ -53,7 +51,7 @@ function ManagePage(props) {
                     </Container>
                 </Main>
             ) :
-            <Redirect to={"/"}/>
+            <Redirect to={"/login"}/>
 
     );
 

@@ -6,6 +6,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import axios from "axios";
 
 /*
     날짜: 2022/01/10 3:59 오후
@@ -23,34 +24,41 @@ import LogoutIcon from '@mui/icons-material/Logout';
 작성내용: Navigation 픽셀로 고정
 */
 const Navigation = () => {
-        const [isLogout, setIsLogout] = useState(false);    //로그아웃의 flag
+    const [isLogout, setIsLogout] = useState(false);    //로그아웃의 flag
     /*
         날짜: 2022/01/12 2:07 오후
         작성자: 한명수
         작성내용: 로그아웃 버튼이 눌렸을 시 작동하는 함수
     */
-    const onLogout = (e) => {
+
+
+    const onLogout = async (e) => {
         if (window.confirm("정말 로그아웃 하시겠습니까?")) {
-            localStorage.removeItem("loginStatus"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
-            localStorage.removeItem("userName"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
-            setIsLogout(true)   //로그아웃 flag를 true로 변환하여 redirect시킴
+            await axios.post("http://localhost:8080/logout", {}, {withCredentials: true})
+                .then((res) => {
+                    console.log(res)
+                    localStorage.removeItem("loginStatus"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
+                    localStorage.removeItem("userName"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
+                    setIsLogout(true)   //로그아웃 flag를 true로 변환하여 redirect시킴
+                })
+
         }
     }
     return (
-        isLogout?
+        isLogout ?
             <Redirect to={"/"}/>    //로그아웃이 눌리면 redirect
             :
-        <Container>
-            <Upper>
-                <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
-                <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
-                <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> {/*관리자*/}
-            </Upper>
+            <Container>
+                <Upper>
+                    <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
+                    <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
+                    <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> {/*관리자*/}
+                </Upper>
 
-            <Bottom>
-                <LogoutIcon className="icon" onClick={onLogout}/>{/*로그아웃*/}
-            </Bottom>
-        </Container>
+                <Bottom>
+                    <LogoutIcon className="icon" onClick={onLogout}/>{/*로그아웃*/}
+                </Bottom>
+            </Container>
     )
 }
 const Container = styled.div`
@@ -58,10 +66,12 @@ const Container = styled.div`
   grid-template-rows: 1fr 2fr;
   border-right: 2px solid #eee;
   padding: 0px;
+
   & .icon {
     color: #FFD400;
     font-size: 42px;
   }
+
   & .icon:hover {
     transform: scale(1.2);
     cursor: pointer;

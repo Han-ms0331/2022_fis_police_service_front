@@ -1,16 +1,23 @@
-import {Route} from "react-router-dom";
+import {Switch, Redirect, Route} from "react-router-dom";
 import MainPage from "./components/pages/MainPage";
 import SchedulePage from "./components/pages/SchedulePage";
 import ManagePage from "./components/pages/ManagePage";
 import ThisLoginPage from "./components/pages/ThisLoginPage";
+import {useRecoilValue} from "recoil";
+import {isLoginedState} from "./store/LoginStore";
+
+
 function App() {
-    // localStorage.setItem("loginStatus", "true");   //처음 랜더링 됐을 때 localstorage의 loginState를 false로 세팅
+    const isLogined = useRecoilValue(isLoginedState);
     return (
         <div className="App">
-            <Route exact path="/" component={ThisLoginPage}/>
-            <Route path="/main" component={MainPage}/>
-            <Route path="/schedule" component={SchedulePage}/>
-            <Route path="/manage" component={ManagePage}/>
+            {isLogined? <Redirect to={"/main"} />: <Redirect to={"/login"} />}
+            <Switch>
+                <Route exact path="/login" component={ThisLoginPage}/>
+                <Route path="/main" component={MainPage}/>
+                <Route path="/schedule" component={SchedulePage}/>
+                <Route path="/manage" component={ManagePage}/>
+            </Switch>
         </div>
     );
 }
