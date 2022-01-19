@@ -23,7 +23,7 @@ function MainPage(props) {
             (
                 <Main>
                     <Navigation/>
-                    <div style={{height: "100vh", borderRight: "1px solid #6D5A00"}}>
+                    <div style={{height: "100%", borderRight: "1px solid #6D5A00"}}>
                         <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected}/>
                     </div>
 

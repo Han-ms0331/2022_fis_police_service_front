@@ -5,6 +5,8 @@ import axios from "axios";
 import CenterInfo from "./CenterInfo";
 import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
 import {useRecoilState} from "recoil";
+import styled from "styled-components";
+
 
 let center_id = "1"
 let value = "4"
@@ -148,7 +150,6 @@ const selCenter = [
 selCenter.splice(1, 0, thisCenter[0]);
 
 
-
 let road = []
 let cInfo = []
 
@@ -187,21 +188,21 @@ function MapView(props) {
         if (e.target.textContent === "250m") {
             setRange(2)
             console.log('250m');
-            loadInfo().then((res)=>{
+            loadInfo().then((res) => {
                 console.log("success")
             })
 
         } else if (e.target.textContent === "500m") {
             setRange(3)
             console.log('500m')
-            loadInfo().then((res)=>{
+            loadInfo().then((res) => {
                 console.log("success")
             })
 
         } else if (e.target.textContent === "1km") {
             setRange(4)
             console.log('1000m')
-            loadInfo().then((res)=>{
+            loadInfo().then((res) => {
                 console.log("success")
             })
 
@@ -211,35 +212,25 @@ function MapView(props) {
 
 
     return (
-<>
+        <MapContainer style={{display: "flex", flexDirection: "column", alignItems: "flex-end"}}>
+            <RangeController onClickFunc={changeRange}/>
 
-                <div style={styles.sButton}>
-                    <RangeController onClickFunc={changeRange}/>
-                </div>
+            <CustomMap cdata={centerInfo} adata={agentInfo} rdata={road} sdata={selCenter} lat={center[0].lat}
+                       lng={center[0].lng}
+                       level={range}/>
+            {/* lat lng 값 변경 해줘야 함*/}
 
-                <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
-                    <CustomMap cdata={centerInfo} adata={agentInfo} rdata={road} sdata={selCenter}  lat={center[0].lat} lng={center[0].lng}
-                               level={range}/>
-                </div>
-        </>
+        </MapContainer>
     );
 }
 
 
+const MapContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end
+`;
+
+
+
 export default MapView;
-
-const styles = {
-    sButton: {
-        marginLeft: "1200px",
-        marginTop: "100px",
-        flexDirection: 'column',
-    },
-    MapView: {
-
-        marginLeft: "150px",
-        width: "70%",
-        height: "550px",
-    }
-}
-
-

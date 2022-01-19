@@ -4,7 +4,7 @@ import InputContainer from "../molecules/InputContainer";
 import {Style} from "../../Style";
 
 function SearchForm(props) {
-    return (<div style={{display: "flex", alignItems: "flex-end", width: props.width, height: props.height}}>
+    return (<div style={{display: "flex", justifyContent: "center", alignItems: "flex-end", width: props.width, height: props.height}}>
             <div style={{marginRight: "20px"}}>
                 <InputContainer labelContent="이름검색" inputName="centerName" inputType="text" width="200px" rows="1"
                                 flexDirection="column" setValueFunction={props.setSearch}/>
