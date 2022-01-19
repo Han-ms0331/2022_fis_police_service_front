@@ -21,8 +21,6 @@ import MessangerContainer from "../organisms/MessangerContainer";
 */
 const ScheduleSidebar = () => {
     const [date, setDate] = useState(new Date());
-
-
     return (
         <Container>
             <Items>
