@@ -58,7 +58,7 @@ const Main = styled.div`
       display: ${(props)=> props.isSidebarOpen===true?'block':'none'};
     }
     
-    & .icon{
+    & .icon{ // >< 화살표 아이콘
       color: #999999;
       font-size: 29px;
       position: absolute;
