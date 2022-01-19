@@ -7,11 +7,12 @@
 import React from 'react';
 import AgentSchedule from "../molecules/AgentSchedule";
 import styled from "styled-components";
+import {Style} from "../../Style";
 
 const Container = styled.div`
   border: 1px solid black;
   padding: 5px;
-  background-color: rgba(255, 212, 0, 0.2);
+  background-color: ${(props) => props.backgroundColor};
   border-radius: 5px;
   margin: 5px;
   width: ${(props) => props.width}px;
@@ -29,7 +30,7 @@ const tempAgent = [
 function AgentContainer({content=tempAgent, width=200, height=400}) {
     // content - 요원 정보가 담긴 배열을 받음. width와 height으로 컨테이너 크기 조절
     return (
-        <Container width={width} height={height}>
+        <Container backgroundColor={Style.color1} width={width} height={height}>
             <center>
                 <div>주변 현장요원</div>
                 <AgentSchedule content={content} width={width} height={height} />
