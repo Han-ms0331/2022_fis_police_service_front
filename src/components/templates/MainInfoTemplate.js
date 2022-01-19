@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Container} from "@mui/material";
 import CenterInfo from "../organisms/CenterInfo";
 import InfoContainer from "../organisms/InfoContainer";
@@ -6,7 +6,7 @@ import CustomButton from "../atoms/CustomButton";
 import axios from "axios";
 import CallInputForm from "../organisms/CallInputForm";
 import {useRecoilValue} from "recoil";
-import {SelectedCenterCallList, SelectedCenterScheduleList} from "../../store/SelectedCenterStore";
+import {SelectedCenterCallList, SelectedCenterId, SelectedCenterScheduleList} from "../../store/SelectedCenterStore";
 
 
 function MainInfoTemplate(props) {
@@ -22,10 +22,26 @@ function MainInfoTemplate(props) {
         center_etc: "",
         agent_etc: ""
     })
+    const center_id = useRecoilValue(SelectedCenterId);
     const callList = useRecoilValue(SelectedCenterCallList);
     const scheduleList = useRecoilValue(SelectedCenterScheduleList);
 
     const {isSelected} = props;
+
+    useEffect(()=>{
+        setIsOpen(false);
+        setCurrentInfo({
+            u_name: "",
+            in_out: "",
+            dateTime: "",
+            participation: "",
+            c_manager: "",
+            m_ph: "",
+            m_email: "",
+            center_etc: "",
+            agent_etc: ""
+        })
+    },[props.isSelected])
 
 
     /*
@@ -33,8 +49,35 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: 저장 버튼이 눌렸을 때 작동하는 함수
     */
-    const onSave = () => {
-
+    const onSave = async () => {
+        console.log(currentInfo);
+        await axios.post('/call',{
+            id: center_id,
+            u_name: currentInfo.u_name,
+            in_out: currentInfo.in_out,
+            dateTime: currentInfo.dateTime,
+            participation: currentInfo.participation,
+            c_manager: currentInfo.c_manager,
+            m_ph: currentInfo.m_ph,
+            m_email: currentInfo.m_email,
+            center_etc: currentInfo.center_etc,
+            agent_etc: currentInfo.agent_etc
+        })
+            .then((res)=>{
+                setCurrentInfo({
+                    u_name: "",
+                    in_out: "",
+                    dateTime: "",
+                    participation: "",
+                    c_manager: "",
+                    m_ph: "",
+                    m_email: "",
+                    center_etc: "",
+                    agent_etc: ""
+                })
+                console.log(res.data);
+                alert("저장되었습니다")
+            })
     }
 
 
@@ -68,6 +111,19 @@ function MainInfoTemplate(props) {
 
     const onClick = (e) => {
         if (e.target.name === "open") {
+            if (callList[0] !== undefined) {
+                setCurrentInfo({
+                    u_name: callList[0].u_name,
+                    in_out: callList[0].in_out,
+                    dateTime: callList[0].dateTime,
+                    participation: callList[0].participation,
+                    c_manager: callList[0].c_manager,
+                    m_ph: callList[0].m_ph,
+                    m_email: callList[0].m_email,
+                    center_etc: callList[0].center_etc,
+                    agent_etc: callList[0].agent_etc
+                })
+            }
             setIsOpen(true);
         } else if (e.target.name === "mail") {
             sendMail()
@@ -75,8 +131,10 @@ function MainInfoTemplate(props) {
             if (window.confirm("작성을 취소하시겠습니까?"))
                 setIsOpen(false);
         } else if (e.target.name === "save") {
-            if (window.confirm("저장하시겠습니까?"))
-                setIsOpen(false);
+            if (window.confirm("저장하시겠습니까?")){
+                onSave()
+            }
+            setIsOpen(false);
         }
     }
 
