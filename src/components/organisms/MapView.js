@@ -233,9 +233,8 @@ function MapView(props) {
 
 
     return (
+<>
 
-        <>
-            <div style={{marginLeft: "30px"}}>
                 <div style={styles.sButton}>
                     <RangeController onClickFunc={changeRange}/>
                 </div>
@@ -244,7 +243,6 @@ function MapView(props) {
                     <CustomMap cdata={centerInfo} adata={agentInfo} rdata={road} sdata={selCenter} fdata={props.thisCenter} fcdata={props.thisCenterInfo} floc={props.thisCenterLocation} lat={center[0].lat} lng={center[0].lng}
                                level={range}/>
                 </div>
-            </div>
         </>
     );
 }
@@ -254,13 +252,13 @@ export default MapView;
 
 const styles = {
     sButton: {
-        marginLeft: "1368px",
-        marginTop: "170px",
+        marginLeft: "1200px",
+        marginTop: "100px",
         flexDirection: 'column',
     },
     MapView: {
-        marginTop: "7px",
-        marginLeft: "369px",
+
+        marginLeft: "150px",
         width: "70%",
         height: "550px",
     }

@@ -98,7 +98,7 @@ function MainBodyTemplate(props) {
                         <CustomCalendar width={"200px"}/>
                         <AgentContainer/>
                     </div>
-                    <div>
+                    <div >
                         <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}
                                  thisCenterLocation={centerLocation}/>
                     </div>
