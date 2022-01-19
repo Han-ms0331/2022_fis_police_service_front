@@ -28,39 +28,21 @@ function ManagePage(props) {
     else
         isLogined = false;
 
-    const [whichTab, setWhichTab] = useState("userManage");
-    const renderTab = (tab) => {
-        switch (tab) {
-            case 'userManage':
-                return <UserManageTemplate/>
-            case 'agentManage':
-                return <AgentManageTemplate/>
-            case 'centerManage':
-                return <CenterManageTemp/>
-        }
-    }
-    const handdleClick = (tab, event) => { /*상단 네비게이션 메뉴를 클릭했을 때 state변경*/
-        console.log(event.target.parentNode.childNodes[0]);
-
-        const tabs = event.target.parentNode.childNodes;
-        console.log(tabs);
-        tabs.forEach((tab) => {
-            if (event.target === tab) {
-                console.log("hi")
-                tab.setAttribute("color", "#2E3C7E");
-                tab.setAttribute("background-color", "#FCF6F5");
-            } else {
-                console.log("bye")
-                tab.setAttribute("color", "#FCF6F5");
-                tab.setAttribute("background-color", "#2E3C7E");
-
-            }
-
-        })
-
-
-        setWhichTab(tab);
-    }
+    // const [whichTab, setWhichTab] = useState("userManage");
+    // const renderTab = (tab) => {
+    //     switch (tab) {
+    //         case 'userManage':
+    //             return <UserManageTemplate/>
+    //         case 'agentManage':
+    //             return <AgentManageTemplate/>
+    //         case 'centerManage':
+    //             return <CenterManageTemp/>
+    //     }
+    // }
+    // const handdleClick = (tab, event) => { /*상단 네비게이션 메뉴를 클릭했을 때 state변경*/
+    //
+    //     setWhichTab(tab);
+    // }
     return (
         isLogined ?     //isLogined가 false면 redirect를 시킴
             (
@@ -121,27 +103,27 @@ const Main = styled.div`
   border-radius: 10px;
   background-color: white;
 `;
-const Container = styled.div`
-  //display: grid;
-  //grid-template-rows: 125px auto;
-`;
-const NavigationTab = styled.div`
-  border-bottom: 2px solid #dadada;
-  align-self: end;
-
-  & .btnContainer {
-    margin-left: 30px;
-  }
-
-  & button {
-    margin-right: 5px;
-  }
-`;
-const Content = styled.div`
-  & > div {
-    margin-top: 30px;
-  }
-`;
+// const Container = styled.div`
+//   //display: grid;
+//   //grid-template-rows: 125px auto;
+// `;
+// const NavigationTab = styled.div`
+//   border-bottom: 2px solid #dadada;
+//   align-self: end;
+//
+//   & .btnContainer {
+//     margin-left: 30px;
+//   }
+//
+//   & button {
+//     margin-right: 5px;
+//   }
+// `;
+// const Content = styled.div`
+//   & > div {
+//     margin-top: 30px;
+//   }
+// `;
 
 
 const Tab = styled(TabUnstyled)`
