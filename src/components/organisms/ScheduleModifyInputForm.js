@@ -156,7 +156,7 @@ function ScheduleModifyInputForm(props) {
                 </div>
 
                 <div style={{marginBottom: "20px", display: `${disable.absentCount}`}}>
-                    <InputContainer labelContent="부재중 횟수: " inputType="number" width="300px"
+                    <InputContainer labelContent="부재중 횟수: " inputName="absentCount" inputType="number" width="300px"
                                     defaultValue={input.absentCount}
                                     setValueFunction={onChange}/>
                 </div>
