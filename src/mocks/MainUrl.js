@@ -4,6 +4,11 @@ import {rest} from "msw";
     작성자: 한명수
     작성내용: main page에서 필요한 mainhandler작성
 */
+
+const center_id="1"
+
+const value="4"
+
 export const mainHandlers = [
     rest.get('/main', async (req, res, ctx) => {
         return res(
@@ -51,8 +56,8 @@ export const mainHandlers = [
                 c_faxNum: null,
                 c_people: null,
                 c_hpAddress: null,
-                c_latitude: 123.0,
-                c_longitude: null,
+                c_latitude: "33.450492180670004",
+                c_longitude: "126.5716140938378",
                 participation: null,
                 visited: null,
                 callList: [
@@ -113,7 +118,7 @@ export const mainHandlers = [
             })
         )
     }),
-    rest.get('/center/{center_id}/range?range={value}', async (req, res, ctx) => {
+    rest.get(`/main/center/${center_id}/range?range=${value}`, async (req, res, ctx) => {
         return res(
             ctx.json({
                     cdata: [
@@ -127,7 +132,7 @@ export const mainHandlers = [
                             c_latitude: "33.450705",
                             c_longitude: "126.570677",
                         },
-                        {
+                        /*{
                             c_id: "2",
                             c_address: "f",
                             c_ph: "",
@@ -136,7 +141,7 @@ export const mainHandlers = [
                             distance: "",
                             c_latitude: "33.450492180670004",
                             c_longitude: "126.5716140938378",
-                        },
+                        },*/
                         {
                             c_id: "3",
                             c_address: "g",
