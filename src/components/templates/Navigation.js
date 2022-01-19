@@ -5,6 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import {Style} from "../../Style";
 
 /*
     날짜: 2022/01/10 3:59 오후
@@ -58,7 +59,8 @@ const Container = styled.div`
   border-right: 2px solid #eee;
   padding: 0px;
   & .icon {
-    color: #FFD400;
+    //color: #FFD400;
+    color: ${Style.color2};
     font-size: 42px;
   }
   & .icon:hover {
