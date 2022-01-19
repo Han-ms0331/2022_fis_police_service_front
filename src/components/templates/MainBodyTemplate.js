@@ -113,7 +113,7 @@ function MainBodyTemplate(props) {
 
                 </Container>
                 :
-                <div>
+                <div style={{display: "flex", justifyContent: "center"}}>
                     <ListContainer width="1500px" height="100vh" headerContents={headerContent} contents={centerList}
                                    gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
                                    onClickFunction={onSelect}/>
