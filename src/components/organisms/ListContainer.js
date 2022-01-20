@@ -5,7 +5,7 @@ import CustomButton from "../atoms/CustomButton";
 
 function ListContainer(props) {
     return (
-        <div style={{
+        props.contents === "" ? null :<div style={{
             width: props.width,
             height: props.height,
             borderRadius: props.borderRadius,
