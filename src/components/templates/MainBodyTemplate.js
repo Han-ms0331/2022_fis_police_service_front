@@ -30,7 +30,6 @@ function MainBodyTemplate(props) {
 
     const headerContent = ["시설명", "주소", "전화번호", "연락기록", "방문여부"]     //리스트 헤더
 
-
     /*
         날짜: 2022/01/18 5:02 오후
         작성자: 한명수
