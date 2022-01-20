@@ -5,10 +5,12 @@ import CustomButton from "../atoms/CustomButton";
 
 function ListContainer(props) {
     return (
-        props.contents === "" ? null : <div style={{
+        <div style={{
             width: props.width,
             height: props.height,
-            borderRadius:props.borderRadius
+            borderRadius: props.borderRadius,
+            // overflow: "hidden"
+            overflowX: "hidden"
         }}>
             <List type="list" type="listHeader" contents={props.headerContents}
                   gridRatio={props.gridRatio}/>

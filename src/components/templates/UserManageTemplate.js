@@ -86,7 +86,7 @@ const UserManageTemplate = () => {
     const handleClose = () => setOpen(false);
     return (<Main>
 
-        <ListContainer width="1800px" height="100%" headerContents={headerContent} contents={contents}
+        <ListContainer width="1800px" height="1000px" headerContents={headerContent} contents={contents}
                        gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
                        onClickFunction={handleModifyButtonClick}/>
         <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
