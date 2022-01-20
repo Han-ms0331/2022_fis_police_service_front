@@ -89,27 +89,20 @@ function MainBodyTemplate(props) {
     return (
         <div>
 
-            <div style={{width: "100%", display: "flex", justifyContent: "center", margin: "30px 0px 40px 0px"}}>
+            <div style={{width: "100%", margin: "30px 0px 40px 50px"}}>
                 <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange}/>
             </div>
 
             {isSelected ?
-
                 <Container>
                     <Left>
-                        <div style={{marginBottom: "20px", marginLeft: "20px"}}>
                             <CustomCalendar/>
-                        </div>
-                        <div>
                             <AgentContainer/>
-
-                        </div>
                     </Left>
                     <Right>
                         <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}
                                  thisCenterLocation={centerLocation}/>
                     </Right>
-
                 </Container>
                 :
                 <div style={{display: "flex", justifyContent: "center"}}>
@@ -128,12 +121,18 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 270px auto;
 `;
+
 const Left = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  margin-top: -28px;
+  &>div{
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
 `;
+
 const Right = styled.div`
   display: flex;
   justify-content: center;

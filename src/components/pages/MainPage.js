@@ -4,12 +4,12 @@ import Navigation from "../templates/Navigation";
 import {Redirect} from "react-router-dom";
 import MainInfoTemplate from "../templates/MainInfoTemplate";
 import MainBodyTemplate from "../templates/MainBodyTemplate";
-
 /*
     날짜: 2022/01/13 10:36 오전
     작성자: 한명수
     작성내용:   MainInfoTemplate 적용
 */
+
 function MainPage(props) {
     const [isSelected, setIsSelected] = useState(false);
 
@@ -28,7 +28,7 @@ function MainPage(props) {
                     </div>
 
                     <div>
-                       <MainInfoTemplate isSelected={isSelected} />
+                       <MainInfoTemplate isSelected={isSelected}/>
                     </div>
                 </Main>
             )
