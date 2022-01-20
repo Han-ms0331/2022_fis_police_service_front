@@ -124,7 +124,7 @@ function CenterManageTemp(props) {
                                 height="100%"/> {/*시설정보를 검색하는 부분*/}
 
 
-                <ListContainer headerContents={headerContent} contents={contents} width="1800px" height="1000px"
+                <ListContainer headerContents={headerContent} contents={contents} width="1800px"
                                gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/> {/*시설정보*/}
                 <Modal
