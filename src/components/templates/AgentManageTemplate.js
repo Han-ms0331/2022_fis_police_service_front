@@ -117,7 +117,7 @@ const AgentManageTemplate = () => {
                 </Box>
             </Modal>
             <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                          backgroundColor={Style.color2} content="현장요원 추가 +" onClick={() => setOpen(true)}/>
+                          backgroundColor={Style.color2} content="현장요원 추가 +" onClick={handleAddButtonClick}/>
         </Main>
     );
 };
@@ -143,8 +143,7 @@ const Main = styled.div`
 
   &> div:nth-child(1) {
     height: 960px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: auto;
   }
 
   & > button { /*콜직원 추가*/

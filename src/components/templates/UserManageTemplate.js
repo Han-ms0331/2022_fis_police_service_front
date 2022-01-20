@@ -134,8 +134,7 @@ const Main = styled.div`
   
   &> div:nth-child(1) {
     height: 960px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: auto;
   }
   
   & > button { /*콜직원 추가*/

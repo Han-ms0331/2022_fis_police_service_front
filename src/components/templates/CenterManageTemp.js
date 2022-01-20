@@ -123,7 +123,7 @@ function CenterManageTemp(props) {
             <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
                                 height="100%"/> {/*시설정보를 검색하는 부분*/}
 
-                <ListContainer headerContents={headerContent} contents={contents} width="1800px" height="1000px"
+                <ListContainer headerContents={headerContent} contents={contents} width="1800px"
                                gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/> {/*시설정보*/}
                 <Modal
@@ -162,9 +162,8 @@ const Main = styled.div`
   margin-top: -20px;
   &> div:nth-child(2) {
     margin-top: 8px;
-    height: 880px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    height: 910px;
+    overflow: auto;
   }
 
   & > button { /*콜직원 추가*/
