@@ -47,7 +47,6 @@ const CustomCalendar = ({setDate}) => {
         },);
     }, [value])
     return (
-        <div>
             <Calendar
                 onChange={(day)=>{
                     setValue(day);
@@ -62,8 +61,6 @@ const CustomCalendar = ({setDate}) => {
                 formatShortWeekday = {(locale, date) => ['일', '월', '화', '수', '목', '금', '토'][date.getDay()]}
                 formatMonthYear = {(locale, date) => ['1월', '2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월',][date.getMonth()]}
                 />
-
-        </div>
     );
 };
 
