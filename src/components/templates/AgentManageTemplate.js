@@ -59,19 +59,33 @@ const AgentManageTemplate = () => {
     const handleModifyButtonClick = (e) => {
         // button이 관리페이지의 정보 수정 버튼일 시...
         console.log(e.target.name);
-        const changeContent = {...contents[parseInt(e.target.name)]};
+        const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
         let date = changeContent['receiveDate'].replaceAll('/', '-');
         changeContent['receiveDate'] = date;
         setCurrentInfo(changeContent);
         handleOpen();
     }
+
+    const handleAddButtonClick = (e) =>{
+        setCurrentInfo({
+            agentName: "",
+            agentCode: "",
+            agentPhone: "",
+            agentHasCar: "",
+            agentAddress: "",
+            deviceNumber: "",
+            receiveDate: "",
+        });
+        handleOpen();
+    }
+
     return (
         <Main>
             <ListContainer width="1800px" height="100%" headerContents={headerContent} contents={contents}
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
             <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                          backgroundColor={Style.color2} content="현장요원 추가" onClick={() => setOpen(true)}/>
+                          backgroundColor={Style.color2} content="현장요원 추가" onClick={handleAddButtonClick}/>
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"

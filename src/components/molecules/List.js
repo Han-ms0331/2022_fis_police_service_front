@@ -29,15 +29,17 @@ function List(props) {
                 width: props.width,
                 height: props.height,
                 gridTemplateColumns: props.gridRatio,
-                borderRadius:props.borderRadius
-            }}>
+                borderRadius: props.borderRadius
+            }}
+            name={props.keyValue} onClick={props.onClickFunction}>
             {
                 Object.values(props.contents).map((value, index) => {
                     return index === 0 ? null :
-                        <div key={index} style={{display: "flex", justifyContent: "center"}}>{value}</div>
+                        <div key={index} name={props.keyValue} onClick={props.onClickFunction}
+                             style={{display: "flex", justifyContent: "center"}}>{value}</div>
                 })
             }
-            <div style={{display: "flex", justifyContent: "center"}}>
+            <div style={{display: "flex", justifyContent: "center"}} name={props.keyValue} onClick={props.onClickFunction}>
                 <CustomButton name={props.keyValue} type="normal" width="auto" height="38px" color={Style.color1}
 
                               backgroundColor={Style.color2} borderRadius="10px" content={props.buttonContent}
@@ -53,6 +55,7 @@ function List(props) {
     );
 
 }
+
 export default List;
 
 

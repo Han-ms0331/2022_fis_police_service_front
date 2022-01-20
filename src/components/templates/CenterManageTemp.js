@@ -78,8 +78,8 @@ function CenterManageTemp(props) {
 
     // 정보 수정 버튼을 누르면 inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오는 함수
     const handleModifyButtonClick = (e) => {
-        // console.log(e.target.name);
-        setCurrentInfo(contents[parseInt(e.target.name)])
+        console.log(e.target.getAttribute("name"))
+        setCurrentInfo(contents[e.target.getAttribute("name")])
         handleOpen();
     }
 

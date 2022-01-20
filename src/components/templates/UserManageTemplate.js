@@ -59,7 +59,7 @@ const UserManageTemplate = () => {
     }
     const handleModifyButtonClick = (e) => {
         // 콜직원 수정버튼 클릭시
-        const changeContent = {...contents[parseInt(e.target.name)]};
+        const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
         delete changeContent['today']; /*오늘통화건수 제외*/
         delete changeContent['avg']; /*평균통화건수 제외*/
         let date = changeContent['start'].replaceAll('/', '-');
@@ -67,6 +67,20 @@ const UserManageTemplate = () => {
         setCurrentInfo(changeContent)
         handleOpen(); /*수정창을 오픈한다*/
     }
+
+    const handleAddButtonClick = (e)=>{
+        setCurrentInfo({
+            name: "",
+            username: "",
+            password: "",
+            hp: "",
+            start: "",
+            auth: "",
+        });
+        handleOpen();
+
+    }
+
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -76,7 +90,7 @@ const UserManageTemplate = () => {
                        gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
                        onClickFunction={handleModifyButtonClick}/>
         <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                      backgroundColor={Style.color2} content="콜직원 추가" onClick={() => setOpen(true)}/>
+                      backgroundColor={Style.color2} content="콜직원 추가" onClick={handleAddButtonClick}/>
         <Modal
             open={open}
             aria-labelledby="modal-modal-title"
