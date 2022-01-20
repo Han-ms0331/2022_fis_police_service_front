@@ -15,13 +15,13 @@ function CenterManageInputForm(props) {
             alignItems: "center",
             justifyContent: "center",
         }}>
-            <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="시설 아이디: " inputName="center_id" inputType="text" width="300px" rows="1"
-                                setValueFunction={props.handleInputFormChange}
-                                defaultValue={props.currentInfo['center_id']} disabled={true}
+            {/*<div style={{marginBottom: "20px"}}>*/}
+            {/*    <InputContainer labelContent="시설 아이디: " inputName="center_id" inputType="text" width="300px" rows="1"*/}
+            {/*                    setValueFunction={props.handleInputFormChange}*/}
+            {/*                    defaultValue={props.currentInfo['center_id']} disabled={true}*/}
 
-                />
-            </div>
+            {/*    />*/}
+            {/*</div>*/}
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="시설 이름: " inputName="c_name" inputType="text" width="300px" rows="2"
                                 setValueFunction={props.handleInputFormChange}

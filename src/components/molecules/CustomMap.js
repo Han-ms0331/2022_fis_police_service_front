@@ -8,6 +8,7 @@ import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
 import {Style} from "../../Style";
 import {MdGpsFixed} from "react-icons/md";
 import styled from "styled-components";
+import CustomButton from "../atoms/CustomButton";
 
 
 /*
@@ -75,6 +76,8 @@ function CustomMap(props) {
                     }
                 })}
             >
+
+
                 {/*return 버튼*/}
                 <CustomPolyLine
                     path={[
