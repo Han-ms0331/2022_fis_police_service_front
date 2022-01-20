@@ -21,6 +21,7 @@ function RangeController(props) {
                                   backgroundColor={Style.color2} name={"500"} content={"500m"} onClick={props.onClickFunc}/>
                     <CustomButton type={"normal"} width={"15px"} height={"35px"} color={"white"} borderRadius={"2"}
                                   backgroundColor={Style.color2} name={"1000"} content={"1km"} onClick={props.onClickFunc}/>
+                                 
                 </div>
 
         </>

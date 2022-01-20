@@ -1,12 +1,13 @@
 /*global kakao */
 import React, {useEffect, useState} from "react";
 import {Map, MapMarker} from "react-kakao-maps-sdk";
-import CustomButton from "../atoms/CustomButton";
 import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
 import {useRecoilState} from "recoil";
 import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
 import {Style} from "../../Style";
+import {MdGpsFixed} from "react-icons/md";
+import styled from "styled-components";
 
 
 /*
@@ -41,9 +42,17 @@ function CustomMap(props) {
                 </div>
         })
     })
-
+    const handleClick = () => {
+        setPosition({
+            center: {
+                lat: props.lat,
+                lng: props.lng,
+            },
+            isPanto: true,
+        });
+    }
     return (
-        <>
+        <Container>
             <Map // 지도를 표시할 Container
                 center={
                     // 선택된 센터의 경/위도
@@ -55,8 +64,8 @@ function CustomMap(props) {
                 }
                 style={{
                     // 지도의 크기
-                    width: "950px",
-                    height: "950px",
+                    width: "1200px",
+                    height: "880px",
                 }}
                 level={props.level} // 지도의 확대 레벨
                 onCenterChanged={(map) => setPosition({ // 드래그로 인해 바뀌는 지도의 센터 값 추적
@@ -80,6 +89,7 @@ function CustomMap(props) {
                                   }
                     />
                 </div>
+
                 {/*return 버튼*/}
                 <CustomPolyLine
                     path={[
@@ -90,10 +100,10 @@ function CustomMap(props) {
                     type={"center"}
                     position={{lat: props.lat, lng: props.lng}}
                     content={
-                    <div>
-                        <div>시설이름 : {selCenterInfo.c_name}</div>
-                        <div>예상인원 : {selCenterInfo.c_people}명</div>
-                    </div>
+                        <div>
+                            <div>시설이름 : {selCenterInfo.c_name}</div>
+                            <div>예상인원 : {selCenterInfo.c_people}명</div>
+                        </div>
                     }
                 />
 
@@ -116,8 +126,32 @@ function CustomMap(props) {
                     />
                 ))} {/*선택된 현장 요원과 주변 현장 요원 표시*/}
             </Map>
-        </>
+            <MdGpsFixed onClick={handleClick}/>
+        </Container>
     )
 }
 
+const Container = styled.div`
+  position: relative;
+  z-index: 1;
+  margin-bottom: 10px;
+
+  & > div { /*지도*/
+    z-index: 2;
+  }
+  
+  & > svg {
+    width: 27px;
+    height: 27px;
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: ${Style.color2};
+    cursor: pointer;
+    z-index: 3;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+  }
+`;
 export default CustomMap;

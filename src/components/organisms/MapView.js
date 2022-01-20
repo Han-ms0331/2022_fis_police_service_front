@@ -6,7 +6,7 @@ import CenterInfo from "./CenterInfo";
 import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
-
+import { MdGpsFixed } from "react-icons/md";
 
 let center_id = "1"
 let value = "4"
@@ -213,9 +213,9 @@ function MapView(props) {
 
 
     return (
-        <MapContainer style={{display: "flex", flexDirection: "column", alignItems: "flex-end"}}>
-            <RangeController onClickFunc={changeRange}/>
 
+        <MapContainer>
+            <RangeController onClickFunc={changeRange}/>
             <CustomMap cdata={centerInfo} adata={agentInfo} rdata={road} sdata={selCenter} lat={center[0].lat}
                        lng={center[0].lng}
                        level={range}/>
@@ -229,7 +229,15 @@ function MapView(props) {
 const MapContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end
+  align-items: flex-end;
+  
+  &>div:nth-child(1){
+    z-index: 3;
+  }
+  &>div:nth-child(2){
+    margin-top: -28px;
+    z-index: 2;
+  }
 `;
 
 
