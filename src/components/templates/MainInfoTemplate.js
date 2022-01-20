@@ -96,7 +96,6 @@ function MainInfoTemplate(props) {
                     } else {
                         alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
                     }
-
                 })
                 .catch((err) => {
                     console.log(err);

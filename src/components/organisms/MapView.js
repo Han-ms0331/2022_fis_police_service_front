@@ -220,19 +220,19 @@ function MapView(props) {
                        lng={center[0].lng}
                        level={range}/>
             {/* lat lng 값 변경 해줘야 함*/}
-
         </MapContainer>
     );
 }
 
 
 const MapContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  
+  position: relative;
   &>div:nth-child(1){
+    position: absolute;
+    right: 10px;
+    top: -10px;
     z-index: 3;
+    margin-top: -7px;
   }
   &>div:nth-child(2){
     margin-top: -28px;
