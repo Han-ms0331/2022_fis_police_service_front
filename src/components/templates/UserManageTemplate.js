@@ -24,7 +24,7 @@ const UserManageTemplate = () => {
     const [open, setOpen] = React.useState(false);
     /*const contents = user;*/
     const [contents,setContents]=useState("");
-    const headerContent = ["이름", "아이디", "비밀번호", "권한", "입사일", "전화번호", "평균통화건수", "오늘통화건수"] /*표 상단에 표시되는 텍스트*/
+    const headerContent = ["이름", "아이디", "비밀번호", "전화번호", "입사일", "권한", "평균통화건수", "오늘통화건수"] /*표 상단에 표시되는 텍스트*/
     const [currentInfo, setCurrentInfo] = useState({
         u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
     })
