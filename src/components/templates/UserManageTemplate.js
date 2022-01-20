@@ -22,10 +22,11 @@ import {Style} from "../../Style";
 
 const UserManageTemplate = () => {
     const [open, setOpen] = React.useState(false);
-    const contents = user;
+    /*const contents = user;*/
+    const [contents,setContents]=useState("");
     const headerContent = ["이름", "아이디", "비밀번호", "권한", "입사일", "전화번호", "평균통화건수", "오늘통화건수"] /*표 상단에 표시되는 텍스트*/
     const [currentInfo, setCurrentInfo] = useState({
-        name: "", username: "", password: "", start: "", hp: "",auth:""
+        u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
     })
     const handleInputFormChange = (e) => {
         // console.log(e);
@@ -49,8 +50,24 @@ const UserManageTemplate = () => {
     //     console.log(currentInfo)
     // },[currentInfo]);
 
+    const showData=async ()=>{
+        await axios.get('/user')
+            .then((res)=>{
+            setContents(res.data.datas)
+        })
+    }
 
-    const handleClickSave = () => {
+    useEffect(()=>{
+        showData().then((res)=>{
+            console.log("done")
+        })
+    },[])
+
+    const handleClickSave = async() => {
+        await axios.patch('/user')
+            .then((res)=>{
+                console.log("saved")
+            })
         //api 수정 요청 보냄,,?
         //input state 에 적혀있는 것으로 수정,,,?
         console.log(currentInfo);
@@ -60,22 +77,17 @@ const UserManageTemplate = () => {
     const handleModifyButtonClick = (e) => {
         // 콜직원 수정버튼 클릭시
         const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
-        delete changeContent['today']; /*오늘통화건수 제외*/
-        delete changeContent['avg']; /*평균통화건수 제외*/
-        let date = changeContent['start'].replaceAll('/', '-');
-        changeContent['start'] = date;
+        delete changeContent['today_call_num']; /*오늘통화건수 제외*/
+        delete changeContent['average_call']; /*평균통화건수 제외*/
+        let date = changeContent['u_sDate'].replaceAll('/', '-');
+        changeContent['u_sDate'] = date;
         setCurrentInfo(changeContent)
         handleOpen(); /*수정창을 오픈한다*/
     }
 
     const handleAddButtonClick = (e)=>{
         setCurrentInfo({
-            name: "",
-            username: "",
-            password: "",
-            hp: "",
-            start: "",
-            auth: "",
+            u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
         });
         handleOpen();
 
