@@ -66,6 +66,7 @@ const AgentManageTemplate = () => {
     // useEffect(()=>{
     //     console.log(currentInfo)}
     // ,[currentInfo]);
+    //주석추ㅏ
 
     const handleClickSave = async() => { //정보 수정,추가 요청
         await axios.patch('/agent')
