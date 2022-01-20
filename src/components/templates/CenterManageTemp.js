@@ -12,7 +12,7 @@ import {Style} from "../../Style";
 
 
 function CenterManageTemp(props) {
-    const [contents,setContents]=useState("")
+    const [contents,setContents]=useState([])
     const headerContent = ["시설이름", "참여여부", "전화번호", "시설주소"]
 
     //form이 열리고 닫히고에 관련된 state 정의
@@ -36,12 +36,20 @@ function CenterManageTemp(props) {
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     const showList = async () => {   //서버와 로그인 통신을 하는 부분
-       await axios.get("/main/center/search?c_name={value}&c_address={value} &c_ph={value}")
+       // await axios.get("/main/center/search?c_name={value}&c_address={value} &c_ph={value}")
+       //      .then((res) => {
+       //          // contents = res.data.lists
+       //          console.log(res.data.lists)
+       //        setContents(res.data.lists);
+       //      })
+        await axios.get('/main/center/search?c_name={value}&c_address={value} &c_ph={value}')
             .then((res) => {
-                // contents = res.data.lists
-                console.log(res.data.lists)
-              setContents(res.data.lists);
+                setContents(res.data.lists);
             })
+            .catch((err) => {
+                console.log(err);
+            })
+
     }
 
     // form이 보이고 안보이고에 대한 함수 정의
@@ -115,7 +123,7 @@ function CenterManageTemp(props) {
             <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
                                 height="100%"/> {/*시설정보를 검색하는 부분*/}
 
-                <ListContainer headerContents={headerContent} contents={contents} width="1800px"
+                <ListContainer headerContents={headerContent} contents={contents} width="1800px" height="1000px"
                                gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/> {/*시설정보*/}
                 <Modal
