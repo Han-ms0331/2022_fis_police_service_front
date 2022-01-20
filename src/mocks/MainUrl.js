@@ -26,146 +26,168 @@ export const mainHandlers = [
                     {
                         center_id: "1",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: "완료"
                     },
                     {
                         center_id: "2",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: "예정"
                     },{
-                        center_id: "1",
+                        center_id: "3",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "4",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "5",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "6",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "7",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "8",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "9",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "10",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "11",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "12",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "13",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "14",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "15",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "16",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "17",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "18",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "19",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "20",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },{
-                        center_id: "1",
+                        center_id: "21",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     },
                     {
-                        center_id: "2",
+                        center_id: "22",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     }
                 ],
                 result: "success"
