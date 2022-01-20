@@ -76,20 +76,7 @@ function CustomMap(props) {
                     }
                 })}
             >
-                <div style={{marginTop: "5px"}}>
-                    <CustomButton type={"normal"} width={"100px"} height={"35px"} color={"white"} borderRadius={"2"}
-                                  backgroundColor={Style.color2} content={"return"}
-                                  onClick={() =>
-                                      setPosition({
-                                          center: {
-                                              lat: props.lat,
-                                              lng: props.lng,
-                                          },
-                                          isPanto: true,
-                                      })
-                                  }
-                    />
-                </div>
+
 
                 {/*return 버튼*/}
                 <CustomPolyLine
