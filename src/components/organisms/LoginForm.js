@@ -30,9 +30,9 @@ const LoginForm = (props) => {
                         <div className="icon"><RiLockPasswordLine/></div>
                         <input name="u_pwd" id="password" type="password" placeholder="비밀번호" onChange={props.onChangeFunction}/>
                     </InputRow>
-                    <Link to={"/main"}><CustomButton type="normal" width="100%" height="40px" borderRadius="6px"
+                    <CustomButton type="normal" width="100%" height="40px" borderRadius="6px"
                                                      color="#fff" backgroundColor="#FFD400" content="로그인"
-                                                     onClick={props.onClickFunction} /></Link> {/*로그인 버튼*/}
+                                                     onClick={props.onClickFunction} />{/*로그인 버튼*/}
                 </div>
             </Container>
         </Main>

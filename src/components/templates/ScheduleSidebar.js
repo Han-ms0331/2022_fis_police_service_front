@@ -3,6 +3,7 @@ import styled from "styled-components";
 import CustomCalendar from "../atoms/CustomCalendar";
 import DateContainer from "../organisms/DateContainer";
 import MessangerContainer from "../organisms/MessangerContainer";
+import {Style} from "../../Style";
 
 /*
 날짜: 2022/01/11 3:59 PM
@@ -32,11 +33,16 @@ const ScheduleSidebar = () => {
     );
 };
 
+// 디자인 비교를 위한 변수
+const [color1,color2]= [Style.color1,Style.color2];
+
+
 const Container = styled.div`
   //border-right: 2px solid #eee;
   padding: 0 15px;
   position: relative;
   transition: 1s ease-out;
+  background-color: ${color1};
 
   & .icon {    /*화살표 아이콘*/
     color: #999999;

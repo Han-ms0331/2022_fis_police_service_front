@@ -3,6 +3,7 @@ import InputContainer from "../molecules/InputContainer";
 import CustomButton from "../atoms/CustomButton";
 import styled from 'styled-components';
 import Box from '@mui/material/Box';
+import {Style} from "../../Style";
 
 
 function CenterManageInputForm(props) {
@@ -39,14 +40,14 @@ function CenterManageInputForm(props) {
             </div>
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>
-                    <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
-                                  border="1px solid #FFE400"
-                                  borderRadius="10px" backgroundColor="white" onClick={props.handleClose}/>
+                    <CustomButton type="reverse" width="150px" height="40px" content="취소" color={Style.color2}
+                                  border={`1px solid ${Style.color1}`}
+                                  borderRadius="10px" backgroundColor={Style.color1} onClick={props.handleClose}/>
                 </div>
 
                 <div>
-                    <CustomButton type="normal" width="150px" height="40px" content="저장" color="black"
-                                  borderRadius="10px" backgroundColor="#FFE400" onClick={props.handleClickSave}/>
+                    <CustomButton type="normal" width="150px" height="40px" content="저장" color={Style.color1}
+                                  borderRadius="10px" backgroundColor={Style.color2} onClick={props.handleClickSave}/>
                 </div>
             </div>
         </div>
