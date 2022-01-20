@@ -71,12 +71,10 @@ const UserManageTemplate = () => {
     const handleClose = () => setOpen(false);
 
     return (
-        <Main>
-            <ListContainer width="1800px" height="100%" headerContents={headerContent} contents={contents}
+        <Main id={"main"}>
+            <ListContainer width="1800px" headerContents={headerContent} contents={contents}
                            gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
                            onClickFunction={handleModifyButtonClick}/>
-            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                          backgroundColor={Style.color2} content="콜직원 추가 +" onClick={() => setOpen(true)}/>
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
@@ -88,6 +86,9 @@ const UserManageTemplate = () => {
                                          handleClickSave={handleClickSave}/>
                 </Box>
             </Modal>
+
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                          backgroundColor={Style.color2} content="콜직원 추가 +" onClick={() => setOpen(true)}/>
         </Main>);
 };
 
@@ -103,11 +104,19 @@ const style = {
 
 const Main = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-
-  & > button {
+  align-items: center;
+  
+  &> div:nth-child(1) {
+    height: 960px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  & > button { /*콜직원 추가*/
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translate(-50%, 0);
   }
