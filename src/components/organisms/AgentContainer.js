@@ -10,10 +10,10 @@ import styled from "styled-components";
 import {Style} from "../../Style";
 
 const Container = styled.div`
-  border: 1px solid black;
+  border: 3px solid #eee;
   padding: 5px;
   background-color: ${(props) => props.backgroundColor};
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 5px;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;

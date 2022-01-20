@@ -8,6 +8,7 @@ import {Style} from "../../Style";
 
 function ScheduleModifyInputForm(props) {
     const [input, setInput] = useState({
+        schedule_id: props.defaultInput.schedule_id,
         c_name: props.defaultInput.c_name,
         a_code: props.defaultInput.a_code,
         visit_date: props.defaultInput.visit_date,
@@ -57,6 +58,13 @@ function ScheduleModifyInputForm(props) {
             call_check: input.call_check,
             total_etc: input.total_etc
         })
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err));
+    }
+
+    const onCancel = async() => {
+        console.log(input.schedule_id);
+        await axios.get(`/schedule?schedule_id=${input.schedule_id}`)
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err));
     }
@@ -185,7 +193,7 @@ function ScheduleModifyInputForm(props) {
 
                 <div style={{marginTop: "30px", display: 'flex',  justifyContent:'center'}}>
                     <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
-                                  borderRadius="15px" backgroundColor={Style.color2} onClick={props.onClickFunction}/>
+                                  borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>
                 </div>
 
                 <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>

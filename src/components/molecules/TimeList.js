@@ -9,10 +9,10 @@ import CircleButton from "../atoms/CircleButton";
 import styled from "styled-components";
 
 const Div = styled.div` // css
-  border: 1px solid black;
+  border: 3px solid #eee;
   padding: 5px;
   background-color: White;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 5px;
 `;
 
