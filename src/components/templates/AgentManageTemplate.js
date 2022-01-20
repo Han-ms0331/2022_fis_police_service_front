@@ -100,12 +100,9 @@ const AgentManageTemplate = () => {
     }
     return (
         <Main>
-            <ListContainer width="1800px" height="1000px"  headerContents={headerContent} contents={contents}
-                           gridRatio="1fr 1fr 1fr  1fr 3fr 1fr
-                           1fr 1fr 1fr" buttonContent="정보수정" onClickFunction={handleModifyButtonClick}/>
-
-            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                          backgroundColor={Style.color2} content="현장요원 추가" onClick={handleAddButtonClick}/>
+            <ListContainer width="1800px"  headerContents={headerContent} contents={contents}
+                           gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
+                           onClickFunction={handleModifyButtonClick}/>
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
@@ -117,6 +114,9 @@ const AgentManageTemplate = () => {
                                           handleClickSave={handleClickSave}/>
                 </Box>
             </Modal>
+
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                          backgroundColor={Style.color2} content="현장요원 추가 +" onClick={handleAddButtonClick}/>
         </Main>
     );
 };
@@ -142,8 +142,7 @@ const Main = styled.div`
 
   &> div:nth-child(1) {
     height: 960px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: auto;
   }
 
   & > button { /*콜직원 추가*/

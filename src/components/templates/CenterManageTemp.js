@@ -163,9 +163,8 @@ const Main = styled.div`
   margin-top: -20px;
   &> div:nth-child(2) {
     margin-top: 8px;
-    height: 880px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    height: 910px;
+    overflow: auto;
   }
 
   & > button { /*콜직원 추가*/
