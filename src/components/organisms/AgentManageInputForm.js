@@ -50,7 +50,7 @@ function AgentManageInputForm(props) {
             <div style={{display: "flex", marginTop: "20px"}}>
                 <div style={{marginRight: "30px"}}>
                     <CustomButton type="reverse" width="150px" height="40px" content="취소" color={Style.color2}
-                                  border= {`1px solid ${Style.color1}`}
+                                  border= {`1px solid ${Style.color2}`}
                                   borderRadius="10px" backgroundColor={Style.color1} onClick={props.handleClose}/>
                 </div>
 
