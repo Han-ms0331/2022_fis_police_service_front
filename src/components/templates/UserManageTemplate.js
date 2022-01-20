@@ -25,7 +25,7 @@ const UserManageTemplate = () => {
     const contents = user;
     const headerContent = ["이름", "아이디", "비밀번호", "권한", "입사일", "전화번호", "평균통화건수", "오늘통화건수"] /*표 상단에 표시되는 텍스트*/
     const [currentInfo, setCurrentInfo] = useState({
-        name: "", username: "", password: "", start: "", hp: "",auth:""
+        name: "", username: "", password: "", start: "", hp: "", auth: ""
     })
     const handleInputFormChange = (e) => {
         // console.log(e);
@@ -67,28 +67,28 @@ const UserManageTemplate = () => {
         setCurrentInfo(changeContent)
         handleOpen(); /*수정창을 오픈한다*/
     }
-
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    return (<Main>
 
-        <ListContainer width="1800px" height="100%" headerContents={headerContent} contents={contents}
-                       gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
-                       onClickFunction={handleModifyButtonClick}/>
-        <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                      backgroundColor={Style.color2} content="콜직원 추가" onClick={() => setOpen(true)}/>
-        <Modal
-            open={open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={style}>
-                <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
-                                     handleInputFormChange={handleInputFormChange}
-                                     handleClickSave={handleClickSave}/>
-            </Box>
-        </Modal>
-    </Main>);
+    return (
+        <Main>
+            <ListContainer width="1800px" height="100%" headerContents={headerContent} contents={contents}
+                           gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
+                           onClickFunction={handleModifyButtonClick}/>
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                          backgroundColor={Style.color2} content="콜직원 추가 +" onClick={() => setOpen(true)}/>
+            <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
+                                         handleInputFormChange={handleInputFormChange}
+                                         handleClickSave={handleClickSave}/>
+                </Box>
+            </Modal>
+        </Main>);
 };
 
 const style = {
@@ -96,7 +96,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     boxShadow: 24,
     p: 4,
 };
@@ -104,7 +104,7 @@ const style = {
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 25px;
+
   & > button {
     position: fixed;
     bottom: 50px;

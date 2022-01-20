@@ -28,50 +28,9 @@ function ManagePage(props) {
     else
         isLogined = false;
 
-    // const [whichTab, setWhichTab] = useState("userManage");
-    // const renderTab = (tab) => {
-    //     switch (tab) {
-    //         case 'userManage':
-    //             return <UserManageTemplate/>
-    //         case 'agentManage':
-    //             return <AgentManageTemplate/>
-    //         case 'centerManage':
-    //             return <CenterManageTemp/>
-    //     }
-    // }
-    // const handdleClick = (tab, event) => { /*상단 네비게이션 메뉴를 클릭했을 때 state변경*/
-    //
-    //     setWhichTab(tab);
-    // }
     return (
         isLogined ?     //isLogined가 false면 redirect를 시킴
             (
-                //     <Main>
-                //         <Navigation/>
-                //         <Container>
-                //             <NavigationTab>
-                //                 <div className="btnContainer">
-                //                     <CustomButton class="userManage" type="normal" width="150px" height="35px"
-                //                                   borderRadius="3px" color={Style.color1} backgroundColor={Style.color2}
-                //                                   content="콜직원관리" onClick={(event) => handdleClick("userManage", event)}/>
-                //                     <CustomButton class="agentManage" type="normal" width="150px" height="35px"
-                //                                   borderRadius="3px" color={Style.color2} backgroundColor={Style.color1}
-                //                                   content="현장요원관리" onClick={(event) => handdleClick("agentManage", event)}/>
-                //                     <CustomButton class="centerManage" type="normal" width="150px" height="35px"
-                //                                   borderRadius="3px" color={Style.color2} backgroundColor={Style.color1}
-                //                                   content="시설정보수정"
-                //                                   onClick={(event) => handdleClick("centerManage", event)}/>
-                //                 </div>
-                //             </NavigationTab>
-                //             <Content>
-                //                 {renderTab(whichTab)}
-                //             </Content>
-                //         </Container>
-                //     </Main>
-                // ) :
-                // <Redirect to={"/"}/>
-
-
                 <Main>
                     <Navigation/>
                     {/*<Container>*/}
@@ -96,6 +55,8 @@ function ManagePage(props) {
 
 }
 
+// style
+
 const Main = styled.div`
   display: grid;
   grid-template-columns: 67px auto;
@@ -103,31 +64,8 @@ const Main = styled.div`
   border-radius: 10px;
   background-color: white;
 `;
-// const Container = styled.div`
-//   //display: grid;
-//   //grid-template-rows: 125px auto;
-// `;
-// const NavigationTab = styled.div`
-//   border-bottom: 2px solid #dadada;
-//   align-self: end;
-//
-//   & .btnContainer {
-//     margin-left: 30px;
-//   }
-//
-//   & button {
-//     margin-right: 5px;
-//   }
-// `;
-// const Content = styled.div`
-//   & > div {
-//     margin-top: 30px;
-//   }
-// `;
-
 
 const Tab = styled(TabUnstyled)`
-
   color: ${Style.color2};
   cursor: pointer;
   font-weight: bold;
@@ -169,6 +107,7 @@ const TabsList = styled(TabsListUnstyled)`
   padding-left: 10px;
   margin-bottom: 30px;
 `;
+
 
 
 export default ManagePage;

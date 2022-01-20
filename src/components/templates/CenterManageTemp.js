@@ -130,7 +130,7 @@ function CenterManageTemp(props) {
                     transform: "translate(-50%,0)"
                 }}>
                     <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                                  backgroundColor={Style.color2} content="시설 추가" onClick={handleAddButtonClick}/>
+                                  backgroundColor={Style.color2} content="시설 추가 +" onClick={handleAddButtonClick}/>
                 </div>
 
 
@@ -158,7 +158,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     boxShadow: 24,
     p: 4,
 };
@@ -166,7 +166,6 @@ const style = {
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 25px;
 
   & > button {
     position: fixed;

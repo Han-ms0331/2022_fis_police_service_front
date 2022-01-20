@@ -71,7 +71,7 @@ const AgentManageTemplate = () => {
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
             <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                          backgroundColor={Style.color2} content="현장요원 추가" onClick={() => setOpen(true)}/>
+                          backgroundColor={Style.color2} content="현장요원 추가 +" onClick={() => setOpen(true)}/>
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
@@ -95,7 +95,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     boxShadow: 24,
     p: 4,
 };
@@ -103,7 +103,6 @@ const style = {
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 25px;
 
   & > button {
     position: fixed;
