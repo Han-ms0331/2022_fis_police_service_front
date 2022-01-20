@@ -163,8 +163,8 @@ const Main = styled.div`
   align-items: center;
   margin-top: -20px;
   &> div:nth-child(2) {
-    margin-top: 8px;
-    height: 910px;
+    margin-top: 5px;
+    height: 880px;
     overflow: auto;
   }
 
