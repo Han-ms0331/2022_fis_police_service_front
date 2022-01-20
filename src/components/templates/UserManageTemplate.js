@@ -97,7 +97,7 @@ const UserManageTemplate = () => {
 
     return (
         <Main id={"main"}>
-           <ListContainer width="1800px" height="1000px" headerContents={headerContent} contents={contents}
+           <ListContainer width="1800px" headerContents={headerContent} contents={contents}
                        gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
                        onClickFunction={handleModifyButtonClick}/>
             <Modal
