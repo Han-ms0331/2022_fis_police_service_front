@@ -15,6 +15,7 @@ import {Redirect} from "react-router-dom";
 작성자: 정도식
 작성내용: Sidebar 접히는 기능 오류 해결
 */
+
 const SchedulePage = (props) => {
     let isLogined;      //로그인 상태에 따라 랜더링을 결정하는 변수
     const[isSidebarOpen,setIsSidebarOpen] = useState(true);
@@ -49,7 +50,7 @@ const Main = styled.div`
   display: grid;
   grid-template-columns: ${(props)=>props.isSidebarOpen===true?'67px 305px auto':'67px 0px auto'};
   height: 100%;
-
+  transition: 1s;
   & .sidebar{ //Sidebar
     border-right: ${(props)=> props.isSidebarOpen===true?'2px solid #eee':'none'};
     position: relative;
