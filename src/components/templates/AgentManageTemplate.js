@@ -79,7 +79,7 @@ const AgentManageTemplate = () => {
     const handleModifyButtonClick = (e) => {
         // button이 관리페이지의 정보 수정 버튼일 시...
         console.log(e.target.name);
-        const changeContent = {...contents[parseInt(e.target.name)]};
+        const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
         let date = changeContent['a_receiveDate'].replaceAll('/', '-');
         changeContent['a_receiveDate'] = date;
         setCurrentInfo(changeContent);
