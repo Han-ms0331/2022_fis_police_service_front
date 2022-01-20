@@ -186,7 +186,6 @@ function MapView(props) {
 
 
     const changeRange = (e) => {
-        console.log(e.target)
         if (e.target.textContent === "250m") {
             setRange(2)
             console.log('250m');

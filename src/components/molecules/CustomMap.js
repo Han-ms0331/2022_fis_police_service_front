@@ -67,7 +67,7 @@ function CustomMap(props) {
                 })}
             >
                 <div style={{marginTop: "5px"}}>
-                    <CustomButton type={"normal"} width={"20px"} height={"20px"} color={"white"} borderRadius={"2"}
+                    <CustomButton type={"normal"} width={"100px"} height={"35px"} color={"white"} borderRadius={"2"}
                                   backgroundColor={Style.color2} content={"return"}
                                   onClick={() =>
                                       setPosition({
