@@ -3,6 +3,10 @@ import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
 import CenterInfo from "./CenterInfo";
+import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
+import {useRecoilState} from "recoil";
+import styled from "styled-components";
+
 
 let center_id = "1"
 let value = "4"
@@ -144,12 +148,6 @@ const selCenter = [
 ]
 
 selCenter.splice(1, 0, thisCenter[0]);
-const center = [
-    {
-        lat: selCenter[1].c_latitude,
-        lng: selCenter[1].c_longitude,
-    }
-]
 
 
 let road = []
@@ -162,38 +160,21 @@ selCenter.forEach((arr, index, buf) => {
     })
 })
 
-/*roadInfo.forEach((arr, index, buf) => {
-    selCenter.forEach((arr1, index1, buf1) => {
-        if (arr.c_id === arr1.c_id) {
-            roadInfo.push({
-                ...arr,
-                c_order: (index1 + 1)
-            })
-        }
-    })
-})
-
-
-roadInfo.forEach((arr, index, buf) => {
-    cInfo.push({
-        ...arr,
-        latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
-        type: "center",
-        contents:
-            <div>
-                <div>{arr.c_order}</div>
-                <div>시설 이름: {arr.c_name}</div>
-                <div>예상 인원: {}</div>
-                <div>방문 예정 시간: {}</div>
-            </div>
-    })
-})*/
-
 
 function MapView(props) {
 
     const [range, setRange] = useState(2);
     const [centerInfo, setCenterInfo] = useState([]);
+
+    const center = [
+        {
+            lat: props.thisCenterLocation[0],
+            lng: props.thisCenterLocation[1],
+        }
+    ]
+    /*const [date,setDate] = useState(119)
+    const [selAgent, setSelAgent] = useState(agentInfo[1]);*/
+
     const loadInfo = async () => {
         await axios.get(`/main/center/${center_id}/range?range=${value}`)
             .then((res) => {
@@ -209,21 +190,21 @@ function MapView(props) {
         if (e.target.textContent === "250m") {
             setRange(2)
             console.log('250m');
-            loadInfo().then((res)=>{
+            loadInfo().then((res) => {
                 console.log("success")
             })
 
         } else if (e.target.textContent === "500m") {
             setRange(3)
             console.log('500m')
-            loadInfo().then((res)=>{
+            loadInfo().then((res) => {
                 console.log("success")
             })
 
         } else if (e.target.textContent === "1km") {
             setRange(4)
             console.log('1000m')
-            loadInfo().then((res)=>{
+            loadInfo().then((res) => {
                 console.log("success")
             })
 
@@ -233,35 +214,25 @@ function MapView(props) {
 
 
     return (
-<>
+        <MapContainer style={{display: "flex", flexDirection: "column", alignItems: "flex-end"}}>
+            <RangeController onClickFunc={changeRange}/>
 
-                <div style={styles.sButton}>
-                    <RangeController onClickFunc={changeRange}/>
-                </div>
+            <CustomMap cdata={centerInfo} adata={agentInfo} rdata={road} sdata={selCenter} lat={center[0].lat}
+                       lng={center[0].lng}
+                       level={range}/>
+            {/* lat lng 값 변경 해줘야 함*/}
 
-                <div style={styles.MapView}> {/* lat lng 값 변경 해줘야 함*/}
-                    <CustomMap cdata={centerInfo} adata={agentInfo} rdata={road} sdata={selCenter} fdata={props.thisCenter} fcdata={props.thisCenterInfo} floc={props.thisCenterLocation} lat={center[0].lat} lng={center[0].lng}
-                               level={range}/>
-                </div>
-        </>
+        </MapContainer>
     );
 }
 
 
+const MapContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end
+`;
+
+
+
 export default MapView;
-
-const styles = {
-    sButton: {
-        marginLeft: "1200px",
-        marginTop: "100px",
-        flexDirection: 'column',
-    },
-    MapView: {
-
-        marginLeft: "150px",
-        width: "70%",
-        height: "550px",
-    }
-}
-
-

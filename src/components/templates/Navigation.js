@@ -8,6 +8,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import axios from "axios";
 import {useRecoilState} from "recoil";
 import {isLoginedState} from "../../store/LoginStore";
+import {Style} from "../../Style";
 
 /*
     날짜: 2022/01/10 3:59 오후
@@ -65,7 +66,8 @@ const Container = styled.div`
   padding: 0px;
 
   & .icon {
-    color: #FFD400;
+    //color: #FFD400;
+    color: ${Style.color2};
     font-size: 42px;
   }
 

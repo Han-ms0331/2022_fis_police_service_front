@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {useRecoilValue} from "recoil";
 import {rowCount} from "../../store/DateSelectedRowsStore";
+import {Style} from "../../Style";
 
 const DateContainer = ({date}) => {
     function getSelectedDate() { // 선택날짜를 ----년-월-일-요일 형식으로 구하는 함수
@@ -33,7 +34,8 @@ const DateContainer = ({date}) => {
 // styled-components
 
 const Container = styled.div`
-background: #F8EFBA;
+//background: #F8EFBA;
+background: ${Style.color1};
 margin: 10px 0;
   border-radius: 10px;
   text-align: center;
@@ -43,6 +45,7 @@ margin: 10px 0;
 
 const SelectedDate = styled.div`
     padding: 20px 0 10px 0;
+    color: ${Style.color2};
   &> p{
     font-weight: 400;
   }

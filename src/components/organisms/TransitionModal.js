@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function TransitionsModal({ defaultInput }) {
+export default function TransitionsModal({ defaultInput, backgroundColor }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -36,7 +36,7 @@ export default function TransitionsModal({ defaultInput }) {
 
     return (
         <div>
-            <CustomButton type="normal" color='black' backgroundColor='rgba(255, 212, 0, 0.5)' content="수정" onClick={handleOpen} />
+            <CustomButton type="normal" color='white' backgroundColor={backgroundColor} content="수정" onClick={handleOpen} />
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"

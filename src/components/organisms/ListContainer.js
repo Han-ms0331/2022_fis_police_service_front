@@ -8,6 +8,7 @@ function ListContainer(props) {
         props.contents === "" ? null : <div style={{
             width: props.width,
             height: props.height,
+            borderRadius:props.borderRadius
         }}>
             <List type="list" type="listHeader" contents={props.headerContents}
                   gridRatio={props.gridRatio}/>

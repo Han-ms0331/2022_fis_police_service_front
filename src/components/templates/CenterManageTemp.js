@@ -118,7 +118,7 @@ function CenterManageTemp(props) {
                                 height="100%"/>
                 </div>
 
-                <ListContainer headerContents={headerContent} contents={contents} width="1500px" height="100%"
+                <ListContainer headerContents={headerContent} contents={contents} width="1800px" height="100%"
                                gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/>
 
@@ -129,7 +129,7 @@ function CenterManageTemp(props) {
                     left: "50%",
                     transform: "translate(-50%,0)"
                 }}>
-                    <CustomButton type="normal" width="150px" height="35px" borderRadius="3px" color={Style.color1}
+                    <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
                                   backgroundColor={Style.color2} content="시설 추가" onClick={handleAddButtonClick}/>
                 </div>
 
@@ -166,6 +166,7 @@ const style = {
 const Main = styled.div`
   display: flex;
   justify-content: center;
+  padding-top: 25px;
 
   & > button {
     position: fixed;

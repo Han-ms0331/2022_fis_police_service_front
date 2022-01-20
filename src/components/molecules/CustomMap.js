@@ -4,6 +4,9 @@ import {Map, MapMarker} from "react-kakao-maps-sdk";
 import CustomButton from "../atoms/CustomButton";
 import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
+import {useRecoilState} from "recoil";
+import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
+import {Style} from "../../Style";
 
 
 /*
@@ -14,10 +17,7 @@ import CustomMarker from "../atoms/CustomMarker";
 */
 
 function CustomMap(props) {
-    /*const [position, setPosition] = useRecoilState(positionState);*///   지도의 바뀌는 센터 값 추적
-    let scheduleData = []
-    const [firstInfo, setFirstInfo] = useState("");
-    const [firstLocation, setFirstLocation] = useState([]);
+    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo);
     const [position, setPosition] = useState(
         {
             center: {lat: props.lat, lng: props.lng},
@@ -25,52 +25,7 @@ function CustomMap(props) {
         }
     )
 
-    /*props.fdata().then((res)=>{
-        console.log("gg")
-        setFirstInfo(props.thisCenter)
-        console.log(firstInfo)
-        setFirstLocation(props.thisCenterLocation)
-        console.log(props.thisCenterLocation)
-        setFirstLocation([props.thisCenterLocation])
-        console.log(firstLocation)
-    })*/
-
-        /*props.fcdata.push({
-            ...props.fcdata,
-            latlng: props.floc,
-            type: "center",
-            contents:
-                <div>
-                    <div>시설 이름: {props.fcdata.c_name}</div>
-                    <div>예상 인원: {}</div>
-                    <div>방문 예정 시간: {}</div>
-                </div>
-        })*/
-
-    /*selCenter.push({
-        ...selCenter,
-        latlng:{lat:props.floc.lat,lng:props.floc.lng},
-        type:"center",
-        contents:
-            <div>
-                <div>시설 이름: {props.fcdata.c_name}</div>
-                <div>예상 인원: {}</div>
-                <div>방문 예정 시간: {}</div>
-            </div>
-    })*/
-
     let cInfo = []
-    props.cdata.forEach((arr, index, buf) => {
-        props.sdata.forEach((arr1, index1, buf1) => {
-            if (arr.c_id === arr1.c_id) {
-                props.cdata.push({
-                    ...arr,
-                    c_order: (index1 + 1)
-                })
-            }
-        })
-    })
-
 
     props.cdata.forEach((arr, index, buf) => {
         cInfo.push({
@@ -87,7 +42,6 @@ function CustomMap(props) {
         })
     })
 
-
     return (
         <>
             <Map // 지도를 표시할 Container
@@ -101,7 +55,7 @@ function CustomMap(props) {
                 }
                 style={{
                     // 지도의 크기
-                    width: "95%",
+                    width: "950px",
                     height: "950px",
                 }}
                 level={props.level} // 지도의 확대 레벨
@@ -114,7 +68,7 @@ function CustomMap(props) {
             >
                 <div style={{marginTop: "5px"}}>
                     <CustomButton type={"normal"} width={"20px"} height={"20px"} color={"white"} borderRadius={"2"}
-                                  backgroundColor={"orange"} content={"return"}
+                                  backgroundColor={Style.color2} content={"return"}
                                   onClick={() =>
                                       setPosition({
                                           center: {
@@ -132,21 +86,26 @@ function CustomMap(props) {
                         props.rdata,
                     ]}
                 /> {/*선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
-               {/* <CustomMarker
-                    key="main"
-                    type={props.fcdata.type}
-                    position={props.fcdata.latlng}
-                    color={props.fcdata.contents}
-                />*/}
+                <CustomMarker
+                    type={"center"}
+                    position={{lat: props.lat, lng: props.lng}}
+                    content={
+                    <div>
+                        <div>시설이름 : {selCenterInfo.c_name}</div>
+                        <div>예상인원 : {selCenterInfo.c_people}명</div>
+                    </div>
+                    }
+                />
+
                 {cInfo.map((position, index) => (
                     <>
-                    <CustomMarker
-                        key={index}
-                        type={position.type}
-                        position={position.latlng} // 마커를 표시할 위치
-                        content={position.contents} // type이 center일 경우 전달받은 시설정보를 띄워준다
+                        <CustomMarker
+                            key={index}
+                            type={position.type}
+                            position={position.latlng} // 마커를 표시할 위치
+                            content={position.contents} // type이 center일 경우 전달받은 시설정보를 띄워준다
 
-                    />
+                        />
                     </>
                 ))} {/*선택된 센터의 주변 시설 정보 표시*/}
                 {props.adata.map((position, index) => (
