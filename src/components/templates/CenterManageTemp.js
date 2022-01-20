@@ -112,28 +112,12 @@ function CenterManageTemp(props) {
 
     return (
         <Main>
-            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                <div style={{marginBottom: "30px"}}>
-                    <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
-                                height="100%"/>
-                </div>
+            <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
+                                height="100%"/> {/*시설정보를 검색하는 부분*/}
 
-                <ListContainer headerContents={headerContent} contents={contents} width="1800px" height="100%"
+                <ListContainer headerContents={headerContent} contents={contents} width="1800px"
                                gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
-                               onClickFunction={handleModifyButtonClick}/>
-
-
-                <div style={{
-                    position: "fixed",
-                    bottom: "50px",
-                    left: "50%",
-                    transform: "translate(-50%,0)"
-                }}>
-                    <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                                  backgroundColor={Style.color2} content="시설 추가" onClick={handleAddButtonClick}/>
-                </div>
-
-
+                               onClickFunction={handleModifyButtonClick}/> {/*시설정보*/}
                 <Modal
                     open={open}
                     aria-labelledby="modal-modal-title"
@@ -143,10 +127,9 @@ function CenterManageTemp(props) {
                         <CenterManageInputForm handleClose={handleClose} handleClickSave={handleClickSave}
                                                handleInputFormChange={handleInputFormChange} currentInfo={currentInfo}/>
                     </Box>
-
                 </Modal>
-
-            </div>
+                    <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                                  backgroundColor={Style.color2} content="시설 추가 +" onClick={handleAddButtonClick}/>
         </Main>
     );
 }
@@ -158,19 +141,27 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     boxShadow: 24,
     p: 4,
 };
 
 const Main = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 25px;
+  align-items: center;
+  margin-top: -20px;
+  &> div:nth-child(2) {
+    margin-top: 8px;
+    height: 880px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 
-  & > button {
+  & > button { /*콜직원 추가*/
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translate(-50%, 0);
   }

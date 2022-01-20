@@ -128,7 +128,7 @@ const Container = styled.div`
     z-index: 2;
   }
   
-  & > svg {
+  & > svg { /*현재위치 버튼*/
     width: 27px;
     height: 27px;
     color: #fff;

@@ -116,6 +116,8 @@ const AgentManageTemplate = () => {
                                           handleClickSave={handleClickSave}/>
                 </Box>
             </Modal>
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                          backgroundColor={Style.color2} content="현장요원 추가 +" onClick={() => setOpen(true)}/>
         </Main>
     );
 };
@@ -128,19 +130,26 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     boxShadow: 24,
     p: 4,
 };
 
 const Main = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 25px;
+  align-items: center;
 
-  & > button {
+  &> div:nth-child(1) {
+    height: 960px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  & > button { /*콜직원 추가*/
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translate(-50%, 0);
   }
