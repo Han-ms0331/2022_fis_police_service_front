@@ -3,7 +3,7 @@ import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
 import CenterInfo from "./CenterInfo";
-import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
+import {SelectedCenterInfo, SelectedCenterList} from "../../store/SelectedCenterStore";
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
 import { MdGpsFixed } from "react-icons/md";
@@ -107,7 +107,7 @@ const selCenter = [
         c_longitude: "126.57215980066594",
     },
 ]
-let road = []
+/*let road = []
 
 selCenter.splice(1, 0, thisCenter[0]); // 선택된 현장 요원의 스케쥴 사이에 선택된 센터 정보 집어 넣기
 
@@ -116,13 +116,13 @@ selCenter.forEach((arr, index, buf) => { // 동선 표시를 위해 위도경도
         ...arr,
         lat: arr.c_latitude, lng: arr.c_longitude,
     })
-})
+})*/
 
 
 function MapView(props) {
 
     const [range, setRange] = useState(2);// 지도의 비율 설정
-    const [centerInfo, setCenterInfo] = useState([]);//지도 확대 비율 별 주변 시설 정보를 서버로 부터 받아와서 set!
+    const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
 
@@ -136,37 +136,82 @@ function MapView(props) {
     /*const [date,setDate] = useState(119)
     const [selAgent, setSelAgent] = useState(agentInfo[1]);*/
 
-    const loadInfo = async () => { //지도의 확대 비율 별 주변 시설 정보 받아오기
+    /*const loadInfo = async () => { //지도의 확대 비율 별 주변 시설 정보 받아오기
         await axios.get(`/main/center/${center_id}/range?range=${value}`)
             .then((res) => {
                 console.log("done")
                 console.log(res.data.cdata)
                 setCenterInfo(res.data.cdata)
             })
-    }
-
+    }*/
+    let centerList=[]
 
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
         if (e.target.textContent === "250m") {
             setRange(2)
             console.log('250m');
-            loadInfo().then((res) => {
-                console.log("success")
+            console.log(selectedCenterList)
+            selectedCenterList.forEach((arr,index,buf)=>{
+                if (arr.distance<=250){
+                    centerList.push({
+                        ...arr,
+                        latlng:{lat:arr.c_latitude,lng:arr.c_longitude},
+                        type: "center",
+                        contents:
+                            <div>
+                                <div>시설 이름: {arr.c_name}</div>
+                                <div>예상 인원: {arr.c_people}</div>
+                            </div>
+                    })
+                }
             })
+
+            /*loadInfo().then((res) => {
+                console.log("success")
+            })*/
 
         } else if (e.target.textContent === "500m") {
             setRange(3)
             console.log('500m')
-            loadInfo().then((res) => {
-                console.log("success")
+            selectedCenterList.forEach((arr,index,buf)=>{
+                if (arr.distance<=500){
+                    centerList.push({
+                        ...arr,
+                        latlng:{lat:arr.c_latitude,lng:arr.c_longitude},
+                        type: "center",
+                        contents:
+                            <div>
+                                <div>시설 이름: {arr.c_name}</div>
+                                <div>예상 인원: {arr.c_people}</div>
+                            </div>
+                    })
+                }
             })
+            console.log(centerList)
+            /*loadInfo().then((res) => {
+                console.log("success")
+            })*/
 
         } else if (e.target.textContent === "1km") {
             setRange(4)
             console.log('1000m')
-            loadInfo().then((res) => {
-                console.log("success")
+            selectedCenterList.forEach((arr,index,buf)=>{
+                if (arr.distance<=1000){
+                    centerList.push({
+                        ...arr,
+                        latlng:{lat:arr.c_latitude,lng:arr.c_longitude},
+                        type: "center",
+                        contents:
+                            <div>
+                                <div>시설 이름: {arr.c_name}</div>
+                                <div>예상 인원: {arr.c_people}</div>
+                            </div>
+                    })
+                }
             })
+            /*loadInfo().then((res) => {
+                console.log("success")
+            })*/
 
         }
 
@@ -177,7 +222,7 @@ function MapView(props) {
 
         <MapContainer>
             <RangeController onClickFunc={changeRange}/>
-            <CustomMap cdata={centerInfo} adata={selectedAgentInfo} clickedAdata={clickedAgent} rdata={road} sdata={selCenter} lat={center[0].lat}
+            <CustomMap cdata={selectedCenterList} aroundCdata={centerList} adata={selectedAgentInfo} clickedAdata={clickedAgent}  sdata={selCenter} lat={center[0].lat}
                        lng={center[0].lng}
                        level={range}/>
         </MapContainer>
