@@ -45,13 +45,13 @@ function MainBodyTemplate(props) {
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`)
             .then((res) => {
                 console.log(res.data)
-                setSelectedAgentInfo(res.data.data.a_data);
+                setSelectedAgentInfo(() => res.data.data);
             })
     }
 
     useEffect(() => {
         onData(); // 날짜를 선택한 경우에 함수 실행
-        console.log(selectedAgentInfo);
+        console.log(selectedAgentInfo); // undefined???
     }, [date])
 
 
