@@ -14,22 +14,12 @@ import MainBodyTemplate from "../templates/MainBodyTemplate";
 function MainPage(props) {
     const [isSelected, setIsSelected] = useState(false);
 
-    let isLogined;      //로그인 상태에 따라 랜더링을 결정하는 변수
-    if (localStorage.getItem("loginStatus") === "true") //localstorage에서 loginStatus가 true일때 isLogined를 true로 바꿔줌
-        isLogined = true;
-    else
-        isLogined = false;
     return (
-        isLogined ?     //isLogined가 false면 redirect를 시킴
-            (
                 <Main>
                     <Navigation/>
                     <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected}/>
                     <MainInfoTemplate isSelected={isSelected}/>
                 </Main>
-            )
-            :
-            <Redirect to={"/"}/>
     );
 }
 
