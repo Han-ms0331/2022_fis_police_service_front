@@ -21,9 +21,9 @@ import NetworkConfig from "../../configures/NetworkConfig";
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
     const [currentInfo, setCurrentInfo] = useState({        //검색창에 입력된 내용을 담는 state
-        centerName: "",
-        centerAddress: "",
-        centerPhone: ""
+        c_name: "",
+        c_address: "",
+        c_ph: ""
     });
     const [centerList, setCenterList] = useState([])    //검색 결과로 나온 시설들의 리스트를 담는 state
     const [centerLocation, setCenterLocation] = useState([]);   //선택된 시설의 위 경도 정보
@@ -53,6 +53,7 @@ function MainBodyTemplate(props) {
     }, [date])
 
 
+
     const headerContent = ["시설명", "주소", "전화번호", "연락기록", "방문여부"]     //리스트 헤더
 
     /*
@@ -61,21 +62,20 @@ function MainBodyTemplate(props) {
         작성내용: 검색 결과로 나온 시설 리스트중 하나를 선택했을 때 작동하는 함수
     */
     const onSelect = async (e) => {
-        console.log(e.target.name);
-        await axios.get('/main/center/select?center_id={e.target.name}')
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.name].center_id}`)
             .then((res) => {
-                console.log(res.data.center_id);
-                setSelectedCenterId(res.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
+                console.log(res.data.data);
+                setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
-                    center_id: res.data.center_id,
-                    c_name: res.data.c_name,
-                    c_address: res.data.c_address,
-                    c_ph: res.data.c_ph,
-                    c_people: res.data.c_people
+                    center_id: res.data.data.center_id,
+                    c_name: res.data.data.c_name,
+                    c_address: res.data.data.c_address,
+                    c_ph: res.data.data.c_ph,
+                    c_people: res.data.data.c_people
                 })
-                setSelectedCenterCallList(res.data.callList)//callList에서 뜰 리스트 저장
-                setSelectedCenterScheduleList(res.data.scheduleList)//scheduleList에서 뜰 내용 저장
-                setCenterLocation([res.data.c_latitude, res.data.c_longitude]);
+                setSelectedCenterCallList(res.data.data.callList)//callList에서 뜰 리스트 저장
+                setSelectedCenterScheduleList(res.data.data.scheduleList)//scheduleList에서 뜰 내용 저장
+                setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
                 setIsSelected(true);
             })
     }
@@ -102,9 +102,11 @@ function MainBodyTemplate(props) {
     */
 
     const onSearch = async () => {
-        await axios.get(`/main/center/search?c_name={value}&c_address={value} &c_ph={value}`)
+        console.log(currentInfo);
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`)
             .then((res) => {
-                setCenterList(res.data.lists);
+                console.log(res.data.data)
+                setCenterList(res.data.data);
                 setIsSelected(false);
             })
             .catch((err) => {
