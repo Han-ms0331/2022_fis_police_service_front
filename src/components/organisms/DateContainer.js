@@ -41,6 +41,7 @@ margin: 10px 0;
   text-align: center;
   font-size: 21px;
   font-weight: 600;
+  border:2px solid ${Style.color2};
 `
 
 const SelectedDate = styled.div`

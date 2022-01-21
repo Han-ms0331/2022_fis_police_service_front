@@ -30,6 +30,7 @@ const Announcement = styled.div`
   margin: 10px 0;
   border-radius: 10px;
   padding: 3px 7px;
+  border:2px solid ${Style.color2};
 `;
 const Header = styled.div`
   color: #6D5A00;

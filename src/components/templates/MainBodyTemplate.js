@@ -17,6 +17,7 @@ import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
 import NetworkConfig from "../../configures/NetworkConfig";
+import {Style} from "../../Style";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -145,7 +146,8 @@ function MainBodyTemplate(props) {
     );
 }
 const Main = styled.div`
-border-right: 2px solid #eee;
+// border-right: 2px solid ${Style.color2};
+  border-right: 2px solid #eee;
 `;
 const Container = styled.div`
   display: grid;
