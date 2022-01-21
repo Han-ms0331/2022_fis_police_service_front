@@ -123,14 +123,14 @@ function CenterManageTemp(props) {
         //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
         if(modify === true){
             //수정
-            await axios.post("/manage/center")
+            await axios.patch("/manage/center")
                 .then((res) => {
                     console.log(res.data);
                 })
             alert("수정 되었습니다.");
         }else{
             //추가
-            await axios.patch("/manage/center")
+            await axios.post("/manage/center")
                 .then((res) => {
                     console.log(res.data);
                 })
