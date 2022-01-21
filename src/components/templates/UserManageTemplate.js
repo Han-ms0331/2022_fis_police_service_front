@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal';
 import Box from "@mui/material/Box";
 import axios from "axios";
 import {Style} from "../../Style";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -21,111 +22,177 @@ import {Style} from "../../Style";
 */
 
 const UserManageTemplate = () => {
-    const [open, setOpen] = React.useState(false);
-    /*const contents = user;*/
-    const [contents,setContents]=useState("");
-    const headerContent = ["이름", "아이디", "비밀번호", "전화번호", "입사일", "권한", "평균통화건수", "오늘통화건수"] /*표 상단에 표시되는 텍스트*/
-    const [currentInfo, setCurrentInfo] = useState({
-        u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
-    })
-    const [modify,setModify]=useState();
+        const [open, setOpen] = React.useState(false);
+        /*const contents = user;*/
+        const [contents, setContents] = useState("");
+        const headerContent = ["이름", "아이디", "비밀번호", "전화번호", "입사일", "권한", "평균통화건수", "오늘통화건수"] /*표 상단에 표시되는 텍스트*/
+        const [currentInfo, setCurrentInfo] = useState({
+            u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "", u_auth: ""
+        })
+        const [modify, setModify] = useState();
 
-    const handleInputFormChange = (e) => {
-        // console.log(e);
-        const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
-        console.log(name);
-        if (name !== 'start') {
-            setCurrentInfo({
-                ...currentInfo, // 기존의 input 객체를 복사한 뒤
-                [name]: value // name 키를 가진 값을 value 로 설정
-            });
-        } else {
-            console.log(e.target.name)
-            // setCurrentInfo({
-            //     ...currentInfo, // 기존의 input 객체를 복사한 뒤
-            //     [name]: toString(value) // name 키를 가진 값을 value 로 설정
-            // });
+        const handleInputFormChange = (e) => {
+            // console.log(e);
+            const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
+            if (name === "u_auth") {
+                if (value === "관리자") {
+                    setCurrentInfo({
+                        ...currentInfo,
+                        u_auth: "ADMIN"
+                    })
+                } else if (value === "일반직원") {
+                    setCurrentInfo({
+                        ...currentInfo,
+                        u_auth: "USER"
+                    })
+                } else {
+                    setCurrentInfo({
+                        ...currentInfo,
+                        u_auth: "FIRED"
+                    })
+                }
+            } else {
+                setCurrentInfo((prev) => {
+                        let a;
+                        if (currentInfo.u_auth === "관리자") {
+                            console.log(currentInfo.u_auth)
+                            a = "ADMIN"
+                        } else if (currentInfo.u_auth === "일반직원") {
+                            console.log(currentInfo.u_auth)
+                            a = "USER"
+                        } else {
+                            console.log(currentInfo.u_auth)
+                            a = "FIRED"
+                        }
+                        return {
+                            ...currentInfo, // 기존의 input 객체를 복사한 뒤
+                            u_auth: a,
+                            [name]: value // name 키를 가진 값을 value 로 설정}
+                        }
+                    }
+                )
+            }
         }
-    }
 
-    // useEffect(()=>{
-    //     console.log(currentInfo)
-    // },[currentInfo]);
 
-    const showData=async ()=>{
-        await axios.get('/user')
-            .then((res)=>{
-            setContents(res.data.datas)
-        })
-    }
+// useEffect(()=>{
+//     console.log(currentInfo)
+// },[currentInfo]);
 
-    useEffect(()=>{
-        showData().then((res)=>{
-            console.log("done")
-        })
-    },[])
+        const showData = async () => {
+            await axios.get(`http://${NetworkConfig.networkAddress}:8080/user`, {withCredentials: true})
+                .then((res) => {
+                        console.log(res.data);
+                        let tmp = [];
+                        let a;
+                        res.data.forEach((list) => {
+                            if (list.u_auth === "ADMIN") {
+                                a = "관리자"
+                            } else if (list.u_auth === "USER") {
+                                a = "일반직원"
+                            } else {
+                                a = "퇴사"
+                            }
 
-    const handleClickSave = async() => {
-        if(modify==true){
-            await axios.patch('/user')
-                .then((res)=>{
+                            tmp.push({
+                                user_id: list.user_id,
+                                u_name: list.u_name,
+                                u_nickname: list.u_nickname,
+                                u_pwd: list.u_pwd,
+                                u_ph: list.u_ph,
+                                u_sDate: list.u_sDate,
+                                u_auth: a,
+                                averge_call: list.average_call,
+                                today_call_num: list.today_call_num
+                            })
+                        })
+                        console.log(tmp)
+                        setContents(tmp);
+                    }
+                )
+        }
+
+        useEffect(() => {
+            showData().then((res) => {
+                console.log("done")
+            })
+        }, [])
+
+        const handleClickSave = async () => {
+            console.log(currentInfo);
+            if (modify == true) {
+                await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true}).then((res) => {
                     console.log("patch done")
+                    showData()
+                }).catch((err) => {
+                    console.log(err);
                 })
-            alert("수정 되었습니다");
+                alert("수정 되었습니다");
+            } else {
+                console.log(currentInfo)
+                await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true})
+                    .then((res) => {
+                        console.log(res)
+                        showData()
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                alert("추가 되었습니다")
+            }
+            handleClose();
         }
-        else{
-            await axios.post('/user')
-                .then((res)=>{
-                    console.log("post done")
-                })
-            alert("추가 되었습니다")
+
+        const handleModifyButtonClick = (e) => {
+            // 콜직원 수정버튼 클릭시
+            setModify(true);
+            const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
+
+            delete changeContent['today_call_num']; /*오늘통화건수 제외*/
+
+            delete changeContent['average_call']; /*평균통화건수 제외*/
+            if (changeContent['u_sDate'] != null) {
+                let date = changeContent['u_sDate'].replaceAll('/', '-');
+                changeContent['u_sDate'] = date;
+            }
+
+            setCurrentInfo(changeContent)
+            // console.log(currentInfo)
+            handleOpen(); /*수정창을 오픈한다*/
         }
-        handleClose();
+        const handleAddButtonClick = (e) => {
+            setModify(false)
+            setCurrentInfo({
+                u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "", u_auth: "", user_id: ""
+            });
+            handleOpen();
+
+        }
+        const handleOpen = () => setOpen(true);
+        const handleClose = () => setOpen(false);
+
+
+        return (
+            <Main id={"main"}>
+                <ListContainer width="1800px" headerContents={headerContent} contents={contents}
+                               gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
+                               onClickFunction={handleModifyButtonClick}/>
+                <Modal
+                    open={open}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
+                                             handleInputFormChange={handleInputFormChange}
+                                             handleClickSave={handleClickSave}/>
+                    </Box>
+                </Modal>
+
+                <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                              backgroundColor={Style.color2} content="콜직원 추가 +" onClick={handleAddButtonClick}/>
+            </Main>);
     }
-    const handleModifyButtonClick = (e) => {
-        // 콜직원 수정버튼 클릭시
-        setModify(true);
-        const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
-        delete changeContent['today_call_num']; /*오늘통화건수 제외*/
-        delete changeContent['average_call']; /*평균통화건수 제외*/
-        let date = changeContent['u_sDate'].replaceAll('/', '-');
-        changeContent['u_sDate'] = date;
-        setCurrentInfo(changeContent)
-        handleOpen(); /*수정창을 오픈한다*/
-    }
-    const handleAddButtonClick = (e)=>{
-        setModify(false)
-        setCurrentInfo({
-            u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
-        });
-        handleOpen();
-
-    }
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-
-    return (
-        <Main id={"main"}>
-           <ListContainer width="1800px" headerContents={headerContent} contents={contents}
-                       gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
-                       onClickFunction={handleModifyButtonClick}/>
-            <Modal
-                open={open}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
-                                         handleInputFormChange={handleInputFormChange}
-                                         handleClickSave={handleClickSave}/>
-                </Box>
-            </Modal>
-
-            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                          backgroundColor={Style.color2} content="콜직원 추가 +" onClick={handleAddButtonClick}/>
-        </Main>);
-};
+;
 
 const style = {
     position: 'absolute',
@@ -142,12 +209,12 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
-  &> div:nth-child(1) {
+
+  & > div:nth-child(1) {
     height: 960px;
     overflow: auto;
   }
-  
+
   & > button { /*콜직원 추가*/
     position: fixed;
     bottom: 40px;

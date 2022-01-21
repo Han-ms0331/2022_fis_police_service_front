@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import AgentManageInputForm from "../organisms/AgentManageInputForm";
 import {Style} from "../../Style";
 import axios from "axios";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -17,10 +18,11 @@ import axios from "axios";
 */
 const AgentManageTemplate = () => {
     const [open, setOpen] = useState(false);
-    const [contents,setContents] =useState("");
+    const [contents, setContents] = useState("");
     /*const contents = agent;*/
     const headerContent = ["이름", "현장요원코드", "전화번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜", "퇴사 여부"]
     const [currentInfo, setCurrentInfo] = useState({
+        agent_id: "",
         a_name: "",
         a_code: "",
         a_ph: "",
@@ -28,23 +30,42 @@ const AgentManageTemplate = () => {
         a_address: "",
         a_equipment: "",
         a_receiveDate: "",
-        a_status:""
+        a_status: ""
     });
-    const [modify, setModify]=useState();
+    const [modify, setModify] = useState();
 
-    const showData=async () => {
-        await axios.get('/agent')
-            .then((res)=>{
-                /*console.log(res.data.a_data);*/
-                setContents(res.data.a_data);
+    const showData = async () => {
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/agent`, {withCredentials: true})
+            .then((res) => {
+                let tmp = [];
+                let a, b;
+
+                console.log(res.data.data)
+
+                res.data.data.forEach((list) => {
+                    list.a_hasCar ? a = "자차" : a = "도보"
+                    list.a_status ? b = "재직" : b = "퇴사"
+                    tmp.push({
+                        agent_id: list.agent_id,
+                        a_name: list.a_name,
+                        a_code: list.a_code,
+                        a_ph: list.a_ph,
+                        a_hasCar: a,
+                        a_address: list.a_address,
+                        a_equipment: list.a_equipment,
+                        a_receiveDate: list.a_receiveDate,
+                        a_status: b,
+                    })
+                })
+                setContents(tmp)
             })
     }
 
-    useEffect(()=>{ //처음 렌더링시에만 데이터 요청
-    showData().then((res)=>{
-        console.log("done")
-    })
-    },[]);
+    useEffect(() => { //처음 렌더링시에만 데이터 요청
+        showData().then((res) => {
+            console.log("done")
+        })
+    }, []);
 
 
     const handleOpen = () => {
@@ -56,31 +77,70 @@ const AgentManageTemplate = () => {
     const handleInputFormChange = (e) => {
         // console.log(e);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
-        setCurrentInfo({
-            ...currentInfo, // 기존의 input 객체를 복사한 뒤
-            [name]: value // name 키를 가진 값을 value 로 설정
-        });
+        let a, b;
+        currentInfo.a_hasCar ? a = true : a = false;
+        currentInfo.a_status ? b = true : b = false;
 
+        if (name === "a_hasCar") {
+            if (value === "자차") {
+                setCurrentInfo({
+                    ...currentInfo,
+                    a_status: b,
+                    a_hasCar: true
+                })
+            } else {
+                setCurrentInfo({
+                    ...currentInfo,
+                    a_status: b,
+                    a_hasCar: false
+                })
+            }
+        } else if (name === "a_status") {
+            if (value === "재직") {
+                setCurrentInfo({
+                    ...currentInfo,
+                    a_hasCar: a,
+                    a_status: true
+                })
+            } else {
+                setCurrentInfo({
+                    ...currentInfo,
+                    a_hasCar: a,
+                    a_status: false
+                })
+            }
+        } else {
+            setCurrentInfo(() => {
+                return {
+                    ...currentInfo,
+                    a_hasCar: a,
+                    a_status: b,
+                    [name]: value
+                }
+            })
+        }
         // console.log(currentInfo)
     };
 
-    // useEffect(()=>{
-    //     console.log(currentInfo)}
-    // ,[currentInfo]);
-    //주석추ㅏ
 
-    const handleClickSave = async() => { //정보 수정,추가 요청
-        if (modify==true){
-            await axios.patch('/agent')
+    const handleClickSave = async () => { //정보 수정,추가 요청
+        console.log(currentInfo)
+        if (modify == true) {
+            await axios.patch(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
                 .then((res) => {
-                    console.log("patch done")
+                    showData();
+                }).catch((err) => {
+                    console.log(err);
                 })
             alert("수정 되었습니다.")
-        }
-        else {
-            await axios.post('/agent')
-                .then((res)=>{
-                    console.log("post done")
+        } else {
+            console.log(currentInfo);
+            await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
+                .then(() => {
+                        showData();
+                    }
+                ).catch((err) => {
+                    console.log(err);
                 })
             alert("추가 되었습니다.")
         }
@@ -92,12 +152,15 @@ const AgentManageTemplate = () => {
         setModify(true)
         console.log(e.target.name);
         const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
-        let date = changeContent['a_receiveDate'].replaceAll('/', '-');
-        changeContent['a_receiveDate'] = date;
+        if (changeContent['a_receiveDate'] != null) {
+            let date = changeContent['a_receiveDate'].replaceAll('/', '-');
+            changeContent['a_receiveDate'] = date;
+        }
         setCurrentInfo(changeContent);
+        // console.log(currentInfo)
         handleOpen();
     }
-    const handleAddButtonClick=(e)=>{
+    const handleAddButtonClick = (e) => {
         setModify(false)
         setCurrentInfo({
             a_name: "",
@@ -107,13 +170,13 @@ const AgentManageTemplate = () => {
             a_address: "",
             a_equipment: "",
             a_receiveDate: "",
-            a_status:""
+            a_status: ""
         });
         handleOpen()
     }
     return (
         <Main>
-            <ListContainer width="1800px"  headerContents={headerContent} contents={contents}
+            <ListContainer width="1800px" headerContents={headerContent} contents={contents}
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
             <Modal
@@ -153,7 +216,7 @@ const Main = styled.div`
   justify-content: center;
   align-items: center;
 
-  &> div:nth-child(1) {
+  & > div:nth-child(1) {
     height: 960px;
     overflow: auto;
   }
