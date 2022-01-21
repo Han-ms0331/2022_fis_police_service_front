@@ -8,6 +8,7 @@ import axios from "axios";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 /*
 날짜: 2022/01/11 3:59 PM
@@ -31,9 +32,9 @@ const ScheduleSidebar = () => {
     const setRows = useSetRecoilState(dateSelectedRows); // 날짜를 선택하기 전인 경우이므로 맨 처음 여기서 default로 dateSelectedRows에 오늘 날짜의 Rows를 설정해줘야한다. -> onChange에 넣지말고 useEffect?
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`/schedule?date=${visit_date}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
-                // console.log(res.data);
+                console.log(res.data);
                 setRows(res.data);
             })
     }

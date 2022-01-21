@@ -7,6 +7,7 @@ import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
 import { MdGpsFixed } from "react-icons/md";
+import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
 
 let center_id = "1"
 let value = "4"
@@ -122,6 +123,8 @@ function MapView(props) {
 
     const [range, setRange] = useState(2);// 지도의 비율 설정
     const [centerInfo, setCenterInfo] = useState([]);//지도 확대 비율 별 주변 시설 정보를 서버로 부터 받아와서 set!
+    const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
+    const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
 
     const center = [ //선택된 시설의 좌표를 mainbodytemp에서 props로 받아옴
         {
@@ -174,7 +177,7 @@ function MapView(props) {
 
         <MapContainer>
             <RangeController onClickFunc={changeRange}/>
-            <CustomMap cdata={centerInfo} adata={agentList} rdata={road} sdata={selCenter} lat={center[0].lat}
+            <CustomMap cdata={centerInfo} adata={selectedAgentInfo} clickedAdata={clickedAgent} rdata={road} sdata={selCenter} lat={center[0].lat}
                        lng={center[0].lng}
                        level={range}/>
         </MapContainer>
