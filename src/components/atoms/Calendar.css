@@ -9,9 +9,9 @@
     min-width: 100%;
     background: var(--option-color-1);
     border: 3px solid #eee;
-    border-radius: 10px;
+    border-radius: 15px;
     font-family: 'Noto Sans KR', sans-serif;;
-    line-height: 12px;
+    line-height: 10px;
 }
 
 .react-calendar--doubleView {
@@ -99,7 +99,7 @@
     font-size: 18px;
     font-weight: bold;
     /*padding: calc(0.75vw / 0.75) calc(0.7vw / 0.75);*/
-    padding: 20px 15px;
+    padding: 20px 17px;
 }
 
 .react-calendar__month-view__days__day--weekend {
@@ -128,7 +128,7 @@
 .react-calendar__tile {
     max-width: 100%;
     text-align: center;
-    padding: 10px;
+    padding: 9px;
     background: none;
     border-radius: 30px;
 }
