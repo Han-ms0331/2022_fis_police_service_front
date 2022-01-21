@@ -61,13 +61,14 @@ function CustomMap(props) {
         console.log(aInfo)
     })
 
-    if (props.clickedAdata != null){
+    useEffect(() => {
         aInfo.forEach((arr,index,buf)=>{
             if(props.clickedAdata.agent_id==arr.agent_id){
                 arr.type="agentSelected"
             }
         })
-    }
+    },[props.clickedAdata])
+
 
 
 
