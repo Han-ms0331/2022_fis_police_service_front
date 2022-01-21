@@ -4,6 +4,7 @@ import Navigation from "../templates/Navigation";
 import {Redirect} from "react-router-dom";
 import MainInfoTemplate from "../templates/MainInfoTemplate";
 import MainBodyTemplate from "../templates/MainBodyTemplate";
+
 /*
     날짜: 2022/01/13 10:36 오전
     작성자: 한명수
@@ -23,13 +24,8 @@ function MainPage(props) {
             (
                 <Main>
                     <Navigation/>
-                    <div style={{height: "100%", borderRight: "1px solid #6D5A00"}}>
-                        <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected}/>
-                    </div>
-
-                    <div>
-                       <MainInfoTemplate isSelected={isSelected}/>
-                    </div>
+                    <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected}/>
+                    <MainInfoTemplate isSelected={isSelected}/>
                 </Main>
             )
             :

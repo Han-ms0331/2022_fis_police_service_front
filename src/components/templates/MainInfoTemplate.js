@@ -8,10 +8,15 @@ import CallInputForm from "../organisms/CallInputForm";
 import {useRecoilValue} from "recoil";
 import {SelectedCenterCallList, SelectedCenterId, SelectedCenterScheduleList} from "../../store/SelectedCenterStore";
 import {Style} from "../../Style";
+import Box from "@mui/material/Box";
+import UserManageInputForm from "../organisms/UserManageInputForm";
+import Modal from "@mui/material/Modal";
+import styled from "styled-components";
 
 
 function MainInfoTemplate(props) {
     const [isOpen, setIsOpen] = useState(false);
+
     const [currentInfo, setCurrentInfo] = useState({
         u_name: "",
         in_out: "",
@@ -145,8 +150,9 @@ function MainInfoTemplate(props) {
                     display: "flex",
                     flexDirection: "column",
                     height: "99vh",
+                    width:"650px",
                     overflow: "auto",
-                    width: "550px"
+                    marginTop:"32px"
                 }}>
                     <Container fixed sx={{marginBottom: "50px"}}>
                         <CenterInfo/>
@@ -154,22 +160,30 @@ function MainInfoTemplate(props) {
                     <Container fixed sx={{marginBottom: "50px"}}>
                         <InfoContainer type={"call"} content={callList} u_name={localStorage.getItem("userName")}/>
                         {isOpen ?
-                            <div>
-                                <div>
-                                    <CallInputForm data={callList[0]} currentInfo={currentInfo}
-                                                   setCurrentInfo={setCurrentInfo}/>
-                                </div>
-                                <div style={{margin: "20px 0px", display: "flex", justifyContent: "space-around"}}>
-                                    <CustomButton name="cancel" type="normal" width="150px" height="35px"
-                                                  borderRadius="3px"
-                                                  color={Style.color1}
-                                                  backgroundColor={Style.color2} content="취소" onClick={onClick}/>
-                                    <CustomButton name="save" type="normal" width="150px" height="35px"
-                                                  borderRadius="3px"
-                                                  color={Style.color1}
-                                                  backgroundColor={Style.color2} content="저장" onClick={onClick}/>
-                                </div>
-                            </div>
+
+                            <Modal
+                                open={isOpen}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box sx={style}>
+                                    <ModalContainer>
+                                        <CallInputForm data={callList[0]} currentInfo={currentInfo}
+                                                       setCurrentInfo={setCurrentInfo}/>
+                                        <div style={{margin: "150px 0px", display: "flex", justifyContent: "space-around"}}>
+                                            <CustomButton name="cancel" type="normal" width="150px" height="35px"
+                                                          borderRadius="3px"
+                                                          color={Style.color1}
+                                                          backgroundColor={Style.color2} content="취소" onClick={onClick}/>
+                                            <CustomButton name="save" type="normal" width="150px" height="35px"
+                                                          borderRadius="3px"
+                                                          color={Style.color1}
+                                                          backgroundColor={Style.color2} content="저장" onClick={onClick}/>
+                                        </div>
+                                    </ModalContainer>
+                                </Box>
+                            </Modal>
+
                             :
                             <div style={{marginTop: "20px", display: "flex", justifyContent: "space-around"}}>
                                 <CustomButton name="open" type="normal" width="150px" height="35px" borderRadius="3px"
@@ -192,5 +206,19 @@ function MainInfoTemplate(props) {
 
     );
 }
-
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    height:'750px',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+};
+const ModalContainer = styled.div`
+display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 export default MainInfoTemplate;
