@@ -56,13 +56,14 @@ const Tab = styled(TabUnstyled)`
   cursor: pointer;
   font-weight: bold;
   background-color: ${Style.color1};
-  width: 80px;
+  width: 65px;
   padding: 10px 12px;
   border: none;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-self: flex-end;
+  margin-right: 5px;
 
   &:hover {
     background-color: ${Style.color3};
