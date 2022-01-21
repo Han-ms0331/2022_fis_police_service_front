@@ -4,22 +4,31 @@ import CustomButton from "../atoms/CustomButton";
 import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
+import {useRecoilState} from "recoil";
+import {Messages} from "../../store/Message";
+
+/*
+날짜: 2022/01/21 1:35 PM
+작성자: 정도식
+작성내용:
+수정요청사항을 서버에 보냄
+ */
 
 const SendMessage = () => {
     let ws;
-    const [message, setMessage] = useState('안녕');
-
+    const [message, setMessage] = useState('');
     function openWebSocket() {
         ws = new WebSocket(`ws://${NetworkConfig.networkAddress}/messenger/websocket`);
         ws.onopen = (e) => {
             console.log("연결완료");
             console.log(ws);
-            ws.send("hi server");
+            ws.send(message);
         }
         ws.onmessage = (data) => {
             console.log("서버에서 받은 데이터" + data.data);
         }
     }
+
 
     const handleSend = (e) => { /*보내기 버튼을 눌렀을 때 실행되는 함수*/
         e.preventDefault();
@@ -33,12 +42,8 @@ const SendMessage = () => {
         e.target.style.height = (20 + e.target.scrollHeight) + "px";
     }
     const handleChange = (e) => { /*메시지를 설정하는 함수*/
-        setMessage(e.target.value); /*리렌더링이 일어남*/
+        setMessage(e.target.value);
     }
-
-    // useEffect(()=>{
-    //     console.log(message);
-    // },[message]);
 
     return (
         <Main>
