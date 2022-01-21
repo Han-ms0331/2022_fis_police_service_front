@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MapView from "../organisms/MapView";
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
 import axios from "axios";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {
     SelectedCenterCallList,
     SelectedCenterId,
@@ -13,6 +13,8 @@ import {
 import CustomCalendar from "../atoms/CustomCalendar";
 import AgentContainer from "../organisms/AgentContainer";
 import styled from "styled-components";
+import {searchKeyword} from "../../store/ScheduleSearchKeyword";
+import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -28,6 +30,24 @@ function MainBodyTemplate(props) {
     const [selectedCenterCallList, setSelectedCenterCallList] = useRecoilState(SelectedCenterCallList);
     const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
 
+    const [date, setDate] = useState(new Date());
+    const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
+    const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`;
+
+
+
+    const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
+        await axios.get(`/center/${SelectedCenterInfo.center_id}/date?date=${visit_date}`)
+            .then((res) => {
+                // console.log(res.data);
+            })
+    }
+
+    useEffect(() => {
+        onData(); // 날짜를 선택한 경우에 함수 실행
+    }, [date])
+
+
     const headerContent = ["시설명", "주소", "전화번호", "연락기록", "방문여부"]     //리스트 헤더
 
     /*
@@ -41,6 +61,7 @@ function MainBodyTemplate(props) {
             .then((res) => {
                 setSelectedCenterId(res.data.id)//현재 선택된 시설의 아이디 전역으로 저장
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
+                    center_id: res.data.center_id,
                     c_name: res.data.c_name,
                     c_address: res.data.c_address,
                     c_ph: res.data.c_ph,
@@ -96,7 +117,7 @@ function MainBodyTemplate(props) {
             {isSelected ?
                 <Container>
                     <Left>
-                            <CustomCalendar/>
+                            <CustomCalendar className="calendar" setDate={setDate}/>
                             <AgentContainer/>
                     </Left>
                     <Right>

@@ -175,7 +175,7 @@ export const mainHandlers = [
     rest.get('/main/center/select?center_id={value}', async (req, res, ctx) => {
         return res(
             ctx.json({
-                id:"10",
+                center_id:"10",
                 c_sido: null,
                 c_sigungu: null,
                 c_name: "예일 유치원",
@@ -245,6 +245,13 @@ export const mainHandlers = [
                         total_etc: null
                     }
                 ]
+            })
+        )
+    }),
+    rest.get(`/center/${center_id}/date?date=${value}`, async (req, res, ctx) => {
+        return res(
+            ctx.json({
+
             })
         )
     }),
