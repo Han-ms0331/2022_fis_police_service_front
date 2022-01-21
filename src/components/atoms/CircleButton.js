@@ -4,7 +4,7 @@
     작성내용: 시간표에 따른 원형 버튼 컴포넌트
 */
 
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 
 const Button = styled.button` // css
@@ -24,9 +24,14 @@ const Button = styled.button` // css
     position: relative;
     top: 1px;
   }
+  &:focus {
+    background-color: orange;
+  }
 `;
 
 export default function CircleButton({bgColor, handleClick}) { // bgColor로 버튼 색 props 받음.
+    const [bcolor, setBcolor] = useState(bgColor);
+
     return (
         <>
             {
