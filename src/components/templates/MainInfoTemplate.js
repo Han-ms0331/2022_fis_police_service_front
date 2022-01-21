@@ -219,7 +219,8 @@ const style = {
     p: 4,
 };
 const RightContainer = styled.div`
-  min-height: 100vh;
+  min-height: 100%;
+  width: 646px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -227,7 +228,7 @@ const RightContainer = styled.div`
   font-size: 35px;
   color: #a8a8a8;
   & img {
-    width: 70px;
+    width: 75px;
     color: #a8a8a8;
   }
 `;
