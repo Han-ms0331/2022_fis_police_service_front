@@ -52,14 +52,25 @@ function CustomMap(props) {
             isPanto: true,
         });
     }
-
     props.adata.forEach((arr,index,buf)=>{
         aInfo.push({
             ...arr,
             latlng:{lat:arr.a_latitude,lng:arr.a_longitude},
             type:"agent"
         })
+        console.log(aInfo)
     })
+
+    if (props.clickedAdata != null){
+        aInfo.forEach((arr,index,buf)=>{
+            if(props.clickedAdata.agent_id==arr.agent_id){
+                arr.type="agentSelected"
+            }
+        })
+    }
+
+
+
 
 
     return (
