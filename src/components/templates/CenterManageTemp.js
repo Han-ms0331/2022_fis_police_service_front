@@ -9,6 +9,7 @@ import CustomButton from "../atoms/CustomButton";
 import {center} from "../../store/dummy-data/center";
 import axios from "axios";
 import {Style} from "../../Style";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 
 function CenterManageTemp(props) {
@@ -43,10 +44,12 @@ function CenterManageTemp(props) {
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     const showList = async () => {
         const {c_name, c_address, c_ph} = searchInput;
-        await axios.get('/main/center/search?c_name={value}&c_address={value} &c_ph={value}')
+        console.log(c_name);
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
+                console.log(res.data.data);
                 let tmp = [];
-                res.data.lists.forEach((list) => {
+                res.data.data.forEach((list) => {
                     tmp.push({
                         center_id: list.center_id,
                         c_name: list.c_name,
@@ -123,6 +126,7 @@ function CenterManageTemp(props) {
         //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
         if(modify === true){
             //수정
+            // await axios.patch(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
             await axios.patch("/manage/center")
                 .then((res) => {
                     console.log(res.data);
@@ -130,6 +134,7 @@ function CenterManageTemp(props) {
             alert("수정 되었습니다.");
         }else{
             //추가
+            // await axios.post(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
             await axios.post("/manage/center")
                 .then((res) => {
                     console.log(res.data);
