@@ -28,7 +28,7 @@ function CustomMap(props) {
     )
 
     let cInfo = []
-
+    let aInfo=[]
     props.cdata.forEach((arr, index, buf) => {
         cInfo.push({
             ...arr,
@@ -52,6 +52,16 @@ function CustomMap(props) {
             isPanto: true,
         });
     }
+
+    props.adata.forEach((arr,index,buf)=>{
+        aInfo.push({
+            ...arr,
+            latlng:{lat:arr.a_latitude,lng:arr.a_longitude},
+            type:"agent"
+        })
+    })
+
+
     return (
         <Container>
             <Map // 지도를 표시할 Container
@@ -106,7 +116,7 @@ function CustomMap(props) {
                         />
                     </>
                 ))} {/*선택된 센터의 주변 시설 정보 표시*/}
-                {props.adata.map((position, index) => (
+                {aInfo.map((position, index) => (
                     <CustomMarker
                         key={index}
                         type={position.type}
