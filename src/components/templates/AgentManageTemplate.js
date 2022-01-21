@@ -30,6 +30,7 @@ const AgentManageTemplate = () => {
         a_receiveDate: "",
         a_status:""
     });
+    const [modify, setModify]=useState();
 
     const showData=async () => {
         await axios.get('/agent')
@@ -69,15 +70,26 @@ const AgentManageTemplate = () => {
     //주석추ㅏ
 
     const handleClickSave = async() => { //정보 수정,추가 요청
-        await axios.patch('/agent')
-            .then((res) => {
-                console.log("success")
-            })
+        if (modify==true){
+            await axios.patch('/agent')
+                .then((res) => {
+                    console.log("patch done")
+                })
+            alert("수정 되었습니다.")
+        }
+        else {
+            await axios.post('/agent')
+                .then((res)=>{
+                    console.log("post done")
+                })
+            alert("추가 되었습니다.")
+        }
         handleClose();
     };
 
     const handleModifyButtonClick = (e) => {
         // button이 관리페이지의 정보 수정 버튼일 시...
+        setModify(true)
         console.log(e.target.name);
         const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
         let date = changeContent['a_receiveDate'].replaceAll('/', '-');
@@ -86,6 +98,7 @@ const AgentManageTemplate = () => {
         handleOpen();
     }
     const handleAddButtonClick=(e)=>{
+        setModify(false)
         setCurrentInfo({
             a_name: "",
             a_code: "",
@@ -100,11 +113,9 @@ const AgentManageTemplate = () => {
     }
     return (
         <Main>
-            <ListContainer width="1800px" height="100%" headerContents={headerContent} contents={contents}
+            <ListContainer width="1800px"  headerContents={headerContent} contents={contents}
                            gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
                            onClickFunction={handleModifyButtonClick}/>
-            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                          backgroundColor={Style.color2} content="현장요원 추가" onClick={handleAddButtonClick}/>
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
@@ -116,6 +127,9 @@ const AgentManageTemplate = () => {
                                           handleClickSave={handleClickSave}/>
                 </Box>
             </Modal>
+
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                          backgroundColor={Style.color2} content="현장요원 추가 +" onClick={handleAddButtonClick}/>
         </Main>
     );
 };
@@ -128,19 +142,25 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     boxShadow: 24,
     p: 4,
 };
 
 const Main = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 25px;
+  align-items: center;
 
-  & > button {
+  &> div:nth-child(1) {
+    height: 960px;
+    overflow: auto;
+  }
+
+  & > button { /*콜직원 추가*/
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translate(-50%, 0);
   }

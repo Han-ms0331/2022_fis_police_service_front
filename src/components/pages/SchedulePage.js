@@ -17,6 +17,7 @@ import {useRecoilValue} from "recoil";
 작성자: 정도식
 작성내용: Sidebar 접히는 기능 오류 해결
 */
+
 const SchedulePage = (props) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -40,11 +41,11 @@ const SchedulePage = (props) => {
 // ===========style===========
 const Main = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => props.isSidebarOpen === true ? '67px 305px auto' : '67px 0px auto'};
-  height: 100%;
-
-  & .sidebar { //Sidebar
-    border-right: ${(props) => props.isSidebarOpen === true ? '2px solid #eee' : 'none'};
+  grid-template-columns: ${(props)=>props.isSidebarOpen===true?'67px 305px auto':'67px 0px auto'};
+  height: 100vh;
+  transition: 1s;
+  & .sidebar{ //Sidebar
+    border-right: ${(props)=> props.isSidebarOpen===true?'2px solid #eee':'none'};
     position: relative;
 
     & > div { //사이드바 내용

@@ -29,7 +29,7 @@ function ScheduleTableSearch() {
     return (
             <TableHead>
                 <TableRow>
-                    <TableCell><SearchIcon fontSize="large" style={{ color: '#2E3C7E' }} /></TableCell>
+                    <TableCell><SearchIcon fontSize="medium" style={{ color: '#2E3C7E' }} /></TableCell>
                     <TableCell align="left"><TextField size="small" id="index" label="No." variant="outlined" onChange={handleChange}/></TableCell>
                     <TableCell align="right"><TextField size="small" id="a_name" label="현장요원" variant="outlined" onChange={handleChange}/></TableCell>
                     <TableCell align="right"><TextField size="small" id="c_name" label="시설정보" variant="outlined" onChange={handleChange}/></TableCell>

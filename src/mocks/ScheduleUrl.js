@@ -6,6 +6,7 @@ import {rest} from "msw";
     작성내용: 테스트용 핸들러 작성
 */
 const value = "22-01-14";
+const schedule_id = 17;
 
 export const scheduleHandlers = [
     rest.get('/scheduletest', async(req, res, ctx)=>{
@@ -117,7 +118,10 @@ export const scheduleHandlers = [
                     visit_time: "14:40:31",               // 방문 시간
                     center_etc: "점심시간에 걸리지 않게 약속 잡아달라하심",                    // 센터 특이사항
                     agent_etc: "현장 요원 방문시 발열체크 및 백신패스 필수",                     // 현장요원 특이사항
-                    modified_info: "개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참",                  // 변경사항
+                    modified_info: "개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참" +
+                        "개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참" +
+                        "개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참" +
+                        "개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참개인적인 사정으로 불참",                  // 변경사항
                     total_etc: "신청서 완료",                      // 스케쥴 특이사항
                     call_check: "통화완료",                     // 최근 통화 상태
                     call_check_info: "null",                 // 최근 통화 상태 정보(부재중 몇건 or 통화오류 이유)
@@ -360,6 +364,13 @@ export const scheduleHandlers = [
         return res(
             ctx.json({
                 checkedList,
+            })
+        )
+    }),
+    rest.get(`/schedule?schedule_id=${schedule_id}`, async(req, res, ctx)=>{
+        return res(
+            ctx.json({
+                schedule_id: schedule_id,
             })
         )
     }),

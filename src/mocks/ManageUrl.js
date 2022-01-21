@@ -28,25 +28,25 @@ export const manageHandlers = [
                     datas: [
                         {
                             u_id: "1",
-                            u_nickname: "ss",
-                            u_name: "bob",
+                            u_nickname: "한명수",
+                            u_name: "fis1",
                             u_pwd: "1234",
                             u_ph: "010-1234-1234",
-                            u_sDate: "11/11",
-                            u_auth: "m",
-                            average_call: "0",
-                            today_call_num: "0"
+                            u_sDate: "2021/11/11",
+                            u_auth: "관리자",
+                            average_call: 50,
+                            today_call_num: 50
                         },
                         {
                             u_id: "2",
-                            u_nickname: "s3",
-                            u_name: "cathy",
+                            u_nickname: "정도식",
+                            u_name: "fis2",
                             u_pwd: "1234",
                             u_ph: "010-1234-1234",
-                            u_sDate: "11/11",
-                            u_auth: "m",
-                            average_call: "0",
-                            today_call_num: "0"
+                            u_sDate: "2021/11/11",
+                            u_auth: "일반직원",
+                            average_call: 30,
+                            today_call_num: 70
                         },
                     ],
                     result: "success"

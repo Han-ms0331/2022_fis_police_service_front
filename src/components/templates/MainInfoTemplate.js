@@ -7,6 +7,7 @@ import axios from "axios";
 import CallInputForm from "../organisms/CallInputForm";
 import {useRecoilValue} from "recoil";
 import {SelectedCenterCallList, SelectedCenterId, SelectedCenterScheduleList} from "../../store/SelectedCenterStore";
+import {Style} from "../../Style";
 
 
 function MainInfoTemplate(props) {
@@ -95,7 +96,6 @@ function MainInfoTemplate(props) {
                     } else {
                         alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
                     }
-
                 })
                 .catch((err) => {
                     console.log(err);
@@ -162,22 +162,22 @@ function MainInfoTemplate(props) {
                                 <div style={{margin: "20px 0px", display: "flex", justifyContent: "space-around"}}>
                                     <CustomButton name="cancel" type="normal" width="150px" height="35px"
                                                   borderRadius="3px"
-                                                  color="#222"
-                                                  backgroundColor="#FFD400" content="취소" onClick={onClick}/>
+                                                  color={Style.color1}
+                                                  backgroundColor={Style.color2} content="취소" onClick={onClick}/>
                                     <CustomButton name="save" type="normal" width="150px" height="35px"
                                                   borderRadius="3px"
-                                                  color="#222"
-                                                  backgroundColor="#FFD400" content="저장" onClick={onClick}/>
+                                                  color={Style.color1}
+                                                  backgroundColor={Style.color2} content="저장" onClick={onClick}/>
                                 </div>
                             </div>
                             :
                             <div style={{marginTop: "20px", display: "flex", justifyContent: "space-around"}}>
                                 <CustomButton name="open" type="normal" width="150px" height="35px" borderRadius="3px"
-                                              color="#222"
-                                              backgroundColor="#FFD400" content="연락기록 추가" onClick={onClick}/>
+                                              color={Style.color1}
+                                              backgroundColor={Style.color2} content="연락기록 추가" onClick={onClick}/>
                                 <CustomButton name="mail" type="normal" width="150px" height="35px" borderRadius="3px"
-                                              color="#222"
-                                              backgroundColor="#FFD400" content="메일 전송" onClick={onClick}/>
+                                              color={Style.color1}
+                                              backgroundColor={Style.color2} content="메일 전송" onClick={onClick}/>
                             </div>
                         }
                     </Container>

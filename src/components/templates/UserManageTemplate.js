@@ -22,11 +22,14 @@ import {Style} from "../../Style";
 
 const UserManageTemplate = () => {
     const [open, setOpen] = React.useState(false);
-    const contents = user;
-    const headerContent = ["이름", "아이디", "비밀번호", "권한", "입사일", "전화번호", "평균통화건수", "오늘통화건수"] /*표 상단에 표시되는 텍스트*/
+    /*const contents = user;*/
+    const [contents,setContents]=useState("");
+    const headerContent = ["이름", "아이디", "비밀번호", "전화번호", "입사일", "권한", "평균통화건수", "오늘통화건수"] /*표 상단에 표시되는 텍스트*/
     const [currentInfo, setCurrentInfo] = useState({
-        name: "", username: "", password: "", start: "", hp: "",auth:""
+        u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
     })
+    const [modify,setModify]=useState();
+
     const handleInputFormChange = (e) => {
         // console.log(e);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
@@ -49,60 +52,79 @@ const UserManageTemplate = () => {
     //     console.log(currentInfo)
     // },[currentInfo]);
 
+    const showData=async ()=>{
+        await axios.get('/user')
+            .then((res)=>{
+            setContents(res.data.datas)
+        })
+    }
 
-    const handleClickSave = () => {
-        //api 수정 요청 보냄,,?
-        //input state 에 적혀있는 것으로 수정,,,?
-        console.log(currentInfo);
-        console.log("saved");
+    useEffect(()=>{
+        showData().then((res)=>{
+            console.log("done")
+        })
+    },[])
+
+    const handleClickSave = async() => {
+        if(modify==true){
+            await axios.patch('/user')
+                .then((res)=>{
+                    console.log("patch done")
+                })
+            alert("수정 되었습니다");
+        }
+        else{
+            await axios.post('/user')
+                .then((res)=>{
+                    console.log("post done")
+                })
+            alert("추가 되었습니다")
+        }
         handleClose();
     }
     const handleModifyButtonClick = (e) => {
         // 콜직원 수정버튼 클릭시
+        setModify(true);
         const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
-        delete changeContent['today']; /*오늘통화건수 제외*/
-        delete changeContent['avg']; /*평균통화건수 제외*/
-        let date = changeContent['start'].replaceAll('/', '-');
-        changeContent['start'] = date;
+        delete changeContent['today_call_num']; /*오늘통화건수 제외*/
+        delete changeContent['average_call']; /*평균통화건수 제외*/
+        let date = changeContent['u_sDate'].replaceAll('/', '-');
+        changeContent['u_sDate'] = date;
         setCurrentInfo(changeContent)
         handleOpen(); /*수정창을 오픈한다*/
     }
-
     const handleAddButtonClick = (e)=>{
+        setModify(false)
         setCurrentInfo({
-            name: "",
-            username: "",
-            password: "",
-            hp: "",
-            start: "",
-            auth: "",
+            u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
         });
         handleOpen();
 
     }
-
-
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    return (<Main>
 
-        <ListContainer width="1800px" height="100%" headerContents={headerContent} contents={contents}
+
+    return (
+        <Main id={"main"}>
+           <ListContainer width="1800px" headerContents={headerContent} contents={contents}
                        gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
                        onClickFunction={handleModifyButtonClick}/>
-        <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                      backgroundColor={Style.color2} content="콜직원 추가" onClick={handleAddButtonClick}/>
-        <Modal
-            open={open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={style}>
-                <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
-                                     handleInputFormChange={handleInputFormChange}
-                                     handleClickSave={handleClickSave}/>
-            </Box>
-        </Modal>
-    </Main>);
+            <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
+                                         handleInputFormChange={handleInputFormChange}
+                                         handleClickSave={handleClickSave}/>
+                </Box>
+            </Modal>
+
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                          backgroundColor={Style.color2} content="콜직원 추가 +" onClick={handleAddButtonClick}/>
+        </Main>);
 };
 
 const style = {
@@ -110,18 +132,25 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     boxShadow: 24,
     p: 4,
 };
 
 const Main = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 25px;
-  & > button {
+  align-items: center;
+  
+  &> div:nth-child(1) {
+    height: 960px;
+    overflow: auto;
+  }
+  
+  & > button { /*콜직원 추가*/
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translate(-50%, 0);
   }

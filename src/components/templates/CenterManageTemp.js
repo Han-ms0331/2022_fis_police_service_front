@@ -12,43 +12,63 @@ import {Style} from "../../Style";
 
 
 function CenterManageTemp(props) {
-    const [contents,setContents]=useState("")
     const headerContent = ["시설이름", "참여여부", "전화번호", "시설주소"]
 
     //form이 열리고 닫히고에 관련된 state 정의
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     //검색 창에 검색어에 대한 상태 정의
     const [searchInput, setSearchInput] = useState({
-        centerName: "",
-        centerAddress: "",
-        centerPhone: "",
+        c_name: "",
+        c_address: "",
+        c_ph: ""
     })
+
+    //검색했을 때 오는 내용을 저장하는 contents에 대한 상태 정의
+    const [contents, setContents] = useState([])
 
     //선택한 시설에 대한 정보들을 관리할 상태 정의
     const [currentInfo, setCurrentInfo] = useState({
-        centerName: "",
-        centerPhone: "",
-        centerAddress: ""
+        center_id: "",
+        c_name: "",
+        c_ph: "",
+        c_address: ""
     })
+
+    //정보 수정 버튼 눌렀을 때는 true로, 시설 추가 눌렀을 때는 false로 set하는 modify 상태에 대한 정의
+    const [modify, setModify] = useState();
 
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
-    const showList = async () => {   //서버와 로그인 통신을 하는 부분
-       await axios.get("/main/center/search?c_name={value}&c_address={value} &c_ph={value}")
+    const showList = async () => {
+        const {c_name, c_address, c_ph} = searchInput;
+        await axios.get('/main/center/search?c_name={value}&c_address={value} &c_ph={value}')
             .then((res) => {
-                // contents = res.data.lists
-                console.log(res.data.lists)
-              setContents(res.data.lists);
+                let tmp = [];
+                res.data.lists.forEach((list) => {
+                    tmp.push({
+                        center_id: list.center_id,
+                        c_name: list.c_name,
+                        participation: list.participation,
+                        c_ph: list.c_ph,
+                        c_address: list.c_address
+                    })
+                })
+                setContents(tmp);
+                // console.log(tmp);
+                // console.log(contents);
             })
+            .catch((err) => {
+                console.log(err);
+            })
+
     }
-
-    // form이 보이고 안보이고에 대한 함수 정의
+// form이 보이고 안보이고에 대한 함수 정의
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
-    // 검색 창에 검색어가 바뀌면, 바뀐 검색어를 위에서 정의한 searchInput이라는 상태에 저장하는 함수 정의
+    const handleClose = () => setOpen(false);
+// 검색 창에 검색어가 바뀌면, 바뀐 검색어를 위에서 정의한 searchInput이라는 상태에 저장하는 함수 정의
     const handleSearchInputChange = (e) => {
         // console.log(e);
         const {value, name} = e.target;
@@ -57,9 +77,9 @@ function CenterManageTemp(props) {
             [name]: value
         });
         console.log(searchInput);
-    }
 
-    // inputForm의 입력창에 글씨가 바뀌면, 위에서 정의한 currentInfo 상태에 입력창에 적힌 글씨를 저장하는 함수 정의
+    }
+// inputForm의 입력창에 글씨가 바뀌면, 위에서 정의한 currentInfo 상태에 입력창에 적힌 글씨를 저장하는 함수 정의
     const handleInputFormChange = (e) => {
         // console.log(e);
         const {value, name} = e.target;
@@ -68,85 +88,82 @@ function CenterManageTemp(props) {
             [name]: value
         });
         console.log(currentInfo);
+
+
     }
 
 
-    // useEffect(() => {
-    //     console.log(currentInfo);
-    // }, [currentInfo])
-
-
-    // 정보 수정 버튼을 누르면 inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오는 함수
+// useEffect(() => {
+//     console.log(currentInfo);
+// }, [currentInfo])
+// 정보 수정 버튼을 누르면 inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오는 함수
     const handleModifyButtonClick = (e) => {
+        setModify(true);
         console.log(e.target.getAttribute("name"))
         setCurrentInfo(contents[e.target.getAttribute("name")])
         handleOpen();
-    }
 
-    // 시설 추가 버튼을 누르면 일어나는 일에 대한 함수. 시설을 선택한 것이 아니므로 currentInfo의 정보를 모두 null로 set함
+    }
+// 시설 추가 버튼을 누르면 일어나는 일에 대한 함수. 시설을 선택한 것이 아니므로 currentInfo의 정보를 모두 null로 set함
     const handleAddButtonClick = (e) => {
+        setModify(false);
         setCurrentInfo({
             centerName: "",
             centerPhone: "",
             centerAddress: ""
         });
         handleOpen();
+
     }
 
-    // inputForm에서 저장버튼 눌렀을 때에 대한 함수 정의
-    // const handleClickSave = () => {
-    //     //api 요청 보냄.
-    //     //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
-    //     handleClose();
-    // }
+// inputForm에서 저장버튼 눌렀을 때에 대한 함수 정의
+
+    const handleClickSave = async () => {
+        //api 요청 보냄.
+        //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
+        if(modify === true){
+            //수정
+            await axios.patch("/manage/center")
+                .then((res) => {
+                    console.log(res.data);
+                })
+            alert("수정 되었습니다.");
+        }else{
+            //추가
+            await axios.post("/manage/center")
+                .then((res) => {
+                    console.log(res.data);
+                })
+            alert("추가 되었습니다.")
+        }
 
 
-    const handleClickSave = async () => {   //서버와 로그인 통신을 하는 부분
-        await axios.post("/manage/center")
-            .then((res) => {
-                console.log(res.data);
-            })
         handleClose();
 
     }
 
     return (
         <Main>
-            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                <div style={{marginBottom: "30px"}}>
-                    <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
-                                height="100%"/>
-                </div>
-
-                <ListContainer headerContents={headerContent} contents={contents} width="1800px" height="100%"
-                               gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
-                               onClickFunction={handleModifyButtonClick}/>
-
-
-                <div style={{
-                    position: "fixed",
-                    bottom: "50px",
-                    left: "50%",
-                    transform: "translate(-50%,0)"
-                }}>
-                    <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                                  backgroundColor={Style.color2} content="시설 추가" onClick={handleAddButtonClick}/>
-                </div>
-
-
-                <Modal
-                    open={open}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <CenterManageInputForm handleClose={handleClose} handleClickSave={handleClickSave}
-                                               handleInputFormChange={handleInputFormChange} currentInfo={currentInfo}/>
-                    </Box>
-
-                </Modal>
-
+            <div style={{margin: "20px 0px 30px 0px"}}>
+                <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
+                            height="100%"/> {/*시설정보를 검색하는 부분*/}
             </div>
+
+            <ListContainer headerContents={headerContent} contents={contents} width="1800px"
+                           gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
+                           onClickFunction={handleModifyButtonClick}/> {/*시설정보*/}
+            <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <CenterManageInputForm handleClose={handleClose} handleClickSave={handleClickSave}
+                                           handleInputFormChange={handleInputFormChange} currentInfo={currentInfo}/>
+                </Box>
+            </Modal>
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                          backgroundColor={Style.color2} content="시설 추가 +" onClick={handleAddButtonClick}/>
         </Main>
     );
 }
@@ -158,19 +175,27 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     boxShadow: 24,
     p: 4,
 };
 
 const Main = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 25px;
+  align-items: center;
+  margin-top: -20px;
 
-  & > button {
+  & > div:nth-child(2) {
+    margin-top: 5px;
+    height: 880px;
+    overflow: auto;
+  }
+
+  & > button { /*콜직원 추가*/
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
     transform: translate(-50%, 0);
   }
