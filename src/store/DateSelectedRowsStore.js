@@ -81,7 +81,8 @@ export const dateSelectedRows = atom({
 export const rowCount = selector({
     key:'rowCount',
     get:({get})=>{
-        const list = get(dateSelectedRows);
+        let list = get(dateSelectedRows);
+        if(list.length===undefined) return 0;
         return list.length;
     }
 })

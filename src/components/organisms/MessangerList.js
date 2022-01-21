@@ -35,8 +35,8 @@ getData()
     }
     return (
         <Main>
-            {messages.map((msg)=>{
-                return <Message header={msg.time} agent={msg.user} content={msg.message} handleDone={handleDone}/>}
+            {messages.map((msg,idx)=>{
+                return <Message key={idx} header={msg.time} agent={msg.user} content={msg.message} handleDone={handleDone}/>}
             )}
         </Main>
     );
