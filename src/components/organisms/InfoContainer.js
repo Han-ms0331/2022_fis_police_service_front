@@ -7,18 +7,6 @@ import ApplyInfoList from "../molecules/ApplyInfoList";
     작성자: 한명수
     작성내용:   style
 */
-
-const style={
-    display: "flex",
-    flexDirection:"column",
-    alignItems: "center",
-    border: "2px solid #6D5A00",
-    borderRadius: "15px",
-    padding: "1vw",
-    textAlign: "center",
-    height: "25vh",
-    overflow: "auto",
-}
 /*
     날짜: 2022/01/14 10:49 오전
     작성자: 한명수
@@ -43,5 +31,16 @@ else if (type=== "apply")
         );
     }
 }
+const style={
+    display: "flex",
+    flexDirection:"column",
+    alignItems: "center",
+    border: "2px solid #6D5A00",
+    borderRadius: "15px",
+    padding: "1vw",
+    textAlign: "center",
+    height: "25vh",
+    overflow: "auto",
 
+}
 export default InfoContainer;
