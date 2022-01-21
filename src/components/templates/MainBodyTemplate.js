@@ -16,6 +16,7 @@ import styled from "styled-components";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -40,7 +41,7 @@ function MainBodyTemplate(props) {
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`/center/${selectedCenterId}/date?date=${visit_date}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}/center/${selectedCenterId}/date?date=${visit_date}`)
             .then((res) => {
                 setSelectedAgentInfo(res.data.a_data);
             })
@@ -101,7 +102,7 @@ function MainBodyTemplate(props) {
     */
 
     const onSearch = async () => {
-        await axios.get('/main/center/search?c_name={value}&c_address={value} &c_ph={value}')
+        await axios.get(`/main/center/search?c_name={value}&c_address={value} &c_ph={value}`)
             .then((res) => {
                 setCenterList(res.data.lists);
                 setIsSelected(false);

@@ -5,6 +5,7 @@ import CustomButton from "../atoms/CustomButton";
 import {Box, Container} from "@mui/material";
 import axios from "axios";
 import {Style} from "../../Style";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 function ScheduleModifyInputForm(props) {
     const [input, setInput] = useState({
@@ -50,21 +51,21 @@ function ScheduleModifyInputForm(props) {
     const onPatch = async() => {
         console.log(input);
         setInput(() => input);
-        await axios.patch('/schedule', {
+        await axios.patch(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
             visit_date: input.visit_date,
             visit_time: input.visit_time,
             estimate_num: input.estimate_num,
             modified_info: input.modified_info,
             call_check: input.call_check,
             total_etc: input.total_etc
-        })
+        }, {withCredentials: true})
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err));
     }
 
     const onCancel = async() => {
         console.log(input.schedule_id);
-        await axios.get(`/schedule?schedule_id=${input.schedule_id}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?schedule_id=${input.schedule_id}`, {withCredentials: true})
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err));
     }
