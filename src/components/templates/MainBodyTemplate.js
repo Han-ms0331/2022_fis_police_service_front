@@ -40,7 +40,7 @@ function MainBodyTemplate(props) {
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`/center/${SelectedCenterId.center_id}/date?date=${visit_date}`)
+        await axios.get(`/center/${selectedCenterId}/date?date=${visit_date}`)
             .then((res) => {
                 setSelectedAgentInfo(res.data.a_data);
             })
@@ -63,6 +63,7 @@ function MainBodyTemplate(props) {
         console.log(e.target.name);
         await axios.get('/main/center/select?center_id={e.target.name}')
             .then((res) => {
+                console.log(res.data.center_id);
                 setSelectedCenterId(res.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
                     center_id: res.data.center_id,
@@ -76,7 +77,6 @@ function MainBodyTemplate(props) {
                 setCenterLocation([res.data.c_latitude, res.data.c_longitude]);
                 setIsSelected(true);
             })
-        console.log(selectedCenterInfo.center_id)
     }
 
     /*
@@ -113,12 +113,10 @@ function MainBodyTemplate(props) {
 
 
     return (
-        <div>
-
+        <Main>
             <div style={{width: "100%", margin: "30px 0px 40px 50px"}}>
                 <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange}/>
             </div>
-
             {isSelected ?
                 <Container>
                     <Left>
@@ -137,12 +135,14 @@ function MainBodyTemplate(props) {
                                    onClickFunction={onSelect}/>
                 </div>
             }
-        </div>
+        </Main>
 
 
     );
 }
-
+const Main = styled.div`
+border-right: 2px solid #eee;
+`;
 const Container = styled.div`
   display: grid;
   grid-template-columns: 270px auto;

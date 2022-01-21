@@ -74,7 +74,15 @@ const ScheduleSidebar = () => {
 // 디자인 비교를 위한 변수
 const [color1,color2]= [Style.color1,Style.color2];
 
-
+// style
+const Items = styled.div` //sidebar를 담는 컨테이너
+display: grid;
+  grid-template-rows: 2fr 1fr 1fr;
+  &>div {
+    min-width: 0;
+    align-self: center;
+  }
+`;
 const Container = styled.div`
   //border-right: 2px solid #eee;
   padding: 0 15px;
@@ -95,12 +103,4 @@ const Container = styled.div`
   }
 `;
 
-const Items = styled.div`
-display: grid;
-  grid-template-rows: 2fr 1fr 1fr;
-  &>div {
-    min-width: 0;
-    align-self: center;
-  }
-`;
 export default ScheduleSidebar;

@@ -6,6 +6,9 @@ import CenterManageTemp from "../templates/CenterManageTemp";
 import CustomButton from "../atoms/CustomButton";
 import UserManageTemplate from "../templates/UserManageTemplate";
 import AgentManageTemplate from "../templates/AgentManageTemplate";
+import {useRecoilValue} from "recoil";
+import {isLoginedState} from "../../store/LoginStore";
+
 import {Style} from "../../Style";
 import {
     buttonUnstyledClasses,
@@ -14,6 +17,7 @@ import {
     TabUnstyled,
     tabUnstyledClasses
 } from "@mui/material";
+
 
 /*
 날짜: 2022/01/13 3:53 PM
@@ -64,6 +68,7 @@ const Main = styled.div`
   border-radius: 10px;
   background-color: white;
 `;
+
 
 const Tab = styled(TabUnstyled)`
   color: ${Style.color2};

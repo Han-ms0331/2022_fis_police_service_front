@@ -30,6 +30,7 @@ const AgentManageTemplate = () => {
         a_receiveDate: "",
         a_status:""
     });
+    const [modify, setModify]=useState();
 
     const showData=async () => {
         await axios.get('/agent')
@@ -69,15 +70,26 @@ const AgentManageTemplate = () => {
     //주석추ㅏ
 
     const handleClickSave = async() => { //정보 수정,추가 요청
-        await axios.patch('/agent')
-            .then((res) => {
-                console.log("success")
-            })
+        if (modify==true){
+            await axios.patch('/agent')
+                .then((res) => {
+                    console.log("patch done")
+                })
+            alert("수정 되었습니다.")
+        }
+        else {
+            await axios.post('/agent')
+                .then((res)=>{
+                    console.log("post done")
+                })
+            alert("추가 되었습니다.")
+        }
         handleClose();
     };
 
     const handleModifyButtonClick = (e) => {
         // button이 관리페이지의 정보 수정 버튼일 시...
+        setModify(true)
         console.log(e.target.name);
         const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
         let date = changeContent['a_receiveDate'].replaceAll('/', '-');
@@ -86,6 +98,7 @@ const AgentManageTemplate = () => {
         handleOpen();
     }
     const handleAddButtonClick=(e)=>{
+        setModify(false)
         setCurrentInfo({
             a_name: "",
             a_code: "",
