@@ -108,13 +108,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ScheduleTable({ rows=[], headerColor, bodyColor, buttonColor, headerFontColor }) {
+export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
-    let count = rows.length;
+    const tmp = [rows];
+    let count = tmp.length;
 
     useEffect( () => {
         setPage(0);
-    }, [keywordProps, rows]); // 검색창에 키워드 입력하거나, 캘린더에서 다른 날짜를 선택했을 때, Page를 0으로 이동시킨다.
+    }, [keywordProps, tmp]); // 검색창에 키워드 입력하거나, 캘린더에서 다른 날짜를 선택했을 때, Page를 0으로 이동시킨다.
 
     const isSearch = () => { // 사용자가 검색창에 키워드를 입력한 상태인지 검사하는 함수
         for (let value in keywordProps) {
@@ -173,32 +174,35 @@ export default function ScheduleTable({ rows=[], headerColor, bodyColor, buttonC
     }
 
     const showList = () => { // 정렬 기능과 함께 Schedule List 여러 개를 띄워주는 함수
+        console.log(tmp);
         return (
-            stableSort(rows, getComparator(order, orderBy))
+            stableSort(tmp, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map(ScheduleList)
         );
     }
 
     const handleFilter = (el) => { // 검색 키워드 필터링해주는 함수
-        return el.a_name.includes(keywordProps.a_name) && // No 검색 필터 구현해야함
-            el.a_code.includes(keywordProps.a_code) &&
-            el.c_name.includes(keywordProps.c_name)
-            // &&
-            // // c_name, c_address, c_ph, visit_time, estimate_num 통합 검색 ?
-            // el.total_etc.includes(keywordProps.total_etc) &&
-            // el.modified_info.includes(keywordProps.modified_info) &&
-            // el.call_check.includes(keywordProps.call_check) &&
-            // el.call_check_info.includes(keywordProps.call_check_info)
+        if (el.a_code === undefined) {
+            return false
+        }
+        return typeof el.a_name ? el.a_name.includes(keywordProps.a_name) : false && // No 검색 필터 구현해야함
+            el.a_code ? el.a_code.includes(keywordProps.a_code) : false &&
+            el.c_name ? el.c_name.includes(keywordProps.c_name) : false &&
+            // c_name, c_address, c_ph, visit_time, estimate_num 통합 검색 ?
+            el.total_etc ? el.total_etc.includes(keywordProps.total_etc) : false &&
+            el.modified_info ? el.modified_info.includes(keywordProps.modified_info) : false &&
+            el.call_check ? el.call_check.includes(keywordProps.call_check) : false &&
+            el.call_check_info ? el.call_check_info.includes(keywordProps.call_check_info) : false
             // 일정공지여부 실제 데이터 들어오면 구현
             ;
     }
 
     const filteredShowList = () => { // 정렬 기능과 함께 검색결과 List를 여러 개 보여주는 함수
 
-        count = rows.filter(handleFilter).length; // 사용자가 검색했을 때 전체 rows의 개수를 검색된 결과의 rows 개수로 바꿔줌
+        count = tmp.filter(handleFilter).length; // 사용자가 검색했을 때 전체 rows의 개수를 검색된 결과의 rows 개수로 바꿔줌
         return (
-            stableSort(rows, getComparator(order, orderBy))
+            stableSort(tmp, getComparator(order, orderBy))
                 .filter(handleFilter)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(ScheduleList)
@@ -212,7 +216,7 @@ export default function ScheduleTable({ rows=[], headerColor, bodyColor, buttonC
             if (checked) {
                 const checkedListArray = [];
 
-                rows.forEach((list) => checkedListArray.push(list));
+                tmp.forEach((list) => checkedListArray.push(list));
 
                 setCheckedList(checkedListArray);
             } else {
@@ -238,14 +242,14 @@ export default function ScheduleTable({ rows=[], headerColor, bodyColor, buttonC
             if (checked) {
                 const checkedListArray = [];
 
-                rows.filter(handleFilter).forEach((list) => checkedListArray.push(list));
+                tmp.filter(handleFilter).forEach((list) => checkedListArray.push(list));
 
                 setCheckedList(checkedListArray);
             } else {
                 setCheckedList([]);
             }
         },
-        [rows.filter(handleFilter)]
+        [tmp.filter(handleFilter)]
     );
 
     function EnhancedTableHead(props) { // 테이블 헤더 컴포넌트 (전체 선택용 체크박스 기능)
@@ -266,7 +270,7 @@ export default function ScheduleTable({ rows=[], headerColor, bodyColor, buttonC
                                 checked={
                                     checkedList.length === 0
                                         ? false
-                                        : checkedList.length === rows.filter(handleFilter).length
+                                        : checkedList.length === tmp.filter(handleFilter).length
                                 }
                             />
                             : // 검색을 안할 경우 전체 선택용 체크박스가 리스트들을 모두 전체 선택함
@@ -277,7 +281,7 @@ export default function ScheduleTable({ rows=[], headerColor, bodyColor, buttonC
                                 checked={
                                     checkedList.length === 0
                                         ? false
-                                        : checkedList.length === rows.length
+                                        : checkedList.length === tmp.length
                                 }
                             />
                         }
@@ -406,7 +410,7 @@ export default function ScheduleTable({ rows=[], headerColor, bodyColor, buttonC
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick} // 사용하지 않는 기능
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
+                            rowCount={tmp.length}
                         />
                         <TableBody style={{ backgroundColor: bodyColor }} className={classes.body}>
                             {isSearch() // 검색 상태라면 검색결과를 보여주고 아니라면 리스트 전체를 보여줌.
