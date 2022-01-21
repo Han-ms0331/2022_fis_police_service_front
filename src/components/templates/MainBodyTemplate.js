@@ -62,7 +62,7 @@ function MainBodyTemplate(props) {
     */
     const onSelect = async (e) => {
         console.log(e.target.name);
-        await axios.get(`http://${NetworkConfig.networkAddress}/main/center/select?center_id=${e.target.name}`)
+        await axios.get('/main/center/select?center_id={e.target.name}')
             .then((res) => {
                 console.log(res.data.center_id);
                 setSelectedCenterId(res.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -102,7 +102,7 @@ function MainBodyTemplate(props) {
     */
 
     const onSearch = async () => {
-        await axios.get('/main/center/search?c_name={value}&c_address={value} &c_ph={value}')
+        await axios.get(`/main/center/search?c_name={value}&c_address={value} &c_ph={value}`)
             .then((res) => {
                 setCenterList(res.data.lists);
                 setIsSelected(false);
