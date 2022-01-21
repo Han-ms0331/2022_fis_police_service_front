@@ -3,6 +3,7 @@ import LoginForm from "../organisms/LoginForm";
 import axios from "axios";
 import {useRecoilState} from "recoil";
 import {isLoginedState} from "../../store/LoginStore";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 /*
     날짜: 2022/01/11 10:57 오전
@@ -33,7 +34,7 @@ function LoginTemplate(props) {
     */
 
     const onLogin = async () => {   //서버와 로그인 통신을 하는 부분
-        await axios.post("http://localhost:8080/login", loginInfo, {withCredentials: true})
+        await axios.post(`http://${NetworkConfig.networkAddress}:8080/login`, loginInfo, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
             .then((res) => {
                 console.log(res.data);
                 if (res.data.sc === "success") {   //로그인 결과가 실패가 아니라면
@@ -46,7 +47,11 @@ function LoginTemplate(props) {
                     alert("비밀번호를 확인해 주세요.")
                 }
             })
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/login`, {withCredentials: true}).then((res) => {
+            console.log(res);
+        })
     }
+
 
 
     return (

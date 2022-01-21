@@ -9,6 +9,7 @@ import axios from "axios";
 import {useRecoilState} from "recoil";
 import {isLoginedState} from "../../store/LoginStore";
 import {Style} from "../../Style";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 /*
     날짜: 2022/01/10 3:59 오후
@@ -36,7 +37,7 @@ const Navigation = () => {
 
     const onLogout = async (e) => {
         if (window.confirm("정말 로그아웃 하시겠습니까?")) {
-            await axios.post("http://localhost:8080/logout", {}, {withCredentials: true})
+            await axios.post(`http://${NetworkConfig.networkAddress}:8080/logout`, {}, {withCredentials: true})
                 .then((res) => {
                     console.log(res)
                     localStorage.removeItem("login-state"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
