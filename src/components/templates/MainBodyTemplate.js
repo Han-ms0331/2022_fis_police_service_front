@@ -121,7 +121,7 @@ function MainBodyTemplate(props) {
                 <Container>
                     <Left>
                             <CustomCalendar className="calendar" setDate={setDate}/>
-                            <AgentContainer/>
+                            <AgentContainer content={selectedAgentInfo}/>
                     </Left>
                     <Right>
                         <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}

@@ -294,7 +294,7 @@ export const mainHandlers = [
                                     "a_longitude": 123.0
                                 },
                                 "visit_date": "2022-01-20",
-                                "visit_time": "17:50:36",
+                                "visit_time": "12:50:36",
                                 "estimate_num": 123,
                                 "center_etc": "111",
                                 "agent_etc": "111",
@@ -322,7 +322,7 @@ export const mainHandlers = [
                                     "a_longitude": 123.0
                                 },
                                 "visit_date": "2022-01-20",
-                                "visit_time": "17:50:36",
+                                "visit_time": "09:50:36",
                                 "estimate_num": 123,
                                 "center_etc": "222",
                                 "agent_etc": "222",

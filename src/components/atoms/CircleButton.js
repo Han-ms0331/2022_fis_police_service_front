@@ -30,9 +30,7 @@ export default function CircleButton({bgColor, handleClick}) { // bgColor로 버
     return (
         <>
             {
-                bgColor === "#3dc1d3"
-                ? <Button bgColor={bgColor} onClick={handleClick}></Button>
-                    : <Button bgColor={bgColor}></Button>
+                <Button bgColor={bgColor} onClick={handleClick}></Button>
                 // 초록색 버튼일 경우 Click Event 활성화
             }
 
