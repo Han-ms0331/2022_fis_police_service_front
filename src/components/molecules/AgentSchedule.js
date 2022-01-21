@@ -13,7 +13,10 @@ function AgentSchedule({content, width, height}) {
     return (
         <div>
             {content.map(item => {
-                return <TimeList key={item.agent_id} content={item} setCurrentTime={0} />;
+                if (!item) {
+                    return <TimeList key={item.agent_id} content={item} setCurrentTime={0} />;
+
+                }
             })}
             {/*Array의 map함수를 통해 요원 스케쥴 데이터를 나열함.*/}
         </div>
