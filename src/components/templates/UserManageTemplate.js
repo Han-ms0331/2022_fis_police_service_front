@@ -28,6 +28,8 @@ const UserManageTemplate = () => {
     const [currentInfo, setCurrentInfo] = useState({
         u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
     })
+    const [modify,setModify]=useState();
+
     const handleInputFormChange = (e) => {
         // console.log(e);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
@@ -64,18 +66,25 @@ const UserManageTemplate = () => {
     },[])
 
     const handleClickSave = async() => {
-        await axios.patch('/user')
-            .then((res)=>{
-                console.log("saved")
-            })
-        //api 수정 요청 보냄,,?
-        //input state 에 적혀있는 것으로 수정,,,?
-        console.log(currentInfo);
-        console.log("saved");
+        if(modify==true){
+            await axios.patch('/user')
+                .then((res)=>{
+                    console.log("patch done")
+                })
+            alert("수정 되었습니다");
+        }
+        else{
+            await axios.post('/user')
+                .then((res)=>{
+                    console.log("post done")
+                })
+            alert("추가 되었습니다")
+        }
         handleClose();
     }
     const handleModifyButtonClick = (e) => {
         // 콜직원 수정버튼 클릭시
+        setModify(true);
         const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
         delete changeContent['today_call_num']; /*오늘통화건수 제외*/
         delete changeContent['average_call']; /*평균통화건수 제외*/
@@ -85,6 +94,7 @@ const UserManageTemplate = () => {
         handleOpen(); /*수정창을 오픈한다*/
     }
     const handleAddButtonClick = (e)=>{
+        setModify(false)
         setCurrentInfo({
             u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "",u_auth:""
         });
