@@ -10,7 +10,7 @@ function SearchForm(props) {
                 {/*<InputContainer labelContent="이름검색" inputName="centerName" inputType="text" width="200px" rows="1"*/}
                 {/*                flexDirection="column" setValueFunction={props.setSearch}/>*/}
                 <TextField id="outlined-basic" label="이름" variant="outlined"
-                           name="centerName" style={{width: "250px"}} size="small" onChange={props.setSearch} />
+                           name="c_name" style={{width: "250px"}} size="small" onChange={props.setSearch} />
 
 
             </div>
@@ -20,7 +20,7 @@ function SearchForm(props) {
                 {/*                flexDirection="column" setValueFunction={props.setSearch}*/}
                 {/*/>*/}
                 <TextField id="outlined-basic" label="주소" variant="outlined"
-                           name="centerAddress" style={{width: "350px"}} size="small" onChange={props.setSearch} />
+                           name="c_address" style={{width: "350px"}} size="small" onChange={props.setSearch} />
 
             </div>
 
@@ -30,7 +30,7 @@ function SearchForm(props) {
                 {/*                setValueFunction={props.setSearch}*/}
                 {/*/>*/}
                 <TextField id="outlined-basic" label="번호" variant="outlined"
-                           name="centerPhone" style={{width: "250px"}} size="small" onChange={props.setSearch} />
+                           name="c_ph" style={{width: "250px"}} size="small" onChange={props.setSearch} />
 
             </div>
 
