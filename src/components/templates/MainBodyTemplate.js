@@ -36,16 +36,16 @@ function MainBodyTemplate(props) {
 
 
 
-    const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`/center/${SelectedCenterInfo.center_id}/date?date=${visit_date}`)
-            .then((res) => {
-                // console.log(res.data);
-            })
-    }
-
-    useEffect(() => {
-        onData(); // 날짜를 선택한 경우에 함수 실행
-    }, [date])
+    // const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
+    //     await axios.get(`/center/${SelectedCenterInfo.center_id}/date?date=${visit_date}`)
+    //         .then((res) => {
+    //             // console.log(res.data);
+    //         })
+    // }
+    //
+    // useEffect(() => {
+    //     onData(); // 날짜를 선택한 경우에 함수 실행
+    // }, [date])
 
 
     const headerContent = ["시설명", "주소", "전화번호", "연락기록", "방문여부"]     //리스트 헤더

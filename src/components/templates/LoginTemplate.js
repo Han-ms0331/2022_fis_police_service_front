@@ -47,9 +47,9 @@ function LoginTemplate(props) {
                     alert("비밀번호를 확인해 주세요.")
                 }
             })
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/login`, {withCredentials: true}).then((res) => {
-            console.log(res);
-        })
+        // await axios.get(`http://${NetworkConfig.networkAddress}:8080/login`, {withCredentials: true}).then((res) => {
+        //     console.log(res);
+        // })
     }
 
 
