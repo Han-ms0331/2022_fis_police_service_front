@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor }) {
+export default function ScheduleTable({ rows=[], headerColor, bodyColor, buttonColor, headerFontColor }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
     let count = rows.length;
 
@@ -183,11 +183,14 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     const handleFilter = (el) => { // 검색 키워드 필터링해주는 함수
         return el.a_name.includes(keywordProps.a_name) && // No 검색 필터 구현해야함
             el.a_code.includes(keywordProps.a_code) &&
-            el.c_name.includes(keywordProps.c_name) && // c_name, c_address, c_ph, visit_time, estimate_num 통합 검색 ?
-            el.total_etc.includes(keywordProps.total_etc) &&
-            el.modified_info.includes(keywordProps.modified_info) &&
-            el.call_check.includes(keywordProps.call_check) &&
-            el.call_check_info.includes(keywordProps.call_check_info) // 일정공지여부 실제 데이터 들어오면 구현
+            el.c_name.includes(keywordProps.c_name)
+            // &&
+            // // c_name, c_address, c_ph, visit_time, estimate_num 통합 검색 ?
+            // el.total_etc.includes(keywordProps.total_etc) &&
+            // el.modified_info.includes(keywordProps.modified_info) &&
+            // el.call_check.includes(keywordProps.call_check) &&
+            // el.call_check_info.includes(keywordProps.call_check_info)
+            // 일정공지여부 실제 데이터 들어오면 구현
             ;
     }
 

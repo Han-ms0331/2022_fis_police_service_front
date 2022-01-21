@@ -16,6 +16,7 @@ import styled from "styled-components";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -40,7 +41,7 @@ function MainBodyTemplate(props) {
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`/center/${selectedCenterId}/date?date=${visit_date}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}/center/${selectedCenterId}/date?date=${visit_date}`)
             .then((res) => {
                 setSelectedAgentInfo(res.data.a_data);
             })
@@ -61,7 +62,7 @@ function MainBodyTemplate(props) {
     */
     const onSelect = async (e) => {
         console.log(e.target.name);
-        await axios.get('/main/center/select?center_id={e.target.name}')
+        await axios.get(`http://${NetworkConfig.networkAddress}/main/center/select?center_id=${e.target.name}`)
             .then((res) => {
                 console.log(res.data.center_id);
                 setSelectedCenterId(res.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
