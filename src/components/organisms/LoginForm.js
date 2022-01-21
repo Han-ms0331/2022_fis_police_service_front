@@ -25,15 +25,15 @@ const LoginForm = (props) => {
                 <div className="inputContainer">
                     <InputRow> {/*아이디*/}
                         <div className="icon"><BiUser/></div>
-                        <input id="username" type="text" placeholder="아이디"/>
+                        <input name="u_nickname" id="username" type="text" placeholder="아이디" onChange={props.onChangeFunction}/>
                     </InputRow>
                     <InputRow> {/*비밀번호*/}
                         <div className="icon"><RiLockPasswordLine/></div>
-                        <input id="password" type="password" placeholder="비밀번호"/>
+                        <input name="u_pwd" id="password" type="password" placeholder="비밀번호" onChange={props.onChangeFunction}/>
                     </InputRow>
-                    <Link to={"/main"}><CustomButton type="normal" width="100%" height="40px" borderRadius="6px"
+                    <CustomButton type="normal" width="100%" height="40px" borderRadius="6px"
                                                      color="#fff" backgroundColor={Style.color2} content="로그인"
-                                                     onClick={props.onClickFunction}/></Link> {/*로그인 버튼*/}
+                                                     onClick={props.onClickFunction}/> {/*로그인 버튼*/}
                 </div>
             </Container>
         </Main>
