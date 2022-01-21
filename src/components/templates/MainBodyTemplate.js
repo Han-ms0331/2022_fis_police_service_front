@@ -15,6 +15,7 @@ import AgentContainer from "../organisms/AgentContainer";
 import styled from "styled-components";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
+import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -30,6 +31,8 @@ function MainBodyTemplate(props) {
     const [selectedCenterCallList, setSelectedCenterCallList] = useRecoilState(SelectedCenterCallList);
     const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
 
+    const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
+
     const [date, setDate] = useState(new Date());
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`;
@@ -37,14 +40,15 @@ function MainBodyTemplate(props) {
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`/center/${SelectedCenterInfo.center_id}/date?date=${visit_date}`)
+        await axios.get(`/center/${SelectedCenterId.center_id}/date?date=${visit_date}`)
             .then((res) => {
-                // console.log(res.data);
+                setSelectedAgentInfo(res.data.a_data);
             })
     }
 
     useEffect(() => {
         onData(); // 날짜를 선택한 경우에 함수 실행
+        console.log(selectedAgentInfo);
     }, [date])
 
 
@@ -59,7 +63,7 @@ function MainBodyTemplate(props) {
         console.log(e.target.name);
         await axios.get('/main/center/select?center_id={e.target.name}')
             .then((res) => {
-                setSelectedCenterId(res.data.id)//현재 선택된 시설의 아이디 전역으로 저장
+                setSelectedCenterId(res.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
                     center_id: res.data.center_id,
                     c_name: res.data.c_name,
@@ -72,6 +76,7 @@ function MainBodyTemplate(props) {
                 setCenterLocation([res.data.c_latitude, res.data.c_longitude]);
                 setIsSelected(true);
             })
+        console.log(selectedCenterInfo.center_id)
     }
 
     /*

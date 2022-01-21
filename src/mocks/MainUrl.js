@@ -5,7 +5,7 @@ import {rest} from "msw";
     작성내용: main page에서 필요한 mainhandler작성
 */
 
-const center_id="1"
+const center_id="10"
 
 const value="4"
 
@@ -273,7 +273,78 @@ export const mainHandlers = [
     rest.get(`/center/${center_id}/date?date=${value}`, async (req, res, ctx) => {
         return res(
             ctx.json({
+                a_data: [
+                    {
+                        "agent_id": 7,
+                        "a_name": "asd",
+                        "a_ph": "123",
+                        "a_code": "111",
+                        "a_address": "분당구 불정로 6",
+                        "a_hasCar": "CAR",
+                        "a_equipment": "",
+                        "a_receiveDate": "2022-01-20T17:50:36.893612",
+                        "a_latitude": 123.0,
+                        "a_longitude": 123.0,
+                        "scheduleList": [
+                            {
+                                "schedule_id": 16,
+                                "center": {
+                                    "c_name": "111",
+                                    "a_latitude": 123.0,
+                                    "a_longitude": 123.0
+                                },
+                                "visit_date": "2022-01-20",
+                                "visit_time": "17:50:36",
+                                "estimate_num": 123,
+                                "center_etc": "111",
+                                "agent_etc": "111",
+                                "total_etc": null
+                            }
+                        ]
+                    },
+                    {
+                        "agent_id": 8,
+                        "a_name": "asd",
+                        "a_ph": "123",
+                        "a_code": "222",
+                        "a_address": "분당구 불정로 6",
+                        "a_hasCar": "CAR",
+                        "a_equipment": "",
+                        "a_receiveDate": "2022-01-20T17:50:36.894418",
+                        "a_latitude": 123.0,
+                        "a_longitude": 123.0,
+                        "scheduleList": [
+                            {
+                                "schedule_id": 17,
+                                "center": {
+                                    "c_name": "123",
+                                    "a_latitude": 123.0,
+                                    "a_longitude": 123.0
+                                },
+                                "visit_date": "2022-01-20",
+                                "visit_time": "17:50:36",
+                                "estimate_num": 123,
+                                "center_etc": "222",
+                                "agent_etc": "222",
+                                "total_etc": null
+                            }
+                        ]
+                    },
+                    {
+                        "agent_id": 9,
+                        "a_name": "asd",
+                        "a_ph": "123",
+                        "a_code": "333",
+                        "a_address": "분당구 불정로 6",
+                        "a_hasCar": "CAR",
+                        "a_equipment": "",
+                        "a_receiveDate": "2022-01-20T17:50:36.894947",
+                        "a_latitude": 123.0,
+                        "a_longitude": 123.0,
+                        "scheduleList": []
+                    }
 
+                ]
             })
         )
     }),
