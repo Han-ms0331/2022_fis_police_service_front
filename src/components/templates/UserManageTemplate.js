@@ -31,54 +31,6 @@ const UserManageTemplate = () => {
         })
         const [modify, setModify] = useState();
 
-        const handleInputFormChange = (e) => {
-            // console.log(e);
-            const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
-            if (name === "u_auth") {
-                if (value === "관리자") {
-                    setCurrentInfo({
-                        ...currentInfo,
-                        u_auth: "ADMIN"
-                    })
-                } else if (value === "일반직원") {
-                    setCurrentInfo({
-                        ...currentInfo,
-                        u_auth: "USER"
-                    })
-                } else {
-                    setCurrentInfo({
-                        ...currentInfo,
-                        u_auth: "FIRED"
-                    })
-                }
-            } else {
-                setCurrentInfo((prev) => {
-                        let a;
-                        if (currentInfo.u_auth === "관리자") {
-                            console.log(currentInfo.u_auth)
-                            a = "ADMIN"
-                        } else if (currentInfo.u_auth === "일반직원") {
-                            console.log(currentInfo.u_auth)
-                            a = "USER"
-                        } else {
-                            console.log(currentInfo.u_auth)
-                            a = "FIRED"
-                        }
-                        return {
-                            ...currentInfo, // 기존의 input 객체를 복사한 뒤
-                            u_auth: a,
-                            [name]: value // name 키를 가진 값을 value 로 설정}
-                        }
-                    }
-                )
-            }
-        }
-
-
-// useEffect(()=>{
-//     console.log(currentInfo)
-// },[currentInfo]);
-
         const showData = async () => {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/user`, {withCredentials: true})
                 .then((res) => {
@@ -118,6 +70,16 @@ const UserManageTemplate = () => {
             })
         }, [])
 
+        const handleInputFormChange = (e) => {
+            // console.log(e);
+            const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
+            setCurrentInfo({
+                ...currentInfo,
+                [name]: value
+            })
+        }
+
+
         const handleClickSave = async () => {
             console.log(currentInfo);
             if (modify == true) {
@@ -146,17 +108,26 @@ const UserManageTemplate = () => {
             // 콜직원 수정버튼 클릭시
             setModify(true);
             const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
-
             delete changeContent['today_call_num']; /*오늘통화건수 제외*/
-
             delete changeContent['average_call']; /*평균통화건수 제외*/
+            let a;
+            if (changeContent['u_auth'] === "관리자") {
+                console.log(currentInfo.u_auth)
+                a = "ADMIN"
+            } else if (changeContent['u_auth'] === "일반직원") {
+                console.log(currentInfo.u_auth)
+                a = "USER"
+            } else {
+                console.log(currentInfo.u_auth)
+                a = "FIRED"
+            }
+            changeContent['u_auth'] = a;
             if (changeContent['u_sDate'] != null) {
                 let date = changeContent['u_sDate'].replaceAll('/', '-');
                 changeContent['u_sDate'] = date;
             }
 
             setCurrentInfo(changeContent)
-            // console.log(currentInfo)
             handleOpen(); /*수정창을 오픈한다*/
         }
         const handleAddButtonClick = (e) => {
@@ -165,8 +136,8 @@ const UserManageTemplate = () => {
                 u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "", u_auth: "", user_id: ""
             });
             handleOpen();
-
         }
+
         const handleOpen = () => setOpen(true);
         const handleClose = () => setOpen(false);
 

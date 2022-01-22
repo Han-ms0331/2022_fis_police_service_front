@@ -37,10 +37,9 @@ const AgentManageTemplate = () => {
     const showData = async () => {
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/agent`, {withCredentials: true})
             .then((res) => {
+                console.log(res.data.data)
                 let tmp = [];
                 let a, b;
-
-                console.log(res.data.data)
 
                 res.data.data.forEach((list) => {
                     list.a_hasCar ? a = "자차" : a = "도보"
@@ -77,49 +76,10 @@ const AgentManageTemplate = () => {
     const handleInputFormChange = (e) => {
         // console.log(e);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
-        let a, b;
-        currentInfo.a_hasCar ? a = true : a = false;
-        currentInfo.a_status ? b = true : b = false;
-
-        if (name === "a_hasCar") {
-            if (value === "자차") {
-                setCurrentInfo({
-                    ...currentInfo,
-                    a_status: b,
-                    a_hasCar: true
-                })
-            } else {
-                setCurrentInfo({
-                    ...currentInfo,
-                    a_status: b,
-                    a_hasCar: false
-                })
-            }
-        } else if (name === "a_status") {
-            if (value === "재직") {
-                setCurrentInfo({
-                    ...currentInfo,
-                    a_hasCar: a,
-                    a_status: true
-                })
-            } else {
-                setCurrentInfo({
-                    ...currentInfo,
-                    a_hasCar: a,
-                    a_status: false
-                })
-            }
-        } else {
-            setCurrentInfo(() => {
-                return {
-                    ...currentInfo,
-                    a_hasCar: a,
-                    a_status: b,
-                    [name]: value
-                }
-            })
-        }
-        // console.log(currentInfo)
+        setCurrentInfo({
+            ...currentInfo,
+            [name]: value
+        })
     };
 
 
@@ -152,6 +112,17 @@ const AgentManageTemplate = () => {
         setModify(true)
         console.log(e.target.name);
         const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
+        if (changeContent['a_hasCar'] === "자차") {
+            changeContent['a_hasCar'] = true
+        }else{
+            changeContent['a_hasCar']=false
+        }
+        if(changeContent['a_status']==="재직"){
+            changeContent['a_status'] = true
+        }else{
+            changeContent['a_status'] = false
+        }
+
         if (changeContent['a_receiveDate'] != null) {
             let date = changeContent['a_receiveDate'].replaceAll('/', '-');
             changeContent['a_receiveDate'] = date;
