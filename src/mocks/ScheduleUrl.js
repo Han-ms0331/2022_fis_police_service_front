@@ -9,45 +9,81 @@ const value = "22-01-14";
 const schedule_id = 17;
 
 export const scheduleHandlers = [
-    rest.get('/scheduletest', async(req, res, ctx)=>{
+    rest.get('/scheduletest', async (req, res, ctx) => {
         console.log(res);
         return res(
             ctx.json({
                 result: "success",
                 name: "Han",
-                authority:"user"
+                authority: "user"
             })
         )
     }),
-    rest.get('/messenger', async(req, res, ctx)=>{
+    rest.get('/messenger', async (req, res, ctx) => {
         return res(
-            ctx.json({
-                result: "success",
-                message: "무언가 잘 못했어요. 고쳐주세요.",
-                user:"원보라",
-                authority:"user"
-            })
+            ctx.json([
+                {
+                    result: "success",
+                    message: "무언가 잘 못했어요. 고쳐주세요.",
+                    user: "원보라",
+                    authority: "user",
+                    time: "10:34 오전"
+                },
+                {
+                    result: "success",
+                    message: "무언가 잘 못했어요. 고쳐주세요2.",
+                    user: "현승구",
+                    authority: "user",
+                    time: "10:35 오전"
+                },
+                {
+                    result: "success",
+                    message: "무언가 잘 못했어요. 고쳐주세요3.",
+                    user: "지상은",
+                    authority: "user",
+                    time: "10:36 오전"
+                },
+
+            ])
         )
     }),
-    rest.post('/messenger', async(req, res, ctx)=>{
+    rest.post('/messenger', async (req, res, ctx) => {
         return res(
-            ctx.json({
-                result: "success",
-                message: "무언가 잘 못했어요. 고쳐주세요.",
-                user:"원보라",
-                authority:"user"
-            })
+            ctx.json([
+                {
+                    result: "success",
+                    message: "무언가 잘 못했어요. 고쳐주세요.",
+                    user: "원보라",
+                    authority: "user",
+                    time: "10:34 오전"
+                },
+                {
+                    result: "success",
+                    message: "무언가 잘 못했어요. 고쳐주세요2.",
+                    user: "현승구",
+                    authority: "user",
+                    time: "10:35 오전"
+                },
+                {
+                    result: "success",
+                    message: "무언가 잘 못했어요. 고쳐주세요3.",
+                    user: "지상은",
+                    authority: "user",
+                    time: "10:36 오전"
+                },
+
+            ])
         )
     }),
-    rest.delete('/messenger', async(req, res, ctx)=>{
+    rest.delete('/messenger', async (req, res, ctx) => {
         return res(
             ctx.json({
                 result: "delete success",
-                authority:"admin"
+                authority: "admin"
             })
         )
     }),
-    rest.get(`/schedule?date=${value}`, async(req, res, ctx)=>{
+    rest.get(`/schedule?date=${value}`, async (req, res, ctx) => {
         console.log(req.params);
         return res(
             ctx.json([
@@ -345,8 +381,8 @@ export const scheduleHandlers = [
             ])
         )
     }),
-    rest.patch('/schedule', async(req, res, ctx)=>{
-        const { visit_date, visit_time, estimate_num, modified_info, call_check, total_etc } = req.body;
+    rest.patch('/schedule', async (req, res, ctx) => {
+        const {visit_date, visit_time, estimate_num, modified_info, call_check, total_etc} = req.body;
 
         return res(
             ctx.json({
@@ -359,15 +395,15 @@ export const scheduleHandlers = [
             })
         )
     }),
-    rest.post('/schedule/announce', async(req, res, ctx)=>{
-        const { checkedList } = req.body;
+    rest.post('/schedule/announce', async (req, res, ctx) => {
+        const {checkedList} = req.body;
         return res(
             ctx.json({
                 checkedList,
             })
         )
     }),
-    rest.get(`/schedule?schedule_id=${schedule_id}`, async(req, res, ctx)=>{
+    rest.get(`/schedule?schedule_id=${schedule_id}`, async (req, res, ctx) => {
         return res(
             ctx.json({
                 schedule_id: schedule_id,

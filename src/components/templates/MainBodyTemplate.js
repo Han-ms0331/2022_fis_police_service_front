@@ -41,7 +41,7 @@ function MainBodyTemplate(props) {
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`/center/${selectedCenterId}/date?date=${visit_date}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}/center/${selectedCenterId}/date?date=${visit_date}`)
             .then((res) => {
                 setSelectedAgentInfo(res.data.a_data);
             })
@@ -102,6 +102,7 @@ function MainBodyTemplate(props) {
     */
 
     const onSearch = async () => {
+
         console.log(currentInfo);
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`)
             .then((res) => {
