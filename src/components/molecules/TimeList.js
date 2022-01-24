@@ -4,7 +4,7 @@
     작성내용: 현장 요원 이름 + 스케줄표(CircleButton으로 시각화)
 */
 
-import React from 'react';
+import React, {useRef} from 'react';
 import CircleButton from "../atoms/CircleButton";
 import styled from "styled-components";
 import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
@@ -48,10 +48,10 @@ function TimeList({content, setCurrentTime=0}) {
                 }
             )}
             {/*{date}*/}
-            <CircleButton bgColor={using[0] ? red : green} handleClick={handleClick}/>
-            <CircleButton bgColor={using[1] ? red : green} handleClick={handleClick}/>
-            <CircleButton bgColor={using[2] ? red : green} handleClick={handleClick}/>
-            <CircleButton bgColor={using[3] ? red : green} handleClick={handleClick}/>
+            <CircleButton name={clickedAgent.a_code+'1'} bgColor={using[0] ? red : green} handleClick={handleClick}/>
+            <CircleButton name={clickedAgent.a_code+'2'} bgColor={using[1] ? red : green} handleClick={handleClick}/>
+            <CircleButton name={clickedAgent.a_code+'3'} bgColor={using[2] ? red : green} handleClick={handleClick}/>
+            <CircleButton name={clickedAgent.a_code+'4'} bgColor={using[3] ? red : green} handleClick={handleClick}/>
             {/* 현장 요원 스케줄에 따른 버튼 */}
         </Div>
     );
