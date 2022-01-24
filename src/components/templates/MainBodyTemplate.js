@@ -17,6 +17,7 @@ import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
 import NetworkConfig from "../../configures/NetworkConfig";
+import {Style} from "../../Style";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -41,15 +42,16 @@ function MainBodyTemplate(props) {
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`http://${NetworkConfig.networkAddress}/center/${selectedCenterId}/date?date=${visit_date}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`)
             .then((res) => {
-                setSelectedAgentInfo(res.data.a_data);
+                console.log(res.data)
+                setSelectedAgentInfo(() => res.data.data);
             })
     }
 
     useEffect(() => {
         onData(); // 날짜를 선택한 경우에 함수 실행
-        console.log(selectedAgentInfo);
+        console.log(selectedAgentInfo); // undefined???
     }, [date])
 
 
@@ -102,7 +104,6 @@ function MainBodyTemplate(props) {
     */
 
     const onSearch = async () => {
-
         console.log(currentInfo);
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`)
             .then((res) => {
@@ -145,7 +146,8 @@ function MainBodyTemplate(props) {
     );
 }
 const Main = styled.div`
-border-right: 2px solid #eee;
+// border-right: 2px solid ${Style.color2};
+  border-right: 2px solid #eee;
 `;
 const Container = styled.div`
   display: grid;

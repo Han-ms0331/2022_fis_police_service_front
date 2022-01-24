@@ -70,13 +70,13 @@ function CallInputForm(props) {
             </div>
             <div style={{marginBottom: "20px", display: "flex", alignItems: "center"}}>
                 <InputContainer labelContent="담당자 이메일: " inputName="m_email" inputType="text" width="200px" row="1"
-                                defaultValue={data === undefined ? "" : mail[0]}
+                                defaultValue={data === undefined ? "" :   mail[0]}
                                 setValueFunction={handleInputFormChange}/>
                 <div style={{margin: "0px 5px"}}>@</div>
                 <CustomInput inputName={"email_form"} type={"select"}
                              name={"email_form"}
                              contents={["naver.com", "google.com", "hanmail.com", "직접입력"]} width={"150px"} row={"1"}
-                             defaultValue={mail[1]} setValueFunction={handleInputFormChange}/>
+                             defaultValue={mail === undefined? mail :mail[1]} setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="담당자 전화번호: " inputName="m_email" inputType="text" width="150px" row="1"

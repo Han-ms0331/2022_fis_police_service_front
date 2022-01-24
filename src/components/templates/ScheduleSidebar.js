@@ -35,7 +35,7 @@ const ScheduleSidebar = () => {
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
                 console.log(res.data);
-                setRows(res.data);
+                setRows(res.data.data);
             })
     }
 

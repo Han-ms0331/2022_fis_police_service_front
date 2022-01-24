@@ -52,14 +52,17 @@ function CustomMap(props) {
             isPanto: true,
         });
     }
-    props.adata.forEach((arr,index,buf)=>{
-        aInfo.push({
-            ...arr,
-            latlng:{lat:arr.a_latitude,lng:arr.a_longitude},
-            type:"agent"
+
+    if (props.adata != null) {
+        props.adata.forEach((arr, index, buf) => {
+            aInfo.push({
+                ...arr,
+                latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
+                type: "agent"
+            })
+            console.log(aInfo)
         })
-        console.log(aInfo)
-    })
+    }
 
     useEffect(() => {
         aInfo.forEach((arr,index,buf)=>{
