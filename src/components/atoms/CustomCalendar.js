@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Calendar from "react-calendar";
 import './Calendar.css';
-import {useRecoilState} from "recoil";
-import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
-import axios from "axios";
-import {searchKeyword} from "../../store/ScheduleSearchKeyword";
+import styled from "styled-components";
 
 /*
 날짜: 2022/01/11 3:31 PM
@@ -15,6 +12,7 @@ const CustomCalendar = ({setDate}) => {
     const [value, setValue] = useState(new Date());
 
     return (
+        <Container>
             <Calendar
                 onChange={(day)=>{
                     setValue(day);
@@ -29,7 +27,10 @@ const CustomCalendar = ({setDate}) => {
                 formatShortWeekday = {(locale, date) => ['일', '월', '화', '수', '목', '금', '토'][date.getDay()]}
                 formatMonthYear = {(locale, date) => ['1월', '2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월',][date.getMonth()]}
                 />
+        </Container>
     );
 };
-
+const Container = styled.div`
+width: 280px;
+`;
 export default CustomCalendar;
