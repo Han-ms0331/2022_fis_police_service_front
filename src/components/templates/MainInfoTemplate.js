@@ -13,12 +13,12 @@ import UserManageInputForm from "../organisms/UserManageInputForm";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
 import question from '../media/question.png';
+import NetworkConfig from "../../configures/NetworkConfig";
 
 function MainInfoTemplate(props) {
     const [isOpen, setIsOpen] = useState(false);
 
     const [currentInfo, setCurrentInfo] = useState({
-        u_name: "",
         in_out: "",
         dateTime: "",
         participation: "",
@@ -37,13 +37,13 @@ function MainInfoTemplate(props) {
     useEffect(() => {
         setIsOpen(false);
         setCurrentInfo({
-            u_name: "",
             in_out: "",
             dateTime: "",
             participation: "",
             c_manager: "",
             m_ph: "",
             m_email: "",
+            num:"",
             center_etc: "",
             agent_etc: ""
         })
@@ -57,8 +57,8 @@ function MainInfoTemplate(props) {
     */
     const onSave = async () => {
         console.log(currentInfo);
-        await axios.post('/call', {
-            id: center_id,
+        await axios.post(`http://${NetworkConfig.networkAddress}:8080/call`, {
+            center_id: center_id,
             u_name: currentInfo.u_name,
             in_out: currentInfo.in_out,
             dateTime: currentInfo.dateTime,
@@ -66,22 +66,23 @@ function MainInfoTemplate(props) {
             c_manager: currentInfo.c_manager,
             m_ph: currentInfo.m_ph,
             m_email: currentInfo.m_email,
+            num:"",
             center_etc: currentInfo.center_etc,
             agent_etc: currentInfo.agent_etc
-        })
+        }, {withCredentials: true})
             .then((res) => {
                 setCurrentInfo({
-                    u_name: "",
                     in_out: "",
                     dateTime: "",
                     participation: "",
                     c_manager: "",
                     m_ph: "",
                     m_email: "",
+                    num:"",
                     center_etc: "",
                     agent_etc: ""
                 })
-                console.log(res.data);
+                console.log(res);
                 alert("저장되었습니다")
             })
     }
@@ -125,6 +126,7 @@ function MainInfoTemplate(props) {
                     c_manager: callList[0].c_manager,
                     m_ph: callList[0].m_ph,
                     m_email: callList[0].m_email,
+                    num:"",
                     center_etc: callList[0].center_etc,
                     agent_etc: callList[0].agent_etc
                 })
