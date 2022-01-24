@@ -1,16 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
-import axios from "axios";
-import CenterInfo from "./CenterInfo";
 import {SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo} from "../../store/SelectedCenterStore";
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
 import { MdGpsFixed } from "react-icons/md";
 import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
-
-let center_id = "1"
-let value = "4"
 
 
 const agentList=[
@@ -69,7 +64,7 @@ const selAgent=[
         a_longitude: 126.57173596860564,
         scheduleList: []
     },
-] /* onClick함수,,,?*/
+]
 
 
 const thisCenter = [
@@ -133,10 +128,11 @@ function MapView(props) {
             lng: props.thisCenterLocation[1],
         }
     ]
-
+    console.log("selAgent")
+    console.log(selectedAgentInfo)
+    console.log("clickedAgent")
+    console.log(clickedAgent)
     let centerList=[]
-    console.log("fullArray")
-    console.log(selectedCenterList)
 
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
         if (e.target.textContent === "250m") {
@@ -151,19 +147,14 @@ function MapView(props) {
                         contents:
                             <div>
                                 <div>시설 이름: {arr.c_name}</div>
-                                <div>예상 인원: {arr.c_people}</div>
+                                <div>예상 인원: {arr.c_people} 명</div>
                             </div>
                     })
                 }
             })
             setCenterInfo(centerList)
-            console.log("250m array")
-            console.log(centerList)
-            /*loadInfo().then((res) => {
-                console.log("success")
-            })*/
-
-        } else if (e.target.textContent === "500m") {
+        }
+        else if (e.target.textContent === "500m") {
             setRange(3)
             console.log('500m')
             selectedCenterList.forEach((arr,index,buf)=>{
@@ -175,19 +166,14 @@ function MapView(props) {
                         contents:
                             <div>
                                 <div>시설 이름: {arr.c_name}</div>
-                                <div>예상 인원: {arr.c_people}</div>
+                                <div>예상 인원: {arr.c_people} 명</div>
                             </div>
                     })
                 }
             })
             setCenterInfo(centerList)
-            console.log("500m array")
-            console.log(centerList)
-            /*loadInfo().then((res) => {
-                console.log("success")
-            })*/
-
-        } else if (e.target.textContent === "1km") {
+        }
+        else if (e.target.textContent === "1km") {
             setRange(4)
             console.log('1000m')
             selectedCenterList.forEach((arr,index,buf)=>{
@@ -199,29 +185,16 @@ function MapView(props) {
                         contents:
                             <div>
                                 <div>시설 이름: {arr.c_name}</div>
-                                <div>예상 인원: {arr.c_people}</div>
+                                <div>예상 인원: {arr.c_people} 명</div>
                             </div>
                     })
                 }
             })
             setCenterInfo(centerList)
-            console.log("1000m array")
-            console.log(centerList)
-            /*loadInfo().then((res) => {
-                console.log("success")
-            })*/
-
         }
-
     }
 
-    /*useEffect( () => {
-        setCenterInfo(centerList)
-    },[range])*/
-    console.log("centerInfo")
-    console.log(centerInfo)
     return (
-
         <MapContainer>
             <RangeController onClickFunc={changeRange}/>
             <CustomMap aroundCdata={centerInfo} adata={selectedAgentInfo} clickedAdata={clickedAgent}  sdata={selCenter} lat={center[0].lat}

@@ -34,7 +34,7 @@ const ScheduleSidebar = () => {
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data.data);
                 setRows(res.data.data);
             })
     }
@@ -77,15 +77,16 @@ const [color1,color2]= [Style.color1,Style.color2];
 
 // style
 const Items = styled.div` //sidebar를 담는 컨테이너
-display: grid;
-  grid-template-rows: 2fr 1fr 1fr;
-  &>div {
-    min-width: 0;
-    align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 35px;
+  &> div{
+    margin-top: 20px;
   }
 `;
+
 const Container = styled.div`
-  //border-right: 2px solid #eee;
   padding: 0 15px;
   position: relative;
   transition: 1s ease-out;

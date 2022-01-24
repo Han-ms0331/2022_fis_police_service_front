@@ -42,7 +42,7 @@ export default function TransitionsModal({ defaultInput, backgroundColor }) {
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
                 open={open}
-                onClose={handleClose}
+                // onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{

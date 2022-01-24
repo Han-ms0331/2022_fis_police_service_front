@@ -6,8 +6,8 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from "axios";
-import {useRecoilState} from "recoil";
-import {isLoginedState} from "../../store/LoginStore";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {isLoginedState, userAuthority} from "../../store/LoginStore";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
 
@@ -26,8 +26,15 @@ import NetworkConfig from "../../configures/NetworkConfig";
 작성자: 정도식
 작성내용: Navigation 픽셀로 고정
 */
+/*
+날짜: 2022/01/24 10:44 AM
+작성자: 정도식
+작성내용: authority에 따른 다른 뷰 작성
+*/
+
 const Navigation = () => {
     const [isLogined, setIsLogined] = useRecoilState(isLoginedState);
+    const authority = useRecoilValue(userAuthority);
     /*
         날짜: 2022/01/12 2:07 오후
         작성자: 한명수
@@ -51,7 +58,7 @@ const Navigation = () => {
                 <Upper>
                     <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
                     <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
-                    <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> {/*관리자*/}
+                    {authority==='ADMIN'?<Link to={"/manage"}> <PersonIcon className="icon"/> </Link>:null} {/*관리자*/}
                 </Upper>
 
                 <Bottom>
@@ -60,6 +67,7 @@ const Navigation = () => {
             </Container>
     )
 }
+//style
 const Container = styled.div`
   display: grid;
   grid-template-rows: 345px auto;

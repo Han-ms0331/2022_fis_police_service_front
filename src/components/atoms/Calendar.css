@@ -9,6 +9,7 @@
     min-width: 100%;
     background: var(--option-color-1);
     border: 2px solid var(--option-color-2);
+    /*box-shadow: 3px 3px #dadada;*/
     border-radius: 15px;
     font-family: 'Noto Sans KR', sans-serif;;
     line-height: 10px;
@@ -53,8 +54,8 @@
     height: 40px;
     padding: 10px 0;
     margin-bottom: 20px;
-    /*border-bottom: 3px solid #eee;*/
     border-bottom: 2px solid var(--option-color-2);
+    /*border-bottom: 2px solid #dadada;*/
 }
 
 /*.react-calendar__navigation>button:hover {*/

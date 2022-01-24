@@ -39,7 +39,6 @@ function ScheduleInputForm(props) {
             visit_date: selectedDate.getFullYear()+"-"+selectedDate.getMonth()+1+"-"+selectedDate.getDate()
         });
     },[])
-    console.log(clickedAgent);
 
     return (
         <div style={{width: "100%", height: "530px", padding: "10px"}}>

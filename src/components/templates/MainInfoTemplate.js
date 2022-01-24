@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {Container} from "@mui/material";
 import CenterInfo from "../organisms/CenterInfo";
 import InfoContainer from "../organisms/InfoContainer";
 import CustomButton from "../atoms/CustomButton";
@@ -16,6 +15,7 @@ import question from '../media/question.png';
 import NetworkConfig from "../../configures/NetworkConfig";
 import ScheduleInputForm from "../organisms/ScheduleInputForm";
 import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
+
 
 function MainInfoTemplate(props) {
     const [isOpen, setIsOpen] = useState(false);
@@ -75,14 +75,14 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: 일정 저장 버튼이 눌렸을 때 작동하는 함수
     */
-    const onSaveSchedule = async () =>{
-        console.log(currentScheduleInfo.visit_time+":00");
+    const onSaveSchedule = async () => {
+        console.log(currentScheduleInfo.visit_time + ":00");
         await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
             center_id: center_id,
             agent_id: clickedAgentInfo.agent_id,
             receipt_date: currentScheduleInfo.receipt_date,
             visit_date: currentScheduleInfo.visit_date,
-            visit_time: currentScheduleInfo.visit_time+":00",
+            visit_time: currentScheduleInfo.visit_time + ":00",
             estimate_num: currentScheduleInfo.estimate_num,
             center_etc: currentScheduleInfo.center_etc,
             agent_etc: currentScheduleInfo.agent_etc
@@ -195,90 +195,74 @@ function MainInfoTemplate(props) {
             setIsOpen(false);
         } else if (e.target.name === "add_schedule") {
             setIsScheduleOpen(true);
-        }else if (e.target.name === "schedule_save") {
+        } else if (e.target.name === "schedule_save") {
             if (window.confirm("저장하시겠습니까?")) {
                 onSaveSchedule()
             }
             setIsScheduleOpen(false);
-        }else if (e.target.name === "schedule_cancel") {
+        } else if (e.target.name === "schedule_cancel") {
             setIsScheduleOpen(false);
         }
     }
 
     return (
-
         isSelected ?
-            <div style={{
-                display: "flex",
-                flexDirection: "column",
-                height: "99vh",
-                width: "650px",
-                overflow: "auto",
-                marginTop: "32px"
-            }}>
-                <Container fixed sx={{marginBottom: "50px"}}>
-                    <CenterInfo/>
-                </Container>
-                <Container fixed sx={{marginBottom: "50px"}}>
-                    <InfoContainer type={"call"} content={callList} u_name={localStorage.getItem("userName")}/>
-                    {isOpen ?
-
-                        <Modal
-                            open={isOpen}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <Box sx={style}>
-                                <ModalContainer>
-                                    <CallInputForm data={callList[0]} currentInfo={currentInfo}
-                                                   setCurrentInfo={setCurrentInfo}/>
-
-                                </ModalContainer>
-                            </Box>
-                        </Modal>
-
-                        :
-                        <div style={{marginTop: "20px", display: "flex", justifyContent: "space-around"}}>
-                            <CustomButton name="open" type="normal" width="150px" height="35px" borderRadius="3px"
-                                          color={Style.color1}
-                                          backgroundColor={Style.color2} content="연락기록 추가" onClick={onClick}/>
-                            <CustomButton name="mail" type="normal" width="150px" height="35px" borderRadius="3px"
-                                          color={Style.color1}
-                                          backgroundColor={Style.color2} content="메일 전송" onClick={onClick}/>
-                        </div>
-                    }
-                </Container>
-                <Container fixed>
-                    <InfoContainer type={"apply"} content={scheduleList} u_name={localStorage.getItem("userName")}/>
-                    <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
-                        <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
-                                      color={Style.color1}
-                                      backgroundColor={Style.color2} content="일정 추가" onClick={onClick}/>
-                    </div>
-                    <Modal
-                        open={isScheduleOpen}
+            <Container>
+                <CenterInfo/>
+                <InfoContainer type={"call"} content={callList} u_name={localStorage.getItem("userName")}/>
+                {isOpen ?
+                    <Modal // 연락기록 추가를 눌렀을 경우에 나타나는 모달창
+                        open={isOpen}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
                         <Box sx={style}>
                             <ModalContainer>
-                                <ScheduleInputForm data={callList[0]} currentInfo={currentScheduleInfo}
-                                               setCurrentInfo={setCurrentScheduleInfo}/>
-                                <div style={{margin: "150px 0px", display: "flex", justifyContent: "space-around"}}>
-                                    <CustomButton name="schedule_cancel" type="normal" width="150px" height="35px"
-                                                  borderRadius="3px"
-                                                  color={Style.color1}
-                                                  backgroundColor={Style.color2} content="취소" onClick={onClick}/>
-                                    <CustomButton name="schedule_save" type="normal" width="150px" height="35px"
-                                                  borderRadius="3px"
-                                                  color={Style.color1}
-                                                  backgroundColor={Style.color2} content="저장" onClick={onClick}/>
-                                </div>
+                                <CallInputForm data={callList[0]} currentInfo={currentInfo}
+                                               setCurrentInfo={setCurrentInfo}/>
+
                             </ModalContainer>
                         </Box>
                     </Modal>
-                </Container>
-            </div>
+                    :
+                    <div style={{marginTop: "20px", display: "flex", justifyContent: "space-around"}}>
+                        <CustomButton name="open" type="normal" width="150px" height="35px" borderRadius="3px"
+                                      color={Style.color1}
+                                      backgroundColor={Style.color2} content="연락기록 추가" onClick={onClick}/>
+                        <CustomButton name="mail" type="normal" width="150px" height="35px" borderRadius="3px"
+                                      color={Style.color1}
+                                      backgroundColor={Style.color2} content="메일 전송" onClick={onClick}/>
+                    </div>
+                }
+                <InfoContainer type={"apply"} content={scheduleList} u_name={localStorage.getItem("userName")}/>
+                <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
+                    <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
+                                  color={Style.color1}
+                                  backgroundColor={Style.color2} content="일정 추가" onClick={onClick}/>
+                </div>
+                <Modal
+                    open={isScheduleOpen}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <ModalContainer>
+                            <ScheduleInputForm data={callList[0]} currentInfo={currentScheduleInfo}
+                                               setCurrentInfo={setCurrentScheduleInfo}/>
+                            <div style={{margin: "150px 0px", display: "flex", justifyContent: "space-around"}}>
+                                <CustomButton name="schedule_cancel" type="normal" width="150px" height="35px"
+                                              borderRadius="3px"
+                                              color={Style.color1}
+                                              backgroundColor={Style.color2} content="취소" onClick={onClick}/>
+                                <CustomButton name="schedule_save" type="normal" width="150px" height="35px"
+                                              borderRadius="3px"
+                                              color={Style.color1}
+                                              backgroundColor={Style.color2} content="저장" onClick={onClick}/>
+                            </div>
+                        </ModalContainer>
+                    </Box>
+                </Modal>
+            </Container>
             :
             <RightContainer>
                 <p>시설을 선택해 주세요!</p>
@@ -288,7 +272,21 @@ function MainInfoTemplate(props) {
     );
 }
 
-const style = {
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 99vh;
+  width: 650px;
+  overflow: auto;
+  margin-top: 30px;
+
+  & > div {
+    min-width: 580px;
+    margin-top: 30px;
+  }
+`;
+const style = { //모당창 스타일
     position: 'absolute',
     top: '50%',
     left: '50%',
