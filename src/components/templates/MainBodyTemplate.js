@@ -18,6 +18,7 @@ import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
 import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
+import {SelectedDateState} from "../../store/SelectedDateStore";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -36,7 +37,7 @@ function MainBodyTemplate(props) {
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
 
 
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useRecoilState(SelectedDateState);
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
 
@@ -104,8 +105,9 @@ function MainBodyTemplate(props) {
         작성내용: 시설을 검색하였을때 작동하는 함수
     */
 
-    const onSearch = async () => {
+    const onSearch = async (e) => {
         console.log(currentInfo);
+        e.preventDefault();
         if (currentInfo.c_name == "" && currentInfo.c_address == "" && currentInfo.c_ph == "") {
             alert("검색어를 입력하세요")
         } else {
@@ -125,7 +127,7 @@ function MainBodyTemplate(props) {
 
     return (
         <Main>
-            <div style={{width: "100%", margin: "30px 0px 40px 50px"}}>
+            <div style={{width: "100%", margin: "30px 0px 40px 75px"}}>
                 <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange}/>
             </div>
             {isSelected ?
@@ -153,12 +155,12 @@ function MainBodyTemplate(props) {
 }
 
 const Main = styled.div`
-    // border-right: 2px solid ${Style.color2};
   border-right: 2px solid #eee;
 `;
+
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 270px auto;
+  grid-template-columns: 320px auto;
 `;
 
 const Left = styled.div`

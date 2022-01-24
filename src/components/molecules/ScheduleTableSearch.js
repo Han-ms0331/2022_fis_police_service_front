@@ -21,7 +21,7 @@ function ScheduleTableSearch() {
     const [keyword, setKeyword] = useRecoilState(searchKeyword) // atom의 default값을 default 설정
     const handleChange = (event) => { // 검색창에 무언가 입력하면 키워드를 담아줌.
         const target = event.target.value;
-        console.log(event.target);
+        console.log(event.target.id);
         setKeyword((prev) => ({...prev, [event.target.id]: target}));
     }
 
@@ -29,14 +29,14 @@ function ScheduleTableSearch() {
     return (
             <TableHead>
                 <TableRow>
-                    <TableCell><SearchIcon fontSize="medium" style={{ color: '#2E3C7E' }} /></TableCell>
-                    <TableCell align="left"><TextField size="small" id="index" label="No." variant="outlined" onChange={handleChange}/></TableCell>
+                    <TableCell><SearchIcon fontSize="large" style={{ color: '#2E3C7E' }} /></TableCell>
+                    <TableCell align="left"></TableCell>
                     <TableCell align="right"><TextField size="small" id="a_name" label="현장요원" variant="outlined" onChange={handleChange}/></TableCell>
                     <TableCell align="right"><TextField size="small" id="c_name" label="시설정보" variant="outlined" onChange={handleChange}/></TableCell>
                     <TableCell align="right"><TextField size="small" id="total_etc" label="특이사항" variant="outlined" onChange={handleChange}/></TableCell>
                     <TableCell align="right"><TextField size="small" id="modified_info" label="변경 사항" variant="outlined" onChange={handleChange}/></TableCell>
                     <TableCell align="right"><TextField size="small" id="call_check" label="통화 이력" variant="outlined" onChange={handleChange}/></TableCell>
-                    <TableCell align="right"><TextField size="small" id="notice" label="일정 공지" variant="outlined" onChange={handleChange}/></TableCell>
+                    {/*<TableCell align="right"><TextField size="small" id="notice" label="일정 공지" variant="outlined" onChange={handleChange}/></TableCell>*/}
                     <TableCell />
                 </TableRow>
             </TableHead>
