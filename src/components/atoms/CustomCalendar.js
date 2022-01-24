@@ -14,9 +14,6 @@ import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 const CustomCalendar = ({setDate}) => {
     const [value, setValue] = useState(new Date());
 
-
-
-
     return (
             <Calendar
                 onChange={(day)=>{

@@ -77,15 +77,15 @@ const [color1,color2]= [Style.color1,Style.color2];
 
 // style
 const Items = styled.div` //sidebar를 담는 컨테이너
-display: grid;
-  grid-template-rows: 2fr 1fr 1fr;
-  &>div {
-    min-width: 0;
-    align-self: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 35px;
+  &> div{
+    margin-top: 20px;
   }
 `;
+
 const Container = styled.div`
-  //border-right: 2px solid #eee;
   padding: 0 15px;
   position: relative;
   transition: 1s ease-out;
