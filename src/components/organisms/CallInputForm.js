@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import InputContainer from "../molecules/InputContainer";
 import CustomInput from "../atoms/CustomInput";
 
@@ -26,7 +26,6 @@ function CallInputForm(props) {
                 [name]: value // name 키를 가진 값을 value 로 설정
             });
         }
-        console.log(currentInfo.m_email);
     };
 
     let mail
@@ -43,23 +42,29 @@ function CallInputForm(props) {
         작성내용: 현재 입력하는 날짜 세팅
     */
     const date = new Date()
-    const today = date.getFullYear() + '-' + date.getMonth() + 1 + '-' + date.getDate()
-
+    const today = date.getFullYear() + '-' + date.getMonth() + 1 + '-' + date.getDate() + "T" + ('0' + date.getHours()).slice(-2) + ":"+ ('0' + date.getMinutes()).slice(-2) + ":"+ ('0' + date.getSeconds()).slice(-2);
+    useEffect(()=>{
+        setCurrentInfo({
+            ...currentInfo, // 기존의 input 객체를 복사한 뒤
+            dateTime: today // name 키를 가진 값을 value 로 설정
+        });
+    },[])
 
     return (
         <div style={{width: "100%", height: "530px", padding: "10px"}}>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="인/아웃바운드: " inputName="in_out" inputType="select" contents={["인", "아웃"]}
+                <InputContainer labelContent="인/아웃바운드: " inputName="in_out" inputType="select" contents={[{show: "인", value: "IN"}, {show: "아웃", value: "OUT"}]}
                                 width="100px" row="1" defaultValue={data === undefined ? "" : data.in_out}
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="연락일자: " inputName="dateTime" inputType="text" width="150px" row="1"
+                <InputContainer labelContent="연락일자: " inputName="dateTime" inputType="text" width="200px" row="1"
                                 defaultValue={today} disabled={true} setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="시설 참여여부: " inputName="participation" inputType="select"
-                                contents={["없음", "참여", "보류", "거부"]} width="100px" row="1"
+                                contents={[{show: "없음", value: "NONE"}, {show: "참여", value: "PARTICIPATION"}, {show: "보류", value: "HOLD"}, {show: "거부", value: "REJECT"}]}
+                                width="100px" row="1"
                                 defaultValue={data === undefined ? "" : data.participation}
                                 setValueFunction={handleInputFormChange}/>
             </div>
@@ -70,16 +75,17 @@ function CallInputForm(props) {
             </div>
             <div style={{marginBottom: "20px", display: "flex", alignItems: "center"}}>
                 <InputContainer labelContent="담당자 이메일: " inputName="m_email" inputType="text" width="200px" row="1"
-                                defaultValue={data === undefined ? "" : mail[0]}
+                                defaultValue={data === undefined ? "" :   mail[0]}
                                 setValueFunction={handleInputFormChange}/>
                 <div style={{margin: "0px 5px"}}>@</div>
                 <CustomInput inputName={"email_form"} type={"select"}
                              name={"email_form"}
-                             contents={["naver.com", "google.com", "hanmail.com", "직접입력"]} width={"150px"} row={"1"}
-                             defaultValue={mail[1]} setValueFunction={handleInputFormChange}/>
+                             contents={[{show: "naver.com", value: "naver.com"}, {show: "google.com", value: "google.com"}, {show: "hanmail.com", value: "hanmail.com"}, {show: "직접입력", value: "직접입력"}]}
+                             width={"150px"} row={"1"}
+                             defaultValue={mail === undefined? mail :mail[1]} setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="담당자 전화번호: " inputName="m_email" inputType="text" width="150px" row="1"
+                <InputContainer labelContent="담당자 전화번호: " inputName="m_ph" inputType="text" width="150px" row="1"
                                 defaultValue={data === undefined ? "" : data.m_ph}
                                 setValueFunction={handleInputFormChange}/>
             </div>

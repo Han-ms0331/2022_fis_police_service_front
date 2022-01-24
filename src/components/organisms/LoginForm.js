@@ -5,6 +5,7 @@ import {BiUser} from "react-icons/bi";
 import {RiLockPasswordLine} from "react-icons/ri"
 import {Link} from "react-router-dom";
 import CustomButton from "../atoms/CustomButton";
+import {Style} from "../../Style";
 
 /*
     날짜: 2022/01/11 10:44 오전
@@ -24,15 +25,15 @@ const LoginForm = (props) => {
                 <div className="inputContainer">
                     <InputRow> {/*아이디*/}
                         <div className="icon"><BiUser/></div>
-                        <input id="username" type="text" placeholder="아이디"/>
+                        <input name="u_nickname" id="username" type="text" placeholder="아이디" onChange={props.onChangeFunction}/>
                     </InputRow>
                     <InputRow> {/*비밀번호*/}
                         <div className="icon"><RiLockPasswordLine/></div>
-                        <input id="password" type="password" placeholder="비밀번호"/>
+                        <input name="u_pwd" id="password" type="password" placeholder="비밀번호" onChange={props.onChangeFunction}/>
                     </InputRow>
-                    <Link to={"/main"}><CustomButton type="normal" width="100%" height="40px" borderRadius="6px"
-                                                     color="#fff" backgroundColor="#FFD400" content="로그인"
-                                                     onClick={props.onClickFunction}/></Link> {/*로그인 버튼*/}
+                    <CustomButton type="normal" width="100%" height="40px" borderRadius="6px"
+                                                     color="#fff" backgroundColor={Style.color2} content="로그인"
+                                                     onClick={props.onClickFunction}/> {/*로그인 버튼*/}
                 </div>
             </Container>
         </Main>
@@ -60,7 +61,7 @@ const Container = styled.div`
   top: 50%;
   font-size: 20px;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.13);
+  background-color: ${Style.color1};
 
   & a {
     text-decoration: none;

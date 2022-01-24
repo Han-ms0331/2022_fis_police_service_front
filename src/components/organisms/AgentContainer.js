@@ -7,27 +7,18 @@
 import React from 'react';
 import AgentSchedule from "../molecules/AgentSchedule";
 import styled from "styled-components";
-
-const Container = styled.div`
-  border: 1px solid black;
-  padding: 5px;
-  background-color: rgba(255, 212, 0, 0.2);
-  border-radius: 5px;
-  margin: 5px;
-  width: ${(props) => props.width}px;
-  height: ${(props) => props.height}px;
-`;
+import {Style} from "../../Style";
 
 const tempAgent = [
-    {id: 1, Name: "가산1 김철수" , Color: "green"},
-    {id: 2, Name: "가산2 박철수" , Color: "red"},
-    {id: 3, Name: "가산3 최철수" , Color: "green"},
-    {id: 4, Name: "가산4 이철수" , Color: "red"},
+    {id: 1, Name: "가산1 김철수" , Color: "#4cd137"},
+    {id: 2, Name: "가산2 박철수" , Color: "#e55039"},
+    {id: 3, Name: "가산3 최철수" , Color: "#4cd137"},
+    {id: 4, Name: "가산4 이철수" , Color: "#e55039"},
 ];
  // tempAgent - 더미 데이터
 
 function AgentContainer({content=tempAgent, width=200, height=400}) {
-    // content - 요원 정보가 담긴 배열을 받음. width와 height으로 컨테이너 크기 조절
+    // content - 요원 정보가 담긴 배열을 받음. width와 height으로 컨테이너 크기 조절..
     return (
         <Container width={width} height={height}>
             <center>
@@ -38,4 +29,13 @@ function AgentContainer({content=tempAgent, width=200, height=400}) {
     );
 }
 
+const Container = styled.div`
+  border: 2px solid ${Style.color2};
+  padding: 5px;
+  background-color: ${Style.color1};
+  border-radius: 10px;
+  margin: 5px;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
+`;
 export default AgentContainer;

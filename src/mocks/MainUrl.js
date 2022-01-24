@@ -4,6 +4,11 @@ import {rest} from "msw";
     작성자: 한명수
     작성내용: main page에서 필요한 mainhandler작성
 */
+
+const center_id="10"
+
+const value="4"
+
 export const mainHandlers = [
     rest.get('/main', async (req, res, ctx) => {
         return res(
@@ -21,16 +26,168 @@ export const mainHandlers = [
                     {
                         center_id: "1",
                         c_name: "동그라미 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: "완료"
                     },
                     {
                         center_id: "2",
                         c_name: "딩동댕 유치원",
-                        participation: "참여",
-                        c_ph: "010-2105-7346",
                         c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: "예정"
+                    },{
+                        center_id: "3",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "4",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "5",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "6",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "7",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "8",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "9",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "10",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "11",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "12",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "13",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "14",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "15",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "16",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "17",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "18",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "19",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "20",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },{
+                        center_id: "21",
+                        c_name: "동그라미 유치원",
+                        c_address: "서울시 노원구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
+                    },
+                    {
+                        center_id: "22",
+                        c_name: "딩동댕 유치원",
+                        c_address: "서울시 광진구 동일로 215길 48",
+                        c_ph: "010-2105-7346",
+                        participation: "참여",
+                        visited: null
                     }
                 ],
                 result: "success"
@@ -40,19 +197,19 @@ export const mainHandlers = [
     rest.get('/main/center/select?center_id={value}', async (req, res, ctx) => {
         return res(
             ctx.json({
-                id:"10",
+                center_id:"10",
                 c_sido: null,
                 c_sigungu: null,
-                c_name: "111",
+                c_name: "예일 유치원",
                 c_type: null,
                 c_status: null,
                 c_address: "분당구 불정로 6",
                 c_zipcode: null,
                 c_faxNum: null,
-                c_people: null,
+                c_people: 20,
                 c_hpAddress: null,
-                c_latitude: 123.0,
-                c_longitude: null,
+                c_latitude: "33.450492180670004",
+                c_longitude: "126.5716140938378",
                 participation: null,
                 visited: null,
                 callList: [
@@ -113,7 +270,85 @@ export const mainHandlers = [
             })
         )
     }),
-    rest.get('/center/{center_id}/range?range={value}', async (req, res, ctx) => {
+    rest.get(`/center/${center_id}/date?date=${value}`, async (req, res, ctx) => {
+        return res(
+            ctx.json({
+                a_data: [
+                    {
+                        "agent_id": 7,
+                        "a_name": "asd",
+                        "a_ph": "123",
+                        "a_code": "111",
+                        "a_address": "분당구 불정로 6",
+                        "a_hasCar": "CAR",
+                        "a_equipment": "",
+                        "a_receiveDate": "2022-01-20T17:50:36.893612",
+                        "a_latitude": 123.0,
+                        "a_longitude": 123.0,
+                        "scheduleList": [
+                            {
+                                "schedule_id": 16,
+                                "center": {
+                                    "c_name": "111",
+                                    "a_latitude": 123.0,
+                                    "a_longitude": 123.0
+                                },
+                                "visit_date": "2022-01-20",
+                                "visit_time": "12:50:36",
+                                "estimate_num": 123,
+                                "center_etc": "111",
+                                "agent_etc": "111",
+                                "total_etc": null
+                            }
+                        ]
+                    },
+                    {
+                        "agent_id": 8,
+                        "a_name": "asd",
+                        "a_ph": "123",
+                        "a_code": "222",
+                        "a_address": "분당구 불정로 6",
+                        "a_hasCar": "CAR",
+                        "a_equipment": "",
+                        "a_receiveDate": "2022-01-20T17:50:36.894418",
+                        "a_latitude": 123.0,
+                        "a_longitude": 123.0,
+                        "scheduleList": [
+                            {
+                                "schedule_id": 17,
+                                "center": {
+                                    "c_name": "123",
+                                    "a_latitude": 123.0,
+                                    "a_longitude": 123.0
+                                },
+                                "visit_date": "2022-01-20",
+                                "visit_time": "09:50:36",
+                                "estimate_num": 123,
+                                "center_etc": "222",
+                                "agent_etc": "222",
+                                "total_etc": null
+                            }
+                        ]
+                    },
+                    {
+                        "agent_id": 9,
+                        "a_name": "asd",
+                        "a_ph": "123",
+                        "a_code": "333",
+                        "a_address": "분당구 불정로 6",
+                        "a_hasCar": "CAR",
+                        "a_equipment": "",
+                        "a_receiveDate": "2022-01-20T17:50:36.894947",
+                        "a_latitude": 123.0,
+                        "a_longitude": 123.0,
+                        "scheduleList": []
+                    }
+
+                ]
+            })
+        )
+    }),
+    rest.get(`/main/center/${center_id}/range?range=${value}`, async (req, res, ctx) => {
         return res(
             ctx.json({
                     cdata: [
@@ -127,7 +362,7 @@ export const mainHandlers = [
                             c_latitude: "33.450705",
                             c_longitude: "126.570677",
                         },
-                        {
+                        /*{
                             c_id: "2",
                             c_address: "f",
                             c_ph: "",
@@ -136,7 +371,7 @@ export const mainHandlers = [
                             distance: "",
                             c_latitude: "33.450492180670004",
                             c_longitude: "126.5716140938378",
-                        },
+                        },*/
                         {
                             c_id: "3",
                             c_address: "g",

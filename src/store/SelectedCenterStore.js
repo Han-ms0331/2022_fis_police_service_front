@@ -25,3 +25,8 @@ export const SelectedCenterScheduleList = atom({    //선택된 시설의 schedu
     key: 'SelectedCenterScheduleList',
     default: []
 })
+
+export const SelectedCenterList=atom({
+    key:'SelectedCenterList',
+    default: []
+})
