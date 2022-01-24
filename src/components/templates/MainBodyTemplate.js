@@ -18,6 +18,7 @@ import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
 import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
+import {SelectedDateState} from "../../store/SelectedDateStore";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -36,7 +37,7 @@ function MainBodyTemplate(props) {
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
 
 
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useRecoilState(SelectedDateState);
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
 

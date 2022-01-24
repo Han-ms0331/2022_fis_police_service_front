@@ -14,10 +14,13 @@ import Modal from "@mui/material/Modal";
 import styled from "styled-components";
 import question from '../media/question.png';
 import NetworkConfig from "../../configures/NetworkConfig";
+import ScheduleInputForm from "../organisms/ScheduleInputForm";
+import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
 
 function MainInfoTemplate(props) {
     const [isOpen, setIsOpen] = useState(false);
-
+    const [isScheduleOpen, setIsScheduleOpen] = useState(false);
+    const clickedAgentInfo = useRecoilValue(ClickedAgentInfo)
     const [currentInfo, setCurrentInfo] = useState({
         in_out: "",
         dateTime: "",
@@ -25,6 +28,14 @@ function MainInfoTemplate(props) {
         c_manager: "",
         m_ph: "",
         m_email: "",
+        center_etc: "",
+        agent_etc: ""
+    })
+    const [currentScheduleInfo, setCurrentScheduleInfo] = useState({
+        receipt_date: "",
+        visit_date: "",
+        visit_time: "",
+        estimate_num: "",
         center_etc: "",
         agent_etc: ""
     })
@@ -43,7 +54,16 @@ function MainInfoTemplate(props) {
             c_manager: "",
             m_ph: "",
             m_email: "",
-            num:"",
+            num: "",
+            center_etc: "",
+            agent_etc: ""
+        })
+        setIsScheduleOpen(false);
+        setCurrentScheduleInfo({
+            receipt_date: "",
+            visit_date: "",
+            visit_time: "",
+            estimate_num: "",
             center_etc: "",
             agent_etc: ""
         })
@@ -51,12 +71,43 @@ function MainInfoTemplate(props) {
 
 
     /*
+        날짜: 2022/01/24 2:12 오후
+        작성자: 한명수
+        작성내용: 일정 저장 버튼이 눌렸을 때 작동하는 함수
+    */
+    const onSaveSchedule = async () =>{
+        console.log(currentScheduleInfo.visit_time+":00");
+        await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+            center_id: center_id,
+            agent_id: clickedAgentInfo.agent_id,
+            receipt_date: currentScheduleInfo.receipt_date,
+            visit_date: currentScheduleInfo.visit_date,
+            visit_time: currentScheduleInfo.visit_time+":00",
+            estimate_num: currentScheduleInfo.estimate_num,
+            center_etc: currentScheduleInfo.center_etc,
+            agent_etc: currentScheduleInfo.agent_etc
+        }, {withCredentials: true})
+            .then((res) => {
+                setCurrentScheduleInfo({
+                    receipt_date: "",
+                    visit_date: "",
+                    visit_time: "",
+                    estimate_num: "",
+                    center_etc: "",
+                    agent_etc: ""
+                })
+                console.log(res);
+                alert("저장되었습니다")
+            })
+    }
+
+
+    /*
         날짜: 2022/01/18 6:23 오후
         작성자: 한명수
-        작성내용: 저장 버튼이 눌렸을 때 작동하는 함수
+        작성내용: 콜 기록 저장 버튼이 눌렸을 때 작동하는 함수
     */
-    const onSave = async () => {
-        console.log(currentInfo);
+    const onSaveCall = async () => {
         await axios.post(`http://${NetworkConfig.networkAddress}:8080/call`, {
             center_id: center_id,
             u_name: currentInfo.u_name,
@@ -66,7 +117,7 @@ function MainInfoTemplate(props) {
             c_manager: currentInfo.c_manager,
             m_ph: currentInfo.m_ph,
             m_email: currentInfo.m_email,
-            num:"",
+            num: "",
             center_etc: currentInfo.center_etc,
             agent_etc: currentInfo.agent_etc
         }, {withCredentials: true})
@@ -78,7 +129,7 @@ function MainInfoTemplate(props) {
                     c_manager: "",
                     m_ph: "",
                     m_email: "",
-                    num:"",
+                    num: "",
                     center_etc: "",
                     agent_etc: ""
                 })
@@ -95,7 +146,7 @@ function MainInfoTemplate(props) {
     */
     const sendMail = async () => {
         if (window.confirm("메일을 전송하시겠습니까?")) {
-            const result = await axios.get('/mail/send')
+            const result = await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`)
                 .then((res) => {
                     if (res.data.result === "success") {
                         alert("메일 전송에 성공하였습니다.")
@@ -126,7 +177,7 @@ function MainInfoTemplate(props) {
                     c_manager: callList[0].c_manager,
                     m_ph: callList[0].m_ph,
                     m_email: callList[0].m_email,
-                    num:"",
+                    num: "",
                     center_etc: callList[0].center_etc,
                     agent_etc: callList[0].agent_etc
                 })
@@ -139,9 +190,18 @@ function MainInfoTemplate(props) {
                 setIsOpen(false);
         } else if (e.target.name === "save") {
             if (window.confirm("저장하시겠습니까?")) {
-                onSave()
+                onSaveCall()
             }
             setIsOpen(false);
+        } else if (e.target.name === "add_schedule") {
+            setIsScheduleOpen(true);
+        }else if (e.target.name === "schedule_save") {
+            if (window.confirm("저장하시겠습니까?")) {
+                onSaveSchedule()
+            }
+            setIsScheduleOpen(false);
+        }else if (e.target.name === "schedule_cancel") {
+            setIsScheduleOpen(false);
         }
     }
 
@@ -172,16 +232,7 @@ function MainInfoTemplate(props) {
                                 <ModalContainer>
                                     <CallInputForm data={callList[0]} currentInfo={currentInfo}
                                                    setCurrentInfo={setCurrentInfo}/>
-                                    <div style={{margin: "150px 0px", display: "flex", justifyContent: "space-around"}}>
-                                        <CustomButton name="cancel" type="normal" width="150px" height="35px"
-                                                      borderRadius="3px"
-                                                      color={Style.color1}
-                                                      backgroundColor={Style.color2} content="취소" onClick={onClick}/>
-                                        <CustomButton name="save" type="normal" width="150px" height="35px"
-                                                      borderRadius="3px"
-                                                      color={Style.color1}
-                                                      backgroundColor={Style.color2} content="저장" onClick={onClick}/>
-                                    </div>
+
                                 </ModalContainer>
                             </Box>
                         </Modal>
@@ -199,12 +250,39 @@ function MainInfoTemplate(props) {
                 </Container>
                 <Container fixed>
                     <InfoContainer type={"apply"} content={scheduleList} u_name={localStorage.getItem("userName")}/>
+                    <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
+                        <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
+                                      color={Style.color1}
+                                      backgroundColor={Style.color2} content="일정 추가" onClick={onClick}/>
+                    </div>
+                    <Modal
+                        open={isScheduleOpen}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <ModalContainer>
+                                <ScheduleInputForm data={callList[0]} currentInfo={currentScheduleInfo}
+                                               setCurrentInfo={setCurrentScheduleInfo}/>
+                                <div style={{margin: "150px 0px", display: "flex", justifyContent: "space-around"}}>
+                                    <CustomButton name="schedule_cancel" type="normal" width="150px" height="35px"
+                                                  borderRadius="3px"
+                                                  color={Style.color1}
+                                                  backgroundColor={Style.color2} content="취소" onClick={onClick}/>
+                                    <CustomButton name="schedule_save" type="normal" width="150px" height="35px"
+                                                  borderRadius="3px"
+                                                  color={Style.color1}
+                                                  backgroundColor={Style.color2} content="저장" onClick={onClick}/>
+                                </div>
+                            </ModalContainer>
+                        </Box>
+                    </Modal>
                 </Container>
             </div>
             :
             <RightContainer>
-                    <p>시설을 선택해 주세요!</p>
-                    <img src={question} alt={'?'}></img>
+                <p>시설을 선택해 주세요!</p>
+                <img src={question} alt={'?'}></img>
             </RightContainer>
 
     );
@@ -229,6 +307,7 @@ const RightContainer = styled.div`
   align-items: center;
   font-size: 35px;
   color: #a8a8a8;
+
   & img {
     width: 75px;
     color: #a8a8a8;
