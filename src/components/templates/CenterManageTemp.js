@@ -88,8 +88,8 @@ function CenterManageTemp(props) {
             [name]: value
         });
         console.log(searchInput);
-
     }
+
 // inputForm의 입력창에 글씨가 바뀌면, 위에서 정의한 currentInfo 상태에 입력창에 적힌 글씨를 저장하는 함수 정의
     const handleInputFormChange = (e) => {
         // console.log(e);
