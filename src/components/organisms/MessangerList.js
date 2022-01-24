@@ -45,6 +45,8 @@ getData()
 const Main = styled.div`
   padding: 0 0 10px 0;
   color: ${Style.color2};
+  height: 350px;
+  overflow: auto;
 `;
 
 export default MessangerList;

@@ -4,7 +4,7 @@ import SchedulePage from "./components/pages/SchedulePage";
 import ManagePage from "./components/pages/ManagePage";
 import ThisLoginPage from "./components/pages/ThisLoginPage";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {isLoginedState} from "./store/LoginStore";
+import {isLoginedState, userAuthority} from "./store/LoginStore";
 
 
 function App() {
@@ -14,6 +14,8 @@ function App() {
         작성내용: login 상태에 따라 랜더링을 다르게하는 상태
     */
     const [isLogined, setIsLgoined] = useRecoilState(isLoginedState);
+    const authority = useRecoilValue(userAuthority);
+    console.log(`authority:${authority}`);
 
     /*
         날짜: 2022/01/19 3:42 오후
@@ -34,9 +36,11 @@ function App() {
             {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
             <Switch>
                 <Route exact path="/login" component={ThisLoginPage}/>
-                <Route path="/main" component={MainPage}/>
-                <Route path="/schedule" component={SchedulePage}/>
-                <Route path="/manage" component={ManagePage}/>
+                <Route exact path="/main" component={MainPage}/>
+                <Route exact path="/schedule" component={SchedulePage}/>
+                <Route exact path="/manage">
+                    {authority==='ADMIN'?<ManagePage/>:<Redirect to={"/main"}/>}
+                </Route>
             </Switch>
         </div>
     );
