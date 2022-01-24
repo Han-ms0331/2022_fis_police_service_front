@@ -27,13 +27,23 @@ function CustomMap(props) {
             isPanto: true,
         }
     )
+
+    const [aroundAgent, setAroundAgent] = useState(
+        {
+            type: "agent",
+            latlng: {lat: props.adata.a_latitude, lng: props.adata.a_longitude},
+            agent_id: props.adata.agent_id
+        }
+    )
+
+
     let aInfo = []
     let road = []
     let center = {
         lat: props.lat,
         lng: props.lng
     }
-
+    let roadCenter=[]
 
     const handleClick = () => {
         setPosition({
@@ -73,33 +83,30 @@ function CustomMap(props) {
                 road.push({
                     ...list,
                     lat: list.center.a_latitude,
-                    lng: list.center.a_longitude
+                    lng: list.center.a_longitude,
+                })
+                roadCenter.push({
+                    latlng:{lat:list.center.a_latitude, lng:list.center.a_longitude},
+                    c_name:list.center.c_name,
+                    c_people:list.estimate_num
                 })
             })
-            console.log("success")
-            console.log(road)
+            console.log("roadCenter")
+            console.log(roadCenter)
         }
     }
+
     road.splice(1, 0, center);
-
-    console.log("aInfo ori")
-    console.log(aInfo)
-
-    useEffect(() => {
-        aInfo.forEach((arr,index,buf)=>{
-            arr.type="agent"
-            console.log("useEffect")
-        })
-        console.log("useEffect aInfo")
-        console.log(aInfo)
-    }, [selectedCenterId])
+    roadCenter.splice(1, 0, {latlng:{lat:center.lat,lng:center.lng},c_name:selCenterInfo.c_name,c_people:selCenterInfo.c_people});
+    console.log("roadCenter")
+    console.log(roadCenter)
 
 
 
-   /* console.log("aInfoOri")
-    console.log(aInfo)
-    console.log("aInfo")
-    console.log(aInfo)*/
+    /* console.log("aInfoOri")
+     console.log(aInfo)
+     console.log("aInfo")
+     console.log(aInfo)*/
 
     /*  if (props.clickedAdata != null) {
           props.clickedAdata.schedule.slice(1, 0, selCenterInfo[0]);
@@ -152,6 +159,22 @@ function CustomMap(props) {
                         road,
                     ]}
                 /> {/*선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
+                {
+                    roadCenter.map((center,index)=>(
+                        <CustomMarker
+                            type={"center"}
+                            position={center.latlng}
+                            content={
+                                <div>
+                                    <div>{index+1}</div>
+                                    <div>시설이름 : {center.c_name}</div>
+                                    <div>예상인원: {center.c_people} 명</div>
+                                </div>
+                            }
+                        />
+                    ))
+                }
+
                 <CustomMarker
                     type={"center"}
                     position={{lat: props.lat, lng: props.lng}}

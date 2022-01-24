@@ -15,7 +15,7 @@ import AgentContainer from "../organisms/AgentContainer";
 import styled from "styled-components";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
-import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
+import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
 import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
@@ -35,6 +35,7 @@ function MainBodyTemplate(props) {
     const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
+    const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
 
 
     const [date, setDate] = useRecoilState(SelectedDateState);
@@ -82,7 +83,7 @@ function MainBodyTemplate(props) {
                 setSelectedCenterScheduleList(res.data.data.scheduleList)//scheduleList에서 뜰 내용 저장
                 setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
                 setSelectedCenterList(res.data.data.ceterList);
-
+                setClickedAgent({});
                 setIsSelected(true);
             })
     }
