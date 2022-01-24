@@ -1,64 +1,52 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import CallEndOutlinedIcon from '@mui/icons-material/CallEndOutlined';
 import axios from "axios";
 import CustomButton from "../atoms/CustomButton";
+import {Style} from "../../Style";
+import {useRecoilValue} from "recoil";
+import {Messages} from "../../store/Message";
+import {Message} from "../molecules/Message";
 /*
 날짜: 2022/01/11 11:27 AM
 작성자: 정도식
 작성내용: 각각의 수정요청 사항 1차 뷰
 */
+/*
+날짜: 2022/01/21 3:14 PM
+작성자: 정도식
+작성내용:
+message msw 작업 완료
+*/
 const MessangerList = () => {
-    const [message,setMessage]=useState('')
-    const data = async () =>{
-        await axios.get("/messenger").then((res)=>{
-            setMessage(res.data.message)
-        })
+    const [messages,setMessages]=useState([]);
+    const getData = async () => {
+        axios.get("/messenger").then((res) => {
+            setMessages(res.data);
+        });
     }
 
+    useEffect(()=>{ //최초 렌더링시 서버로부터 데이터를 받아온다.
+getData()
+    },[]);
+
+    const handleDone = () => { // 수정완료버튼을 눌렀을 경우...
+        console.log("수정완료!")
+    }
     return (
         <Main>
-            <Header>10:34오전</Header>
-            <Content>
-                <p>원보라(<CallEndOutlinedIcon/>):</p>
-                <p>무언가 잘못했어요. 고쳐주세요.</p>
-                <div>
-                <CustomButton type="normal" backgroundColor="#f7e98b" border= "1.5px solid #c9b034" borderRadius="7px" content="수정완료" color="#222" fontSize="14px" padding="0px" margin="7px 0"onClick={()=>data()}>수정완료</CustomButton>
-                </div>
-            </Content>
+            {messages.map((msg,idx)=>{
+                return <Message key={idx} header={msg.time} agent={msg.user} content={msg.message} handleDone={handleDone}/>}
+            )}
         </Main>
     );
 };
 //style
 const Main = styled.div`
-padding: 0 0 10px 0;
+  padding: 0 0 10px 0;
+  color: ${Style.color2};
+  height: 350px;
+  overflow: auto;
 `;
-
-const Header = styled.div`
-  font-size: 16px;
-  background: #f7e98b;
-  padding: 3px 7px;
-`;
-
-const Content = styled.div`
-    background: #fff9d6;
-    padding:  7px;
-  &>p{
-    margin: 0;
-    font-size: 17px;
-    text-align: unset;
-  }
-  &>div{
-    text-align: center;
-    &>button{
-      transform: scale(1.1);
-      cursor: pointer;
-    }
-  }
-  & svg{
-    font-size: 17px;
-  }
-`;
-
 
 export default MessangerList;

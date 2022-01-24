@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
-import styled from "styled-components";
+import React, {useEffect, useState} from 'react';
 import LoginForm from "../organisms/LoginForm";
 import axios from "axios";
 import {useRecoilState} from "recoil";
-import {AuthorityState} from "../../store/AuthorityStore";
+import {isLoginedState, userAuthority} from "../../store/LoginStore";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 /*
     날짜: 2022/01/11 10:57 오전
@@ -12,22 +12,53 @@ import {AuthorityState} from "../../store/AuthorityStore";
 */
 
 function LoginTemplate(props) {
+    const [loginInfo, setLoginInfo] = useState({
+        u_nickname: "",
+        u_pwd: ""
+    });
+
+    const [isLogined, setIsLogined] = useRecoilState(isLoginedState);
+    const [authority,setAuthority] = useRecoilState(userAuthority);
+
+    const handleInputFormChange = (e) => {
+        const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
+        setLoginInfo({
+            ...loginInfo, // 기존의 input 객체를 복사한 뒤
+            [name]: value // name 키를 가진 값을 value 로 설정
+        });
+    };
+
+    /*
+        날짜: 2022/01/19 3:43 오후
+        작성자: 한명수
+        작성내용: login 버튼을 눌렀을 때 작동하는 함수
+    */
+
     const onLogin = async () => {   //서버와 로그인 통신을 하는 부분
-        await axios.post("/login", {
-            id: "1234",
-            password:"1234"
-        })
+        await axios.post(`http://${NetworkConfig.networkAddress}:8080/login`, loginInfo, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
             .then((res) => {
-                console.log(res.data.result);
-                if (res.data.result === "success")
-                    localStorage.setItem("loginStatus", "true")
+                console.log(res.data);
+                setAuthority(res.data.u_auth); // user 권한을 설정
+                if (res.data.sc === "success") {   //로그인 결과가 실패가 아니라면
+                    setIsLogined(true);     //setIsLogined를 true로 바꾸고
+                    localStorage.setItem("login-state", "true");    //localStorage에 login-state를 true로 저장함
+                } else if (res.data.sc === "idFail") {
+                    console.log(isLogined);
+                    alert("존재하지않는 아이디 입니다. 다시 시도해 주세요")
+                } else if (res.data.sc === "pwdFail") {
+                    alert("비밀번호를 확인해 주세요.")
+                }
             })
+        // await axios.get(`http://${NetworkConfig.networkAddress}:8080/login`, {withCredentials: true}).then((res) => {
+        //     console.log(res);
+        // })
     }
+
 
 
     return (
         <div>
-            <LoginForm onClickFunction={onLogin}/>
+            <LoginForm onClickFunction={onLogin} onChangeFunction={handleInputFormChange}/>
         </div>
     );
 }

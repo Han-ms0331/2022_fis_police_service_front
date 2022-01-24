@@ -9,14 +9,8 @@ export const isLoginedState = atom({
     default: false,
 });
 
-export const isLoginedChangedState = selector({
-    key: 'isLoginedChangedState',
-    get: ({get}) =>{
-        const isLogined = get(isLoginedState);
-        console.log(isLogined);
-        if(isLogined){
-            return true
-        }
-        return false;
-    }
-})
+export const userAuthority = atom({
+    key: 'userAuthority',
+    default: "",
+});
+

@@ -1,5 +1,7 @@
 import React from 'react';
 import CustomButton from "../atoms/CustomButton";
+import styled from 'styled-components';
+import {Style} from "../../Style";
 
 function List(props) {
     let element
@@ -20,40 +22,56 @@ function List(props) {
                 )
             }
         < /div>
-
-
     } else if (props.type === "list") {
-        element = <div
+        element = <ListElement
             key={props.keyValue}
             style={{
-            width: props.width,
-            height: props.height,
-            border: "1px solid #6D5A00",
-            borderRadius: "15px",
-            display: "grid",
-            gridTemplateColumns: props.gridRatio,
-            alignItems: "center",
-            marginBottom: "15px",
-            padding: "5px 0px"
-        }}>
+                width: props.width,
+                height: props.height,
+                gridTemplateColumns: props.gridRatio,
+                borderRadius: props.borderRadius
+            }}
+            name={props.keyValue} onClick={props.onClickFunction}>
             {
                 Object.values(props.contents).map((value, index) => {
-                    return index === 0 ? null :  <div key={index} style={{display: "flex", justifyContent: "center"}}>{value}</div>
+                    return index === 0 ? null :
+                        <div key={index} name={props.keyValue} onClick={props.onClickFunction}
+                             style={{display: "flex", justifyContent: "center"}}>{value}</div>
                 })
             }
-            <div style={{display: "flex", justifyContent: "center"}}>
-                <CustomButton name={props.keyValue} type="reverse" width="100px" height="40px" color="black" border="1px solid #FFD400"
-                              backgroundColor="white" borderRadius="10px" content={props.buttonContent}
+            <div style={{display: "flex", justifyContent: "center"}} name={props.keyValue} onClick={props.onClickFunction}>
+                <CustomButton name={props.keyValue} type="normal" width="auto" height="38px" color={Style.color1}
+
+                              backgroundColor={Style.color2} borderRadius="10px" content={props.buttonContent}
                               onClick={props.onClickFunction}/>
             </div>
 
-        </div>
+        </ListElement>
     }
+
 
     return (
         element
     );
+
 }
 
 export default List;
 
+
+const ListElement = styled.div`
+  display: grid;
+  padding: 5px 0px;
+  margin-bottom: 5px;
+  background-color: ${Style.color1};
+  align-items: center;
+  border-radius: 15px;
+  color: ${Style.color2};
+
+  &:hover {
+    transform: scale(1.005);
+    //transition: .8s;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  }
+`

@@ -70,8 +70,22 @@ const headCells = [
 // 테이블 헤더 정보
 
 const useStyles = makeStyles((theme) => ({
+    header: props => (
+        {
+            backgroundColor: props.headerbackgroundColor, // 테이블 헤더 색깔
+        }
+    ),
+    body: props => (
+        {
+            backgroundColor: props.bodybackgroundColor, // 테이블 바디 색깔
+
+        }
+    ),
     root: {
         width: '100%',
+    },
+    icon: {
+        color: 'inherit !important'
     },
     paper: {
         width: '100%',
@@ -93,13 +107,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ScheduleTable({ rows }) {
+
+export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
+
     let count = rows.length;
 
     useEffect( () => {
         setPage(0);
-    }, [keywordProps]);
+    }, [keywordProps, rows]); // 검색창에 키워드 입력하거나, 캘린더에서 다른 날짜를 선택했을 때, Page를 0으로 이동시킨다.
 
     const isSearch = () => { // 사용자가 검색창에 키워드를 입력한 상태인지 검사하는 함수
         for (let value in keywordProps) {
@@ -110,11 +126,11 @@ export default function ScheduleTable({ rows }) {
         return false;
     }
 
+    const columnWidth = ['150px', '500px', '900px', '900px', '1100px', '500px', '500px', '150px'];
 
     const ScheduleList = (row, index) => { // Schedule List를 띄워주는 함수
         // const isItemSelected = isSelected(row.No);
         const labelId = `enhanced-table-checkbox-${index}`;
-
         return (
             <TableRow
                 hover
@@ -130,25 +146,35 @@ export default function ScheduleTable({ rows }) {
                         type="checkbox"
                         onChange={(e) => onCheckedElement(e.target.checked, row)}
                         checked={checkedList.includes(row)}
+                        style={{zoom: 2.0, width: '15px'}}
                     />
                 </TableCell>
-                <TableCell component="th" id={labelId} scope="row" padding="none">
-                    {index+1}
+                <TableCell style={{ width:'150px', color: headerColor, fontSize: '15pt', padding: '0px 0px' }} component="th" id={labelId} scope="row" padding="none">
+                    {page*rowsPerPage + (index+1)}
                 </TableCell>
-                <TableCell align="right">{row.a_name}</TableCell>
-                <TableCell align="right"><pre>{`${row.c_name}\n ${row.c_address}\n ${row.c_ph}\n ${row.visit_time}\n ${row.estimate_num}명`}</pre></TableCell>
-                <TableCell align="right"><pre>{row.total_etc}</pre></TableCell>
-                <TableCell align="right"><pre>{row.modified_info}</pre></TableCell>
-                <TableCell align="right"><pre>{row.call_check}</pre></TableCell>
-                <TableCell align="right"><pre>일정공지여부</pre></TableCell>
-                <TableCell align="right">
-                    <TransitionsModal defaultInput={row} />
+                <TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">{row.a_name}</TableCell>
+                <TableCell style={{ width:'900px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
+                    <details style={{padding:"10px 0"}}>
+                    <summary>{row.c_name}</summary>
+                    <div style={{fontSize: '13pt'}}>{row.c_address}</div>
+                    <div style={{fontSize: '13pt'}}>{row.c_ph}</div>
+                    <div style={{fontSize: '13pt'}}>{row.visit_time}</div>
+                    <div style={{fontSize: '13pt'}}>{row.estimate_num}명</div>
+                    </details>
+                </TableCell>
+                <TableCell style={{ width:'900px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
+                <TableCell style={{ width:'1100px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{  margin: 10, padding: '10px 0', overflowY: 'auto', maxHeight: 150 }}>{row.modified_info}</div></TableCell>
+                <TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.call_check}</div></TableCell>
+                <TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>일정공지여부</div></TableCell>
+                <TableCell style={{ width:'150px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
+                    <TransitionsModal defaultInput={row} backgroundColor={buttonColor} />
                 </TableCell>
             </TableRow>
         );
     }
 
     const showList = () => { // 정렬 기능과 함께 Schedule List 여러 개를 띄워주는 함수
+        console.log(rows);
         return (
             stableSort(rows, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -157,13 +183,15 @@ export default function ScheduleTable({ rows }) {
     }
 
     const handleFilter = (el) => { // 검색 키워드 필터링해주는 함수
-        return el.a_name.includes(keywordProps.a_name) &&
-            el.a_code.includes(keywordProps.a_code) &&
-            el.c_name.includes(keywordProps.c_name) &&
-            el.total_etc.includes(keywordProps.total_etc) &&
-            el.modified_info.includes(keywordProps.modified_info) &&
-            el.call_check.includes(keywordProps.call_check) &&
-            el.call_check_info.includes(keywordProps.call_check_info)
+        return el.a_name ? el.a_name.includes(keywordProps.a_name) : false && // No 검색 필터 구현해야함
+            el.a_code ? el.a_code.includes(keywordProps.a_code) : false &&
+            el.c_name ? el.c_name.includes(keywordProps.c_name) : false &&
+            // c_name, c_address, c_ph, visit_time, estimate_num 통합 검색 ?
+            el.total_etc ? el.total_etc.includes(keywordProps.total_etc) : false &&
+            el.modified_info ? el.modified_info.includes(keywordProps.modified_info) : false &&
+            el.call_check ? el.call_check.includes(keywordProps.call_check) : false &&
+            el.call_check_info ? el.call_check_info.includes(keywordProps.call_check_info) : false
+            // 일정공지여부 실제 데이터 들어오면 구현
             ;
     }
 
@@ -228,11 +256,12 @@ export default function ScheduleTable({ rows }) {
         };
 
         return (
-            <TableHead style={{backgroundColor:'rgba(255, 212, 0, 0.5)'}}>
+            <TableHead className={classes.header}>
                 <TableRow>
                     <TableCell padding="checkbox">
                         {isSearch() ? // 검색창에 무언가 입력되어있는 상태라면 전체 선택용 체크박스가 검색된 결과의 리스트들만 모두 선택함
                             <input
+                                style={{zoom: 2.0, width: '15px'}}
                                 type="checkbox"
                                 onChange = {(e) => onCheckedAllFiltered(e.target.checked)}
                                 checked={
@@ -243,6 +272,7 @@ export default function ScheduleTable({ rows }) {
                             />
                             : // 검색을 안할 경우 전체 선택용 체크박스가 리스트들을 모두 전체 선택함
                             <input
+                                style={{zoom: 2.0, width: '15px'}}
                                 type="checkbox"
                                 onChange = {(e) => onCheckedAll(e.target.checked)}
                                 checked={
@@ -253,17 +283,21 @@ export default function ScheduleTable({ rows }) {
                             />
                         }
                     </TableCell>
-                    {headCells.map((headCell) => ( // 테이블 헤더 정보 mapping
+                    {headCells.map((headCell, index) => ( // 테이블 헤더 정보 mapping
                         <TableCell
+                            style={{ width: columnWidth[index], color: headerFontColor, fontSize: '14pt', fontWeight: 'bold' }}
                             key={headCell.id}
                             align={headCell.numeric ? 'right' : 'left'}
+                            // align='center'
                             padding={headCell.disablePadding ? 'none' : 'normal'}
                             sortDirection={orderBy === headCell.id ? order : false}
                         >
                             <TableSortLabel
                                 active={orderBy === headCell.id}
+                                classes={{ root: classes.root, active: classes.active, icon: classes.icon}}
                                 direction={orderBy === headCell.id ? order : 'asc'}
                                 onClick={createSortHandler(headCell.id)}
+                                style={{ color: '#fff', alignContent: 'center' }}
                             >
                                 {headCell.label}
                                 {orderBy === headCell.id ? (
@@ -289,13 +323,14 @@ export default function ScheduleTable({ rows }) {
         rowCount: PropTypes.number.isRequired,
     };
 
-    const classes = useStyles();
+    const colorVariable = { headerbackgroundColor: headerColor, bodybackgroundColor: bodyColor, activeColor: bodyColor };
+    const classes = useStyles(colorVariable);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -356,7 +391,7 @@ export default function ScheduleTable({ rows }) {
 
     return (
         <div className={classes.root} style={{margin: '15px'}}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} style={{backgroundColor: 'white'}}>
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -374,39 +409,39 @@ export default function ScheduleTable({ rows }) {
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
-                        <TableBody>
+                        <TableBody style={{ backgroundColor: bodyColor }} className={classes.body}>
                             {isSearch() // 검색 상태라면 검색결과를 보여주고 아니라면 리스트 전체를 보여줌.
                                 ?
                                 filteredShowList()
                                 :
                                 showList()
                             }
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
+                            {/*{emptyRows > 0 && (*/}
+                            {/*    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>*/}
+                            {/*        <TableCell colSpan={6} />*/}
+                            {/*    </TableRow>*/}
+                            {/*)}*/}
                         </TableBody>
                     </Table>
                     <div>
-                        <div style={{margin: '25px'}}>
-                            <CustomButton
-                                type="normal"
-                                content="일정공지"
-                                backgroundColor='rgba(255, 212, 0, 0.5)'
-                                color='black'
-                                onClick={ async() => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-                                        console.log(checkedList);
-                                        await axios.post('/schedule/announce', {
-                                            checkedList
-                                        })
-                                            .then((res) => console.log(res.data))
-                                    }
-                                }
-                            />
-                        </div>
+                        {/*<div style={{margin: '25px'}}>*/}
+                        {/*    <CustomButton*/}
+                        {/*        type="normal"*/}
+                        {/*        content="일정공지"*/}
+                        {/*        backgroundColor={buttonColor}*/}
+                        {/*        color='white'*/}
+                        {/*        onClick={ async() => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수*/}
+                        {/*                console.log(checkedList);*/}
+                        {/*                await axios.post('/schedule/announce', {*/}
+                        {/*                    checkedList*/}
+                        {/*                })*/}
+                        {/*                    .then((res) => console.log(res.data))*/}
+                        {/*            }*/}
+                        {/*        }*/}
+                        {/*    />*/}
+                        {/*</div>*/}
                         <TablePagination
-                            rowsPerPageOptions={[5, 10, 25]}
+                            rowsPerPageOptions={[10, 25]}
                             component="div"
                             count={count}
                             rowsPerPage={rowsPerPage}
@@ -418,10 +453,6 @@ export default function ScheduleTable({ rows }) {
                 </TableContainer>
 
             </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
-            />
         </div>
     );
 }

@@ -1,6 +1,19 @@
 import React from 'react';
 import CustomLabel from "../atoms/CustomLabel";
 import CustomButton from "../atoms/CustomButton";
+import {Style} from "../../Style";
+import {
+    buttonUnstyledClasses,
+    TabPanelUnstyled,
+    TabsListUnstyled,
+    TabsUnstyled,
+    TabUnstyled,
+    tabUnstyledClasses
+} from "@mui/material";
+import UserManageTemplate from "../templates/UserManageTemplate";
+import AgentManageTemplate from "../templates/AgentManageTemplate";
+import CenterManageTemp from "../templates/CenterManageTemp";
+import styled from "styled-components";
 
 /*
     날짜 : 2022/01/12 2:14 PM
@@ -11,19 +24,65 @@ import CustomButton from "../atoms/CustomButton";
 function RangeController(props) {
     return (
         <>
-            <div style={{marginTop:"50px", marginLeft:"-208px"}}>
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <div style={{marginRight:"5px"}}>주변시설</div>
-                    <CustomButton type={"normal"} width={"10px"} height={"20px"} color={"white"} borderRadius={"2"}
-                                  backgroundColor={"orange"} name={"250"} content={"250m"} onClick={props.onClickFunc}/>
-                    <CustomButton type={"normal"} width={"10px"} height={"20px"} color={"white"} borderRadius={"2"}
-                                  backgroundColor={"orange"} name={"500"} content={"500m"} onClick={props.onClickFunc}/>
-                    <CustomButton type={"normal"} width={"10px"} height={"20px"} color={"white"} borderRadius={"2"}
-                                  backgroundColor={"orange"} name={"1000"} content={"1km"} onClick={props.onClickFunc}/>
-                </div>
-            </div>
+            {/*<div style={{display: 'flex', alignItems: 'center'}}>*/}
+            {/*    <CustomButton type={"normal"} width={"15px"} height={"35px"} margin={'0 2px'} color={"white"} borderRadius={"2"}*/}
+            {/*                  backgroundColor={Style.color2} name={"250"} content={"250m"} onClick={props.onClickFunc}/>*/}
+            {/*    <CustomButton type={"normal"} width={"15px"} height={"35px"} margin={'0 2px'} color={"white"} borderRadius={"2"}*/}
+            {/*                  backgroundColor={Style.color2} name={"500"} content={"500m"} onClick={props.onClickFunc}/>*/}
+            {/*    <CustomButton type={"normal"} width={"15px"} height={"35px"} margin={'0 2px'} color={"white"} borderRadius={"2"}*/}
+            {/*                  backgroundColor={Style.color2} name={"1000"} content={"1km"} onClick={props.onClickFunc}/>*/}
+
+            {/*</div>*/}
+
+            <TabsUnstyled defaultValue={0}>
+                <TabsList>
+                    <Tab onClick={props.onClickFunc}>250m</Tab>
+                    <Tab onClick={props.onClickFunc}>500m</Tab>
+                    <Tab onClick={props.onClickFunc}>1km</Tab>
+                </TabsList>
+
+            </TabsUnstyled>
+
+
+
         </>
     );
 }
 
 export default RangeController;
+
+const Tab = styled(TabUnstyled)`
+  color: ${Style.color2};
+  cursor: pointer;
+  font-weight: bold;
+  background-color: ${Style.color1};
+  width: 65px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-self: flex-end;
+  margin-right: 5px;
+
+  &:hover {
+    background-color: ${Style.color3};
+  }
+
+
+  &.${tabUnstyledClasses.selected} {
+    background-color: ${Style.color2};
+    color: ${Style.color1};
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const TabsList = styled(TabsListUnstyled)`
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+`;

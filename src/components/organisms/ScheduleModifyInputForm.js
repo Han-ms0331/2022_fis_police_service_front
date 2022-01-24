@@ -4,9 +4,12 @@ import CheckboxContainer from "../molecules/CheckboxContainer";
 import CustomButton from "../atoms/CustomButton";
 import {Box, Container} from "@mui/material";
 import axios from "axios";
+import {Style} from "../../Style";
+import NetworkConfig from "../../configures/NetworkConfig";
 
 function ScheduleModifyInputForm(props) {
     const [input, setInput] = useState({
+        schedule_id: props.defaultInput.schedule_id,
         c_name: props.defaultInput.c_name,
         a_code: props.defaultInput.a_code,
         visit_date: props.defaultInput.visit_date,
@@ -48,14 +51,21 @@ function ScheduleModifyInputForm(props) {
     const onPatch = async() => {
         console.log(input);
         setInput(() => input);
-        await axios.patch('/schedule', {
+        await axios.patch(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
             visit_date: input.visit_date,
             visit_time: input.visit_time,
             estimate_num: input.estimate_num,
             modified_info: input.modified_info,
             call_check: input.call_check,
             total_etc: input.total_etc
-        })
+        }, {withCredentials: true})
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err));
+    }
+
+    const onCancel = async() => {
+        console.log(input.schedule_id);
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?schedule_id=${input.schedule_id}`, {withCredentials: true})
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err));
     }
@@ -156,7 +166,7 @@ function ScheduleModifyInputForm(props) {
                 </div>
 
                 <div style={{marginBottom: "20px", display: `${disable.absentCount}`}}>
-                    <InputContainer labelContent="부재중 횟수: " inputType="number" width="300px"
+                    <InputContainer labelContent="부재중 횟수: " inputName="absentCount" inputType="number" width="300px"
                                     defaultValue={input.absentCount}
                                     setValueFunction={onChange}/>
                 </div>
@@ -176,27 +186,27 @@ function ScheduleModifyInputForm(props) {
                 </div>
 
 
-                <div style={{marginLeft: "80px"}}>
-                    <CheckboxContainer name="applicationForm" setCheckboxInputFunction={onClick} content="신청서 완료"/>
-                    <CheckboxContainer name="placeArrangement" setCheckboxInputFunction={onClick} content="장소 마련 완료"/>
-                    <CheckboxContainer name="visitDateConfirm" setCheckboxInputFunction={onClick} content="방문일정 확인 완료"/>
-                </div>
+                {/*<div style={{marginLeft: "80px"}}>*/}
+                {/*    <CheckboxContainer name="applicationForm" setCheckboxInputFunction={onClick} content="신청서 완료"/>*/}
+                {/*    <CheckboxContainer name="placeArrangement" setCheckboxInputFunction={onClick} content="장소 마련 완료"/>*/}
+                {/*    <CheckboxContainer name="visitDateConfirm" setCheckboxInputFunction={onClick} content="방문일정 확인 완료"/>*/}
+                {/*</div>*/}
 
                 <div style={{marginTop: "30px", display: 'flex',  justifyContent:'center'}}>
-                    <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="black"
-                                  borderRadius="15px" backgroundColor="#FFE400" onClick={props.onClickFunction}/>
+                    <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
+                                  borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>
                 </div>
 
                 <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>
                     <div style={{marginRight: "20px"}}>
                         <CustomButton type="reverse" width="150px" height="40px" content="취소" color="black"
-                                      border="1px solid #FFE400"
+                                      border={`1px solid ${Style.color2}`}
                                       borderRadius="15px" backgroundColor="white" onClick={props.onClickFunction}/>
                     </div>
 
                     <div>
-                        <CustomButton type="normal" width="150px" height="40px" content="저장" color="black"
-                                      borderRadius="15px" backgroundColor="#FFE400" onClick={onPatch}/>
+                        <CustomButton type="normal" width="150px" height="40px" content="저장" color="white"
+                                      borderRadius="15px" backgroundColor={Style.color2} onClick={onPatch}/>
                     </div>
                 </div>
 

@@ -7,28 +7,52 @@
 import React from 'react';
 import CircleButton from "../atoms/CircleButton";
 import styled from "styled-components";
+import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
+import {useRecoilState} from "recoil";
+
 
 const Div = styled.div` // css
-  border: 1px solid black;
+  border: 3px solid #eee;
   padding: 5px;
   background-color: White;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 5px;
 `;
 
-const handleClick = () => {
-    alert('현재 시간 저장');
-}
 
 function TimeList({content, setCurrentTime=0}) {
+    const red = '#e55039';
+    const green = '#4cd137';
+    const date = new Date().getHours();
+    let using = [false, false, false, false];
+    const handleClick = () => {
+        setClickedAgent(content);
+        console.log(content);
+    }
+    const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
     return (
         <Div>
-                <div>{content.Name}</div> {/* 현장 요원 이름 */}
-                <CircleButton bgColor={content.Color} handleClick={handleClick}/>
-                <CircleButton bgColor={content.Color} handleClick={handleClick}/>
-                <CircleButton bgColor={content.Color} handleClick={handleClick}/>
-                <CircleButton bgColor={content.Color} handleClick={handleClick}/>
-                {/* 현장 요원 스케줄에 따른 버튼 */}
+            <div>{content.a_code} {content.a_name}</div> {/* 현장 요원 이름 */}
+            {content.scheduleList.map(
+                item => {
+                    const x = Date.parse(item.visit_date + "T" + item.visit_time)
+                    if (x>=Date.parse(item.visit_date + "T09:00:00") && x<=Date.parse(item.visit_date + "T10:00:00") ) {
+                        using[0] = true;
+                    } else if (x>=Date.parse(item.visit_date + "T10:00:00") && x<=Date.parse(item.visit_date + "T11:00:00")) {
+                        using[1] = true;
+                    } else if (x>=Date.parse(item.visit_date + "T11:00:00") && x<=Date.parse(item.visit_date + "T12:00:00")) {
+                        using[2] = true;
+                    } else if (x>=Date.parse(item.visit_date + "T12:00:00")) {
+                        using[3] = true;
+                    }
+                }
+            )}
+            {/*{date}*/}
+            <CircleButton bgColor={using[0] ? red : green} handleClick={handleClick}/>
+            <CircleButton bgColor={using[1] ? red : green} handleClick={handleClick}/>
+            <CircleButton bgColor={using[2] ? red : green} handleClick={handleClick}/>
+            <CircleButton bgColor={using[3] ? red : green} handleClick={handleClick}/>
+            {/* 현장 요원 스케줄에 따른 버튼 */}
         </Div>
     );
 }
