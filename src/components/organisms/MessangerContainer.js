@@ -3,23 +3,22 @@ import styled from 'styled-components';
 import MessangerList from "./MessangerList";
 import SendMessage from "./SendMessage";
 import {Style} from "../../Style";
+import {useRecoilValue} from "recoil";
+import {userAuthority} from "../../store/LoginStore";
 
 /*
 날짜: 2022/01/11 11:28 AM
 작성자: 정도식
 작성내용: 수정요청사항을 담는 컨테이너
 */
+
 const MessangerContainer = () => {
-    // const [userStatus,setUserStatus]=useState('admin');
+    const authority = useRecoilValue(userAuthority);
     return (
         <>
             <Announcement>
                 <Header>수정 요청 사항</Header>
-                <SendMessage/>
-            </Announcement>
-            <Announcement>
-                <Header>수정 요청 사항</Header>
-                <MessangerList/>
+                {authority==="ADMIN"?<MessangerList/>:<SendMessage/>}
             </Announcement>
         </>
     );

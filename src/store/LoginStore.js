@@ -10,7 +10,7 @@ export const isLoginedState = atom({
 });
 
 export const userAuthority = atom({
-    key: 'isLoginedState',
+    key: 'userAuthority',
     default: "",
 });
 
