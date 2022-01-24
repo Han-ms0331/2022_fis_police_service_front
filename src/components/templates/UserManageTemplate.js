@@ -106,7 +106,9 @@ const UserManageTemplate = () => {
                     showData()
                     handleClose();
                 }).catch((err) => {
-                    console.log(err);
+                    if(err.response.status === 402) {
+                        alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
+                    }
                 })
             } else if(emptyOrNot() === false && modify === false) {
                 console.log(currentInfo)
@@ -116,7 +118,9 @@ const UserManageTemplate = () => {
                         showData()
                         handleClose();
                     }).catch((err) => {
-                        console.log(err);
+                        if(err.response.status === 402) {
+                            alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
+                        }
                     })
             }
             else{
