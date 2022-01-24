@@ -79,6 +79,7 @@ const [color1,color2]= [Style.color1,Style.color2];
 const Items = styled.div` //sidebar를 담는 컨테이너
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-top: 35px;
   &> div{
     margin-top: 20px;

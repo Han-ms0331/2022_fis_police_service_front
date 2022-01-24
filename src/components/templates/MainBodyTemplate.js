@@ -126,7 +126,7 @@ function MainBodyTemplate(props) {
 
     return (
         <Main>
-            <div style={{width: "100%", margin: "30px 0px 40px 50px"}}>
+            <div style={{width: "100%", margin: "30px 0px 40px 75px"}}>
                 <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange}/>
             </div>
             {isSelected ?
@@ -154,12 +154,12 @@ function MainBodyTemplate(props) {
 }
 
 const Main = styled.div`
-    // border-right: 2px solid ${Style.color2};
   border-right: 2px solid #eee;
 `;
+
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 270px auto;
+  grid-template-columns: 320px auto;
 `;
 
 const Left = styled.div`
