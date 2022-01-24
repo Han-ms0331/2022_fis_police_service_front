@@ -65,7 +65,7 @@ function ScheduleModifyInputForm(props) {
 
     const onCancel = async() => {
         console.log(input.schedule_id);
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?schedule_id=${input.schedule_id}`, {withCredentials: true})
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err));
     }
@@ -194,7 +194,10 @@ function ScheduleModifyInputForm(props) {
 
                 <div style={{marginTop: "30px", display: 'flex',  justifyContent:'center'}}>
                     <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
-                                  borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>
+                                  borderRadius="15px" backgroundColor={Style.color2} onClick={()=>{
+                                      onCancel();
+                                      props.onClickFunction();
+                    }}/>
                 </div>
 
                 <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>
@@ -206,7 +209,10 @@ function ScheduleModifyInputForm(props) {
 
                     <div>
                         <CustomButton type="normal" width="150px" height="40px" content="저장" color="white"
-                                      borderRadius="15px" backgroundColor={Style.color2} onClick={onPatch}/>
+                                      borderRadius="15px" backgroundColor={Style.color2} onClick={()=>{
+                                          onPatch();
+                                          props.onClickFunction();
+                        }}/>
                     </div>
                 </div>
 
