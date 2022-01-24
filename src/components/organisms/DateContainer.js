@@ -36,6 +36,7 @@ const DateContainer = (props) => {
 const Container = styled.div`
 //background: #F8EFBA;
 background: ${Style.color1};
+  width: 280px;
 margin: 10px 0;
   border-radius: 10px;
   text-align: center;
