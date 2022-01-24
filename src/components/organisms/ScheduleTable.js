@@ -19,13 +19,14 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableHead from "@mui/material/TableHead";
 import ScheduleTableSearch from "../molecules/ScheduleTableSearch";
-import {useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import TransitionsModal from "./TransitionModal";
 import CustomButton from "../atoms/CustomButton";
 import CheckboxContainer from "../molecules/CheckboxContainer";
 import {FormControlLabel, lighten, Switch, TableSortLabel} from "@mui/material";
 import axios from "axios";
+import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -63,7 +64,7 @@ const headCells = [
     { id: 'total_etc', numeric: true, disablePadding: false, label: '특이사항' },
     { id: 'modified_info', numeric: true, disablePadding: false, label: '변경 사항' },
     { id: 'call_check', numeric: true, disablePadding: false, label: '통화 이력' },
-    { id: 'notice', numeric: true, disablePadding: false, label: '일정 공지' },
+    // { id: 'notice', numeric: true, disablePadding: false, label: '일정 공지' },
     { id: 'edit', numeric: true, disablePadding: false, label: '' },
 ];
 
@@ -110,8 +111,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
-
+    console.log(keywordProps);
     let count = rows.length;
+    const [r, setR] = useRecoilState(dateSelectedRows);
 
     useEffect( () => {
         setPage(0);
@@ -131,6 +133,10 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     const ScheduleList = (row, index) => { // Schedule List를 띄워주는 함수
         // const isItemSelected = isSelected(row.No);
         const labelId = `enhanced-table-checkbox-${index}`;
+        // setR((prev) => ({
+        //     ...prev,
+        //     ['No'] = 100
+        // }))
         return (
             <TableRow
                 hover
@@ -165,7 +171,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                 <TableCell style={{ width:'900px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
                 <TableCell style={{ width:'1100px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{  margin: 10, padding: '10px 0', overflowY: 'auto', maxHeight: 150 }}>{row.modified_info}</div></TableCell>
                 <TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.call_check}</div></TableCell>
-                <TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>일정공지여부</div></TableCell>
+                {/*<TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>일정공지여부</div></TableCell>*/}
                 <TableCell style={{ width:'150px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
                     <TransitionsModal defaultInput={row} backgroundColor={buttonColor} />
                 </TableCell>
@@ -183,16 +189,20 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     }
 
     const handleFilter = (el) => { // 검색 키워드 필터링해주는 함수
-        return el.a_name ? el.a_name.includes(keywordProps.a_name) : false && // No 검색 필터 구현해야함
-            el.a_code ? el.a_code.includes(keywordProps.a_code) : false &&
-            el.c_name ? el.c_name.includes(keywordProps.c_name) : false &&
-            // c_name, c_address, c_ph, visit_time, estimate_num 통합 검색 ?
-            el.total_etc ? el.total_etc.includes(keywordProps.total_etc) : false &&
-            el.modified_info ? el.modified_info.includes(keywordProps.modified_info) : false &&
-            el.call_check ? el.call_check.includes(keywordProps.call_check) : false &&
-            el.call_check_info ? el.call_check_info.includes(keywordProps.call_check_info) : false
-            // 일정공지여부 실제 데이터 들어오면 구현
-            ;
+        return (
+            (el.a_name !== null ? el.a_name.includes(keywordProps.a_name) : keywordProps.a_name === "") && // No 검색 필터 구현해야함
+            (el.c_name !== null ?
+                (el.c_name.includes(keywordProps.c_name) ||
+                el.c_address.includes(keywordProps.c_name) ||
+                el.c_ph.includes(keywordProps.c_name)) ||
+                el.visit_time.includes(keywordProps.c_name) ||
+                (String(el.estimate_num) + '명').includes(keywordProps.c_name)
+                : keywordProps.c_name === "") &&
+            // c_name, c_address, c_ph, visit_time, estimate_num 통합 검색
+            (el.total_etc !== null ? el.total_etc.includes(keywordProps.total_etc) : keywordProps.total_etc === "") &&
+            (el.modified_info !== null ? el.modified_info.includes(keywordProps.modified_info) : keywordProps.modified_info === "") &&
+            (el.call_check !== null ? el.call_check.includes(keywordProps.call_check) : keywordProps.call_check === "")
+        );
     }
 
     const filteredShowList = () => { // 정렬 기능과 함께 검색결과 List를 여러 개 보여주는 함수
