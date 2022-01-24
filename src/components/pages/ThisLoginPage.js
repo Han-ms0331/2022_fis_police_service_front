@@ -1,13 +1,18 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import styled from "styled-components";
+import LoginTemplate from "../templates/LoginTemplate";
+import {Container, Grid} from "@mui/material";
 
 function ThisLoginPage(props) {
     return (
-        <div>
-            <Link to={"/main"}>로그인</Link>
-            <span>This is Login Page</span>
-        </div>
+        <Main>
+            <Container maxWidth={"sm"}>
+                <LoginTemplate setIsLogined={props.setIsLogined}/>
+            </Container>
+        </Main>
     );
 }
-
+const Main = styled.div`
+  min-width: 100vw;
+`;
 export default ThisLoginPage;
