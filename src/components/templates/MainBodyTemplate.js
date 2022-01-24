@@ -55,6 +55,9 @@ function MainBodyTemplate(props) {
         console.log(selectedAgentInfo); // undefined???
     }, [date])
 
+    useEffect(() => {
+        setSelectedAgentInfo([]);
+    }, [selectedCenterInfo])
 
     const headerContent = ["시설명", "주소", "전화번호", "연락기록", "방문여부"]     //리스트 헤더
 
