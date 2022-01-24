@@ -14,14 +14,14 @@ function UserManageInputForm(props) {
             justifyContent: "center",
         }}>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="이름: " inputName="u_nickname" inputType="text" width="300px" rows="1"
-                                setValueFunction={props.handleInputFormChange}
-                                defaultValue={props.currentInfo['u_nickname']}/>
-            </div>
-            <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="아이디: " inputName="u_name" inputType="text" width="300px" rows="1"
+                <InputContainer labelContent="이름: " inputName="u_name" inputType="text" width="300px" rows="1"
                                 setValueFunction={props.handleInputFormChange}
                                 defaultValue={props.currentInfo['u_name']}/>
+            </div>
+            <div style={{marginBottom: "20px"}}>
+                <InputContainer labelContent="아이디: " inputName="u_nickname" inputType="text" width="300px" rows="1"
+                                setValueFunction={props.handleInputFormChange}
+                                defaultValue={props.currentInfo['u_nickname']}/>
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="비밀번호: " inputName="u_pwd" inputType="text" width="300px" rows="1"

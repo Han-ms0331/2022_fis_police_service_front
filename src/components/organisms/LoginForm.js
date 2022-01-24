@@ -6,6 +6,7 @@ import {RiLockPasswordLine} from "react-icons/ri"
 import {Link} from "react-router-dom";
 import CustomButton from "../atoms/CustomButton";
 import {Style} from "../../Style";
+import {Button} from "@mui/material";
 
 /*
     날짜: 2022/01/11 10:44 오전
@@ -22,7 +23,7 @@ const LoginForm = (props) => {
         <Main>
             <Container>
                 <img src={logo}/> {/*회사로고*/}
-                <div className="inputContainer">
+                <form onSubmit={props.onClickFunction} className="inputContainer">
                     <InputRow> {/*아이디*/}
                         <div className="icon"><BiUser/></div>
                         <input name="u_nickname" id="username" type="text" placeholder="아이디" onChange={props.onChangeFunction}/>
@@ -31,10 +32,15 @@ const LoginForm = (props) => {
                         <div className="icon"><RiLockPasswordLine/></div>
                         <input name="u_pwd" id="password" type="password" placeholder="비밀번호" onChange={props.onChangeFunction}/>
                     </InputRow>
-                    <CustomButton type="normal" width="100%" height="40px" borderRadius="6px"
-                                                     color="#fff" backgroundColor={Style.color2} content="로그인"
-                                                     onClick={props.onClickFunction}/> {/*로그인 버튼*/}
-                </div>
+                    <Button variant="contained" name={props.name} type="submit" style={{
+                        width: "100%",
+                        height: "40px",
+                        backgroundColor: `${Style.color2}`,
+                        color: `${Style.color1}`,
+                        borderRadius: "10px"
+                    }}
+                    >로그인</Button>
+                </form>
             </Container>
         </Main>
     );
