@@ -82,17 +82,24 @@ function CustomMap(props) {
     }
     road.splice(1, 0, center);
 
-    /*useEffect(() => {
+    console.log("aInfo ori")
+    console.log(aInfo)
+
+    useEffect(() => {
         aInfo.forEach((arr,index,buf)=>{
-            arr=null
+            arr.type="agent"
+            console.log("useEffect")
         })
-    }, [selectedCenterId])*/
+        console.log("useEffect aInfo")
+        console.log(aInfo)
+    }, [selectedCenterId])
 
 
-    console.log("aInfoOri")
+
+   /* console.log("aInfoOri")
     console.log(aInfo)
     console.log("aInfo")
-    console.log(aInfo)
+    console.log(aInfo)*/
 
     /*  if (props.clickedAdata != null) {
           props.clickedAdata.schedule.slice(1, 0, selCenterInfo[0]);
