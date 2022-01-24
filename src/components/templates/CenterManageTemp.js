@@ -66,7 +66,8 @@ function CenterManageTemp(props) {
     }
 
 
-    const showList = async () => {
+    const showList = async (e) => {
+        e.preventDefault();
         const {c_name, c_address, c_ph} = searchInput;
         if (c_name == "" && c_address == "" && c_ph == "") {
             alert("검색어를 입력하세요")

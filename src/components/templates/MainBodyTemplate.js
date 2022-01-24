@@ -104,8 +104,9 @@ function MainBodyTemplate(props) {
         작성내용: 시설을 검색하였을때 작동하는 함수
     */
 
-    const onSearch = async () => {
+    const onSearch = async (e) => {
         console.log(currentInfo);
+        e.preventDefault();
         if (currentInfo.c_name == "" && currentInfo.c_address == "" && currentInfo.c_ph == "") {
             alert("검색어를 입력하세요")
         } else {
