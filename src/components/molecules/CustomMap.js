@@ -26,6 +26,7 @@ function CustomMap(props) {
             isPanto: true,
         }
     )
+    const [selAgentInfo,setSelAgentInfo] = useState([])
 
     let cInfo = []
     let aInfo = []
@@ -64,17 +65,22 @@ function CustomMap(props) {
                 latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
                 type: "agent"
             })
+            console.log("agentList")
             console.log(aInfo)
         })
     }
 
-    useEffect(() => {
-        aInfo.forEach((arr, index, buf) => {
-            if (props.clickedAdata.agent_id == arr.agent_id) {
-                arr.type = "agentSelected"
-            }
-        })
-    }, [props.clickedAdata])
+    console.log("clicked")
+    console.log(props.clickedAdata)
+    aInfo.forEach((arr, index, buf) => {
+        if (props.clickedAdata.agent_id == arr.agent_id) {
+            arr.type = "agentSelected"
+        }
+    })
+    console.log("aInfo")
+    console.log(aInfo)
+    console.log("type change")
+    console.log(aInfo.type)
     /*  if (props.clickedAdata != null) {
           props.clickedAdata.schedule.slice(1, 0, selCenterInfo[0]);
           props.clickedAdata.schedule.forEach((arr, index, buf) => { // 동선 표시를 위해 위도경도 입력 형태 변경
@@ -146,7 +152,7 @@ function CustomMap(props) {
                             type={position.type}
                             position={position.latlng} // 마커를 표시할 위치
                             content={position.contents}
-                             // type이 center일 경우 전달받은 시설정보를 띄워준다
+                            // type이 center일 경우 전달받은 시설정보를 띄워준다
 
                         />
                     </>
