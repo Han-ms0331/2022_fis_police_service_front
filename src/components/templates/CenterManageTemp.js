@@ -119,9 +119,10 @@ function CenterManageTemp(props) {
     const handleAddButtonClick = (e) => {
         setModify(false);
         setCurrentInfo({
-            centerName: "",
-            centerPhone: "",
-            centerAddress: ""
+            center_id: "",
+            c_name: "",
+            c_ph: "",
+            c_address: ""
         });
         handleOpen();
 
