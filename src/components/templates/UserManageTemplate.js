@@ -81,27 +81,47 @@ const UserManageTemplate = () => {
 
 
         const handleClickSave = async () => {
-            console.log(currentInfo);
-            if (modify == true) {
+            const emptyOrNot = ()=>{
+                let a = 1;
+                for(const key in currentInfo){
+                    if(key==='user_id'){
+                        continue;
+                    }
+                    if(currentInfo[key]===""){
+                        console.log('hi')
+                        a = 0;          // empty면 0으로 체크
+                        break;
+                    }
+                }
+                if(a === 0){
+                    return true;       // a가 0이면 empty, true 리턴
+                }else{
+                    return false;
+                }
+            }
+
+            if (emptyOrNot() === false && modify === true) {
                 await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true}).then((res) => {
-                    console.log("patch done")
+                    alert("수정 되었습니다");
                     showData()
+                    handleClose();
                 }).catch((err) => {
                     console.log(err);
                 })
-                alert("수정 되었습니다");
-            } else {
+            } else if(emptyOrNot() === false && modify === false) {
                 console.log(currentInfo)
                 await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true})
                     .then((res) => {
-                        console.log(res)
+                        alert("추가 되었습니다")
                         showData()
+                        handleClose();
                     }).catch((err) => {
                         console.log(err);
                     })
-                alert("추가 되었습니다")
             }
-            handleClose();
+            else{
+                alert("모든 폼을 입력해주세요.")
+            }
         }
 
         const handleModifyButtonClick = (e) => {

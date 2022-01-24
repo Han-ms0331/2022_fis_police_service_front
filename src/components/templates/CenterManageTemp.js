@@ -132,30 +132,51 @@ function CenterManageTemp(props) {
 // inputForm에서 저장버튼 눌렀을 때에 대한 함수 정의
 
     const handleClickSave = async () => {
-        //api 요청 보냄.
-        //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
-        if (modify === true) {
+        const emptyOrNot = ()=>{
+            let a = 1;
+            for(const key in currentInfo){
+                if(key==='center_id'){
+                    continue;
+                }
+                if(currentInfo[key]===""){
+                    a = 0;          // empty면 0으로 체크
+                    break;
+                }
+            }
+            if(a === 0){
+                return true;       // a가 0이면 empty, true 리턴
+            }else{
+                return false;
+            }
+        }
+
+        if (emptyOrNot() === false && modify === true) {
             //수정
             await axios.patch(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
                 .then(() => {
                         const {c_name, c_address, c_ph} = searchInput;
                         apiGetCall(c_name, c_address, c_ph);
+                        alert("수정 되었습니다.");
+                        handleClose();
                     }
-                )
-            alert("수정 되었습니다.");
-        } else {
+                ).catch((err)=>{
+                    console.log(err);
+                })
+        } else if(emptyOrNot() === false && modify === false) {
             //추가
             await axios.post(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
                 .then(() => {
                         const {c_name, c_address, c_ph} = searchInput;
                         apiGetCall(c_name, c_address, c_ph);
+                        alert("수정 되었습니다.");
+                        handleClose();
                     }
-                )
-            alert("추가 되었습니다.")
+                ).catch((err)=>{
+                    console.log(err)
+                })
+        }else{
+            alert("모든 폼을 입력해주세요.")
         }
-
-
-        handleClose();
 
     }
 
