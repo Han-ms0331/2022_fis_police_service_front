@@ -42,12 +42,10 @@ function CenterManageTemp(props) {
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
-    const showList = async () => {
-        const {c_name, c_address, c_ph} = searchInput;
-        console.log(c_name);
+    async function apiGetCall(c_name, c_address, c_ph) {
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
-                console.log(res.data.data);
+                // console.log(res.data.data);
                 let tmp = [];
                 res.data.data.forEach((list) => {
                     tmp.push({
@@ -65,6 +63,16 @@ function CenterManageTemp(props) {
             .catch((err) => {
                 console.log(err);
             })
+    }
+
+
+    const showList = async () => {
+        const {c_name, c_address, c_ph} = searchInput;
+        if (c_name == "" && c_address == "" && c_ph == "") {
+            alert("검색어를 입력하세요")
+        } else {
+            apiGetCall(c_name, c_address, c_ph);
+        }
 
     }
 // form이 보이고 안보이고에 대한 함수 정의
@@ -124,21 +132,23 @@ function CenterManageTemp(props) {
     const handleClickSave = async () => {
         //api 요청 보냄.
         //'정보수정'일 때 api 요청이랑 '시설추가' 일 때 api 요청일 때 다른데 어떻게 처리 할 것인가.
-        if(modify === true){
+        if (modify === true) {
             //수정
-            // await axios.patch(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
-            await axios.patch("/manage/center")
-                .then((res) => {
-                    console.log(res.data);
-                })
+            await axios.patch(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
+                .then(() => {
+                        const {c_name, c_address, c_ph} = searchInput;
+                        apiGetCall(c_name, c_address, c_ph);
+                    }
+                )
             alert("수정 되었습니다.");
-        }else{
+        } else {
             //추가
-            // await axios.post(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
-            await axios.post("/manage/center")
-                .then((res) => {
-                    console.log(res.data);
-                })
+            await axios.post(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
+                .then(() => {
+                        const {c_name, c_address, c_ph} = searchInput;
+                        apiGetCall(c_name, c_address, c_ph);
+                    }
+                )
             alert("추가 되었습니다.")
         }
 
