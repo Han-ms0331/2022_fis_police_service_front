@@ -86,13 +86,11 @@ function MainBodyTemplate(props) {
                 setIsSelected(true);
             })
     }
-
     /*
         날짜: 2022/01/18 5:02 오후
         작성자: 한명수
         작성내용: 검색창에 입력을 할 때 작동하는 함수
     */
-
     const handleSearchInputChange = (e) => {
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
         setCurrentInfo({
@@ -100,14 +98,11 @@ function MainBodyTemplate(props) {
             [name]: value // name 키를 가진 값을 value 로 설정
         });
     };
-
-
     /*
         날짜: 2022/01/18 5:01 오후
         작성자: 한명수
         작성내용: 시설을 검색하였을때 작동하는 함수
     */
-
     const onSearch = async (e) => {
         console.log(currentInfo);
         e.preventDefault();
