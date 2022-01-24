@@ -7,7 +7,7 @@ import {useRecoilState, useSetRecoilState} from "recoil";
 import {
     SelectedCenterCallList,
     SelectedCenterId,
-    SelectedCenterInfo, SelectedCenterList,
+    SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo,
     SelectedCenterScheduleList
 } from "../../store/SelectedCenterStore";
 import CustomCalendar from "../atoms/CustomCalendar";
@@ -33,6 +33,7 @@ function MainBodyTemplate(props) {
     const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
+
 
     const [date, setDate] = useState(new Date());
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
@@ -78,6 +79,7 @@ function MainBodyTemplate(props) {
                 setSelectedCenterScheduleList(res.data.data.scheduleList)//scheduleList에서 뜰 내용 저장
                 setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
                 setSelectedCenterList(res.data.data.ceterList);
+
                 setIsSelected(true);
             })
     }

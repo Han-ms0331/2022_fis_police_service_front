@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
 import axios from "axios";
 import CenterInfo from "./CenterInfo";
-import {SelectedCenterInfo, SelectedCenterList} from "../../store/SelectedCenterStore";
+import {SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo} from "../../store/SelectedCenterStore";
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
 import { MdGpsFixed } from "react-icons/md";
@@ -125,6 +125,7 @@ function MapView(props) {
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
+    const [centerInfo,setCenterInfo] = useState([])
 
     const center = [ //선택된 시설의 좌표를 mainbodytemp에서 props로 받아옴
         {
@@ -133,24 +134,14 @@ function MapView(props) {
         }
     ]
 
-    /*const [date,setDate] = useState(119)
-    const [selAgent, setSelAgent] = useState(agentInfo[1]);*/
-
-    /*const loadInfo = async () => { //지도의 확대 비율 별 주변 시설 정보 받아오기
-        await axios.get(`/main/center/${center_id}/range?range=${value}`)
-            .then((res) => {
-                console.log("done")
-                console.log(res.data.cdata)
-                setCenterInfo(res.data.cdata)
-            })
-    }*/
     let centerList=[]
+    console.log("fullArray")
+    console.log(selectedCenterList)
 
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
         if (e.target.textContent === "250m") {
             setRange(2)
             console.log('250m');
-            console.log(selectedCenterList)
             selectedCenterList.forEach((arr,index,buf)=>{
                 if (arr.distance<=250){
                     centerList.push({
@@ -165,7 +156,9 @@ function MapView(props) {
                     })
                 }
             })
-
+            setCenterInfo(centerList)
+            console.log("250m array")
+            console.log(centerList)
             /*loadInfo().then((res) => {
                 console.log("success")
             })*/
@@ -187,6 +180,8 @@ function MapView(props) {
                     })
                 }
             })
+            setCenterInfo(centerList)
+            console.log("500m array")
             console.log(centerList)
             /*loadInfo().then((res) => {
                 console.log("success")
@@ -209,6 +204,9 @@ function MapView(props) {
                     })
                 }
             })
+            setCenterInfo(centerList)
+            console.log("1000m array")
+            console.log(centerList)
             /*loadInfo().then((res) => {
                 console.log("success")
             })*/
@@ -217,12 +215,16 @@ function MapView(props) {
 
     }
 
-
+    /*useEffect( () => {
+        setCenterInfo(centerList)
+    },[range])*/
+    console.log("centerInfo")
+    console.log(centerInfo)
     return (
 
         <MapContainer>
             <RangeController onClickFunc={changeRange}/>
-            <CustomMap cdata={selectedCenterList} aroundCdata={centerList} adata={selectedAgentInfo} clickedAdata={clickedAgent}  sdata={selCenter} lat={center[0].lat}
+            <CustomMap aroundCdata={centerInfo} adata={selectedAgentInfo} clickedAdata={clickedAgent}  sdata={selCenter} lat={center[0].lat}
                        lng={center[0].lng}
                        level={range}/>
         </MapContainer>

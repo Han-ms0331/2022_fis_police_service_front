@@ -75,15 +75,15 @@ function CustomMap(props) {
             }
         })
     }, [props.clickedAdata])
-  /*  if (props.clickedAdata != null) {
-        props.clickedAdata.schedule.slice(1, 0, selCenterInfo[0]);
-        props.clickedAdata.schedule.forEach((arr, index, buf) => { // 동선 표시를 위해 위도경도 입력 형태 변경
-            road.push({
-                ...arr,
-                lat: arr.c_latitude, lng: arr.c_longitude,
-            })
-        })
-    }*/
+    /*  if (props.clickedAdata != null) {
+          props.clickedAdata.schedule.slice(1, 0, selCenterInfo[0]);
+          props.clickedAdata.schedule.forEach((arr, index, buf) => { // 동선 표시를 위해 위도경도 입력 형태 변경
+              road.push({
+                  ...arr,
+                  lat: arr.c_latitude, lng: arr.c_longitude,
+              })
+          })
+      }*/
 
     /*
         for(let i=0;i<3;i++){
@@ -95,7 +95,6 @@ function CustomMap(props) {
         }
 
     */
-
 
     return (
         <Container>
@@ -124,7 +123,7 @@ function CustomMap(props) {
 
 
                 {/*return 버튼*/}
-             {/*   <CustomPolyLine
+                {/*   <CustomPolyLine
                     path={[
                         road,
                     ]}
@@ -146,7 +145,8 @@ function CustomMap(props) {
                             key={index}
                             type={position.type}
                             position={position.latlng} // 마커를 표시할 위치
-                            content={position.contents} // type이 center일 경우 전달받은 시설정보를 띄워준다
+                            content={position.contents}
+                             // type이 center일 경우 전달받은 시설정보를 띄워준다
 
                         />
                     </>
