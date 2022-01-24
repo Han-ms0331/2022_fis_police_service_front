@@ -26,27 +26,14 @@ function CustomMap(props) {
             isPanto: true,
         }
     )
-
-    let cInfo = []
     let aInfo = []
-    let road = []
-    /*if (props.cdata != null) {
-        props.cdata.ceterList.forEach((arr, index, buf) => {
-            cInfo.push({
-                ...arr,
-                latlng: {lat: arr.ceterList.c_latitude, lng: arr.ceterList.c_longitude},
-                type: "center",
-                contents:
-                    <div>
-                        <div>{arr.c_order}</div>
-                        <div>시설 이름: {arr.c_name}</div>
-                        <div>예상 인원: {}</div>
-                        <div>방문 예정 시간: {}</div>
-                    </div>
-            })
-        })
-        console.log(cInfo)
-    }*/
+    let road=[]
+    let center={
+        lat:props.lat,
+        lng:props.lng
+    }
+
+
     const handleClick = () => {
         setPosition({
             center: {
@@ -57,24 +44,55 @@ function CustomMap(props) {
         });
     }
 
+    console.log("agentList")
+    console.log(props.adata)
+    console.log("clickedAdata")
+    console.log(props.clickedAdata)
+
     if (props.adata != null) {
         props.adata.forEach((arr, index, buf) => {
-            aInfo.push({
-                ...arr,
-                latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
-                type: "agent"
-            })
-            console.log(aInfo)
+            /*if(props.clickedAdata[0].agent_id===arr.agent_id) {
+                aInfo.push({
+                    ...arr,
+                    latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
+                    type: "agentSelected"
+                })
+            }*/
+                aInfo.push({
+                    ...arr,
+                    latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
+                    type: "agent"
+                })
+
         })
     }
 
-    useEffect(() => {
+    if(props.clickedAdata!=null) {
         aInfo.forEach((arr, index, buf) => {
-            if (props.clickedAdata.agent_id == arr.agent_id) {
+            if (props.clickedAdata.agent_id === arr.agent_id) {
                 arr.type = "agentSelected"
             }
         })
-    }, [props.clickedAdata])
+        if (props.clickedAdata.scheduleList != null) {
+            props.clickedAdata.scheduleList.forEach((list, index, buf) => {
+                road.push({
+                    ...list,
+                    lat: list.center.a_latitude,
+                    lng: list.center.a_longitude
+                })
+            })
+            console.log("success")
+            console.log(road)
+        }
+    }
+    road.splice(1, 0, center);
+
+
+    console.log("aInfoOri")
+    console.log(aInfo)
+    console.log("aInfo")
+    console.log(aInfo)
+
     /*  if (props.clickedAdata != null) {
           props.clickedAdata.schedule.slice(1, 0, selCenterInfo[0]);
           props.clickedAdata.schedule.forEach((arr, index, buf) => { // 동선 표시를 위해 위도경도 입력 형태 변경
@@ -120,14 +138,12 @@ function CustomMap(props) {
                     }
                 })}
             >
-
-
                 {/*return 버튼*/}
-                {/*   <CustomPolyLine
+                   <CustomPolyLine
                     path={[
                         road,
                     ]}
-                /> 선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
+                /> {/*선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
                 <CustomMarker
                     type={"center"}
                     position={{lat: props.lat, lng: props.lng}}
@@ -146,7 +162,6 @@ function CustomMap(props) {
                             type={position.type}
                             position={position.latlng} // 마커를 표시할 위치
                             content={position.contents}
-                             // type이 center일 경우 전달받은 시설정보를 띄워준다
 
                         />
                     </>
