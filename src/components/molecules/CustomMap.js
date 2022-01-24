@@ -4,7 +4,7 @@ import {Map, MapMarker} from "react-kakao-maps-sdk";
 import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
 import {useRecoilState} from "recoil";
-import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
+import {SelectedCenterId, SelectedCenterInfo} from "../../store/SelectedCenterStore";
 import {Style} from "../../Style";
 import {MdGpsFixed} from "react-icons/md";
 import styled from "styled-components";
@@ -20,6 +20,7 @@ import CustomButton from "../atoms/CustomButton";
 
 function CustomMap(props) {
     const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo);
+    const [selectedCenterId, setSelectedCenterId] = useRecoilState(SelectedCenterId);
     const [position, setPosition] = useState(
         {
             center: {lat: props.lat, lng: props.lng},
@@ -27,10 +28,10 @@ function CustomMap(props) {
         }
     )
     let aInfo = []
-    let road=[]
-    let center={
-        lat:props.lat,
-        lng:props.lng
+    let road = []
+    let center = {
+        lat: props.lat,
+        lng: props.lng
     }
 
 
@@ -51,23 +52,17 @@ function CustomMap(props) {
 
     if (props.adata != null) {
         props.adata.forEach((arr, index, buf) => {
-            /*if(props.clickedAdata[0].agent_id===arr.agent_id) {
-                aInfo.push({
-                    ...arr,
-                    latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
-                    type: "agentSelected"
-                })
-            }*/
-                aInfo.push({
-                    ...arr,
-                    latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
-                    type: "agent"
-                })
+            aInfo.push({
+                ...arr,
+                latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
+                type: "agent"
+            })
 
         })
     }
 
-    if(props.clickedAdata!=null) {
+
+    if (props.clickedAdata != null) {
         aInfo.forEach((arr, index, buf) => {
             if (props.clickedAdata.agent_id === arr.agent_id) {
                 arr.type = "agentSelected"
@@ -86,6 +81,12 @@ function CustomMap(props) {
         }
     }
     road.splice(1, 0, center);
+
+    /*useEffect(() => {
+        aInfo.forEach((arr,index,buf)=>{
+            arr=null
+        })
+    }, [selectedCenterId])*/
 
 
     console.log("aInfoOri")
@@ -139,7 +140,7 @@ function CustomMap(props) {
                 })}
             >
                 {/*return 버튼*/}
-                   <CustomPolyLine
+                <CustomPolyLine
                     path={[
                         road,
                     ]}
