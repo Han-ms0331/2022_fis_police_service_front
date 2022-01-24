@@ -28,21 +28,25 @@ function CustomMap(props) {
     )
 
     let cInfo = []
-    let aInfo=[]
-    props.cdata.forEach((arr, index, buf) => {
-        cInfo.push({
-            ...arr,
-            latlng: {lat: arr.c_latitude, lng: arr.c_longitude},
-            type: "center",
-            contents:
-                <div>
-                    <div>{arr.c_order}</div>
-                    <div>시설 이름: {arr.c_name}</div>
-                    <div>예상 인원: {}</div>
-                    <div>방문 예정 시간: {}</div>
-                </div>
+    let aInfo = []
+    let road = []
+    /*if (props.cdata != null) {
+        props.cdata.ceterList.forEach((arr, index, buf) => {
+            cInfo.push({
+                ...arr,
+                latlng: {lat: arr.ceterList.c_latitude, lng: arr.ceterList.c_longitude},
+                type: "center",
+                contents:
+                    <div>
+                        <div>{arr.c_order}</div>
+                        <div>시설 이름: {arr.c_name}</div>
+                        <div>예상 인원: {}</div>
+                        <div>방문 예정 시간: {}</div>
+                    </div>
+            })
         })
-    })
+        console.log(cInfo)
+    }*/
     const handleClick = () => {
         setPosition({
             center: {
@@ -65,17 +69,32 @@ function CustomMap(props) {
     }
 
     useEffect(() => {
-        aInfo.forEach((arr,index,buf)=>{
-            if(props.clickedAdata.agent_id==arr.agent_id){
-                arr.type="agentSelected"
+        aInfo.forEach((arr, index, buf) => {
+            if (props.clickedAdata.agent_id == arr.agent_id) {
+                arr.type = "agentSelected"
             }
         })
-    },[props.clickedAdata])
+    }, [props.clickedAdata])
+    /*  if (props.clickedAdata != null) {
+          props.clickedAdata.schedule.slice(1, 0, selCenterInfo[0]);
+          props.clickedAdata.schedule.forEach((arr, index, buf) => { // 동선 표시를 위해 위도경도 입력 형태 변경
+              road.push({
+                  ...arr,
+                  lat: arr.c_latitude, lng: arr.c_longitude,
+              })
+          })
+      }*/
 
+    /*
+        for(let i=0;i<3;i++){
+            road.push({
+                ...road,
+                lat:props.clickedAdata.scheduleList[i].center.a_latitude,
+                lng:props.clickedAdata.scheduleList[i].center.a_longitude,
+            })
+        }
 
-
-
-
+    */
 
     return (
         <Container>
@@ -104,11 +123,11 @@ function CustomMap(props) {
 
 
                 {/*return 버튼*/}
-                <CustomPolyLine
+                {/*   <CustomPolyLine
                     path={[
-                        props.rdata,
+                        road,
                     ]}
-                /> {/*선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
+                /> 선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
                 <CustomMarker
                     type={"center"}
                     position={{lat: props.lat, lng: props.lng}}
@@ -118,19 +137,21 @@ function CustomMap(props) {
                             <div>예상인원 : {selCenterInfo.c_people}명</div>
                         </div>
                     }
-                />
+                /> {/*선택된 센터 표시*/}
 
-                {cInfo.map((position, index) => (
+                {props.aroundCdata.map((position, index) => (
                     <>
                         <CustomMarker
                             key={index}
                             type={position.type}
                             position={position.latlng} // 마커를 표시할 위치
-                            content={position.contents} // type이 center일 경우 전달받은 시설정보를 띄워준다
+                            content={position.contents}
+                             // type이 center일 경우 전달받은 시설정보를 띄워준다
 
                         />
                     </>
                 ))} {/*선택된 센터의 주변 시설 정보 표시*/}
+
                 {aInfo.map((position, index) => (
                     <CustomMarker
                         key={index}

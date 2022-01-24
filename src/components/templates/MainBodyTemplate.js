@@ -7,7 +7,7 @@ import {useRecoilState, useSetRecoilState} from "recoil";
 import {
     SelectedCenterCallList,
     SelectedCenterId,
-    SelectedCenterInfo,
+    SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo,
     SelectedCenterScheduleList
 } from "../../store/SelectedCenterStore";
 import CustomCalendar from "../atoms/CustomCalendar";
@@ -32,13 +32,13 @@ function MainBodyTemplate(props) {
     const [selectedCenterInfo, setSelectedCenterInfo] = useRecoilState(SelectedCenterInfo);
     const [selectedCenterCallList, setSelectedCenterCallList] = useRecoilState(SelectedCenterCallList);
     const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
-
+    const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
+
 
     const [date, setDate] = useState(new Date());
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
-    const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`;
-
+    const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
@@ -55,7 +55,6 @@ function MainBodyTemplate(props) {
     }, [date])
 
 
-
     const headerContent = ["시설명", "주소", "전화번호", "연락기록", "방문여부"]     //리스트 헤더
 
     /*
@@ -64,7 +63,7 @@ function MainBodyTemplate(props) {
         작성내용: 검색 결과로 나온 시설 리스트중 하나를 선택했을 때 작동하는 함수
     */
     const onSelect = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.name].center_id}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`)
             .then((res) => {
                 console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -78,6 +77,8 @@ function MainBodyTemplate(props) {
                 setSelectedCenterCallList(res.data.data.callList)//callList에서 뜰 리스트 저장
                 setSelectedCenterScheduleList(res.data.data.scheduleList)//scheduleList에서 뜰 내용 저장
                 setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
+                setSelectedCenterList(res.data.data.ceterList);
+
                 setIsSelected(true);
             })
     }
@@ -105,15 +106,20 @@ function MainBodyTemplate(props) {
 
     const onSearch = async () => {
         console.log(currentInfo);
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`)
-            .then((res) => {
-                console.log(res.data.data)
-                setCenterList(res.data.data);
-                setIsSelected(false);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        if (currentInfo.c_name == "" && currentInfo.c_address == "" && currentInfo.c_ph == "") {
+            alert("검색어를 입력하세요")
+        } else {
+            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`)
+                .then((res) => {
+                    console.log(res.data.data)
+                    setCenterList(res.data.data);
+                    setIsSelected(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+
     }
 
 
@@ -125,8 +131,8 @@ function MainBodyTemplate(props) {
             {isSelected ?
                 <Container>
                     <Left>
-                            <CustomCalendar className="calendar" setDate={setDate}/>
-                            <AgentContainer content={selectedAgentInfo}/>
+                        <CustomCalendar className="calendar" setDate={setDate}/>
+                        <AgentContainer content={selectedAgentInfo}/>
                     </Left>
                     <Right>
                         <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}
@@ -135,7 +141,7 @@ function MainBodyTemplate(props) {
                 </Container>
                 :
                 <div style={{display: "flex", justifyContent: "center"}}>
-                    <ListContainer width="1500px"  height="1000px" headerContents={headerContent} contents={centerList}
+                    <ListContainer width="1500px" height="1000px" headerContents={headerContent} contents={centerList}
                                    gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
                                    onClickFunction={onSelect}/>
                 </div>
@@ -145,8 +151,9 @@ function MainBodyTemplate(props) {
 
     );
 }
+
 const Main = styled.div`
-// border-right: 2px solid ${Style.color2};
+    // border-right: 2px solid ${Style.color2};
   border-right: 2px solid #eee;
 `;
 const Container = styled.div`
@@ -159,10 +166,11 @@ const Left = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: -28px;
-  &>div{
-  margin-left: 20px;
-  margin-bottom: 20px;
-}
+
+  & > div {
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
 `;
 
 const Right = styled.div`
