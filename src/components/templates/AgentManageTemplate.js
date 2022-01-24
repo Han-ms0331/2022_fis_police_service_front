@@ -88,6 +88,7 @@ const AgentManageTemplate = () => {
         if (modify == true) {
             await axios.patch(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
                 .then((res) => {
+                    console.log(res)
                     showData();
                 }).catch((err) => {
                     console.log(err);
@@ -114,12 +115,12 @@ const AgentManageTemplate = () => {
         const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
         if (changeContent['a_hasCar'] === "자차") {
             changeContent['a_hasCar'] = true
-        }else{
-            changeContent['a_hasCar']=false
+        } else {
+            changeContent['a_hasCar'] = false
         }
-        if(changeContent['a_status']==="재직"){
+        if (changeContent['a_status'] === "재직") {
             changeContent['a_status'] = true
-        }else{
+        } else {
             changeContent['a_status'] = false
         }
 
@@ -128,8 +129,9 @@ const AgentManageTemplate = () => {
             changeContent['a_receiveDate'] = date;
         }
         setCurrentInfo(changeContent);
-        // console.log(currentInfo)
         handleOpen();
+        console.log(changeContent);
+        console.log(currentInfo);
     }
     const handleAddButtonClick = (e) => {
         setModify(false)

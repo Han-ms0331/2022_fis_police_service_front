@@ -41,7 +41,7 @@ function CustomInput(props) {
                 onChange={props.setValueFunction}
             >
                 {props.contents.map((content) => {
-                    return <MenuItem key={content.show} value={content.value ? content.value : " "}>{content.show}</MenuItem>;
+                    return <MenuItem key={content.show} value={content.value}>{content.show}</MenuItem>;
                 })}
             </Select>
         </FormControl>
