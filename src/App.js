@@ -28,8 +28,8 @@ function App() {
     */
 
     useEffect(() => {
-        setIsLgoined(isLogined);
-    }, [isLogined]);
+        LoginStateInitialization();
+    });
 
 
     const LoginStateInitialization = async () => {
@@ -48,7 +48,7 @@ function App() {
 
             });
     };
-    LoginStateInitialization();
+
     return (
         <div className="App">
             {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
