@@ -7,7 +7,7 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {isLoginedState, userAuthority} from "./store/LoginStore";
 import axios from "axios";
 import NetworkConfig from "./configures/NetworkConfig";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 function App() {
@@ -27,8 +27,12 @@ function App() {
         작성내용:   새로고침 되었을 때 로그인 상태를 유지하는 함수
     */
 
+    useEffect(() => {
+        setIsLgoined(isLogined);
+    }, [isLogined]);
+
+
     const LoginStateInitialization = async () => {
-        setIsLoading(true);
         console.log("initializating")
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/checkLogin`, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
             .then((res) => {
@@ -37,7 +41,6 @@ function App() {
                 if (sc === "success") {
                     setAuthority(u_auth);
                     setIsLgoined(true);
-                    setIsLoading(false);
                 } else {
                     setIsLgoined(false);
                     setAuthority("");
@@ -47,22 +50,17 @@ function App() {
     };
     LoginStateInitialization();
     return (
-        isLoading ?
-            <div>
-                loading...
-            </div>
-            :
-            <div className="App">
-                {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
-                <Switch>
-                    <Route exact path="/login" component={ThisLoginPage}/>
-                    <Route exact path="/main" component={MainPage}/>
-                    <Route exact path="/schedule" component={SchedulePage}/>
-                    <Route exact path="/manage">
-                        {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}
-                    </Route>
-                </Switch>
-            </div>
+        <div className="App">
+            {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
+            <Switch>
+                <Route exact path="/login" component={ThisLoginPage}/>
+                <Route exact path="/main" component={MainPage}/>
+                <Route exact path="/schedule" component={SchedulePage}/>
+                <Route exact path="/manage">
+                    {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}
+                </Route>
+            </Switch>
+        </div>
     );
 }
 
