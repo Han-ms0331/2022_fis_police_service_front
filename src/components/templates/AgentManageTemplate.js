@@ -236,7 +236,7 @@ const Main = styled.div`
     position: fixed;
     bottom: 40px;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-28.5%, 0);
   }
 `;
 
