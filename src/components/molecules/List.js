@@ -30,7 +30,8 @@ function List(props) {
                 height: props.height,
                 gridTemplateColumns: props.gridRatio,
                 borderRadius: props.borderRadius,
-                backgroundColor: Object.values(props.contents).includes("퇴사")?"pink": Style.color1
+                backgroundColor: Object.values(props.contents).includes("퇴사")?Style.color3: Style.color1,
+                opacity: Object.values(props.contents).includes("퇴사")?"0.4": "1"
             }}
             name={props.keyValue} onClick={props.onClickFunction}>
             {
@@ -63,7 +64,7 @@ const ListElement = styled.div`
   display: grid;
   padding: 5px 0px;
   margin-bottom: 5px;
-  // background-color: ${Style.color1};
+  background-color: ${Style.color1};
   align-items: center;
   border-radius: 15px;
   color: ${Style.color2};
