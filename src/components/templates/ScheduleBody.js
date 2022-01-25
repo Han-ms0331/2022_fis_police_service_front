@@ -13,7 +13,6 @@ import styled from 'styled-components';
 
 const ScheduleBody = () => {
     const resultRows = useRecoilValue(dateSelectedRows);
-    const rr = [resultRows];
     // const backgroundColor = 'rgba(255, 212, 0, 0.5)';
     const backgroundColor = Style.color2;
     const backgroundColor2 = Style.color1;

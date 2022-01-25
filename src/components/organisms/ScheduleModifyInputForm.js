@@ -6,20 +6,13 @@ import {Box, Container} from "@mui/material";
 import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
+import {useRecoilState, useSetRecoilState} from "recoil";
+import {dateSelectedRows, rowCount} from "../../store/DateSelectedRowsStore";
 
 function ScheduleModifyInputForm(props) {
+
     const [input, setInput] = useState({
-        schedule_id: props.defaultInput.schedule_id,
-        c_name: props.defaultInput.c_name,
-        a_code: props.defaultInput.a_code,
-        visit_date: props.defaultInput.visit_date,
-        visit_time: props.defaultInput.visit_time,
-        estimate_num: props.defaultInput.estimate_num,
-        modified_info: props.defaultInput.modified_info,
-        call_check: props.defaultInput.call_check,
-        absentCount: props.defaultInput.call_check_info,
-        errorReason: props.defaultInput.call_check_info,
-        total_etc: props.defaultInput.total_etc,
+        ...props.defaultInput
     })
 
     const [checkboxInput, setCheckBoxInput] = useState({
@@ -48,26 +41,45 @@ function ScheduleModifyInputForm(props) {
 
     })
 
+    const setRows = useSetRecoilState(dateSelectedRows);
+    const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${input.visit_date}`, {withCredentials: true})
+            .then((res) => {
+                console.log(res.data.data);
+                setRows(res.data.data);
+            })
+    }
+
     const onPatch = async() => {
-        console.log(input);
-        setInput(() => input);
-        await axios.patch(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
-            visit_date: input.visit_date,
-            visit_time: input.visit_time,
-            estimate_num: input.estimate_num,
-            modified_info: input.modified_info,
-            call_check: input.call_check,
-            total_etc: input.total_etc
-        }, {withCredentials: true})
-            .then((res) => console.log(res.data))
-            .catch((err) => console.log(err));
+        if (window.confirm('저장하시겠습니까?')) {
+            console.log(input);
+            setInput(() => input);
+            await axios.patch(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+                visit_date: input.visit_date,
+                visit_time: input.visit_time,
+                estimate_num: input.estimate_num,
+                modified_info: input.modified_info,
+                call_check: input.call_check,
+                total_etc: input.total_etc
+            }, {withCredentials: true})
+                .then((res) => console.log(res.data))
+                .catch((err) => console.log(err));
+            onData();
+            props.onClickFunction();
+            alert('저장되었습니다.');
+        }
     }
 
     const onCancel = async() => {
-        console.log(input.schedule_id);
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
-            .then((res) => console.log(res.data))
-            .catch((err) => console.log(err));
+        if (window.confirm('일정을 취소하시겠습니까?')) {
+            console.log(input.schedule_id);
+            await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
+                .then((res) => console.log(res.data))
+                .catch((err) => console.log(err));
+            onData();
+            props.onClickFunction();
+            alert('일정이 취소되었습니다.');
+        }
     }
 
 
@@ -194,10 +206,7 @@ function ScheduleModifyInputForm(props) {
 
                 <div style={{marginTop: "30px", display: 'flex',  justifyContent:'center'}}>
                     <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
-                                  borderRadius="15px" backgroundColor={Style.color2} onClick={()=>{
-                                      onCancel();
-                                      props.onClickFunction();
-                    }}/>
+                                  borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>
                 </div>
 
                 <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>
@@ -209,10 +218,7 @@ function ScheduleModifyInputForm(props) {
 
                     <div>
                         <CustomButton type="normal" width="150px" height="40px" content="저장" color="white"
-                                      borderRadius="15px" backgroundColor={Style.color2} onClick={()=>{
-                                          onPatch();
-                                          props.onClickFunction();
-                        }}/>
+                                      borderRadius="15px" backgroundColor={Style.color2} onClick={onPatch}/>
                     </div>
                 </div>
 

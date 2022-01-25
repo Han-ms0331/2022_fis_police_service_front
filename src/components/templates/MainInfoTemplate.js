@@ -244,7 +244,7 @@ function MainInfoTemplate(props) {
                                       backgroundColor={Style.color2} content="메일 전송" onClick={onClick}/>
                     </div>
                 }
-                <InfoContainer type={"apply"} content={scheduleList} u_name={localStorage.getItem("userName")}/>
+                <InfoContainer type={"apply"} content={scheduleList} />
                 <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
                     <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
                                   color={Style.color1}
