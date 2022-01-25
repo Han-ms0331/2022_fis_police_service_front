@@ -35,7 +35,7 @@ function CustomMap(props) {
         lat: props.lat,
         lng: props.lng
     } // position 은 계속 변화함, 선택한 센터의 중앙값을 고정하여 저장
-    let roadCenter=[] // 동선에 해당하는 center 마커 표시
+    let roadCenter = [] // 동선에 해당하는 center 마커 표시
 
     const handleClick = () => {
         setPosition({
@@ -64,38 +64,47 @@ function CustomMap(props) {
                 arr.type = "agentSelected"
             }
         }) // 만약 선택된 햔장요원과 현장요원 리스트에 있는 agent_id가 같을 경우 현장요원 리스트의 해당하는 현장요원 타입을 agentSelected로 변경
-         if (props.clickedAdata.scheduleList != null) {
-           /* props.clickedAdata.scheduleList.forEach((list, index, buf) => {
+        if (props.clickedAdata.scheduleList != null) {
+            props.clickedAdata.scheduleList.forEach((list, index, buf) => {
                 road.push({
                     ...list,
+                    schedule_id:list.schedule_id,
                     lat: list.center.a_latitude,
                     lng: list.center.a_longitude,
                 }) // 동선 표시를 해야하는 위치 저장
                 roadCenter.push({
-                    latlng:{lat:list.center.a_latitude, lng:list.center.a_longitude},
-                    c_name:list.center.c_name,
-                    c_people:list.estimate_num
+                    schedule_id:list.schedule_id,
+                    latlng: {lat: list.center.a_latitude, lng: list.center.a_longitude},
+                    c_name: list.center.c_name,
+                    c_people: list.estimate_num
                 }) // 센터 표시를 해야하는 위치, 해당 센터의 이름과 예상인원 저장
-            })*/
-             for(let i=0;i<3;i++){
-                 road[i]={
-                     lat:props.clickedAdata.scheduleList.center.a_latitude,
-                     lng:props.clickedAdata.scheduleList.center.a_longitude,
-                 }
-             }
-                 for (let j=0;j<3;j++){
-                     roadCenter[j]={
-                         latlng: {lat:props.clickedAdata.scheduleList.center.a_latitude, lng: props.clickedAdata.scheduleList.center.a_longitude},
-                         c_name: props.clickedAdata.scheduleList.center.c_name,
-                         c_people: props.clickedAdata.scheduleList.c_people,
-                     }
-                 }
+            })
+            /*for (let i = 0; i < 2; i++) {
+                road.push({
+                    lat: props.clickedAdata.scheduleList.center.a_latitude,
+                    lng: props.clickedAdata.scheduleList.center.a_longitude,
+                })
+            }
+            for (let j = 0; j < 2; j++) {
+                roadCenter.push({
+                    latlng: {
+                        lat: props.clickedAdata.scheduleList.center.a_latitude,
+                        lng: props.clickedAdata.scheduleList.center.a_longitude
+                    },
+                    c_name: props.clickedAdata.scheduleList.center.c_name,
+                    c_people: props.clickedAdata.scheduleList.c_people,
+                })
+}*/
 
         }
     }
 
     road.splice(1, 0, center); // 동선 중간에 현재 선택된 센터의 위치 넣어줌
-    roadCenter.splice(1, 0, {latlng:{lat:center.lat,lng:center.lng},c_name:selCenterInfo.c_name,c_people:selCenterInfo.c_people}); // 동선 중간에 현재 선택된 센터의 정보 넣어줌
+    roadCenter.splice(1, 0, {
+        latlng: {lat: center.lat, lng: center.lng},
+        c_name: selCenterInfo.c_name,
+        c_people: selCenterInfo.c_people
+    }); // 동선 중간에 현재 선택된 센터의 정보 넣어줌
 
     return (
         <Container>
@@ -128,13 +137,13 @@ function CustomMap(props) {
                     ]}
                 /> {/*선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
                 {
-                    roadCenter.map((center,index)=>(
+                    roadCenter.map((center, index) => (
                         <CustomMarker
                             type={"center"}
                             position={center.latlng}
                             content={
                                 <div>
-                                    <div>{index+1}</div>
+                                    <div>{index + 1}</div>
                                     <div>시설이름 : {center.c_name}</div>
                                     <div>예상인원: {center.c_people} 명</div>
                                 </div>
