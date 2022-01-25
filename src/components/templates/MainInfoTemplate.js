@@ -76,7 +76,7 @@ function MainInfoTemplate(props) {
         작성내용: 일정 저장 버튼이 눌렸을 때 작동하는 함수
     */
     const onSaveSchedule = async () => {
-        console.log(currentScheduleInfo.visit_time + ":00");
+        console.log(clickedAgentInfo);
         await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
             center_id: center_id,
             agent_id: clickedAgentInfo.agent_id,

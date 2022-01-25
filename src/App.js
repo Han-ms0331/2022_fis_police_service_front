@@ -30,7 +30,6 @@ function App() {
 
 
 
-
     const LoginStateInitialization = async () => {
         console.log("initializating")
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/checkLogin`, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
@@ -47,6 +46,7 @@ function App() {
 
             });
     };
+
     LoginStateInitialization();
     return (
         <div className="App">

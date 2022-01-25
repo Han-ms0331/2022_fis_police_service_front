@@ -22,32 +22,6 @@ const agentList=[
         a_longitude: 126.57173596860564,
         scheduleList: []
     },
-    {
-        agent_id: 7,
-        a_name: "asd",
-        a_ph: "123",
-        a_code: "111",
-        a_address: "분당구 불정로 6",
-        a_hasCar: "CAR",
-        a_equipment: "",
-        a_receiveDate: "2022-01-20T17:42:51.524995",
-        a_latitude: 33.44995682230663,
-        a_longitude: 126.57062723393493,
-        scheduleList: []
-    },
-    {
-        agent_id: 8,
-        a_name: "asd",
-        a_ph: "123",
-        a_code: "111",
-        a_address: "분당구 불정로 6",
-        a_hasCar: "CAR",
-        a_equipment: "",
-        a_receiveDate: "2022-01-20T17:42:51.524995",
-        a_latitude: 33.45113828191392,
-        a_longitude: 126.5720357592316,
-        scheduleList: []
-    },
 ]
 
 const selAgent=[
@@ -91,16 +65,6 @@ const selCenter = [
         c_latitude: "33.450705",
         c_longitude: "126.570677",
     },
-    {
-        c_id: "3",
-        c_address: "g",
-        c_ph: "",
-        participation: null,
-        visited: null,
-        distance: "",
-        c_latitude: "33.44997113581058",
-        c_longitude: "126.57215980066594",
-    },
 ]
 /*let road = []
 
@@ -139,7 +103,7 @@ function MapView(props) {
             setRange(2)
             console.log('250m');
             selectedCenterList.forEach((arr,index,buf)=>{
-                if (arr.distance<=250){
+               if (0<arr.distance<=250){
                     centerList.push({
                         ...arr,
                         latlng:{lat:arr.c_latitude,lng:arr.c_longitude},
