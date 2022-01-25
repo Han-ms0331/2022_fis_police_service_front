@@ -139,7 +139,7 @@ function MapView(props) {
             setRange(2)
             console.log('250m');
             selectedCenterList.forEach((arr,index,buf)=>{
-                if (arr.distance<=250){
+               if (0<arr.distance<=250){
                     centerList.push({
                         ...arr,
                         latlng:{lat:arr.c_latitude,lng:arr.c_longitude},
