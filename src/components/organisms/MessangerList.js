@@ -30,10 +30,8 @@ function wsEvt() {
     }
 
     ws.onmessage = function(data) {
-        var msg = data.data;
-        if(msg != null && msg.trim() != ''){
-            $("#chating").append("<p>" + msg + "</p>");
-        }
+        let msg = data.data;
+        console.log(msg);
     }
 
     document.addEventListener("keypress", function(e){
@@ -46,7 +44,7 @@ function wsEvt() {
 const MessangerList = () => {
     const [messages,setMessages]=useState([]);
     const getData = async () => {
-        wsOpen();
+        await wsOpen();
         // axios.get("/messenger").then((res) => {
         //     setMessages(res.data);
         // }
