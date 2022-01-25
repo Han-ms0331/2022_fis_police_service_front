@@ -11,6 +11,11 @@ import {userAuthority} from "../../store/LoginStore";
 작성자: 정도식
 작성내용: 수정요청사항을 담는 컨테이너
 */
+/*
+    작성시간: 2022/01/24 4:25 PM
+    이름: 이창윤
+    작성내용: Announcement width 크기 수정
+*/
 
 const MessangerContainer = () => {
     const authority = useRecoilValue(userAuthority);
