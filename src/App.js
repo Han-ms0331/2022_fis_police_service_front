@@ -25,22 +25,27 @@ function App() {
         작성내용:   새로고침 되었을 때 로그인 상태를 유지하는 함수
     */
 
-    const LoginStateInitialization = async () => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/checkLogin`, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
-            .then((res) => {
-                console.log(res.data);   // sc: "success", u_auth:"ADMIN"
-                const [sc,u_auth] = [res.data.sc,res.data.u_auth];
-                if(sc==="success"){
-                    setAuthority(u_auth);
-                    setIsLgoined(true);
-                }
-                else{
-                    setIsLgoined(false);
-                    setAuthority("");
-                }
-
-            });
-    };
+    // const LoginStateInitialization = async () => {
+    //     await axios.get(`http://${NetworkConfig.networkAddress}:8080/checkLogin`, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
+    //         .then((res) => {
+    //             console.log(res.data);   // sc: "success", u_auth:"ADMIN"
+    //             const [sc,u_auth] = [res.data.sc,res.data.u_auth];
+    //             if(sc==="success"){
+    //                 setAuthority(u_auth);
+    //                 setIsLgoined(true);
+    //             }
+    //             else{
+    //                 setIsLgoined(false);
+    //                 setAuthority("");
+    //             }
+    //
+    //         });
+    // };
+    const LoginStateInitialization = () => {
+        if (localStorage.getItem("login-state") === "true") {
+            setIsLgoined(true); //다시 새로고침 되었을 때 로컬 스토리지에 저장이 되어있는 login state에 따라 isLogined를 세팅
+        }
+    }
     LoginStateInitialization();
     return (
         <div className="App">
