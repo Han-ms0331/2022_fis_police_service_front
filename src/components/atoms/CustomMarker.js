@@ -37,7 +37,8 @@ function CustomMarker(props) {
                 </div>}
             </MapMarker>
         )
-    } else if (props.type === 'agent') {
+    }
+    else if (props.type === 'agent') {
         return (
             <MapMarker
                 position={props.position}
