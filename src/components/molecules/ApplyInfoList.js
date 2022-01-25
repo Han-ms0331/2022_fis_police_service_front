@@ -10,19 +10,19 @@ import './ApplyInfoList.css'
 
 function ApplyInfoList(props) {
     const {u_name, content} = props;
-
+    console.log(content)
     return (
         <div className={"apply_info_list"} style={{width: "100%", padding: "1vw", fontSize: "0.7vw"}}>
             <div className={"apply_recorder_container"}>
                 <div>기록자</div>
-                <div>{u_name}</div>
+                <div>{content.user.user_name}</div>
             </div>
             <div className={"apply_info_container"}>
                 <div>
                     <div style={{textAlign: "start"}}>
                         <div className={"apply_field_container"}>
                             <div className={"apply_field_name"}>현장요원</div>
-                            <div className={"apply_field_value"}>{content.a_code}</div>
+                            <div className={"apply_field_value"}>{content.agent.agent_id+content.agent.agent_name}</div>
                         </div>
                         <br/>
                         <div className={"apply_field_container"}>
