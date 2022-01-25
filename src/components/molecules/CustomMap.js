@@ -26,24 +26,16 @@ function CustomMap(props) {
             center: {lat: props.lat, lng: props.lng},
             isPanto: true,
         }
-    )
-
-    const [aroundAgent, setAroundAgent] = useState(
-        {
-            type: "agent",
-            latlng: {lat: props.adata.a_latitude, lng: props.adata.a_longitude},
-            agent_id: props.adata.agent_id
-        }
-    )
+    ) //선택한 센터의 좌표를 초기 값으로 갖고, 지도의 중앙값을 추적하는 state
 
 
-    let aInfo = []
-    let road = []
+    let aInfo = [] // 현장요원 리스트
+    let road = [] // 동선 저장
     let center = {
         lat: props.lat,
         lng: props.lng
-    }
-    let roadCenter=[]
+    } // position 은 계속 변화함, 선택한 센터의 중앙값을 고정하여 저장
+    let roadCenter = [] // 동선에 해당하는 center 마커 표시
 
     const handleClick = () => {
         setPosition({
@@ -55,11 +47,6 @@ function CustomMap(props) {
         });
     }
 
-    console.log("agentList")
-    console.log(props.adata)
-    console.log("clickedAdata")
-    console.log(props.clickedAdata)
-
     if (props.adata != null) {
         props.adata.forEach((arr, index, buf) => {
             aInfo.push({
@@ -67,9 +54,8 @@ function CustomMap(props) {
                 latlng: {lat: arr.a_latitude, lng: arr.a_longitude},
                 type: "agent"
             })
-
         })
-    }
+    } // 현장요원 리스트에 타입과 latlng 형식 추가
 
 
     if (props.clickedAdata != null) {
@@ -77,57 +63,48 @@ function CustomMap(props) {
             if (props.clickedAdata.agent_id === arr.agent_id) {
                 arr.type = "agentSelected"
             }
-        })
+        }) // 만약 선택된 햔장요원과 현장요원 리스트에 있는 agent_id가 같을 경우 현장요원 리스트의 해당하는 현장요원 타입을 agentSelected로 변경
         if (props.clickedAdata.scheduleList != null) {
             props.clickedAdata.scheduleList.forEach((list, index, buf) => {
                 road.push({
                     ...list,
+                    schedule_id:list.schedule_id,
                     lat: list.center.a_latitude,
                     lng: list.center.a_longitude,
-                })
+                }) // 동선 표시를 해야하는 위치 저장
                 roadCenter.push({
-                    latlng:{lat:list.center.a_latitude, lng:list.center.a_longitude},
-                    c_name:list.center.c_name,
-                    c_people:list.estimate_num
-                })
+                    schedule_id:list.schedule_id,
+                    latlng: {lat: list.center.a_latitude, lng: list.center.a_longitude},
+                    c_name: list.center.c_name,
+                    c_people: list.estimate_num
+                }) // 센터 표시를 해야하는 위치, 해당 센터의 이름과 예상인원 저장
             })
-            console.log("roadCenter")
-            console.log(roadCenter)
+            /*for (let i = 0; i < 2; i++) {
+                road.push({
+                    lat: props.clickedAdata.scheduleList.center.a_latitude,
+                    lng: props.clickedAdata.scheduleList.center.a_longitude,
+                })
+            }
+            for (let j = 0; j < 2; j++) {
+                roadCenter.push({
+                    latlng: {
+                        lat: props.clickedAdata.scheduleList.center.a_latitude,
+                        lng: props.clickedAdata.scheduleList.center.a_longitude
+                    },
+                    c_name: props.clickedAdata.scheduleList.center.c_name,
+                    c_people: props.clickedAdata.scheduleList.c_people,
+                })
+}*/
+
         }
     }
 
-    road.splice(1, 0, center);
-    roadCenter.splice(1, 0, {latlng:{lat:center.lat,lng:center.lng},c_name:selCenterInfo.c_name,c_people:selCenterInfo.c_people});
-    console.log("roadCenter")
-    console.log(roadCenter)
-
-
-
-    /* console.log("aInfoOri")
-     console.log(aInfo)
-     console.log("aInfo")
-     console.log(aInfo)*/
-
-    /*  if (props.clickedAdata != null) {
-          props.clickedAdata.schedule.slice(1, 0, selCenterInfo[0]);
-          props.clickedAdata.schedule.forEach((arr, index, buf) => { // 동선 표시를 위해 위도경도 입력 형태 변경
-              road.push({
-                  ...arr,
-                  lat: arr.c_latitude, lng: arr.c_longitude,
-              })
-          })
-      }*/
-
-    /*
-        for(let i=0;i<3;i++){
-            road.push({
-                ...road,
-                lat:props.clickedAdata.scheduleList[i].center.a_latitude,
-                lng:props.clickedAdata.scheduleList[i].center.a_longitude,
-            })
-        }
-
-    */
+    road.splice(1, 0, center); // 동선 중간에 현재 선택된 센터의 위치 넣어줌
+    roadCenter.splice(1, 0, {
+        latlng: {lat: center.lat, lng: center.lng},
+        c_name: selCenterInfo.c_name,
+        c_people: selCenterInfo.c_people
+    }); // 동선 중간에 현재 선택된 센터의 정보 넣어줌
 
     return (
         <Container>
@@ -160,13 +137,13 @@ function CustomMap(props) {
                     ]}
                 /> {/*선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
                 {
-                    roadCenter.map((center,index)=>(
+                    roadCenter.map((center, index) => (
                         <CustomMarker
                             type={"center"}
                             position={center.latlng}
                             content={
                                 <div>
-                                    <div>{index+1}</div>
+                                    <div>{index + 1}</div>
                                     <div>시설이름 : {center.c_name}</div>
                                     <div>예상인원: {center.c_people} 명</div>
                                 </div>
