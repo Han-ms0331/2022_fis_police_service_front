@@ -82,6 +82,7 @@ const InputRow = styled.div`
   width: 280px;
   height: 40px;
   border-radius: 6px;
+  background-color: #fff;
 
   & .icon {
     justify-self: center;
@@ -92,11 +93,13 @@ const InputRow = styled.div`
   }
 
   & input {
-    width: 98%;
+    width: 94.5%;
     justify-self: start;
     color: #222;
     box-sizing: content-box;
     border: none;
+    border-left: 1px solid #dadada;
+    padding-left: 10px;
   }
 `;
 export default LoginForm;
