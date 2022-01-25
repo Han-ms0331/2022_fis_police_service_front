@@ -25,6 +25,13 @@ import NetworkConfig from "../../configures/NetworkConfig";
 작성자: 정도식
 작성내용: 해당 날짜에 검색되는 스케줄 개수 띄우기
 */
+/*
+    작성시간: 2022/01/25 10:37 AM
+    이름: 이창윤
+    작성내용: 날짜 선택 시 스케줄 데이터를 불러오는 함수 작성
+        - onData in useEffect
+*/
+
 const ScheduleSidebar = () => {
     const [date, setDate] = useState(new Date());
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
