@@ -18,7 +18,7 @@ import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
 
 
 function MainInfoTemplate(props) {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const [isScheduleOpen, setIsScheduleOpen] = useState(false);
     const clickedAgentInfo = useRecoilValue(ClickedAgentInfo)
     const [currentInfo, setCurrentInfo] = useState({
@@ -165,7 +165,7 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: onClick- 각 버튼들이 클릭되었을 때 실행하는 로직을 담고있음
     */
-
+    useEffect(()=>{console.log(isOpen)},[isOpen]);
     const onClick = (e) => {
         if (e.target.name === "open") {
             if (callList[0] !== undefined) {
@@ -182,7 +182,7 @@ function MainInfoTemplate(props) {
                     agent_etc: callList[0].agent_etc
                 })
             }
-            setIsOpen(true);
+        setIsOpen(true);
         } else if (e.target.name === "mail") {
             sendMail()
         } else if (e.target.name === "cancel") {
@@ -190,9 +190,9 @@ function MainInfoTemplate(props) {
                 setIsOpen(false);
         } else if (e.target.name === "save") {
             if (window.confirm("저장하시겠습니까?")) {
-                onSaveCall()
+                onSaveCall();
+                setIsOpen(false);
             }
-            setIsOpen(false);
         } else if (e.target.name === "add_schedule") {
             setIsScheduleOpen(true);
         } else if (e.target.name === "schedule_save") {
@@ -220,7 +220,17 @@ function MainInfoTemplate(props) {
                             <ModalContainer>
                                 <CallInputForm data={callList[0]} currentInfo={currentInfo}
                                                setCurrentInfo={setCurrentInfo}/>
+                                <div style={{margin: "150px 0px", display: "flex", justifyContent: "space-around"}}>
+                                    <CustomButton name="cancel" type="normal" width="150px" height="35px"
+                                                  borderRadius="3px"
+                                                  color={Style.color1}
+                                                  backgroundColor={Style.color2} content="취소" onClick={onClick}/>
+                                    <CustomButton name="save" type="normal" width="150px" height="35px"
+                                                  borderRadius="3px"
+                                                  color={Style.color1}
+                                                  backgroundColor={Style.color2} content="저장" onClick={onClick}/>
 
+                                </div>
                             </ModalContainer>
                         </Box>
                     </Modal>
@@ -258,6 +268,7 @@ function MainInfoTemplate(props) {
                                               borderRadius="3px"
                                               color={Style.color1}
                                               backgroundColor={Style.color2} content="저장" onClick={onClick}/>
+
                             </div>
                         </ModalContainer>
                     </Box>
@@ -277,7 +288,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: 99vh;
-  width: 650px;
+  width: 670px;
   overflow: auto;
   margin-top: 30px;
 
