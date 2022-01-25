@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {user} from '../../store/dummy-data/user'
 import ListContainer from "../organisms/ListContainer";
 import CustomButton from "../atoms/CustomButton";
 import UserManageInputForm from "../organisms/UserManageInputForm";
@@ -214,7 +213,7 @@ const Main = styled.div`
     position: fixed;
     bottom: 40px;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-28.5%, 0);
   }
 `;
 export default UserManageTemplate;

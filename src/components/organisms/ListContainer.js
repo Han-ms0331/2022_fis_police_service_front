@@ -2,15 +2,15 @@ import React from 'react';
 import List from "../molecules/List";
 import InputContainer from "../molecules/InputContainer";
 import CustomButton from "../atoms/CustomButton";
+import CustomSpinner from "../atoms/CustomSpinner";
 
 function ListContainer(props) {
     return (
-        props.contents === "" ? null :
+        props.contents === "" ? <CustomSpinner/>:
         <div style={{
             width: props.width,
             height: props.height,
             borderRadius: props.borderRadius,
-            // overflow: "hidden"
             overflowX: "hidden"
         }}>
             <List type="listHeader" contents={props.headerContents}
