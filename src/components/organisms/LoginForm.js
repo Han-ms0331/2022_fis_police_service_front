@@ -3,10 +3,8 @@ import styled from 'styled-components';
 import logo from '../media/logo.png'
 import {BiUser} from "react-icons/bi";
 import {RiLockPasswordLine} from "react-icons/ri"
-import {Link} from "react-router-dom";
 import CustomButton from "../atoms/CustomButton";
 import {Style} from "../../Style";
-import {Button} from "@mui/material";
 
 /*
     날짜: 2022/01/11 10:44 오전
@@ -32,14 +30,8 @@ const LoginForm = (props) => {
                         <div className="icon"><RiLockPasswordLine/></div>
                         <input name="u_pwd" id="password" type="password" placeholder="비밀번호" onChange={props.onChangeFunction}/>
                     </InputRow>
-                    <Button variant="contained" name={props.name} type="submit" style={{
-                        width: "100%",
-                        height: "40px",
-                        backgroundColor: `${Style.color2}`,
-                        color: `${Style.color1}`,
-                        borderRadius: "10px"
-                    }}
-                    >로그인</Button>
+                    <CustomButton type="normal" width="100%" height="40px" backgroundColor={Style.color2}
+                    color={Style.color1} borderRadius={"10px"} content={"로그인"} submitType={"submit"}/>
                 </form>
             </Container>
         </Main>
@@ -82,6 +74,7 @@ const InputRow = styled.div`
   width: 280px;
   height: 40px;
   border-radius: 6px;
+  background-color: #fff;
 
   & .icon {
     justify-self: center;
@@ -92,11 +85,13 @@ const InputRow = styled.div`
   }
 
   & input {
-    width: 98%;
+    width: 94.5%;
     justify-self: start;
     color: #222;
     box-sizing: content-box;
     border: none;
+    border-left: 1px solid #dadada;
+    padding-left: 10px;
   }
 `;
 export default LoginForm;
