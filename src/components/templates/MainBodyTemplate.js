@@ -52,8 +52,10 @@ function MainBodyTemplate(props) {
     }
 
     useEffect(() => {
-        onData(); // 날짜를 선택한 경우에 함수 실행
-        console.log(selectedAgentInfo); // undefined???
+        if (selectedCenterId !== "") {
+            onData(); // 날짜를 선택한 경우에 함수 실행
+            console.log(selectedAgentInfo); // undefined???
+        }
     }, [date])
 
     useEffect(() => {
