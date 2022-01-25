@@ -27,9 +27,8 @@ function App() {
         작성내용:   새로고침 되었을 때 로그인 상태를 유지하는 함수
     */
 
-    useEffect(() => {
-        LoginStateInitialization();
-    });
+
+
 
 
     const LoginStateInitialization = async () => {
@@ -48,7 +47,7 @@ function App() {
 
             });
     };
-
+    LoginStateInitialization();
     return (
         <div className="App">
             {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
