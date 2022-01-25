@@ -18,9 +18,12 @@ import {Message} from "../molecules/Message";
 작성내용:
 message msw 작업 완료
 */
-
+const ws = new WebSocket("ws://" + "54.175.8.114:8080" + "/messenger/websocket");
+function send() {
+    ws.send("name"+" : "+"msg");
+}
 function wsOpen(){
-    ws = new WebSocket("ws://" + "54.175.8.114:8080" + "/messenger/websocket");
+
     wsEvt();
 }
 
@@ -44,7 +47,7 @@ function wsEvt() {
 const MessangerList = () => {
     const [messages,setMessages]=useState([]);
     const getData = async () => {
-        await wsOpen();
+        wsOpen();
         // axios.get("/messenger").then((res) => {
         //     setMessages(res.data);
         // }
