@@ -34,7 +34,8 @@ function LoginTemplate(props) {
         작성내용: login 버튼을 눌렀을 때 작동하는 함수
     */
 
-    const onLogin = async () => {   //서버와 로그인 통신을 하는 부분
+    const onLogin = async (e) => {   //서버와 로그인 통신을 하는 부분
+        e.preventDefault();
         await axios.post(`http://${NetworkConfig.networkAddress}:8080/login`, loginInfo, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
             .then((res) => {
                 console.log(res.data);

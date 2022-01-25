@@ -15,7 +15,7 @@ import AgentContainer from "../organisms/AgentContainer";
 import styled from "styled-components";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
-import {SelectedAgentInfo} from "../../store/SelectedAgentStore";
+import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
 import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
@@ -35,6 +35,7 @@ function MainBodyTemplate(props) {
     const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
+    const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
 
 
     const [date, setDate] = useRecoilState(SelectedDateState);
@@ -55,6 +56,9 @@ function MainBodyTemplate(props) {
         console.log(selectedAgentInfo); // undefined???
     }, [date])
 
+    useEffect(() => {
+        setSelectedAgentInfo([]);
+    }, [selectedCenterInfo])
 
     const headerContent = ["시설명", "주소", "전화번호", "연락기록", "방문여부"]     //리스트 헤더
 
@@ -79,17 +83,15 @@ function MainBodyTemplate(props) {
                 setSelectedCenterScheduleList(res.data.data.scheduleList)//scheduleList에서 뜰 내용 저장
                 setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
                 setSelectedCenterList(res.data.data.ceterList);
-
+                setClickedAgent({});
                 setIsSelected(true);
             })
     }
-
     /*
         날짜: 2022/01/18 5:02 오후
         작성자: 한명수
         작성내용: 검색창에 입력을 할 때 작동하는 함수
     */
-
     const handleSearchInputChange = (e) => {
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
         setCurrentInfo({
@@ -97,14 +99,11 @@ function MainBodyTemplate(props) {
             [name]: value // name 키를 가진 값을 value 로 설정
         });
     };
-
-
     /*
         날짜: 2022/01/18 5:01 오후
         작성자: 한명수
         작성내용: 시설을 검색하였을때 작동하는 함수
     */
-
     const onSearch = async (e) => {
         console.log(currentInfo);
         e.preventDefault();

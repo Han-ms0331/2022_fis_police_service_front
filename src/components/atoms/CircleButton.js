@@ -4,7 +4,7 @@
     작성내용: 시간표에 따른 원형 버튼 컴포넌트
 */
 
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import styled from "styled-components";
 
 const Button = styled.button` // css
@@ -29,13 +29,13 @@ const Button = styled.button` // css
   }
 `;
 
-export default function CircleButton({bgColor, handleClick}) { // bgColor로 버튼 색 props 받음.
+export default function CircleButton({name, bgColor, handleClick}) { // bgColor로 버튼 색 props 받음.
     const [bcolor, setBcolor] = useState(bgColor);
 
     return (
         <>
             {
-                <Button bgColor={bgColor} onClick={handleClick}></Button>
+                <Button name={name} bgColor={bcolor} onClick={handleClick} ></Button>
                 // 초록색 버튼일 경우 Click Event 활성화
             }
 
