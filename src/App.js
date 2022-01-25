@@ -7,6 +7,7 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {isLoginedState, userAuthority} from "./store/LoginStore";
 import axios from "axios";
 import NetworkConfig from "./configures/NetworkConfig";
+import {useState} from "react";
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
         작성내용: login 상태에 따라 랜더링을 다르게하는 상태
     */
     const [isLogined, setIsLgoined] = useRecoilState(isLoginedState);
-    const [authority,setAuthority] = useRecoilState(userAuthority);
+    const [authority, setAuthority] = useRecoilState(userAuthority);
+    const [isLoading, setIsLoading] = useState(false);
     console.log(`authority:${authority}`);
 
     /*
@@ -26,16 +28,17 @@ function App() {
     */
 
     const LoginStateInitialization = async () => {
+        setIsLoading(true);
         console.log("initializating")
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/checkLogin`, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
             .then((res) => {
                 console.log(res.data);   // sc: "success", u_auth:"ADMIN"
-                const [sc,u_auth] = [res.data.sc,res.data.u_auth];
-                if(sc==="success"){
+                const [sc, u_auth] = [res.data.sc, res.data.u_auth];
+                if (sc === "success") {
                     setAuthority(u_auth);
                     setIsLgoined(true);
-                }
-                else{
+                    setIsLoading(false);
+                } else {
                     setIsLgoined(false);
                     setAuthority("");
                 }
@@ -44,17 +47,22 @@ function App() {
     };
     LoginStateInitialization();
     return (
-        <div className="App">
-            {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
-            <Switch>
-                <Route exact path="/login" component={ThisLoginPage}/>
-                <Route exact path="/main" component={MainPage}/>
-                <Route exact path="/schedule" component={SchedulePage}/>
-                <Route exact path="/manage">
-                    {authority==='ADMIN'?<ManagePage/>:<Redirect to={"/main"}/>}
-                </Route>
-            </Switch>
-        </div>
+        isLoading ?
+            <div>
+                loading...
+            </div>
+            :
+            <div className="App">
+                {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
+                <Switch>
+                    <Route exact path="/login" component={ThisLoginPage}/>
+                    <Route exact path="/main" component={MainPage}/>
+                    <Route exact path="/schedule" component={SchedulePage}/>
+                    <Route exact path="/manage">
+                        {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}
+                    </Route>
+                </Switch>
+            </div>
     );
 }
 
