@@ -70,7 +70,7 @@ function MainBodyTemplate(props) {
         작성내용: 검색 결과로 나온 시설 리스트중 하나를 선택했을 때 작동하는 함수
     */
     const onSelect = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
             .then((res) => {
                 console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -112,7 +112,7 @@ function MainBodyTemplate(props) {
         if (currentInfo.c_name == "" && currentInfo.c_address == "" && currentInfo.c_ph == "") {
             alert("검색어를 입력하세요")
         } else {
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`)
+            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`,{withCredentials:true})
                 .then((res) => {
                     console.log(res.data.data)
                     setCenterList(res.data.data);
