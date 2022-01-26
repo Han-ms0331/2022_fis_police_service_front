@@ -57,6 +57,13 @@ function ScheduleModifyInputForm(props) {
             console.log(input);
             setInput(() => input);
             await axios.patch(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+                schedule_id: input.schedule_id,
+                a_code: input.a_code,
+                center_id: input.center_id,
+                center_etc: input.center_etc,
+                agent_etc: input.agent_etc,
+                call_check_info: input.call_check_info,
+                valid: input.valid,
                 visit_date: input.visit_date,
                 visit_time: input.visit_time,
                 estimate_num: input.estimate_num,
@@ -201,19 +208,19 @@ function ScheduleModifyInputForm(props) {
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="통화이력: " inputName="call_check" inputType="select" width="300px"
                                     defaultValue={input.call_check}
-                                    contents={["미완료", "통화완료", "부재중", "통화오류"]} setValueFunction={onChange}
+                                    contents={[{show: "미완료", value: "미완료"}, {show: "통화완료", value: "통화완료"}, {show: "부재중", value: "부재중"}, {show: "통화오류", value: "통화오류"}]} setValueFunction={onChange}
                     />
                 </div>
 
                 <div style={{marginBottom: "20px", display: `${disable.absentCount}`}}>
-                    <InputContainer labelContent="부재중 횟수: " inputName="absentCount" inputType="number" width="300px"
-                                    defaultValue={input.absentCount}
+                    <InputContainer labelContent="부재중 횟수: " inputName="call_check_info" inputType="number" width="300px"
+                                    defaultValue={input.call_check_info}
                                     setValueFunction={onChange}/>
                 </div>
 
                 <div style={{marginBottom: "20px", display: `${disable.errorReason}`}}>
-                    <InputContainer labelContent="통화오류 사유: " inputName="errorReason" inputType="text" width="300px"
-                                    defaultValue={input.errorReason}
+                    <InputContainer labelContent="통화오류 사유: " inputName="call_check_info" inputType="text" width="300px"
+                                    defaultValue={input.call_check_info}
                                     setValueFunction={onChange}/>
                 </div>
             </div>

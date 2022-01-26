@@ -31,39 +31,50 @@ function TimeList({content, setCurrentTime=0}) {
         setClickedAgent(content);
         console.log(content);
     }
+
     const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
+    content.scheduleList.map(
+        item => {
+            const x = Date.parse(item.visit_date + "T" + item.visit_time)
+            if (x>=Date.parse(item.visit_date + "T09:00:00") && x<=Date.parse(item.visit_date + "T10:00:00") ) {
+                using[0] = true;
+            } else if (x>=Date.parse(item.visit_date + "T10:00:00") && x<=Date.parse(item.visit_date + "T11:00:00")) {
+                using[1] = true;
+            } else if (x>=Date.parse(item.visit_date + "T11:00:00") && x<=Date.parse(item.visit_date + "T12:00:00")) {
+                using[2] = true;
+            } else if (x>=Date.parse(item.visit_date + "T12:00:00")) {
+                using[3] = true;
+            }
+            })
+    const Content = () => {
+        return (
+          <div style={{width: 200}}>
+                  {content.a_code} {content.a_name}
+              <div>
+                  <CircleButton name={clickedAgent.a_code+'1'} bgColor={using[0] ? red : green} />
+                  <CircleButton name={clickedAgent.a_code+'2'} bgColor={using[1] ? red : green} />
+                  <CircleButton name={clickedAgent.a_code+'3'} bgColor={using[2] ? red : green} />
+                  <CircleButton name={clickedAgent.a_code+'4'} bgColor={using[3] ? red : green} />
+              </div>
+          </div>
+        );
+    }
 
     return (
         <CustomButton
             fontWeight='normal'
             type='reverse'
-            content={`${content.a_code} ${content.a_name}`}
+            content={<Content />}
             margin='5px' padding='5px' border='3px solid #eee'
             color='black' backgroundColor='White' borderRadius='10px'
-            width='225px' height='61px' fontSize='18px'
+            width='225px' height='65px' fontSize='18px'
             onClick={handleClick}
-        />
-            // {/* 현장 요원 이름 */}
-            // {/*{content.scheduleList.map(*/}
-            // {/*    item => {*/}
-            // {/*        const x = Date.parse(item.visit_date + "T" + item.visit_time)*/}
-            // {/*        if (x>=Date.parse(item.visit_date + "T09:00:00") && x<=Date.parse(item.visit_date + "T10:00:00") ) {*/}
-            // {/*            using[0] = true;*/}
-            // {/*        } else if (x>=Date.parse(item.visit_date + "T10:00:00") && x<=Date.parse(item.visit_date + "T11:00:00")) {*/}
-            // {/*            using[1] = true;*/}
-            // {/*        } else if (x>=Date.parse(item.visit_date + "T11:00:00") && x<=Date.parse(item.visit_date + "T12:00:00")) {*/}
-            // {/*            using[2] = true;*/}
-            // {/*        } else if (x>=Date.parse(item.visit_date + "T12:00:00")) {*/}
-            // {/*            using[3] = true;*/}
-            // {/*        }*/}
-            // {/*    }*/}
-            // {/*)}*/}
-            // {/*/!*{date}*!/*/}
-            // {/*<CircleButton name={clickedAgent.a_code+'1'} bgColor={using[0] ? red : green} handleClick={handleClick}/>*/}
-            // {/*<CircleButton name={clickedAgent.a_code+'2'} bgColor={using[1] ? red : green} handleClick={handleClick}/>*/}
-            // {/*<CircleButton name={clickedAgent.a_code+'3'} bgColor={using[2] ? red : green} handleClick={handleClick}/>*/}
-            // {/*<CircleButton name={clickedAgent.a_code+'4'} bgColor={using[3] ? red : green} handleClick={handleClick}/>*/}
-            // {/* 현장 요원 스케줄에 따른 버튼 */}
+        >
+
+
+            {/*현장 요원 스케줄에 따른 버튼*/}
+        </CustomButton>
+
     );
 }
 
