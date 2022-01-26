@@ -145,7 +145,7 @@ function CustomMap(props) {
 
 
                 <CustomMarker
-                    type={"centerSelected"}
+                    type={"mainCenter"}
                     position={{lat: props.lat, lng: props.lng}}
                     content={
                         <div>
