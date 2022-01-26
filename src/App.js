@@ -36,10 +36,12 @@ function App() {
                 console.log(res.data);   // sc: "success", u_auth:"ADMIN"
                 const [sc, u_auth] = [res.data.sc, res.data.u_auth];
                 if (sc === "success") {
+                    console.log("success inside")
                     setAuthority(u_auth);
                     setIsLgoined(true);
                     isLoginedCheck = true
                 } else {
+                    console.log("fail inside")
                     setIsLgoined(false);
                     setAuthority("");
                     isLoginedCheck = false
