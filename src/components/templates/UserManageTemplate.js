@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {user} from '../../store/dummy-data/user'
 import ListContainer from "../organisms/ListContainer";
 import CustomButton from "../atoms/CustomButton";
 import UserManageInputForm from "../organisms/UserManageInputForm";
@@ -9,6 +8,8 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
+import Swal from "sweetalert2";
+import '../atoms/swal.css'
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -81,50 +82,79 @@ const UserManageTemplate = () => {
 
 
         const handleClickSave = async () => {
-            const emptyOrNot = ()=>{
+            const emptyOrNot = () => {
                 let a = 1;
-                for(const key in currentInfo){
-                    if(key==='user_id'){
+                for (const key in currentInfo) {
+                    if (key === 'user_id') {
                         continue;
                     }
-                    if(currentInfo[key]===""){
+                    if (currentInfo[key] === "") {
                         console.log('hi')
                         a = 0;          // empty면 0으로 체크
                         break;
                     }
                 }
-                if(a === 0){
+                if (a === 0) {
                     return true;       // a가 0이면 empty, true 리턴
-                }else{
+                } else {
                     return false;
+                }
+            }
+            const showErrorMessage = (err) => {
+                if (err.response.status === 402) {
+                    // alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '서버 오류입니다.',
+                        text: '잠시 후 재시도 해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
                 }
             }
 
             if (emptyOrNot() === false && modify === true) {
                 await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true}).then((res) => {
-                    alert("수정 되었습니다");
+                    Swal.fire({
+                        icon: 'success',
+                        title: '수정되었습니다.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
                     showData()
                     handleClose();
                 }).catch((err) => {
-                    if(err.response.status === 402) {
-                        alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
-                    }
+                    showErrorMessage(err);
                 })
-            } else if(emptyOrNot() === false && modify === false) {
+            } else if (emptyOrNot() === false && modify === false) {
                 console.log(currentInfo)
                 await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true})
                     .then((res) => {
-                        alert("추가 되었습니다")
+                        Swal.fire({
+                            icon: 'success',
+                            title: '추가되었습니다.',
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: '확인',
+                        })
                         showData()
                         handleClose();
                     }).catch((err) => {
-                        if(err.response.status === 402) {
-                            alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
-                        }
+                        showErrorMessage(err);
                     })
-            }
-            else{
-                alert("모든 폼을 입력해주세요.")
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '폼을 모두 입력해주세요.',
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: '확인',
+                })
             }
         }
 
@@ -175,6 +205,7 @@ const UserManageTemplate = () => {
                     open={open}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
+                    style={{zIndex: 2}}
                 >
                     <Box sx={style}>
                         <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
@@ -214,7 +245,7 @@ const Main = styled.div`
     position: fixed;
     bottom: 40px;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-28.5%, 0);
   }
 `;
 export default UserManageTemplate;

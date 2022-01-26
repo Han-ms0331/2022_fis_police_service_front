@@ -15,6 +15,8 @@ import question from '../media/question.png';
 import NetworkConfig from "../../configures/NetworkConfig";
 import ScheduleInputForm from "../organisms/ScheduleInputForm";
 import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
+import Swal from "sweetalert2";
+import '../atoms/swal.css'
 
 
 function MainInfoTemplate(props) {
@@ -97,7 +99,20 @@ function MainInfoTemplate(props) {
                     agent_etc: ""
                 })
                 console.log(res);
-                alert("저장되었습니다")
+                Swal.fire({
+                    icon: "success",
+                    title: "저장되었습니다.",
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: "확인"
+                })
+            }).catch(err => {
+                console.log(err);
+                Swal.fire({
+                    icon: "error",
+                    title: "실패하였습니다.",
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: "확인"
+                })
             })
     }
 
@@ -134,7 +149,21 @@ function MainInfoTemplate(props) {
                     agent_etc: ""
                 })
                 console.log(res);
-                alert("저장되었습니다")
+                // alert("저장되었습니다")
+                Swal.fire({
+                    icon: "success",
+                    title: "저장되었습니다.",
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: "확인"
+                })
+            }).catch(err => {
+                console.log(err)
+                Swal.fire({
+                    icon: "error",
+                    title: "실패하였습니다.",
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: "확인"
+                })
             })
     }
 
@@ -144,20 +173,48 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: sendMail - 서버와 메일전송 통신을 하는 부분
     */
+    const sendMailFunction = async () => {
+        const result = await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`)
+            .then((res) => {
+                if (res.data.result === "success") {
+                    // alert("메일 전송에 성공하였습니다.")
+                    Swal.fire({
+                        icon: "success",
+                        title: "메일 전송에 성공하였습니다.",
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: "확인"
+                    })
+                } else {
+                    // alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                Swal.fire({
+                    icon: "error",
+                    title: "메일 전송에 실패하였습니다.",
+                    text: "잠시후에 다시 실행해 주세요.",
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: "확인"
+                })
+            })
+
+    }
+
     const sendMail = async () => {
-        if (window.confirm("메일을 전송하시겠습니까?")) {
-            const result = await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`)
-                .then((res) => {
-                    if (res.data.result === "success") {
-                        alert("메일 전송에 성공하였습니다.")
-                    } else {
-                        alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-        }
+        Swal.fire({
+            title: '메일을 보내시겠습니까?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: Style.color2,
+            cancelButtonColor: "#e55039",
+            confirmButtonText: '확인',
+            cancelButtonText: "취소"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sendMailFunction();
+            }
+        })
     }
 
     /*
@@ -165,7 +222,9 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: onClick- 각 버튼들이 클릭되었을 때 실행하는 로직을 담고있음
     */
-    useEffect(()=>{console.log(isOpen)},[isOpen]);
+    useEffect(() => {
+        console.log(isOpen)
+    }, [isOpen]);
     const onClick = (e) => {
         if (e.target.name === "open") {
             if (callList[0] !== undefined) {
@@ -182,24 +241,56 @@ function MainInfoTemplate(props) {
                     agent_etc: callList[0].agent_etc
                 })
             }
-        setIsOpen(true);
+            setIsOpen(true);
         } else if (e.target.name === "mail") {
             sendMail()
         } else if (e.target.name === "cancel") {
-            if (window.confirm("작성을 취소하시겠습니까?"))
-                setIsOpen(false);
+            Swal.fire({
+                title: '작성을 취소하시겠습니까?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: Style.color2,
+                cancelButtonColor: "#e55039",
+                confirmButtonText: '확인',
+                cancelButtonText: "취소"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setIsOpen(false);
+                }
+            })
         } else if (e.target.name === "save") {
-            if (window.confirm("저장하시겠습니까?")) {
-                onSaveCall();
-                setIsOpen(false);
-            }
+            Swal.fire({
+                title: '저장하시겠습니까?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: Style.color2,
+                cancelButtonColor: "#e55039",
+                confirmButtonText: '확인',
+                cancelButtonText: "취소"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    onSaveCall();
+                    setIsOpen(false);
+                }
+            })
+
         } else if (e.target.name === "add_schedule") {
             setIsScheduleOpen(true);
         } else if (e.target.name === "schedule_save") {
-            if (window.confirm("저장하시겠습니까?")) {
-                onSaveSchedule()
-            }
-            setIsScheduleOpen(false);
+            Swal.fire({
+                title: '저장하시겠습니까?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: Style.color2,
+                cancelButtonColor: "#e55039",
+                confirmButtonText: '확인',
+                cancelButtonText: "취소"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    onSaveSchedule()
+                    setIsScheduleOpen(false);
+                }
+            })
         } else if (e.target.name === "schedule_cancel") {
             setIsScheduleOpen(false);
         }
@@ -215,6 +306,7 @@ function MainInfoTemplate(props) {
                         open={isOpen}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
+                        style={{zIndex: 2}}
                     >
                         <Box sx={style}>
                             <ModalContainer>
@@ -244,7 +336,7 @@ function MainInfoTemplate(props) {
                                       backgroundColor={Style.color2} content="메일 전송" onClick={onClick}/>
                     </div>
                 }
-                <InfoContainer type={"apply"} content={scheduleList} />
+                <InfoContainer type={"apply"} content={scheduleList}/>
                 <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
                     <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
                                   color={Style.color1}
@@ -254,6 +346,7 @@ function MainInfoTemplate(props) {
                     open={isScheduleOpen}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
+                    style={{zIndex: 2}}
                 >
                     <Box sx={style}>
                         <ModalContainer>

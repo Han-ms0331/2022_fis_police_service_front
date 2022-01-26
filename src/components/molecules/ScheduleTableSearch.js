@@ -5,7 +5,7 @@
     검색 버튼 없이 키워드 입력 시 바로 결과가 나옴. 검색 버튼은 삭제할 예정
 */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
@@ -13,10 +13,12 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 // import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@mui/icons-material/Search';
-
+import PetsIcon from '@mui/icons-material/Pets';
 import TextField from "@mui/material/TextField";
 
+
 function ScheduleTableSearch() {
+
 
     const [keyword, setKeyword] = useRecoilState(searchKeyword) // atom의 default값을 default 설정
     const handleChange = (event) => { // 검색창에 무언가 입력하면 키워드를 담아줌.

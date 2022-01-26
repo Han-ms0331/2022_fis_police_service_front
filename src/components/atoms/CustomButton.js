@@ -46,7 +46,8 @@ function CustomButton(props) {
                         fontSize:props.fontSize,
                         boxSizing:"border-box",
                         padding:props.padding,
-                        margin:props.margin
+                        margin:props.margin,
+                        fontWeight: props.fontWeight
                     }}
                     onClick={props.onClick}
             >{props.content}</Button>);

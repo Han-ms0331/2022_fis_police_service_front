@@ -10,6 +10,9 @@ import {center} from "../../store/dummy-data/center";
 import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
+import Swal from "sweetalert2";
+import '../atoms/swal.css'
+import CustomSpinner from "../atoms/CustomSpinner";
 
 
 function CenterManageTemp(props) {
@@ -38,14 +41,13 @@ function CenterManageTemp(props) {
 
     //정보 수정 버튼 눌렀을 때는 true로, 시설 추가 눌렀을 때는 false로 set하는 modify 상태에 대한 정의
     const [modify, setModify] = useState();
-
+    const [isloading,setIsloading] = useState(true);
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     async function apiGetCall(c_name, c_address, c_ph) {
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
-                // console.log(res.data.data);
                 let tmp = [];
                 res.data.data.forEach((list) => {
                     tmp.push({
@@ -57,11 +59,18 @@ function CenterManageTemp(props) {
                     })
                 })
                 setContents(tmp);
+                setIsloading(false);
                 // console.log(tmp);
                 // console.log(contents);
             })
             .catch((err) => {
-                console.log(err);
+                Swal.fire({
+                    icon: "warning",
+                    title: "서버오류입니다.",
+                    text: "잠시 후 재시도해주세요.",
+                    confirmButtonText: "확인",
+                    confirmButtonColor: Style.color2
+                })
             })
     }
 
@@ -70,7 +79,12 @@ function CenterManageTemp(props) {
         e.preventDefault();
         const {c_name, c_address, c_ph} = searchInput;
         if (c_name == "" && c_address == "" && c_ph == "") {
-            alert("검색어를 입력하세요")
+            Swal.fire({
+                icon: 'info',
+                title: '검색어를 입력해주세요.',
+                confirmButtonColor: Style.color2,
+                confirmButtonText: '확인',
+            })
         } else {
             apiGetCall(c_name, c_address, c_ph);
         }
@@ -78,11 +92,10 @@ function CenterManageTemp(props) {
     }
 // form이 보이고 안보이고에 대한 함수 정의
     const handleOpen = () => setOpen(true);
-
     const handleClose = () => setOpen(false);
+
 // 검색 창에 검색어가 바뀌면, 바뀐 검색어를 위에서 정의한 searchInput이라는 상태에 저장하는 함수 정의
     const handleSearchInputChange = (e) => {
-        // console.log(e);
         const {value, name} = e.target;
         setSearchInput({
             ...searchInput,
@@ -100,22 +113,16 @@ function CenterManageTemp(props) {
             [name]: value
         });
         console.log(currentInfo);
-
-
     }
 
-
-// useEffect(() => {
-//     console.log(currentInfo);
-// }, [currentInfo])
 // 정보 수정 버튼을 누르면 inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오는 함수
     const handleModifyButtonClick = (e) => {
         setModify(true);
         console.log(e.target.getAttribute("name"))
         setCurrentInfo(contents[e.target.getAttribute("name")])
         handleOpen();
-
     }
+
 // 시설 추가 버튼을 누르면 일어나는 일에 대한 함수. 시설을 선택한 것이 아니므로 currentInfo의 정보를 모두 null로 set함
     const handleAddButtonClick = (e) => {
         setModify(false);
@@ -126,56 +133,79 @@ function CenterManageTemp(props) {
             c_address: ""
         });
         handleOpen();
-
     }
 
 // inputForm에서 저장버튼 눌렀을 때에 대한 함수 정의
-
     const handleClickSave = async () => {
-        const emptyOrNot = ()=>{
+        const emptyOrNot = () => {
             let a = 1;
-            for(const key in currentInfo){
-                if(key==='center_id'){
+            for (const key in currentInfo) {
+                if (key === 'center_id') {
                     continue;
                 }
-                if(currentInfo[key]===""){
+                if (currentInfo[key] === "") {
                     a = 0;          // empty면 0으로 체크
                     break;
                 }
             }
-            if(a === 0){
+            if (a === 0) {
                 return true;       // a가 0이면 empty, true 리턴
-            }else{
+            } else {
                 return false;
             }
         }
 
-        if (emptyOrNot() === false && modify === true) {
-            //수정
+        if (emptyOrNot() === false && modify === true) { // 수정
             await axios.patch(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
                 .then(() => {
                         const {c_name, c_address, c_ph} = searchInput;
                         apiGetCall(c_name, c_address, c_ph);
-                        alert("수정 되었습니다.");
+                        Swal.fire({
+                            icon: 'success',
+                            title: '수정되었습니다.',
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: '확인',
+                        })
                         handleClose();
                     }
-                ).catch((err)=>{
-                    console.log(err);
+                ).catch((err) => {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '서버오류입니다.',
+                        text: '잠시 후 재시도해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
                 })
-        } else if(emptyOrNot() === false && modify === false) {
-            //추가
+        } else if (emptyOrNot() === false && modify === false) { // 추가
             await axios.post(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
                 .then(() => {
                         const {c_name, c_address, c_ph} = searchInput;
                         apiGetCall(c_name, c_address, c_ph);
-                        alert("수정 되었습니다.");
+                        Swal.fire({
+                            icon: 'success',
+                            title: '추가되었습니다.',
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: '확인',
+                        })
                         handleClose();
                     }
-                ).catch((err)=>{
-                    console.log(err)
+                ).catch((err) => {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '서버오류입니다.',
+                        text: '잠시 후 재시도해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
                 })
-        }else{
-            alert("모든 폼을 입력해주세요.")
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: '폼을 모두 입력해주세요.',
+                confirmButtonColor: Style.color2,
+                confirmButtonText: '확인',
+            })
         }
 
     }
@@ -184,16 +214,17 @@ function CenterManageTemp(props) {
         <Main>
             <div style={{margin: "20px 0px 30px 0px"}}>
                 <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
-                            height="100%"/> {/*시설정보를 검색하는 부분*/}
+                            height="100%" setIsLoading={setIsloading}/> {/*시설정보를 검색하는 부분*/}
             </div>
-
+            {isloading===true?<CustomSpinner/>:null}
             <ListContainer headerContents={headerContent} contents={contents} width="1800px"
                            gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
-                           onClickFunction={handleModifyButtonClick}/> {/*시설정보*/}
+                           onClickFunction={handleModifyButtonClick} isLoading={isloading}/> {/*시설정보*/}
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                style={{zIndex: 2}}
             >
                 <Box sx={style}>
                     <CenterManageInputForm handleClose={handleClose} handleClickSave={handleClickSave}
@@ -235,7 +266,7 @@ const Main = styled.div`
     position: fixed;
     bottom: 40px;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-28.5%, 0);
   }
 `;
 

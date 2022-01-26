@@ -10,6 +10,8 @@ import AgentManageInputForm from "../organisms/AgentManageInputForm";
 import {Style} from "../../Style";
 import axios from "axios";
 import NetworkConfig from "../../configures/NetworkConfig";
+import Swal from "sweetalert2";
+import '../atoms/swal.css'
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -84,64 +86,91 @@ const AgentManageTemplate = () => {
 
 
         const handleClickSave = async () => { //정보 수정,추가 요청
-            const emptyOrNot = ()=>{
+            const emptyOrNot = () => {
                 let a = 1;
-                for(const key in currentInfo){
-                    if(key==='agent_id'){
+                for (const key in currentInfo) {
+                    if (key === 'agent_id') {
                         continue;
                     }
-                    if(currentInfo[key]===""){
+                    if (currentInfo[key] === "") {
                         console.log('hi')
                         a = 0;          // empty면 0으로 체크
                         break;
                     }
                 }
-                if(a === 0){
+                if (a === 0) {
                     return true;       // a가 0이면 empty, true 리턴
-                }else{
+                } else {
                     return false;
                 }
             }
+            const showErrorMessage = (err) =>{
+                if (err.response.status === 400) {
+                    // alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '이미 있는 현장요원 코드 입니다.',
+                        text: '현장 요원 코드를 다시 입력해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                } else if (err.response.status === 401) {
+                    // alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '잘못된 주소를 입력하셨습니다.',
+                        text: '올바른 주소를 입력해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                } else {
+                    // alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '서버 오류입니다.',
+                        text: '잠시 후 재시도 해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                }
+            }
 
-            if (emptyOrNot() ===false && modify == true) {
+            if (emptyOrNot() === false && modify == true) {
                 await axios.patch(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
                     .then((res) => {
-                        console.log(res.status)
-                        alert("수정 되었습니다.")
+                        Swal.fire({
+                            icon: 'success',
+                            title: '수정되었습니다.',
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: '확인',
+                        })
                         showData();
                         handleClose();
                     }).catch((err) => {
-                        if (err.response.status === 400) {
-                            alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
-                        } else if (err.response.status === 401) {
-                            alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
-                        } else if (err.response.status === 402) {
-                            alert("폼을 모두 입력해주세요.")
-                        } else if (err.response.status === 500) {
-                            alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
-                        }
+                       showErrorMessage(err);
                     })
-            } else if(emptyOrNot() === false && modify === false) {
-                console.log(currentInfo);
+            } else if (emptyOrNot() === false && modify === false) {
                 await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
                     .then(() => {
-                            alert("추가 되었습니다.")
+                            Swal.fire({
+                                icon: 'success',
+                                title: '추가되었습니다.',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
                             showData();
                             handleClose();
                         }
                     ).catch((err) => {
-                        if (err.response.status === 400) {
-                            alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
-                        } else if (err.response.status === 401) {
-                            alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
-                        } else if (err.response.status === 402) {
-                            alert("폼을 모두 입력해주세요.")
-                        } else if (err.response.status === 500) {
-                            alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
-                        }
+                       showErrorMessage(err);
                     })
-            }else{
-                alert("모든 폼을 입력해주세요.")
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '폼을 모두 입력해주세요.',
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: '확인',
+                });
             }
         };
 
@@ -193,6 +222,7 @@ const AgentManageTemplate = () => {
                     open={open}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
+                    style={{zIndex: 2}}
                 >
                     <Box sx={style}>
                         <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo}
@@ -236,7 +266,7 @@ const Main = styled.div`
     position: fixed;
     bottom: 40px;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-28.5%, 0);
   }
 `;
 

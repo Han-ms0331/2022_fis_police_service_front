@@ -19,6 +19,7 @@ import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStor
 import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
+import Swal from "sweetalert2";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -37,23 +38,25 @@ function MainBodyTemplate(props) {
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
     const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
 
-
+    const [loading, setLoading] = useState(true);
     const [date, setDate] = useRecoilState(SelectedDateState);
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`,{withCredentials:true})
+        setLoading(true);
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
                 console.log(res.data)
                 setSelectedAgentInfo(() => res.data.data);
+                setLoading(false);
             })
     }
 
     useEffect(() => {
-        onData(); // 날짜를 선택한 경우에 함수 실행
-        console.log(selectedAgentInfo); // undefined???
+        if (isSelected)
+            onData(); // 날짜를 선택한 경우에 함수 실행
     }, [date])
 
     useEffect(() => {
@@ -68,7 +71,7 @@ function MainBodyTemplate(props) {
         작성내용: 검색 결과로 나온 시설 리스트중 하나를 선택했을 때 작동하는 함수
     */
     const onSelect = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
                 console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -108,16 +111,27 @@ function MainBodyTemplate(props) {
         console.log(currentInfo);
         e.preventDefault();
         if (currentInfo.c_name == "" && currentInfo.c_address == "" && currentInfo.c_ph == "") {
-            alert("검색어를 입력하세요")
+            Swal.fire({
+                title: '검색어를 입력하세요.',
+                icon: 'info',
+                confirmButtonText: '확인',
+                confirmButtonColor: Style.color2,
+            })
         } else {
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`,{withCredentials:true})
+            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
                     console.log(res.data.data)
                     setCenterList(res.data.data);
                     setIsSelected(false);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
                 })
         }
 
@@ -133,7 +147,7 @@ function MainBodyTemplate(props) {
                 <Container>
                     <Left>
                         <CustomCalendar className="calendar" setDate={setDate}/>
-                        <AgentContainer content={selectedAgentInfo}/>
+                        <AgentContainer content={selectedAgentInfo} loading={loading}/>
                     </Left>
                     <Right>
                         <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}

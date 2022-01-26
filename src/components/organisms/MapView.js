@@ -8,76 +8,6 @@ import { MdGpsFixed } from "react-icons/md";
 import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
 
 
-const agentList=[
-    {
-        agent_id: 6,
-        a_name: "asd",
-        a_ph: "123",
-        a_code: "111",
-        a_address: "분당구 불정로 6",
-        a_hasCar: "CAR",
-        a_equipment: "",
-        a_receiveDate: "2022-01-20T17:42:51.524995",
-        a_latitude: 33.44976681228811,
-        a_longitude: 126.57173596860564,
-        scheduleList: []
-    },
-]
-
-const selAgent=[
-    {
-        agent_id: 6,
-        a_name: "asd",
-        a_ph: "123",
-        a_code: "111",
-        a_address: "분당구 불정로 6",
-        a_hasCar: "CAR",
-        a_equipment: "",
-        a_receiveDate: "2022-01-20T17:42:51.524995",
-        a_latitude: 33.44976681228811,
-        a_longitude: 126.57173596860564,
-        scheduleList: []
-    },
-]
-
-
-const thisCenter = [
-    {
-        c_id: "2",
-        c_address: "f",
-        c_ph: "",
-        participation: null,
-        visited: null,
-        distance: "",
-        c_latitude: "33.450492180670004",
-        c_longitude: "126.5716140938378",
-    },
-]
-
-const selCenter = [
-    {
-        c_id: "1",
-        c_address: "제즈더",
-        c_ph: "000",
-        participation: null,
-        visited: null,
-        distance: "",
-        c_latitude: "33.450705",
-        c_longitude: "126.570677",
-    },
-]
-/*let road = []
-
-selCenter.splice(1, 0, thisCenter[0]); // 선택된 현장 요원의 스케쥴 사이에 선택된 센터 정보 집어 넣기
-
-selCenter.forEach((arr, index, buf) => { // 동선 표시를 위해 위도경도 입력 형태 변경
-    road.push({
-        ...arr,
-        lat: arr.c_latitude, lng: arr.c_longitude,
-    })
-})*/
-
-
 function MapView(props) {
 
     const [range, setRange] = useState(2);// 지도의 비율 설정
@@ -85,6 +15,7 @@ function MapView(props) {
     const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
     const [centerInfo,setCenterInfo] = useState([])
+    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo);
 
     const center = [ //선택된 시설의 좌표를 mainbodytemp에서 props로 받아옴
         {
@@ -98,11 +29,16 @@ function MapView(props) {
     console.log(clickedAgent)
     let centerList=[]
 
+    let modifiedSelectedCenter= selectedCenterList.filter((el,idx)=>{
+        return el.c_name!==selCenterInfo.c_name;
+    }) // 선택된 센터는 주변시설 리스트에서 제외
+
+
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
         if (e.target.textContent === "250m") {
             setRange(2)
             console.log('250m');
-            selectedCenterList.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{
                if (0<arr.distance<=250){
                     centerList.push({
                         ...arr,
@@ -121,7 +57,7 @@ function MapView(props) {
         else if (e.target.textContent === "500m") {
             setRange(3)
             console.log('500m')
-            selectedCenterList.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{
                 if (arr.distance<=500){
                     centerList.push({
                         ...arr,
@@ -140,7 +76,7 @@ function MapView(props) {
         else if (e.target.textContent === "1km") {
             setRange(4)
             console.log('1000m')
-            selectedCenterList.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{
                 if (arr.distance<=1000){
                     centerList.push({
                         ...arr,
@@ -161,7 +97,7 @@ function MapView(props) {
     return (
         <MapContainer>
             <RangeController onClickFunc={changeRange}/>
-            <CustomMap aroundCdata={centerInfo} adata={selectedAgentInfo} clickedAdata={clickedAgent}  sdata={selCenter} lat={center[0].lat}
+            <CustomMap aroundCdata={centerInfo} adata={selectedAgentInfo} clickedAdata={clickedAgent} lat={center[0].lat}
                        lng={center[0].lng}
                        level={range}/>
         </MapContainer>
