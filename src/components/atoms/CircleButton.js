@@ -7,12 +7,12 @@
 import React, {useRef, useState} from "react";
 import styled from "styled-components";
 
-const Button = styled.button` // css
+const Button = styled.div` // css
   background-color: ${(props) => props.bgColor};
   border-width: 0px;
   border-color: black;
   border-radius: 60%;
-  padding: 5%;
+  //padding: 5%;
   box-shadow: 0.1px 0.1px 0 rgb(0, 0, 0, 0.5);
   margin: 1px;
   &:hover {
@@ -32,13 +32,7 @@ const Button = styled.button` // css
 export default function CircleButton({name, bgColor, handleClick}) { // bgColor로 버튼 색 props 받음.
     const [bcolor, setBcolor] = useState(bgColor);
 
-    return (
-        <>
-            {
-                <Button name={name} bgColor={bcolor} onClick={handleClick} ></Button>
+    return (<Button name={name} bgColor={bcolor} onClick={handleClick} ></Button>
                 // 초록색 버튼일 경우 Click Event 활성화
-            }
-
-        </>
     );
 }
