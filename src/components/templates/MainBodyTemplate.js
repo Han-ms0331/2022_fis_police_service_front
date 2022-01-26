@@ -51,12 +51,15 @@ function MainBodyTemplate(props) {
                 console.log(res.data)
                 setSelectedAgentInfo(() => res.data.data);
                 setLoading(false);
+            }).catch((err)=>{
+                console.log(err)
             })
     }
 
     useEffect(() => {
-        if (isSelected)
+        if (selectedCenterId !== ""){
             onData(); // 날짜를 선택한 경우에 함수 실행
+        }
     }, [date])
 
     useEffect(() => {
@@ -71,7 +74,7 @@ function MainBodyTemplate(props) {
         작성내용: 검색 결과로 나온 시설 리스트중 하나를 선택했을 때 작동하는 함수
     */
     const onSelect = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
             .then((res) => {
                 console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
