@@ -10,6 +10,7 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {isLoginedState, userAuthority} from "../../store/LoginStore";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
+import Swal from "sweetalert2";
 
 /*
     날짜: 2022/01/10 3:59 오후
@@ -41,30 +42,46 @@ const Navigation = () => {
         작성내용: 로그아웃 버튼이 눌렸을 시 작동하는 함수
     */
 
+    const logoutFunction = async () => {
+        await axios.post(`http://${NetworkConfig.networkAddress}:8080/logout`, {}, {withCredentials: true})
+            .then((res) => {
+                // console.log(res)
+                localStorage.removeItem("login-state"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
+                setIsLogined(false);
+            }).catch(err => {
+                console.log(err)
+            })
+    }
 
     const onLogout = async (e) => {
-        if (window.confirm("정말 로그아웃 하시겠습니까?")) {
-            await axios.post(`http://${NetworkConfig.networkAddress}:8080/logout`, {}, {withCredentials: true})
-                .then((res) => {
-                    console.log(res)
-                    localStorage.removeItem("login-state"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
-                    setIsLogined(false);
-                })
+        Swal.fire({
+            title: '정말 로그아웃 하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: Style.color2,
+            cancelButtonColor: "#e55039",
+            confirmButtonText: '확인',
+            cancelButtonText: "취소"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logoutFunction();
+            }
+        })
 
-        }
+
     }
     return (
-            <Container>
-                <Upper>
-                    <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
-                    <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
-                    {authority==='ADMIN'?<Link to={"/manage"}> <PersonIcon className="icon"/> </Link>:null} {/*관리자*/}
-                </Upper>
+        <Container>
+            <Upper>
+                <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
+                <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
+                {authority === 'ADMIN' ? <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> : null} {/*관리자*/}
+            </Upper>
 
-                <Bottom>
-                    <LogoutIcon className="icon" onClick={onLogout}/>{/*로그아웃*/}
-                </Bottom>
-            </Container>
+            <Bottom>
+                <LogoutIcon className="icon" onClick={onLogout}/>{/*로그아웃*/}
+            </Bottom>
+        </Container>
     )
 }
 //style
