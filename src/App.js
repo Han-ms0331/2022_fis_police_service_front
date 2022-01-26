@@ -20,7 +20,6 @@ function App() {
     const [authority, setAuthority] = useRecoilState(userAuthority);
     const [isLoading, setIsLoading] = useState(false);
     console.log(`authority:${authority}`);
-    let isLoginedCheck = true;
 
     /*
         날짜: 2022/01/19 3:42 오후
@@ -39,23 +38,21 @@ function App() {
                     console.log("success inside")
                     setAuthority(u_auth);
                     setIsLgoined(true);
-                    isLoginedCheck = true
                 } else {
                     console.log("fail inside")
                     setIsLgoined(false);
                     setAuthority("");
-                    isLoginedCheck = false
                 }
 
             }).catch((err)=>{
                 console.log(err);
+                setIsLgoined(false);
+                setAuthority("");
             })
     };
 
 
     LoginStateInitialization();
-    console.log(isLoginedCheck);
-    console.log(isLogined);
     return (
         <div className="App">
             {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
