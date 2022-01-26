@@ -27,6 +27,11 @@ import CheckboxContainer from "../molecules/CheckboxContainer";
 import {FormControlLabel, lighten, Switch, TableSortLabel} from "@mui/material";
 import axios from "axios";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const Spinner = () => {
+    return <ClipLoader height="32" width="160" color="#2E3C7E" radius="8" />;
+};
 
 
 function descendingComparator(a, b, orderBy) {
@@ -109,11 +114,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor }) {
+export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor, loading }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
     console.log(keywordProps);
     let count = rows.length;
     const [r, setR] = useRecoilState(dateSelectedRows);
+
+    console.log(loading);
 
     useEffect( () => {
         setPage(0);
@@ -419,19 +426,30 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
-                        <TableBody style={{ backgroundColor: bodyColor }} className={classes.body}>
-                            {isSearch() // 검색 상태라면 검색결과를 보여주고 아니라면 리스트 전체를 보여줌.
-                                ?
-                                filteredShowList()
-                                :
-                                showList()
-                            }
-                            {/*{emptyRows > 0 && (*/}
-                            {/*    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>*/}
-                            {/*        <TableCell colSpan={6} />*/}
-                            {/*    </TableRow>*/}
-                            {/*)}*/}
-                        </TableBody>
+                        {loading ?
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell style={{ padding: 30 }} align='center' colSpan={8}>
+                                        <Spinner/>
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                            :
+                            <TableBody style={{ backgroundColor: bodyColor }} className={classes.body}>
+                                {isSearch() // 검색 상태라면 검색결과를 보여주고 아니라면 리스트 전체를 보여줌.
+                                    ?
+                                    filteredShowList()
+                                    :
+                                    showList()
+                                }
+                                {/*{emptyRows > 0 && (*/}
+                                {/*    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>*/}
+                                {/*        <TableCell colSpan={6} />*/}
+                                {/*    </TableRow>*/}
+                                {/*)}*/}
+                            </TableBody>
+                        }
+
                     </Table>
                     <div>
                         {/*<div style={{margin: '25px'}}>*/}

@@ -20,7 +20,7 @@ import {useRecoilValue} from "recoil";
 
 const SchedulePage = (props) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
+    const [loading, setLoading] = useState(() => true);
     const toggleSideBar = () => { /*사이드바 토글 함수*/
         setIsSidebarOpen(!isSidebarOpen);
     }
@@ -29,11 +29,11 @@ const SchedulePage = (props) => {
         <Main isSidebarOpen={isSidebarOpen}>
             <Navigation/>
             <div className="sidebar" isSidebarOpen={isSidebarOpen}>
-                <ScheduleSidebar isSidebarOpen={isSidebarOpen}/>
+                <ScheduleSidebar isSidebarOpen={isSidebarOpen} setLoading={setLoading}/>
                 {isSidebarOpen ? <GoChevronLeft className="icon" onClick={toggleSideBar}/> :
                     <GoChevronRight className="icon" onClick={toggleSideBar}/>}
             </div>
-            <ScheduleBody/>
+            <ScheduleBody loading={loading}/>
         </Main>
     );
 }
