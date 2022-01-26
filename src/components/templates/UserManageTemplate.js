@@ -10,6 +10,7 @@ import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
+import '../atoms/swal.css'
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -100,6 +101,25 @@ const UserManageTemplate = () => {
                     return false;
                 }
             }
+            const showErrorMessage = (err) => {
+                if (err.response.status === 402) {
+                    // alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '서버 오류입니다.',
+                        text: '잠시 후 재시도 해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                }
+            }
 
             if (emptyOrNot() === false && modify === true) {
                 await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true}).then((res) => {
@@ -112,9 +132,7 @@ const UserManageTemplate = () => {
                     showData()
                     handleClose();
                 }).catch((err) => {
-                    if (err.response.status === 402) {
-                        alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
-                    }
+                    showErrorMessage(err);
                 })
             } else if (emptyOrNot() === false && modify === false) {
                 console.log(currentInfo)
@@ -129,12 +147,15 @@ const UserManageTemplate = () => {
                         showData()
                         handleClose();
                     }).catch((err) => {
-                        if (err.response.status === 402) {
-                            alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
-                        }
+                        showErrorMessage(err);
                     })
             } else {
-                alert("모든 폼을 입력해주세요.")
+                Swal.fire({
+                    icon: 'warning',
+                    title: '폼을 모두 입력해주세요.',
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: '확인',
+                })
             }
         }
 

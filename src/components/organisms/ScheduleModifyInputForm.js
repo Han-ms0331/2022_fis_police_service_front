@@ -8,6 +8,7 @@ import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {dateSelectedRows, rowCount} from "../../store/DateSelectedRowsStore";
+import Swal from "sweetalert2";
 
 function ScheduleModifyInputForm(props) {
 
@@ -66,7 +67,14 @@ function ScheduleModifyInputForm(props) {
                 .catch((err) => console.log(err));
             onData();
             props.onClickFunction();
-            alert('저장되었습니다.');
+            // alert('저장되었습니다.');
+            Swal.fire({
+                title: '저장되었습니다.',
+                icon: 'success',
+                confirmButtonColor: Style.color2,
+                confirmButtonText: '확인',
+            })
+
         }
     }
 
@@ -78,7 +86,13 @@ function ScheduleModifyInputForm(props) {
                 .catch((err) => console.log(err));
             onData();
             props.onClickFunction();
-            alert('일정이 취소되었습니다.');
+            // alert('일정이 취소되었습니다.');
+            Swal.fire({
+                title: '일정이 취소되었습니다.',
+                icon: 'success',
+                confirmButtonColor: Style.color2,
+                confirmButtonText: '확인',
+            })
         }
     }
 

@@ -104,11 +104,38 @@ const AgentManageTemplate = () => {
                     return false;
                 }
             }
+            const showErrorMessage = (err) =>{
+                if (err.response.status === 400) {
+                    // alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                } else if (err.response.status === 401) {
+                    // alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                } else {
+                    // alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '서버 오류입니다.',
+                        text: '잠시 후 재시도 해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                }
+            }
 
             if (emptyOrNot() === false && modify == true) {
                 await axios.patch(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
                     .then((res) => {
-                        console.log(res.status)
                         Swal.fire({
                             icon: 'success',
                             title: '수정되었습니다.',
@@ -118,18 +145,9 @@ const AgentManageTemplate = () => {
                         showData();
                         handleClose();
                     }).catch((err) => {
-                        if (err.response.status === 400) {
-                            alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
-                        } else if (err.response.status === 401) {
-                            alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
-                        } else if (err.response.status === 402) {
-                            alert("폼을 모두 입력해주세요.")
-                        } else if (err.response.status === 500) {
-                            alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
-                        }
+                       showErrorMessage(err);
                     })
             } else if (emptyOrNot() === false && modify === false) {
-                console.log(currentInfo);
                 await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
                     .then(() => {
                             Swal.fire({
@@ -142,15 +160,7 @@ const AgentManageTemplate = () => {
                             handleClose();
                         }
                     ).catch((err) => {
-                        if (err.response.status === 400) {
-                            alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
-                        } else if (err.response.status === 401) {
-                            alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
-                        } else if (err.response.status === 402) {
-                            alert("폼을 모두 입력해주세요.")
-                        } else if (err.response.status === 500) {
-                            alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
-                        }
+                       showErrorMessage(err);
                     })
             } else {
                 Swal.fire({
@@ -158,7 +168,7 @@ const AgentManageTemplate = () => {
                     title: '폼을 모두 입력해주세요.',
                     confirmButtonColor: Style.color2,
                     confirmButtonText: '확인',
-            })
+                });
             }
         };
 
