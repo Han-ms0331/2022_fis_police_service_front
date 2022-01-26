@@ -15,26 +15,32 @@ import {Messages} from "../../store/Message";
  */
 
 const SendMessage = () => {
-    let ws;
     const [message, setMessage] = useState('');
+    let ws;
 
-    function openWebSocket() { //웹소켓을 열어서 서버에게 메시지를 전달
-        ws = new WebSocket(`ws://${NetworkConfig.networkAddress}/messenger/websocket`);
-        ws.onopen = (e) => {
-            console.log("연결완료");
-            console.log(ws);
-            ws.send(message);
-        }
-        ws.onmessage = (data) => {
-            console.log("서버에서 받은 데이터" + data.data);
-        }
+    function openSocket() {
+        ws = new WebSocket("ws://" + "54.175.8.114:8080" + "/messenger/websocket");
+        wsEvt();
+        ws.addEventListener('error', (event) =>{
+            console.log(event);
+        })
     }
-
+    function wsEvt() {
+        console.log("socket opened");
+        ws.onopen = function (data) {
+            //소켓이 열리면 초기화 세팅하기
+            console.log("opened");
+        }
+        ws.onmessage = function (data) {
+            console.log(data.data);
+        }
+        ws.send(message);
+    }
 
     const handleSend = (e) => { /*보내기 버튼을 눌렀을 때 실행되는 함수*/
         e.preventDefault();
         console.log(`${message} message sent`);
-        openWebSocket();
+        openSocket();
         e.target.reset();
     }
 
