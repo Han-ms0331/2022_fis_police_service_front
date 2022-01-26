@@ -45,7 +45,7 @@ function MainBodyTemplate(props) {
 
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`,{withCredentials:true})
             .then((res) => {
                 console.log(res.data)
                 setSelectedAgentInfo(() => res.data.data);
@@ -123,7 +123,13 @@ function MainBodyTemplate(props) {
                     setIsSelected(false);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
                 })
         }
 
