@@ -17,13 +17,13 @@ const tempAgent = [
 ];
  // tempAgent - 더미 데이터
 
-function AgentContainer({content=tempAgent, width=266, height=400}) {
+function AgentContainer({content=tempAgent, width=266, height=400, loading}) {
     // content - 요원 정보가 담긴 배열을 받음. width와 height으로 컨테이너 크기 조절..
     return (
         <Container style={{ overflowY: 'auto', margin: '0 0 20px 20px' }} width={width} height={height}>
             <center>
-                <div>주변 현장요원</div>
-                <AgentSchedule content={content} width={width} height={height} />
+                <div style={{ fontSize: 20, margin: 8 }}>주변 현장요원</div>
+                <AgentSchedule content={content} width={width} height={height} loading={loading} />
             </center>
         </Container>
     );

@@ -7,16 +7,24 @@
 
 import React from 'react';
 import TimeList from "./TimeList";
+import {ClipLoader} from "react-spinners";
+import {Style} from "../../Style";
 
 
-function AgentSchedule({content, width, height}) {
+function AgentSchedule({content, width, height, loading}) {
+    console.log(loading);
     return (
-        <div>
-            {content!==null && content.map(item => {
-                return <TimeList key={item.agent_id} content={item} setCurrentTime={0}/>;
-            })}
-            {/*Array의 map함수를 통해 요원 스케쥴 데이터를 나열함.*/}
-        </div>
+        loading ?
+            <div style={{ marginTop: 145 }} >
+                <ClipLoader color={Style.color2} />
+            </div>
+            :
+            <div>
+                {content!==null && content.map(item => {
+                    return <TimeList key={item.agent_id} content={item} setCurrentTime={0} loading={loading}/>;
+                })}
+                {/*Array의 map함수를 통해 요원 스케쥴 데이터를 나열함.*/}
+            </div>
     );
 }
 
