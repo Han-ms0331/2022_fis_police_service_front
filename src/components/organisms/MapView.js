@@ -85,6 +85,7 @@ function MapView(props) {
     const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
     const [centerInfo,setCenterInfo] = useState([])
+    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo);
 
     const center = [ //선택된 시설의 좌표를 mainbodytemp에서 props로 받아옴
         {
@@ -98,11 +99,16 @@ function MapView(props) {
     console.log(clickedAgent)
     let centerList=[]
 
+    let modifiedSelectedCenter= selectedCenterList.filter((el,idx)=>{
+        return el.c_name!==selCenterInfo.c_name;
+    })
+    console.log(modifiedSelectedCenter);
+
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
         if (e.target.textContent === "250m") {
             setRange(2)
             console.log('250m');
-            selectedCenterList.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{
                if (0<arr.distance<=250){
                     centerList.push({
                         ...arr,
@@ -121,7 +127,7 @@ function MapView(props) {
         else if (e.target.textContent === "500m") {
             setRange(3)
             console.log('500m')
-            selectedCenterList.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{
                 if (arr.distance<=500){
                     centerList.push({
                         ...arr,
@@ -140,7 +146,7 @@ function MapView(props) {
         else if (e.target.textContent === "1km") {
             setRange(4)
             console.log('1000m')
-            selectedCenterList.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{
                 if (arr.distance<=1000){
                     centerList.push({
                         ...arr,

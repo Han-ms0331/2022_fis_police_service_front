@@ -111,6 +111,7 @@ function CustomMap(props) {
         modifiedAround=modifiedAround.filter((e) => e.c_name!== value.c_name)
 
     })
+
     return (
         <Container>
             <Map // 지도를 표시할 Container
@@ -144,7 +145,7 @@ function CustomMap(props) {
 
 
                 <CustomMarker
-                    type={"center"}
+                    type={"mainCenter"}
                     position={{lat: props.lat, lng: props.lng}}
                     content={
                         <div>
@@ -178,7 +179,7 @@ function CustomMap(props) {
                 {
                     roadCenter.map((center, index) => (
                         <CustomMarker
-                            type={"center"}
+                            type={"centerSelected"}
                             position={center.latlng}
                             content={
                                 <div>

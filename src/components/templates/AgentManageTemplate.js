@@ -109,7 +109,8 @@ const AgentManageTemplate = () => {
                     // alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
                     Swal.fire({
                         icon: 'warning',
-                        title: '이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.',
+                        title: '이미 있는 현장요원 코드 입니다.',
+                        text: '현장 요원 코드를 다시 입력해주세요.',
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
@@ -117,7 +118,8 @@ const AgentManageTemplate = () => {
                     // alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
                     Swal.fire({
                         icon: 'warning',
-                        title: '잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.',
+                        title: '잘못된 주소를 입력하셨습니다.',
+                        text: '올바른 주소를 입력해주세요.',
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
