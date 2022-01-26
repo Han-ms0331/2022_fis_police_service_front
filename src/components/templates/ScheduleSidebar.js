@@ -32,7 +32,7 @@ import NetworkConfig from "../../configures/NetworkConfig";
         - onData in useEffect
 */
 
-const ScheduleSidebar = () => {
+const ScheduleSidebar = ({ setLoading }) => {
     const [date, setDate] = useState(new Date());
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`;
@@ -43,6 +43,7 @@ const ScheduleSidebar = () => {
             .then((res) => {
                 console.log(res.data.data);
                 setRows(res.data.data);
+                setLoading(false);
             })
     }
 
