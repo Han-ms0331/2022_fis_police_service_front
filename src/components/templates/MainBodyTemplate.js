@@ -123,7 +123,13 @@ function MainBodyTemplate(props) {
                     setIsSelected(false);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
                 })
         }
 
