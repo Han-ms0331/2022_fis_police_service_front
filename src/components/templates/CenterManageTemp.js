@@ -41,7 +41,7 @@ function CenterManageTemp(props) {
 
     //정보 수정 버튼 눌렀을 때는 true로, 시설 추가 눌렀을 때는 false로 set하는 modify 상태에 대한 정의
     const [modify, setModify] = useState();
-    const [isloading,setIsloading] = useState(true);
+    const [loading,setLoading] = useState(false);
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
@@ -59,7 +59,7 @@ function CenterManageTemp(props) {
                     })
                 })
                 setContents(tmp);
-                setIsloading(false);
+                setLoading(false);
                 // console.log(tmp);
                 // console.log(contents);
             })
@@ -87,6 +87,7 @@ function CenterManageTemp(props) {
             })
         } else {
             apiGetCall(c_name, c_address, c_ph);
+            setLoading(true);
         }
 
     }
@@ -214,12 +215,12 @@ function CenterManageTemp(props) {
         <Main>
             <div style={{margin: "20px 0px 30px 0px"}}>
                 <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
-                            height="100%" setIsLoading={setIsloading}/> {/*시설정보를 검색하는 부분*/}
+                            height="100%"/> {/*시설정보를 검색하는 부분*/}
             </div>
-            {isloading===true?<CustomSpinner/>:null}
-            <ListContainer headerContents={headerContent} contents={contents} width="1800px"
-                           gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
-                           onClickFunction={handleModifyButtonClick} isLoading={isloading}/> {/*시설정보*/}
+            {loading===true?<CustomSpinner/>: <ListContainer headerContents={headerContent} contents={contents} width="1800px"
+                                                             gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
+                                                             onClickFunction={handleModifyButtonClick}/>}
+
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
