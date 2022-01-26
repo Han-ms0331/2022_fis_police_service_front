@@ -163,7 +163,7 @@ const AgentManageTemplate = () => {
                 })
 
             } else if (emptyOrNot() === false && modify === false) {
-                await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
+              /*  await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
                     .then(() => {
                             Swal.fire({
                                 icon: 'success',
@@ -176,7 +176,32 @@ const AgentManageTemplate = () => {
                         }
                     ).catch((err) => {
                        showErrorMessage(err);
-                    })
+                    })*/
+                Swal.fire({
+                    icon: "question",
+                    title: '추가하시겠습니까?',
+                    showCancelButton: true,
+                    confirmButtonText: '확인',
+                    cancelButtonText: '취소',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
+                            .then((res) => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '추가되었습니다.',
+                                    confirmButtonColor: Style.color2,
+                                    confirmButtonText: '확인',
+                                })
+                                showData();
+                                handleClose();
+                            }).catch((err) => {
+                                console.log(err);
+                                showErrorMessage(err);
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                })
             } else {
                 Swal.fire({
                     icon: 'warning',
