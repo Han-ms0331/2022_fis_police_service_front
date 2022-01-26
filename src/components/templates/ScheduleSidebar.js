@@ -39,6 +39,7 @@ const ScheduleSidebar = ({ setLoading }) => {
     const setRows = useSetRecoilState(dateSelectedRows); // 날짜를 선택하기 전인 경우이므로 맨 처음 여기서 default로 dateSelectedRows에 오늘 날짜의 Rows를 설정해줘야한다. -> onChange에 넣지말고 useEffect?
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
+        setLoading(true);
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
                 console.log(res.data.data);
