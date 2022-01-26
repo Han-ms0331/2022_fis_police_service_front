@@ -48,7 +48,6 @@ function App() {
         }
     }
     LoginStateInitialization();
-    console.log(isLogined);
     return (
         <div className="App">
             {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
