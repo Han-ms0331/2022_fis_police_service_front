@@ -32,7 +32,7 @@ import NetworkConfig from "../../configures/NetworkConfig";
         - onData in useEffect
 */
 
-const ScheduleSidebar = () => {
+const ScheduleSidebar = ({ setLoading }) => {
     const [date, setDate] = useState(new Date());
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`;
@@ -47,7 +47,9 @@ const ScheduleSidebar = () => {
     }
 
     useEffect(() => {
+        setLoading(true);
         onData(); // 날짜를 선택한 경우에 함수 실행
+        setLoading(false);
         setSearchInput({ // 검색창 초기화
             schedule_id: "",              // 스케쥴 id
             a_code: "",                // 현장요원 코드
