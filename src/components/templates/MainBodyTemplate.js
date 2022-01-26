@@ -46,17 +46,20 @@ function MainBodyTemplate(props) {
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         setLoading(true);
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials:true})
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
                 console.log(res.data)
                 setSelectedAgentInfo(() => res.data.data);
                 setLoading(false);
+            }).catch((err)=>{
+                console.log(err)
             })
     }
 
     useEffect(() => {
-        onData(); // 날짜를 선택한 경우에 함수 실행
-        console.log(selectedAgentInfo); // undefined???
+        if (selectedCenterId !== ""){
+            onData(); // 날짜를 선택한 경우에 함수 실행
+        }
     }, [date])
 
     useEffect(() => {
@@ -118,7 +121,7 @@ function MainBodyTemplate(props) {
                 confirmButtonColor: Style.color2,
             })
         } else {
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`,{withCredentials:true})
+            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
                     console.log(res.data.data)
                     setCenterList(res.data.data);

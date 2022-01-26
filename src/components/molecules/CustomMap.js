@@ -79,38 +79,15 @@ function CustomMap(props) {
                     c_people: list.estimate_num
                 }) // 센터 표시를 해야하는 위치, 해당 센터의 이름과 예상인원 저장
             })
-/*            for (let i = 0; i < 2; i++) {
-                road.push({
-                    lat: props.clickedAdata.scheduleList.center.a_latitude,
-                    lng: props.clickedAdata.scheduleList.center.a_longitude,
-                })
-            }
-            for (let j = 0; j < 2; j++) {
-                roadCenter.push({
-                    latlng: {
-                        lat: props.clickedAdata.scheduleList.center.a_latitude,
-                        lng: props.clickedAdata.scheduleList.center.a_longitude
-                    },
-                    c_name: props.clickedAdata.scheduleList.center.c_name,
-                    c_people: props.clickedAdata.scheduleList.c_people,
-                })
-}*/
 
         }
     }
 
-    /*road.splice(1, 0, center); // 동선 중간에 현재 선택된 센터의 위치 넣어줌
-    roadCenter.splice(1, 0, {
-        latlng: {lat: center.lat, lng: center.lng},
-        c_name: selCenterInfo.c_name,
-        c_people: selCenterInfo.c_people
-    }); // 동선 중간에 현재 선택된 센터의 정보 넣어줌*/
 
     let modifiedAround = props.aroundCdata;
     roadCenter.forEach((value,index)=>{
         modifiedAround=modifiedAround.filter((e) => e.c_name!== value.c_name)
-
-    })
+    }) // 선택된 현장요원의 스케줄리스트에 있는 센터는 주변시설 리스트에서 제외
 
     return (
         <Container>
