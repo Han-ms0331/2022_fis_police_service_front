@@ -40,7 +40,8 @@ function App() {
     //             }
     //
     //         });
-    // };
+    // };   local test시 로그인 방법
+
     const LoginStateInitialization = () => {
         if (localStorage.getItem("login-state") === "true") {
             setIsLgoined(true); //다시 새로고침 되었을 때 로컬 스토리지에 저장이 되어있는 login state에 따라 isLogined를 세팅

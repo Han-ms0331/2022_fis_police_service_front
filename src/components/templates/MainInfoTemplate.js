@@ -76,7 +76,7 @@ function MainInfoTemplate(props) {
         작성내용: 일정 저장 버튼이 눌렸을 때 작동하는 함수
     */
     const onSaveSchedule = async () => {
-        console.log(currentScheduleInfo.visit_time + ":00");
+        console.log(clickedAgentInfo);
         await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
             center_id: center_id,
             agent_id: clickedAgentInfo.agent_id,
@@ -244,7 +244,7 @@ function MainInfoTemplate(props) {
                                       backgroundColor={Style.color2} content="메일 전송" onClick={onClick}/>
                     </div>
                 }
-                <InfoContainer type={"apply"} content={scheduleList} u_name={localStorage.getItem("userName")}/>
+                <InfoContainer type={"apply"} content={scheduleList} />
                 <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
                     <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
                                   color={Style.color1}

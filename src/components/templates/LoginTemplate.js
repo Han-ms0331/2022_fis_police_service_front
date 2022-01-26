@@ -4,6 +4,8 @@ import axios from "axios";
 import {useRecoilState} from "recoil";
 import {isLoginedState, userAuthority} from "../../store/LoginStore";
 import NetworkConfig from "../../configures/NetworkConfig";
+import Swal from 'sweetalert2'
+import {Style} from "../../Style";
 
 /*
     날짜: 2022/01/11 10:57 오전
@@ -18,7 +20,7 @@ function LoginTemplate(props) {
     });
 
     const [isLogined, setIsLogined] = useRecoilState(isLoginedState);
-    const [authority,setAuthority] = useRecoilState(userAuthority);
+    const [authority, setAuthority] = useRecoilState(userAuthority);
 
     const handleInputFormChange = (e) => {
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
@@ -45,16 +47,29 @@ function LoginTemplate(props) {
                     localStorage.setItem("login-state", "true");    //localStorage에 login-state를 true로 저장함
                 } else if (res.data.sc === "idFail") {
                     console.log(isLogined);
-                    alert("존재하지않는 아이디 입니다. 다시 시도해 주세요")
+                    // alert("존재하지않는 아이디 입니다. 다시 시도해 주세요")
+                    Swal.fire({
+                        icon: 'error',
+                        title: '존재하지않는 아이디 입니다.',
+                        text: '다시 시도해 주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+
                 } else if (res.data.sc === "pwdFail") {
-                    alert("비밀번호를 확인해 주세요.")
+                    // alert("비밀번호를 확인해 주세요.")
+                    Swal.fire({
+                        icon: 'error',
+                        title: '비밀번호를 확인해주세요',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
                 }
             })
         // await axios.get(`http://${NetworkConfig.networkAddress}:8080/login`, {withCredentials: true}).then((res) => {
         //     console.log(res);
         // })
     }
-
 
 
     return (

@@ -19,6 +19,7 @@ import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStor
 import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
+import Swal from "sweetalert2";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -68,7 +69,7 @@ function MainBodyTemplate(props) {
         작성내용: 검색 결과로 나온 시설 리스트중 하나를 선택했을 때 작동하는 함수
     */
     const onSelect = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`)
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
             .then((res) => {
                 console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -108,9 +109,14 @@ function MainBodyTemplate(props) {
         console.log(currentInfo);
         e.preventDefault();
         if (currentInfo.c_name == "" && currentInfo.c_address == "" && currentInfo.c_ph == "") {
-            alert("검색어를 입력하세요")
+            Swal.fire({
+                title: '검색어를 입력하세요.',
+                icon: 'info',
+                confirmButtonText: '확인',
+                confirmButtonColor: Style.color2,
+            })
         } else {
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`)
+            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`,{withCredentials:true})
                 .then((res) => {
                     console.log(res.data.data)
                     setCenterList(res.data.data);

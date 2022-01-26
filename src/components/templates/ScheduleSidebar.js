@@ -43,13 +43,12 @@ const ScheduleSidebar = ({ setLoading }) => {
             .then((res) => {
                 console.log(res.data.data);
                 setRows(res.data.data);
+                setLoading(false);
             })
     }
 
     useEffect(() => {
-        setLoading(true);
         onData(); // 날짜를 선택한 경우에 함수 실행
-        setLoading(false);
         setSearchInput({ // 검색창 초기화
             schedule_id: "",              // 스케쥴 id
             a_code: "",                // 현장요원 코드

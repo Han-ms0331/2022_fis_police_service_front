@@ -17,7 +17,8 @@ import {Messages} from "../../store/Message";
 const SendMessage = () => {
     let ws;
     const [message, setMessage] = useState('');
-    function openWebSocket() {
+
+    function openWebSocket() { //웹소켓을 열어서 서버에게 메시지를 전달
         ws = new WebSocket(`ws://${NetworkConfig.networkAddress}/messenger/websocket`);
         ws.onopen = (e) => {
             console.log("연결완료");
@@ -44,10 +45,11 @@ const SendMessage = () => {
     const handleChange = (e) => { /*메시지를 설정하는 함수*/
         setMessage(e.target.value);
     }
+    const time = new Date().getHours()+':'+new Date().getMinutes(); // 수정요청사항을 보내는 시간
 
     return (
         <Main>
-            <Header>10:34 오전</Header>
+            <Header>{time}</Header>
             <Content onSubmit={handleSend}>
                 <textarea placeholder="요청 사항을 입력하세요..." type="text" onKeyUp={resize} onKeyDown={resize}
                           onChange={handleChange}/>

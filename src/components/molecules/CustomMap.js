@@ -79,7 +79,7 @@ function CustomMap(props) {
                     c_people: list.estimate_num
                 }) // 센터 표시를 해야하는 위치, 해당 센터의 이름과 예상인원 저장
             })
-            /*for (let i = 0; i < 2; i++) {
+/*            for (let i = 0; i < 2; i++) {
                 road.push({
                     lat: props.clickedAdata.scheduleList.center.a_latitude,
                     lng: props.clickedAdata.scheduleList.center.a_longitude,
@@ -99,13 +99,18 @@ function CustomMap(props) {
         }
     }
 
-    road.splice(1, 0, center); // 동선 중간에 현재 선택된 센터의 위치 넣어줌
+    /*road.splice(1, 0, center); // 동선 중간에 현재 선택된 센터의 위치 넣어줌
     roadCenter.splice(1, 0, {
         latlng: {lat: center.lat, lng: center.lng},
         c_name: selCenterInfo.c_name,
         c_people: selCenterInfo.c_people
-    }); // 동선 중간에 현재 선택된 센터의 정보 넣어줌
+    }); // 동선 중간에 현재 선택된 센터의 정보 넣어줌*/
 
+    let modifiedAround = props.aroundCdata;
+    roadCenter.forEach((value,index)=>{
+        modifiedAround=modifiedAround.filter((e) => e.c_name!== value.c_name)
+
+    })
     return (
         <Container>
             <Map // 지도를 표시할 Container
@@ -136,21 +141,7 @@ function CustomMap(props) {
                         road,
                     ]}
                 /> {/*선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
-                {
-                    roadCenter.map((center, index) => (
-                        <CustomMarker
-                            type={"center"}
-                            position={center.latlng}
-                            content={
-                                <div>
-                                    <div>{index + 1}</div>
-                                    <div>시설이름 : {center.c_name}</div>
-                                    <div>예상인원: {center.c_people} 명</div>
-                                </div>
-                            }
-                        />
-                    ))
-                }
+
 
                 <CustomMarker
                     type={"center"}
@@ -159,11 +150,12 @@ function CustomMap(props) {
                         <div>
                             <div>시설이름 : {selCenterInfo.c_name}</div>
                             <div>예상인원 : {selCenterInfo.c_people}명</div>
+                            <div>{selCenterInfo.distance}</div>
                         </div>
                     }
                 /> {/*선택된 센터 표시*/}
 
-                {props.aroundCdata.map((position, index) => (
+                {modifiedAround.map((position, index) => (
                     <>
                         <CustomMarker
                             key={index}
@@ -182,6 +174,22 @@ function CustomMap(props) {
                         position={position.latlng} // 마커를 표시할 위치
                     />
                 ))} {/*선택된 현장 요원과 주변 현장 요원 표시*/}
+
+                {
+                    roadCenter.map((center, index) => (
+                        <CustomMarker
+                            type={"center"}
+                            position={center.latlng}
+                            content={
+                                <div>
+                                    <div>{index + 1}</div>
+                                    <div>시설이름 : {center.c_name}</div>
+                                    <div>예상인원: {center.c_people} 명</div>
+                                </div>
+                            }
+                        />
+                    ))
+                }
             </Map>
             <MdGpsFixed onClick={handleClick}/>
         </Container>

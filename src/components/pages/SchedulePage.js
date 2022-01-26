@@ -20,7 +20,7 @@ import {useRecoilValue} from "recoil";
 
 const SchedulePage = (props) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [loading, setLoading] = useState(null);
+    const [loading, setLoading] = useState(() => true);
     const toggleSideBar = () => { /*사이드바 토글 함수*/
         setIsSidebarOpen(!isSidebarOpen);
     }
