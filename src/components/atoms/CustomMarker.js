@@ -38,6 +38,31 @@ function CustomMarker(props) {
             </MapMarker>
         )
     }
+    else if (props.type === 'centerSelected') {
+        return (
+            <MapMarker
+                position={props.position}
+                image={{
+                    src: "https://ifh.cc/g/mO7w5C.png",
+                    size: {
+                        width: 70,
+                        height: 70,
+                    },
+                }}
+                clickable={true}
+                onMouseOver={
+                    ()=>setIsOpen(true)
+                }
+                onMouseOut={
+                    ()=>setIsOpen(false)
+                }
+            >
+                {isOpen && <div style={{padding: "3px", color: "#000" }}>
+                    {props.content}
+                </div>}
+            </MapMarker>
+        )
+    }
     else if (props.type === 'agent') {
         return (
             <MapMarker
@@ -56,7 +81,7 @@ function CustomMarker(props) {
             <MapMarker
                 position={props.position}
                 image={{
-                    src: "https://ifh.cc/g/TSz6dP.png",
+                    src: "https://ifh.cc/g/p5RFAR.png",
                     size: {
                         width: 70,
                         height: 70,
