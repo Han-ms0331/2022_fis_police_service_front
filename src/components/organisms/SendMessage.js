@@ -19,7 +19,7 @@ const SendMessage = () => {
     let ws;
 
     function openSocket() {
-        ws = new WebSocket("ws://" + "54.175.8.114:8080" + "/messenger/websocket");
+        ws = new WebSocket(`ws://localhost:8080/messenger/websocket`);
         wsEvt();
         ws.addEventListener('error', (event) =>{
             console.log(event);
@@ -30,11 +30,13 @@ const SendMessage = () => {
         ws.onopen = function (data) {
             //소켓이 열리면 초기화 세팅하기
             console.log("opened");
+            ws.send(message);
+            console.log(`${message} sent`);
         }
         ws.onmessage = function (data) {
             console.log(data.data);
         }
-        ws.send(message);
+
     }
 
     const handleSend = (e) => { /*보내기 버튼을 눌렀을 때 실행되는 함수*/
@@ -53,6 +55,9 @@ const SendMessage = () => {
     }
     const time = new Date().getHours()+':'+new Date().getMinutes(); // 수정요청사항을 보내는 시간
 
+    useEffect(()=>{
+        console.log(message);
+    },[message])
     return (
         <Main>
             <Header>{time}</Header>
