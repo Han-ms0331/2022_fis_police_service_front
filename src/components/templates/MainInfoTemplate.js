@@ -146,7 +146,7 @@ function MainInfoTemplate(props) {
     */
     const sendMail = async () => {
         if (window.confirm("메일을 전송하시겠습니까?")) {
-            const result = await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`)
+            const result = await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`,{withCredentials:true})
                 .then((res) => {
                     if (res.data.result === "success") {
                         alert("메일 전송에 성공하였습니다.")
