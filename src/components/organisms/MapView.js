@@ -102,7 +102,7 @@ function MapView(props) {
     let modifiedSelectedCenter= selectedCenterList.filter((el,idx)=>{
         return el.c_name!==selCenterInfo.c_name;
     })
-    console.log(modifiedSelectedCenter);
+
 
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
         if (e.target.textContent === "250m") {
