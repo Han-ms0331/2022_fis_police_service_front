@@ -19,6 +19,7 @@ import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStor
 import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
+import Swal from "sweetalert2";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -108,7 +109,12 @@ function MainBodyTemplate(props) {
         console.log(currentInfo);
         e.preventDefault();
         if (currentInfo.c_name == "" && currentInfo.c_address == "" && currentInfo.c_ph == "") {
-            alert("검색어를 입력하세요")
+            Swal.fire({
+                title: '검색어를 입력하세요.',
+                icon: 'info',
+                confirmButtonText: '확인',
+                confirmButtonColor: Style.color2,
+            })
         } else {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`)
                 .then((res) => {
