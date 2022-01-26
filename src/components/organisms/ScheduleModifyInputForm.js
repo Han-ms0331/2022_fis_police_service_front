@@ -10,6 +10,7 @@ import {useRecoilState, useSetRecoilState} from "recoil";
 import {dateSelectedRows, rowCount} from "../../store/DateSelectedRowsStore";
 import Swal from "sweetalert2";
 
+
 function ScheduleModifyInputForm(props) {
 
     const [input, setInput] = useState({
@@ -22,7 +23,7 @@ function ScheduleModifyInputForm(props) {
         visitDateConfirm: false
     })
 
-    const [disable, setDisable] = useState( () => {
+    const [disable, setDisable] = useState(() => {
         if (input.call_check === "부재중") {
             return ({
                 absentCount: "block",
@@ -51,7 +52,7 @@ function ScheduleModifyInputForm(props) {
             })
     }
 
-    const onPatch = async() => {
+    const onPatch = async () => {
         if (window.confirm('저장하시겠습니까?')) {
             console.log(input);
             setInput(() => input);
@@ -78,22 +79,35 @@ function ScheduleModifyInputForm(props) {
         }
     }
 
-    const onCancel = async() => {
-        if (window.confirm('일정을 취소하시겠습니까?')) {
-            console.log(input.schedule_id);
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
-                .then((res) => console.log(res.data))
-                .catch((err) => console.log(err));
-            onData();
-            props.onClickFunction();
-            // alert('일정이 취소되었습니다.');
-            Swal.fire({
-                title: '일정이 취소되었습니다.',
-                icon: 'success',
-                confirmButtonColor: Style.color2,
-                confirmButtonText: '확인',
-            })
-        }
+    const onCancelFunction = async () => {
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err));
+        onData();
+        props.onClickFunction();
+        // alert('일정이 취소되었습니다.');
+        Swal.fire({
+            title: '일정이 취소되었습니다.',
+            icon: 'success',
+            confirmButtonColor: Style.color2,
+            confirmButtonText: '확인',
+        })
+    }
+
+    const onCancel = () => {
+        Swal.fire({
+            title: '일정을 취소하시겠습니까?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: Style.color2,
+            cancelButtonColor: "#e55039",
+            confirmButtonText: '확인',
+            cancelButtonText: "취소"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                onCancelFunction();
+            }
+        })
     }
 
 
@@ -150,7 +164,7 @@ function ScheduleModifyInputForm(props) {
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="시설정보: " inputName="c_name" inputType="text" width="300px" rows="2"
                                     defaultValue={input.c_name}
-                                    setValueFunction={onChange}  />
+                                    setValueFunction={onChange}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="현장요원코드: " inputName="a_code" inputType="text" width="300px"
@@ -218,7 +232,7 @@ function ScheduleModifyInputForm(props) {
                 {/*    <CheckboxContainer name="visitDateConfirm" setCheckboxInputFunction={onClick} content="방문일정 확인 완료"/>*/}
                 {/*</div>*/}
 
-                <div style={{marginTop: "30px", display: 'flex',  justifyContent:'center'}}>
+                <div style={{marginTop: "30px", display: 'flex', justifyContent: 'center'}}>
                     <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
                                   borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>
                 </div>

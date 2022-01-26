@@ -48,6 +48,7 @@ export default function TransitionsModal({ defaultInput, backgroundColor }) {
                 BackdropProps={{
                     timeout: 500,
                 }}
+                style={{zIndex: 2}}
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
