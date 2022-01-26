@@ -47,7 +47,9 @@ function App() {
                     isLoginedCheck = false
                 }
 
-            });
+            }).catch((err)=>{
+                console.log(err);
+            })
     };
 
 
