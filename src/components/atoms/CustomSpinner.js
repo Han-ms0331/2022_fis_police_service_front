@@ -10,7 +10,7 @@ import styled from "styled-components";
 import {Style} from "../../Style";
 const CustomSpinner = (props) => {
     return (
-        <Container class="spinner" width={props.width}>
+        <Container className="spinner" width={props.width}>
             <h2>Loading</h2>
             <ClipLoader size="62px" color="rgba(46, 60, 126,0.3)"/>
         </Container>

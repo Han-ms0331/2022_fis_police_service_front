@@ -45,11 +45,27 @@ const Navigation = () => {
     const logoutFunction = async () => {
         await axios.post(`http://${NetworkConfig.networkAddress}:8080/logout`, {}, {withCredentials: true})
             .then((res) => {
-                // console.log(res)
                 localStorage.removeItem("login-state"); //로그아웃 상태를 저장하는 localStorage의 loginStatus를 제거
                 setIsLogined(false);
             }).catch(err => {
-                console.log(err)
+                if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                    setIsLogined(false);
+                }else{
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
+                }
             })
     }
 
@@ -67,8 +83,6 @@ const Navigation = () => {
                 logoutFunction();
             }
         })
-
-
     }
     return (
         <Container>

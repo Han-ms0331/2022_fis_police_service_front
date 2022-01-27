@@ -9,6 +9,7 @@ import NetworkConfig from "../../configures/NetworkConfig";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {dateSelectedRows, rowCount} from "../../store/DateSelectedRowsStore";
 import Swal from "sweetalert2";
+import {isLoginedState} from "../../store/LoginStore";
 import {userAuthority} from "../../store/LoginStore";
 
 
@@ -47,11 +48,31 @@ function ScheduleModifyInputForm(props) {
     })
 
     const setRows = useSetRecoilState(dateSelectedRows);
+    const setIsLogined = useSetRecoilState(isLoginedState)
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${input.visit_date}`, {withCredentials: true})
             .then((res) => {
-                console.log(res.data.data);
                 setRows(res.data.data);
+            })
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                    setIsLogined(false);
+                }else{
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
+                }
             })
     }
 
@@ -83,7 +104,6 @@ function ScheduleModifyInputForm(props) {
                     total_etc: input.total_etc
                 }, {withCredentials: true})
                     .then((res) => {
-                            console.log(res.data)
                             onData();
                             props.onClickFunction();
                             // alert('저장되었습니다.');
@@ -96,12 +116,24 @@ function ScheduleModifyInputForm(props) {
                         }
                     )
                     .catch((err) => {
+                        if (err.response.status === 401) {
                             Swal.fire({
-                                title: '잠시후 재시도해주세요.',
-                                icon: 'warning',
-                                confirmButtonColor: Style.color2,
-                                confirmButtonText: '확인',
+                                icon: "warning",
+                                title: "세션이 만료되었습니다.",
+                                text: "다시 로그인 해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                            setIsLogined(false);
+                        }else{
+                            Swal.fire({
+                                icon: "warning",
+                                title: "서버오류입니다.",
+                                text: "잠시 후 재시도해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
                             })
+                        }
                         }
                     )
 
@@ -126,7 +158,6 @@ function ScheduleModifyInputForm(props) {
                 setInput(() => input);
                 await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
                     .then((res) => {
-                            console.log(res.data)
                             onData();
                             props.onClickFunction();
                             Swal.fire({
@@ -138,12 +169,24 @@ function ScheduleModifyInputForm(props) {
                         }
                     )
                     .catch((err) => {
+                        if (err.response.status === 401) {
                             Swal.fire({
-                                title: '잠시후 재시도해주세요.',
-                                icon: 'warning',
-                                confirmButtonColor: Style.color2,
-                                confirmButtonText: '확인',
+                                icon: "warning",
+                                title: "세션이 만료되었습니다.",
+                                text: "다시 로그인 해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                            setIsLogined(false);
+                        }else{
+                            Swal.fire({
+                                icon: "warning",
+                                title: "서버오류입니다.",
+                                text: "잠시 후 재시도해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
                             })
+                        }
                         }
                     )
             }
@@ -154,13 +197,11 @@ function ScheduleModifyInputForm(props) {
 
 
     const onChange = (e) => {
-        // console.log(e);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
         setInput({
             ...input, // 기존의 input 객체를 복사한 뒤
             [name]: value, // name 키를 가진 값을 value 로 설정
         });
-        console.log(input);
         if (name === "call_check") {
             if (value === "통화완료" || value === "미완료") {
                 setDisable({
@@ -182,13 +223,11 @@ function ScheduleModifyInputForm(props) {
     };
 
     const onClick = (e) => {
-        // console.dir(e.target)
         const {checked, name} = e.target;
         setCheckBoxInput({
             ...checkboxInput, // 기존의 input 객체를 복사한 뒤
             [name]: checked // name 키를 가진 값을 value 로 설정
         });
-        // console.log(checkboxInput)
     }
 
 
