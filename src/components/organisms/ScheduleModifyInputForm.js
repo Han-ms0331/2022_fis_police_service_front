@@ -101,6 +101,7 @@ function ScheduleModifyInputForm(props) {
                             })
                         }
                     )
+
             }
             ,
             allowOutsideClick: () => !Swal.isLoading()
