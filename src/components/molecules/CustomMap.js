@@ -27,7 +27,7 @@ function CustomMap(props) {
             isPanto: true,
         }
     ) //선택한 센터의 좌표를 초기 값으로 갖고, 지도의 중앙값을 추적하는 state
-
+    const [draggable, setDraggable] = useState("true");
 
     let aInfo = [] // 현장요원 리스트
     let road = [] // 동선 저장
@@ -112,12 +112,15 @@ function CustomMap(props) {
                         lng: map.getCenter().getLng(),
                     }
                 })}
+                onCenterChanged={(map)=>setDraggable("false")}정 // 지도의 센터 변경 즉 지도를 드래그하면 draggable변수를 false로 set
+
             >
                 {/*return 버튼*/}
                 <CustomPolyLine
                     path={[
                         road,
                     ]}
+                    drag={draggable} // draggable 변수 props로 넘겨줌
                 /> {/*선택된 현장 요원의 동선 표시 -> 요원 선택 시 나타나야 함*/}
 
 

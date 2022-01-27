@@ -4,8 +4,13 @@ import InfoContainer from "../organisms/InfoContainer";
 import CustomButton from "../atoms/CustomButton";
 import axios from "axios";
 import CallInputForm from "../organisms/CallInputForm";
-import {useRecoilValue} from "recoil";
-import {SelectedCenterCallList, SelectedCenterId, SelectedCenterScheduleList} from "../../store/SelectedCenterStore";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {
+    CenterList, CenterLocation,
+    SelectedCenterCallList,
+    SelectedCenterId, SelectedCenterInfo, SelectedCenterList,
+    SelectedCenterScheduleList
+} from "../../store/SelectedCenterStore";
 import {Style} from "../../Style";
 import Box from "@mui/material/Box";
 import UserManageInputForm from "../organisms/UserManageInputForm";
@@ -44,8 +49,35 @@ function MainInfoTemplate(props) {
     const center_id = useRecoilValue(SelectedCenterId);
     const callList = useRecoilValue(SelectedCenterCallList);
     const scheduleList = useRecoilValue(SelectedCenterScheduleList);
-
+    const [centerList, setCenterList] = useRecoilState(CenterList); //검색 결과로 나온 시설들의 리스트를 담는 state
+    const [centerLocation, setCenterLocation] = useRecoilState(CenterLocation);   //선택된 시설의 위 경도 정보
+    const [selectedCenterId, setSelectedCenterId] = useRecoilState(SelectedCenterId);
+    const [selectedCenterInfo, setSelectedCenterInfo] = useRecoilState(SelectedCenterInfo);
+    const [selectedCenterCallList, setSelectedCenterCallList] = useRecoilState(SelectedCenterCallList);
+    const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
+    const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
+    const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
     const {isSelected} = props;
+
+    const onRefresh = async (e) => {
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${selectedCenterId}`,{withCredentials:true})
+            .then((res) => {
+                console.log(res.data.data);
+                setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
+                setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
+                    center_id: res.data.data.center_id,
+                    c_name: res.data.data.c_name,
+                    c_address: res.data.data.c_address,
+                    c_ph: res.data.data.c_ph,
+                    c_people: res.data.data.c_people
+                })
+                setSelectedCenterCallList(res.data.data.callList)//callList에서 뜰 리스트 저장
+                setSelectedCenterScheduleList(res.data.data.scheduleList)//scheduleList에서 뜰 내용 저장
+                setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
+                setSelectedCenterList(res.data.data.ceterList);
+                setClickedAgent({});
+            })
+    }
 
     useEffect(() => {
         setIsOpen(false);
@@ -105,6 +137,8 @@ function MainInfoTemplate(props) {
                     confirmButtonColor: Style.color2,
                     confirmButtonText: "확인"
                 })
+                onRefresh();
+                console.log("새로고침")
             }).catch(err => {
                 console.log(err);
                 Swal.fire({
@@ -156,6 +190,8 @@ function MainInfoTemplate(props) {
                     confirmButtonColor: Style.color2,
                     confirmButtonText: "확인"
                 })
+                onRefresh();
+                console.log("새로고침")
             }).catch(err => {
                 console.log(err)
                 Swal.fire({

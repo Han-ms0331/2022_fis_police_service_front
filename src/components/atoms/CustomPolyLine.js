@@ -25,6 +25,7 @@ function CustomPolyLine(props) {
             strokeColor="#17BA5C" // 선의 색깔입니다
             strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             /*strokeStyle={"solid"} // 선의 스타일입니다*/
+            display={props.drag} // 드래그 시 폴리라인 고정
         />
     );
 }

@@ -5,6 +5,7 @@ import ListContainer from "../organisms/ListContainer";
 import axios from "axios";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {
+    CenterList, CenterLocation,
     SelectedCenterCallList,
     SelectedCenterId,
     SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo,
@@ -28,8 +29,8 @@ function MainBodyTemplate(props) {
         c_address: "",
         c_ph: ""
     });
-    const [centerList, setCenterList] = useState([])    //검색 결과로 나온 시설들의 리스트를 담는 state
-    const [centerLocation, setCenterLocation] = useState([]);   //선택된 시설의 위 경도 정보
+    const [centerList, setCenterList] = useRecoilState(CenterList); //검색 결과로 나온 시설들의 리스트를 담는 state
+    const [centerLocation, setCenterLocation] = useRecoilState(CenterLocation);   //선택된 시설의 위 경도 정보
     const [selectedCenterId, setSelectedCenterId] = useRecoilState(SelectedCenterId);
     const [selectedCenterInfo, setSelectedCenterInfo] = useRecoilState(SelectedCenterInfo);
     const [selectedCenterCallList, setSelectedCenterCallList] = useRecoilState(SelectedCenterCallList);
