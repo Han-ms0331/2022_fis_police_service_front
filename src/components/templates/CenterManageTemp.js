@@ -156,50 +156,75 @@ function CenterManageTemp(props) {
             }
         }
 
+
         if (emptyOrNot() === false && modify === true) { // 수정
-            await axios.patch(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
-                .then(() => {
-                        const {c_name, c_address, c_ph} = searchInput;
-                        apiGetCall(c_name, c_address, c_ph);
-                        Swal.fire({
-                            icon: 'success',
-                            title: '수정되었습니다.',
-                            confirmButtonColor: Style.color2,
-                            confirmButtonText: '확인',
+            Swal.fire({
+                icon: "question",
+                title: '수정하시겠습니까?',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    await axios.patch(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
+                        .then((res) => {
+                            const {c_name, c_address, c_ph} = searchInput;
+                            apiGetCall(c_name, c_address, c_ph);
+                            Swal.fire({
+                                icon: 'success',
+                                title: '수정되었습니다.',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
+                            handleClose();
+                        }).catch((err) => {
+                            console.log(err)
+                            Swal.fire({
+                                icon: 'warning',
+                                title: '서버오류입니다.',
+                                text: '잠시 후 재시도해주세요.',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
                         })
-                        handleClose();
-                    }
-                ).catch((err) => {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: '서버오류입니다.',
-                        text: '잠시 후 재시도해주세요.',
-                        confirmButtonColor: Style.color2,
-                        confirmButtonText: '확인',
-                    })
-                })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+
+
         } else if (emptyOrNot() === false && modify === false) { // 추가
-            await axios.post(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
-                .then(() => {
-                        const {c_name, c_address, c_ph} = searchInput;
-                        apiGetCall(c_name, c_address, c_ph);
-                        Swal.fire({
-                            icon: 'success',
-                            title: '추가되었습니다.',
-                            confirmButtonColor: Style.color2,
-                            confirmButtonText: '확인',
+            Swal.fire({
+                icon: "question",
+                title: '추가하시겠습니까?',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    await axios.post(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
+                        .then((res) => {
+                            const {c_name, c_address, c_ph} = searchInput;
+                            apiGetCall(c_name, c_address, c_ph);
+                            Swal.fire({
+                                icon: 'success',
+                                title: '추가되었습니다.',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
+                            handleClose();
+                        }).catch((err) => {
+                            console.log(err)
+                            Swal.fire({
+                                icon: 'warning',
+                                title: '서버오류입니다.',
+                                text: '잠시 후 재시도해주세요.',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
                         })
-                        handleClose();
-                    }
-                ).catch((err) => {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: '서버오류입니다.',
-                        text: '잠시 후 재시도해주세요.',
-                        confirmButtonColor: Style.color2,
-                        confirmButtonText: '확인',
-                    })
-                })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
         } else {
             Swal.fire({
                 icon: 'warning',
@@ -217,6 +242,7 @@ function CenterManageTemp(props) {
                 <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
                             height="100%"/> {/*시설정보를 검색하는 부분*/}
             </div>
+
             {loading===true?<CustomSpinner/>: <ListContainer headerContents={headerContent} contents={contents} width="1800px"
                                                              gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
                                                              onClickFunction={handleModifyButtonClick}/>}

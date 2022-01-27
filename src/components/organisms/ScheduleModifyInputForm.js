@@ -53,74 +53,101 @@ function ScheduleModifyInputForm(props) {
     }
 
     const onPatch = async () => {
-        if (window.confirm('저장하시겠습니까?')) {
-            console.log(input);
-            setInput(() => input);
-            await axios.patch(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
-                schedule_id: input.schedule_id,
-                a_code: input.a_code,
-                center_id: input.center_id,
-                center_etc: input.center_etc,
-                agent_etc: input.agent_etc,
-                call_check_info: input.call_check_info,
-                valid: input.valid,
-                visit_date: input.visit_date,
-                visit_time: input.visit_time,
-                estimate_num: input.estimate_num,
-                modified_info: input.modified_info,
-                call_check: input.call_check,
-                total_etc: input.total_etc
-            }, {withCredentials: true})
-                .then((res) => console.log(res.data))
-                .catch((err) => console.log(err));
-            onData();
-            props.onClickFunction();
-            // alert('저장되었습니다.');
-            Swal.fire({
-                title: '저장되었습니다.',
-                icon: 'success',
-                confirmButtonColor: Style.color2,
-                confirmButtonText: '확인',
-            })
-
-        }
-    }
-
-    const onCancelFunction = async () => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
-            .then((res) => console.log(res.data))
-            .catch((err) => console.log(err));
-        onData();
-        props.onClickFunction();
-        // alert('일정이 취소되었습니다.');
         Swal.fire({
-            title: '일정이 취소되었습니다.',
-            icon: 'success',
-            confirmButtonColor: Style.color2,
+            icon: "question",
+            title: '수정하시겠습니까?',
+            showCancelButton: true,
             confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            showLoaderOnConfirm: true,
+            confirmButtonColor: Style.color2,
+            cancelButtonColor: "#e55039",
+            preConfirm: async () => {
+                setInput(() => input);
+                await axios.patch(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+                    schedule_id: input.schedule_id,
+                    a_code: input.a_code,
+                    center_id: input.center_id,
+                    center_etc: input.center_etc,
+                    agent_etc: input.agent_etc,
+                    call_check_info: input.call_check_info,
+                    valid: input.valid,
+                    visit_date: input.visit_date,
+                    visit_time: input.visit_time,
+                    estimate_num: input.estimate_num,
+                    modified_info: input.modified_info,
+                    call_check: input.call_check,
+                    total_etc: input.total_etc
+                }, {withCredentials: true})
+                    .then((res) => {
+                            console.log(res.data)
+                            onData();
+                            props.onClickFunction();
+                            // alert('저장되었습니다.');
+                            Swal.fire({
+                                title: '저장되었습니다.',
+                                icon: 'success',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
+                        }
+                    )
+                    .catch((err) => {
+                            Swal.fire({
+                                title: '잠시후 재시도해주세요.',
+                                icon: 'warning',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
+                        }
+                    )
+
+            }
+            ,
+            allowOutsideClick: () => !Swal.isLoading()
         })
     }
 
     const onCancel = () => {
         Swal.fire({
+            icon: "question",
             title: '일정을 취소하시겠습니까?',
-            icon: 'question',
             showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
-            confirmButtonText: '확인',
-            cancelButtonText: "취소"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                onCancelFunction();
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                setInput(() => input);
+                await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
+                    .then((res) => {
+                            console.log(res.data)
+                            onData();
+                            props.onClickFunction();
+                            Swal.fire({
+                                title: '일정이 취소되었습니다.',
+                                icon: 'success',
+                                confirmButtonText: '확인',
+                                confirmButtonColor: Style.color2,
+                            })
+                        }
+                    )
+                    .catch((err) => {
+                            Swal.fire({
+                                title: '잠시후 재시도해주세요.',
+                                icon: 'warning',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
+                        }
+                    )
             }
+            ,
+            allowOutsideClick: () => !Swal.isLoading()
         })
     }
 
-
-    // useEffect(() => {
-    //     console.log("1")
-    // }, [input])
 
     const onChange = (e) => {
         // console.log(e);
@@ -208,7 +235,10 @@ function ScheduleModifyInputForm(props) {
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="통화이력: " inputName="call_check" inputType="select" width="300px"
                                     defaultValue={input.call_check}
-                                    contents={[{show: "미완료", value: "미완료"}, {show: "통화완료", value: "통화완료"}, {show: "부재중", value: "부재중"}, {show: "통화오류", value: "통화오류"}]} setValueFunction={onChange}
+                                    contents={[{show: "미완료", value: "미완료"}, {show: "통화완료", value: "통화완료"}, {
+                                        show: "부재중",
+                                        value: "부재중"
+                                    }, {show: "통화오류", value: "통화오류"}]} setValueFunction={onChange}
                     />
                 </div>
 
