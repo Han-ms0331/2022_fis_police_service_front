@@ -15,14 +15,14 @@ function CallInfoList(props) {
         <div className={"info_list"} style={{width: "100%", padding: "1vw", fontSize: "0.7vw"}}>
             <div className={"recorder_container"}>
                 <div>기록자</div>
-                <div>{u_name}</div>
+                <div>{content.user.user_name}</div>
             </div>
             <div className={"info_container"}>
                 <div>
                     <div style={{textAlign: "start"}}>
                         <div className={"field_container"}>
                             <div className={"field_name"}>인/아웃바운드</div>
-                            <div className={"field_value"}>{content.in_out}</div>
+                            <div className={"field_value"}>{content.in_out==="IN" ? "인" : "아웃"}</div>
                         </div>
                         <br/>
                         <div className={"field_container"}>
@@ -32,7 +32,12 @@ function CallInfoList(props) {
                         <br/>
                         <div className={"field_container"}>
                             <div className={"field_name"}>시설 참여여부</div>
-                            <div className={"field_value"}>{content.participation}</div>
+                            <div className={"field_value"}>{
+                                content.participation ==="PARTICIPATION" ?
+                                    "참여":
+                                    content.participation ==="REJECT" ?
+                                        "거부":"보류"
+                            }</div>
                         </div>
                     </div>
                 </div>

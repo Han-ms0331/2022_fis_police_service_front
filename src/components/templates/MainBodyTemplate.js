@@ -109,8 +109,8 @@ function MainBodyTemplate(props) {
                     c_ph: res.data.data.c_ph,
                     c_people: res.data.data.c_people
                 })
-                setSelectedCenterCallList(res.data.data.callList)//callList에서 뜰 리스트 저장
-                setSelectedCenterScheduleList(res.data.data.scheduleList)//scheduleList에서 뜰 내용 저장
+                setSelectedCenterCallList(res.data.data.callList.reverse())//callList에서 뜰 리스트 저장
+                setSelectedCenterScheduleList(res.data.data.scheduleList.reverse())//scheduleList에서 뜰 내용 저장
                 setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
                 setSelectedCenterList(res.data.data.ceterList);
                 setClickedAgent({});
@@ -173,7 +173,7 @@ function MainBodyTemplate(props) {
                         setIsSearched(true);
                         setIsEmpty(true);
                     } else {
-                        setIsEmpty(false);
+
                         setCenterList(res.data.data);
                         setIsSelected(false);
                         setIsSearched(true);

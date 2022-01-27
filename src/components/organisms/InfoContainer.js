@@ -19,21 +19,21 @@ function InfoContainer(props) {
     const {type} = props    //props로 넘어온 type에 따라 다른 랜더링
     if (type === "call") {
         return (
-            <Container>
+            <Container1>
                 {props.content.map(o => <CallInfoList u_name={props.u_name} content={o}/>)}
-            </Container>
+            </Container1>
         );
 
     } else if (type === "apply") {
         return (
-            <Container>
+            <Container2>
                 {props.content.map(o => <ApplyInfoList u_name={props.u_name} content={o}/>)}
-            </Container>
+            </Container2>
         );
     }
 }
 
-const Container = styled.div`
+const Container1 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,9 +42,26 @@ const Container = styled.div`
   box-shadow: 3px 3px #dadada;
   background-color: ${Style.color1};
   padding: 1vw;
-  width: 580px;
+  width: 610px;
   text-align: center;
-  height: 250px;
+  min-height: 300px;
+  max-height: 300px;
+  overflow: auto;
+`
+
+const Container2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 3px 3px #dadada;
+  background-color: ${Style.color1};
+  padding: 1vw;
+  width: 610px;
+  text-align: center;
+  min-height: 350px;
+  max-height: 350px;
   overflow: auto;
 `
 export default InfoContainer;
