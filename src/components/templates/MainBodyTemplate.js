@@ -146,8 +146,7 @@ function MainBodyTemplate(props) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err.response.status === 500)
-                    if (err.response.status === 301) {
+                    if (err.response.status === 401) {
                         Swal.fire({
                             icon: "warning",
                             title: "세션이 만료되었습니다.",
@@ -155,7 +154,7 @@ function MainBodyTemplate(props) {
                             confirmButtonText: "확인",
                             confirmButtonColor: Style.color2
                         });
-                    }
+                    }else{
                     Swal.fire({
                         icon: "warning",
                         title: "서버오류입니다.",
@@ -163,6 +162,7 @@ function MainBodyTemplate(props) {
                         confirmButtonText: "확인",
                         confirmButtonColor: Style.color2
                     })
+                    }
                     setButtonLoading(false);
                 })
         }

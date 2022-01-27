@@ -7,6 +7,7 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {isLoginedState, userAuthority} from "./store/LoginStore";
 import axios from "axios";
 import NetworkConfig from "./configures/NetworkConfig";
+import {useEffect} from "react";
 
 
 function App() {
@@ -16,8 +17,7 @@ function App() {
         작성내용: login 상태에 따라 랜더링을 다르게하는 상태
     */
     const [isLogined, setIsLgoined] = useRecoilState(isLoginedState);
-    const [authority,setAuthority] = useRecoilState(userAuthority);
-    console.log(`authority:${authority}`);
+    const [authority, setAuthority] = useRecoilState(userAuthority);
 
     /*
         날짜: 2022/01/19 3:42 오후
@@ -41,14 +41,16 @@ function App() {
                     setAuthority("");
                 }
 
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err);
                 setIsLgoined(false);
                 setAuthority("");
             })
     };
+    useEffect(() => {
+        LoginStateInitialization();
+    },[])
 
-    LoginStateInitialization();
     return (
         <div className="App">
             {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
@@ -57,7 +59,7 @@ function App() {
                 <Route exact path="/main" component={MainPage}/>
                 <Route exact path="/schedule" component={SchedulePage}/>
                 <Route exact path="/manage">
-                    {authority==='ADMIN'?<ManagePage/>:<Redirect to={"/main"}/>}
+                    {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}
                 </Route>
             </Switch>
         </div>
