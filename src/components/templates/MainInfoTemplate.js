@@ -60,7 +60,7 @@ function MainInfoTemplate(props) {
     const {isSelected} = props;
 
     const onRefresh = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${selectedCenterId}`,{withCredentials:true})
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${selectedCenterId}`, {withCredentials: true})
             .then((res) => {
                 console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -109,45 +109,100 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: 일정 저장 버튼이 눌렸을 때 작동하는 함수
     */
-    const onSaveSchedule = async () => {
-        console.log(clickedAgentInfo);
-        await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
-            center_id: center_id,
-            agent_id: clickedAgentInfo.agent_id,
-            receipt_date: currentScheduleInfo.receipt_date,
-            visit_date: currentScheduleInfo.visit_date,
-            visit_time: currentScheduleInfo.visit_time + ":00",
-            estimate_num: currentScheduleInfo.estimate_num,
-            center_etc: currentScheduleInfo.center_etc,
-            agent_etc: currentScheduleInfo.agent_etc
-        }, {withCredentials: true})
-            .then((res) => {
-                setCurrentScheduleInfo({
-                    receipt_date: "",
-                    visit_date: "",
-                    visit_time: "",
-                    estimate_num: "",
-                    center_etc: "",
-                    agent_etc: ""
-                })
-                console.log(res);
-                Swal.fire({
-                    icon: "success",
-                    title: "저장되었습니다.",
-                    confirmButtonColor: Style.color2,
-                    confirmButtonText: "확인"
-                })
-                onRefresh();
-                console.log("새로고침")
-            }).catch(err => {
-                console.log(err);
-                Swal.fire({
-                    icon: "error",
-                    title: "실패하였습니다.",
-                    confirmButtonColor: Style.color2,
-                    confirmButtonText: "확인"
-                })
-            })
+    // const onSaveSchedule = async () => {
+    //     console.log(clickedAgentInfo);
+    //     await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+    //         center_id: center_id,
+    //         agent_id: clickedAgentInfo.agent_id,
+    //         receipt_date: currentScheduleInfo.receipt_date,
+    //         visit_date: currentScheduleInfo.visit_date,
+    //         visit_time: currentScheduleInfo.visit_time + ":00",
+    //         estimate_num: currentScheduleInfo.estimate_num,
+    //         center_etc: currentScheduleInfo.center_etc,
+    //         agent_etc: currentScheduleInfo.agent_etc
+    //     }, {withCredentials: true})
+    //         .then((res) => {
+    //             setCurrentScheduleInfo({
+    //                 receipt_date: "",
+    //                 visit_date: "",
+    //                 visit_time: "",
+    //                 estimate_num: "",
+    //                 center_etc: "",
+    //                 agent_etc: ""
+    //             })
+    //             console.log(res);
+    //             Swal.fire({
+    //                 icon: "success",
+    //                 title: "저장되었습니다.",
+    //                 confirmButtonColor: Style.color2,
+    //                 confirmButtonText: "확인"
+    //             })
+    //             onRefresh();
+    //             console.log("새로고침")
+    //         }).catch(err => {
+    //             console.log(err);
+    //             Swal.fire({
+    //                 icon: "error",
+    //                 title: "실패하였습니다.",
+    //                 confirmButtonColor: Style.color2,
+    //                 confirmButtonText: "확인"
+    //             })
+    //         })
+    // }
+    const onSaveSchedule = () => {
+        Swal.fire({
+            icon: "question",
+            title: '저장하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            showLoaderOnConfirm: true,
+            confirmButtonColor: Style.color2,
+            cancelButtonColor: "#e55039",
+            preConfirm: async () => {
+                await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+                    center_id: center_id,
+                    agent_id: clickedAgentInfo.agent_id,
+                    receipt_date: currentScheduleInfo.receipt_date,
+                    visit_date: currentScheduleInfo.visit_date,
+                    visit_time: currentScheduleInfo.visit_time + ":00",
+                    estimate_num: currentScheduleInfo.estimate_num,
+                    center_etc: currentScheduleInfo.center_etc,
+                    agent_etc: currentScheduleInfo.agent_etc
+                }, {withCredentials: true})
+                    .then((res) => {
+                        setCurrentScheduleInfo({
+                            receipt_date: "",
+                            visit_date: "",
+                            visit_time: "",
+                            estimate_num: "",
+                            center_etc: "",
+                            agent_etc: ""
+                        })
+                        console.log(res);
+                        Swal.fire({
+                            icon: "success",
+                            title: "저장되었습니다.",
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: "확인"
+                        })
+                        onRefresh();
+                        console.log("새로고침")
+                    }).catch(err => {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "실패하였습니다.",
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: "확인"
+                        })
+                    })
+
+
+            }
+            ,
+            allowOutsideClick: () => !Swal.isLoading()
+        })
     }
 
 
@@ -156,51 +211,113 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: 콜 기록 저장 버튼이 눌렸을 때 작동하는 함수
     */
-    const onSaveCall = async () => {
-        await axios.post(`http://${NetworkConfig.networkAddress}:8080/call`, {
-            center_id: center_id,
-            u_name: currentInfo.u_name,
-            in_out: currentInfo.in_out,
-            dateTime: currentInfo.dateTime,
-            participation: currentInfo.participation,
-            c_manager: currentInfo.c_manager,
-            m_ph: currentInfo.m_ph,
-            m_email: currentInfo.m_email,
-            num: "",
-            center_etc: currentInfo.center_etc,
-            agent_etc: currentInfo.agent_etc
-        }, {withCredentials: true})
-            .then((res) => {
-                setCurrentInfo({
-                    in_out: "",
-                    dateTime: "",
-                    participation: "",
-                    c_manager: "",
-                    m_ph: "",
-                    m_email: "",
+    // const onSaveCall = async () => {
+    //     await axios.post(`http://${NetworkConfig.networkAddress}:8080/call`, {
+    //         center_id: center_id,
+    //         u_name: currentInfo.u_name,
+    //         in_out: currentInfo.in_out,
+    //         dateTime: currentInfo.dateTime,
+    //         participation: currentInfo.participation,
+    //         c_manager: currentInfo.c_manager,
+    //         m_ph: currentInfo.m_ph,
+    //         m_email: currentInfo.m_email,
+    //         num: "",
+    //         center_etc: currentInfo.center_etc,
+    //         agent_etc: currentInfo.agent_etc
+    //     }, {withCredentials: true})
+    //         .then((res) => {
+    //             setCurrentInfo({
+    //                 in_out: "",
+    //                 dateTime: "",
+    //                 participation: "",
+    //                 c_manager: "",
+    //                 m_ph: "",
+    //                 m_email: "",
+    //                 num: "",
+    //                 center_etc: "",
+    //                 agent_etc: ""
+    //             })
+    //             console.log(res);
+    //             // alert("저장되었습니다")
+    //             Swal.fire({
+    //                 icon: "success",
+    //                 title: "저장되었습니다.",
+    //                 confirmButtonColor: Style.color2,
+    //                 confirmButtonText: "확인"
+    //             })
+    //             onRefresh();
+    //             console.log("새로고침")
+    //         }).catch(err => {
+    //             console.log(err)
+    //             Swal.fire({
+    //                 icon: "error",
+    //                 title: "실패하였습니다.",
+    //                 confirmButtonColor: Style.color2,
+    //                 confirmButtonText: "확인"
+    //             })
+    //         })
+    // }
+    const onSaveCall = () => {
+        Swal.fire({
+            icon: "question",
+            title: '수정하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            showLoaderOnConfirm: true,
+            confirmButtonColor: Style.color2,
+            cancelButtonColor: "#e55039",
+            preConfirm: async () => {
+                await axios.post(`http://${NetworkConfig.networkAddress}:8080/call`, {
+                    center_id: center_id,
+                    u_name: currentInfo.u_name,
+                    in_out: currentInfo.in_out,
+                    dateTime: currentInfo.dateTime,
+                    participation: currentInfo.participation,
+                    c_manager: currentInfo.c_manager,
+                    m_ph: currentInfo.m_ph,
+                    m_email: currentInfo.m_email,
                     num: "",
-                    center_etc: "",
-                    agent_etc: ""
-                })
-                console.log(res);
-                // alert("저장되었습니다")
-                Swal.fire({
-                    icon: "success",
-                    title: "저장되었습니다.",
-                    confirmButtonColor: Style.color2,
-                    confirmButtonText: "확인"
-                })
-                onRefresh();
-                console.log("새로고침")
-            }).catch(err => {
-                console.log(err)
-                Swal.fire({
-                    icon: "error",
-                    title: "실패하였습니다.",
-                    confirmButtonColor: Style.color2,
-                    confirmButtonText: "확인"
-                })
-            })
+                    center_etc: currentInfo.center_etc,
+                    agent_etc: currentInfo.agent_etc
+                }, {withCredentials: true})
+                    .then((res) => {
+                        setCurrentInfo({
+                            in_out: "",
+                            dateTime: "",
+                            participation: "",
+                            c_manager: "",
+                            m_ph: "",
+                            m_email: "",
+                            num: "",
+                            center_etc: "",
+                            agent_etc: ""
+                        })
+                        console.log(res);
+                        // alert("저장되었습니다")
+                        Swal.fire({
+                            icon: "success",
+                            title: "저장되었습니다.",
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: "확인"
+                        })
+                        onRefresh();
+                        console.log("새로고침")
+                    }).catch(err => {
+                        console.log(err)
+                        Swal.fire({
+                            icon: "error",
+                            title: "실패하였습니다.",
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: "확인"
+                        })
+                    })
+
+
+            }
+            ,
+            allowOutsideClick: () => !Swal.isLoading()
+        })
     }
 
 
@@ -209,49 +326,91 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: sendMail - 서버와 메일전송 통신을 하는 부분
     */
-    const sendMailFunction = async () => {
-        const result = await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`)
-            .then((res) => {
-                if (res.data.result === "success") {
-                    // alert("메일 전송에 성공하였습니다.")
-                    Swal.fire({
-                        icon: "success",
-                        title: "메일 전송에 성공하였습니다.",
-                        confirmButtonColor: Style.color2,
-                        confirmButtonText: "확인"
-                    })
-                } else {
-                    // alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                Swal.fire({
-                    icon: "error",
-                    title: "메일 전송에 실패하였습니다.",
-                    text: "잠시후에 다시 실행해 주세요.",
-                    confirmButtonColor: Style.color2,
-                    confirmButtonText: "확인"
-                })
-            })
+    // const sendMailFunction = async () => {
+    //     const result = await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`)
+    //         .then((res) => {
+    //             if (res.data.result === "success") {
+    //                 // alert("메일 전송에 성공하였습니다.")
+    //                 Swal.fire({
+    //                     icon: "success",
+    //                     title: "메일 전송에 성공하였습니다.",
+    //                     confirmButtonColor: Style.color2,
+    //                     confirmButtonText: "확인"
+    //                 })
+    //             } else {
+    //                 // alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //             Swal.fire({
+    //                 icon: "error",
+    //                 title: "메일 전송에 실패하였습니다.",
+    //                 text: "잠시후에 다시 실행해 주세요.",
+    //                 confirmButtonColor: Style.color2,
+    //                 confirmButtonText: "확인"
+    //             })
+    //         })
+    //
+    // }
 
-    }
+    // const sendMail = async () => {
+    //     Swal.fire({
+    //         title: '메일을 보내시겠습니까?',
+    //         icon: 'question',
+    //         showCancelButton: true,
+    //         confirmButtonColor: Style.color2,
+    //         cancelButtonColor: "#e55039",
+    //         confirmButtonText: '확인',
+    //         cancelButtonText: "취소"
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             sendMailFunction();
+    //         }
+    //     })
+    // }
 
-    const sendMail = async () => {
+    const sendMail = () => {
         Swal.fire({
+            icon: "question",
             title: '메일을 보내시겠습니까?',
-            icon: 'question',
             showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            showLoaderOnConfirm: true,
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
-            confirmButtonText: '확인',
-            cancelButtonText: "취소"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                sendMailFunction();
+            preConfirm: async () => {
+                await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`)
+                    .then((res) => {
+                        if (res.data.result === "success") {
+                            // alert("메일 전송에 성공하였습니다.")
+                            Swal.fire({
+                                icon: "success",
+                                title: "메일 전송에 성공하였습니다.",
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: "확인"
+                            })
+                        } else {
+                            // alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "메일 전송에 실패하였습니다.",
+                            text: "잠시후에 다시 실행해 주세요.",
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: "확인"
+                        })
+                    })
             }
+            ,
+            allowOutsideClick: () => !Swal.isLoading()
         })
     }
+
 
     /*
         날짜: 2022/01/18 1:51 오후
@@ -295,38 +454,42 @@ function MainInfoTemplate(props) {
                 }
             })
         } else if (e.target.name === "save") {
-            Swal.fire({
-                title: '저장하시겠습니까?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: Style.color2,
-                cancelButtonColor: "#e55039",
-                confirmButtonText: '확인',
-                cancelButtonText: "취소"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    onSaveCall();
-                    setIsOpen(false);
-                }
-            })
+            // Swal.fire({
+            //     title: '저장하시겠습니까?',
+            //     icon: 'question',
+            //     showCancelButton: true,
+            //     confirmButtonColor: Style.color2,
+            //     cancelButtonColor: "#e55039",
+            //     confirmButtonText: '확인',
+            //     cancelButtonText: "취소"
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         onSaveCall();
+            //         setIsOpen(false);
+            //     }
+            // })
+            onSaveCall();
+            setIsOpen(false);
 
         } else if (e.target.name === "add_schedule") {
             setIsScheduleOpen(true);
         } else if (e.target.name === "schedule_save") {
-            Swal.fire({
-                title: '저장하시겠습니까?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: Style.color2,
-                cancelButtonColor: "#e55039",
-                confirmButtonText: '확인',
-                cancelButtonText: "취소"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    onSaveSchedule()
-                    setIsScheduleOpen(false);
-                }
-            })
+            // Swal.fire({
+            //     title: '저장하시겠습니까?',
+            //     icon: 'question',
+            //     showCancelButton: true,
+            //     confirmButtonColor: Style.color2,
+            //     cancelButtonColor: "#e55039",
+            //     confirmButtonText: '확인',
+            //     cancelButtonText: "취소"
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         onSaveSchedule()
+            //         setIsScheduleOpen(false);
+            //     }
+            // })
+            onSaveSchedule()
+            setIsScheduleOpen(false);
         } else if (e.target.name === "schedule_cancel") {
             setIsScheduleOpen(false);
         }
