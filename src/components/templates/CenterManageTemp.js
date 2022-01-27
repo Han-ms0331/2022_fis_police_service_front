@@ -13,6 +13,8 @@ import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
 import '../atoms/swal.css'
 import CustomSpinner from "../atoms/CustomSpinner";
+import {useSetRecoilState} from "recoil";
+import {isLoginedState} from "../../store/LoginStore";
 
 
 function CenterManageTemp(props) {
@@ -42,7 +44,9 @@ function CenterManageTemp(props) {
 
     //정보 수정 버튼 눌렀을 때는 true로, 시설 추가 눌렀을 때는 false로 set하는 modify 상태에 대한 정의
     const [modify, setModify] = useState();
-    const [loading, setLoading] = useState(false);
+    const [loading,setLoading] = useState(false);
+    const setIsLogined = useSetRecoilState(isLoginedState)
+
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
@@ -68,17 +72,26 @@ function CenterManageTemp(props) {
                 }
                 setIsSearched(true);
                 setLoading(false);
-                // console.log(tmp);
-                // console.log(contents);
             })
             .catch((err) => {
-                Swal.fire({
-                    icon: "warning",
-                    title: "서버오류입니다.",
-                    text: "잠시 후 재시도해주세요.",
-                    confirmButtonText: "확인",
-                    confirmButtonColor: Style.color2
-                })
+                if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                    setIsLogined(false);
+                }else{
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
+                }
             })
     }
 
@@ -110,24 +123,20 @@ function CenterManageTemp(props) {
             ...searchInput,
             [name]: value
         });
-        console.log(searchInput);
     }
 
 // inputForm의 입력창에 글씨가 바뀌면, 위에서 정의한 currentInfo 상태에 입력창에 적힌 글씨를 저장하는 함수 정의
     const handleInputFormChange = (e) => {
-        // console.log(e);
         const {value, name} = e.target;
         setCurrentInfo({
             ...currentInfo,
             [name]: value
         });
-        console.log(currentInfo);
     }
 
 // 정보 수정 버튼을 누르면 inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오는 함수
     const handleModifyButtonClick = (e) => {
         setModify(true);
-        console.log(e.target.getAttribute("name"))
         setCurrentInfo(contents[e.target.getAttribute("name")])
         handleOpen();
     }
@@ -186,14 +195,24 @@ function CenterManageTemp(props) {
                             })
                             handleClose();
                         }).catch((err) => {
-                            console.log(err)
-                            Swal.fire({
-                                icon: 'warning',
-                                title: '서버오류입니다.',
-                                text: '잠시 후 재시도해주세요.',
-                                confirmButtonColor: Style.color2,
-                                confirmButtonText: '확인',
-                            })
+                            if (err.response.status === 401) {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "세션이 만료되었습니다.",
+                                    text: "다시 로그인 해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                });
+                                setIsLogined(false);
+                            }else{
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "서버오류입니다.",
+                                    text: "잠시 후 재시도해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                })
+                            }
                         })
                 },
                 allowOutsideClick: () => !Swal.isLoading()
@@ -221,14 +240,25 @@ function CenterManageTemp(props) {
                             })
                             handleClose();
                         }).catch((err) => {
-                            console.log(err)
-                            Swal.fire({
-                                icon: 'warning',
-                                title: '서버오류입니다.',
-                                text: '잠시 후 재시도해주세요.',
-                                confirmButtonColor: Style.color2,
-                                confirmButtonText: '확인',
-                            })
+                            if (err.response.status === 401) {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "세션이 만료되었습니다.",
+                                    text: "다시 로그인 해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                });
+                                setIsLogined(false);
+                            }else{
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "서버오류입니다.",
+                                    text: "잠시 후 재시도해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                })
+                            }
+
                         })
                 },
                 allowOutsideClick: () => !Swal.isLoading()

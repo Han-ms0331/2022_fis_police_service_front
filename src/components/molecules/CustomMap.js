@@ -161,6 +161,7 @@ function CustomMap(props) {
                 {
                     roadCenter.map((center, index) => (
                         <CustomMarker
+                            key={index}
                             type={"centerSelected"}
                             position={center.latlng}
                             content={

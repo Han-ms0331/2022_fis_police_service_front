@@ -51,7 +51,7 @@
 
 .react-calendar__navigation {
     display: flex;
-    height: 40px;
+    height: auto;
     padding: 10px 0;
     margin-bottom: 20px;
     border-bottom: 2px solid var(--option-color-2);
@@ -72,6 +72,23 @@
     /*background-color: #e6e6e6;*/
     transform: scale(1.25);
 
+}
+/*네이게이션 월이 표시되는 부분*/
+.react-calendar__navigation__label{
+    font-size: 23px;
+}
+
+/*달을 넘기는 부분*/
+.react-calendar__navigation__next-button,
+.react-calendar__navigation__prev-button
+{
+    font-size: 32px;
+}
+
+.react-calendar__navigation__next2-button,
+.react-calendar__navigation__prev2-button
+{
+    display: none;
 }
 
 .react-calendar__navigation button[disabled] {
@@ -142,7 +159,8 @@
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
     /*background-color: #F8EFBA;*/
-    background-color: var(--option-color-2);
+    /*background-color: var(--option-color-2);*/
+    background-color: #828dc2;
     color: #fff;
     transform: scale(1.15);
 }

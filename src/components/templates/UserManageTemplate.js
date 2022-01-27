@@ -10,6 +10,8 @@ import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
 import '../atoms/swal.css'
+import {useSetRecoilState} from "recoil";
+import {isLoginedState} from "../../store/LoginStore";
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -31,11 +33,10 @@ const UserManageTemplate = () => {
             u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "", u_auth: ""
         })
         const [modify, setModify] = useState();
-
+        const setIsLogined = useSetRecoilState(isLoginedState)
         const showData = async () => {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/user`, {withCredentials: true})
                 .then((res) => {
-                        console.log(res.data);
                         let tmp = [];
                         let a;
                         res.data.forEach((list) => {
@@ -46,7 +47,6 @@ const UserManageTemplate = () => {
                             } else {
                                 a = "퇴사"
                             }
-
                             tmp.push({
                                 user_id: list.user_id,
                                 u_name: list.u_name,
@@ -58,21 +58,39 @@ const UserManageTemplate = () => {
                                 averge_call: list.average_call,
                                 today_call_num: list.today_call_num
                             })
+
+
                         })
-                        console.log(tmp)
                         setContents(tmp);
                     }
                 )
+                .catch((err) => {
+                    if (err.response.status === 401) {
+                        Swal.fire({
+                            icon: "warning",
+                            title: "세션이 만료되었습니다.",
+                            text: "다시 로그인 해주세요.",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: Style.color2
+                        });
+                        setIsLogined(false);
+                    }else{
+                        Swal.fire({
+                            icon: "warning",
+                            title: "서버오류입니다.",
+                            text: "잠시 후 재시도해주세요.",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: Style.color2
+                        })
+                    }
+                })
         }
 
         useEffect(() => {
-            showData().then((res) => {
-                console.log("done")
-            })
+            showData()
         }, [])
 
         const handleInputFormChange = (e) => {
-            // console.log(e);
             const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
             setCurrentInfo({
                 ...currentInfo,
@@ -89,7 +107,6 @@ const UserManageTemplate = () => {
                         continue;
                     }
                     if (currentInfo[key] === "") {
-                        console.log('hi')
                         a = 0;          // empty면 0으로 체크
                         break;
                     }
@@ -109,7 +126,18 @@ const UserManageTemplate = () => {
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
-                } else {
+                }
+                else if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                    setIsLogined(false);
+                }
+                else {
                     Swal.fire({
                         icon: 'warning',
                         title: '서버 오류입니다.',
@@ -152,14 +180,12 @@ const UserManageTemplate = () => {
                                 showData();
                                 handleClose();
                             }).catch((err) => {
-                                console.log(err);
                                 showErrorMessage(err);
                             })
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 })
             } else if (emptyOrNot() === false && modify === false) {
-                console.log(currentInfo)
                 /*await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true})
                     .then((res) => {
                         Swal.fire({
@@ -192,7 +218,6 @@ const UserManageTemplate = () => {
                                 showData();
                                 handleClose();
                             }).catch((err) => {
-                                console.log(err);
                                 showErrorMessage(err);
                             })
                     },
@@ -216,13 +241,10 @@ const UserManageTemplate = () => {
             delete changeContent['average_call']; /*평균통화건수 제외*/
             let a;
             if (changeContent['u_auth'] === "관리자") {
-                console.log(currentInfo.u_auth)
                 a = "ADMIN"
             } else if (changeContent['u_auth'] === "일반직원") {
-                console.log(currentInfo.u_auth)
                 a = "USER"
             } else {
-                console.log(currentInfo.u_auth)
                 a = "FIRED"
             }
             changeContent['u_auth'] = a;

@@ -34,7 +34,7 @@ function RangeController(props) {
 
             {/*</div>*/}
 
-            <TabsUnstyled defaultValue={0}>
+            <TabsUnstyled defaultValue={0} style={{zIndex: 3}}>
                 <TabsList>
                     <Tab onClick={props.onClickFunc}>250m</Tab>
                     <Tab onClick={props.onClickFunc}>500m</Tab>

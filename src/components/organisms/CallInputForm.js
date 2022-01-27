@@ -33,6 +33,7 @@ function CallInputForm(props) {
 
     let mail
     if (data !== undefined) {
+        console.log(data.m_email)
         mail = data.m_email.split("@");
         if (mail[1] !== "naver.com" && mail[1] !== "google.com" && mail[1] !== "hanmail.com") {     //사용 mail주소가 미리 입력된 메일이 아닐 경우 직접입력으로 사용
             mail[0] = mail[0] + "@" + mail[1];
