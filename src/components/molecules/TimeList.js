@@ -11,6 +11,7 @@ import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
 import {useRecoilState} from "recoil";
 import CustomButton from "../atoms/CustomButton";
 import CustomSpinner from "../atoms/CustomSpinner";
+import {Style} from "../../Style";
 
 
 const Button = styled.button` // css
@@ -19,7 +20,8 @@ const Button = styled.button` // css
   padding: 5px;
   border: 3px solid #eee;
   color: black;
-  background-color: White;
+  //background-color: White;
+  background-color: ${(props) => props.bgColor};
   border-radius: 10px;
   width: 225px;
   height: 70px;
@@ -34,20 +36,17 @@ const Button = styled.button` // css
     position: relative;
     top: 1px;
   }
-  &:focus {
-    background-color: orange;
-  }
 `;
 
 
-function TimeList({content, setCurrentTime=0}) {
+function TimeList({content, setCurrentTime=0, selected, setSelected}) {
     const red = '#e55039';
     const green = '#4cd137';
     const date = new Date().getHours();
     let using = [false, false, false, false];
     const handleClick = () => {
         setClickedAgent(content);
-        console.log(content);
+        setSelected(content.agent_id);
     }
 
 
@@ -81,7 +80,7 @@ function TimeList({content, setCurrentTime=0}) {
 
     return (
         <div>
-            <Button onClick={handleClick}>
+            <Button onClick={handleClick} bgColor={selected === content.agent_id ? Style.color3 : 'white'}>
                 <Content />
             </Button>
         </div>
