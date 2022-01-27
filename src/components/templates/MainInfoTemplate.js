@@ -258,9 +258,6 @@ function MainInfoTemplate(props) {
         작성자: 한명수
         작성내용: onClick- 각 버튼들이 클릭되었을 때 실행하는 로직을 담고있음
     */
-    useEffect(() => {
-        console.log(isOpen)
-    }, [isOpen]);
     const onClick = (e) => {
         if (e.target.name === "open") {
             if (callList[0] !== undefined) {
