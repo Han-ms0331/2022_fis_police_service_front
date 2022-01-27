@@ -27,8 +27,9 @@ function CustomButton(props) {
                         fontSize:props.fontSize,
                         boxSizing:"border-box",
                         padding:props.padding,
-                        margin:props.margin
+                        margin:props.margin,
                     }}
+                    disabled={props.disabled}
                     onClick={props.onClick}
             >{props.content}
                 </Button>
@@ -50,6 +51,7 @@ function CustomButton(props) {
                         margin:props.margin,
                         fontWeight: props.fontWeight,
                     }}
+                    disabled={props.disabled}
                     onClick={props.onClick}
             >
                 <div>

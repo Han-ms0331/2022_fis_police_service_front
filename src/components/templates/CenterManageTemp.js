@@ -17,7 +17,8 @@ import CustomSpinner from "../atoms/CustomSpinner";
 
 function CenterManageTemp(props) {
     const headerContent = ["시설이름", "참여여부", "전화번호", "시설주소"]
-
+    const [isSearched, setIsSearched] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(false);
     //form이 열리고 닫히고에 관련된 state 정의
     const [open, setOpen] = useState(false);
 
@@ -41,24 +42,31 @@ function CenterManageTemp(props) {
 
     //정보 수정 버튼 눌렀을 때는 true로, 시설 추가 눌렀을 때는 false로 set하는 modify 상태에 대한 정의
     const [modify, setModify] = useState();
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     async function apiGetCall(c_name, c_address, c_ph) {
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
-                let tmp = [];
-                res.data.data.forEach((list) => {
-                    tmp.push({
-                        center_id: list.center_id,
-                        c_name: list.c_name,
-                        participation: list.participation,
-                        c_ph: list.c_ph,
-                        c_address: list.c_address
+                if(res.data.data.length === 0){
+
+                    setIsEmpty(true);
+                } else {
+                    let tmp = [];
+                    res.data.data.forEach((list) => {
+                        tmp.push({
+                            center_id: list.center_id,
+                            c_name: list.c_name,
+                            participation: list.participation,
+                            c_ph: list.c_ph,
+                            c_address: list.c_address
+                        })
                     })
-                })
-                setContents(tmp);
+                    setContents(tmp);
+                    setIsEmpty(false);
+                }
+                setIsSearched(true);
                 setLoading(false);
                 // console.log(tmp);
                 // console.log(contents);
@@ -243,9 +251,19 @@ function CenterManageTemp(props) {
                             height="100%"/> {/*시설정보를 검색하는 부분*/}
             </div>
 
-            {loading===true?<CustomSpinner/>: <ListContainer headerContents={headerContent} contents={contents} width="1800px"
-                                                             gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
-                                                             onClickFunction={handleModifyButtonClick}/>}
+            {loading === true ? <CustomSpinner/>
+                :
+                isSearched ?
+                    isEmpty ?
+                        <BodyContainer>검색 결과가 없습니다</BodyContainer>
+                        :
+                        <ListContainer headerContents={headerContent} contents={contents} width="1800px"
+                                       gridRatio="1fr 1fr 1fr 2fr 1fr" buttonContent="정보수정"
+                                       onClickFunction={handleModifyButtonClick}/>
+                    :
+                    <BodyContainer>시설을 검색해 주세요</BodyContainer>
+
+            }
 
             <Modal
                 open={open}
@@ -297,6 +315,21 @@ const Main = styled.div`
   }
 `;
 
+const BodyContainer = styled.div`
+  min-height: 100%;
+  width: 646px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #a8a8a8;
+
+  & img {
+    width: 75px;
+    color: #a8a8a8;
+  }
+`;
 
 /*
     날짜 : 2022/01/13 11:40 AM

@@ -56,7 +56,7 @@ function MainInfoTemplate(props) {
     const [selectedCenterCallList, setSelectedCenterCallList] = useRecoilState(SelectedCenterCallList);
     const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
-    const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
+    const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
     const {isSelected} = props;
 
     const onRefresh = async (e) => {
@@ -381,7 +381,7 @@ function MainInfoTemplate(props) {
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
             preConfirm: async () => {
-                await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`)
+                await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`, {withCredentials: true})
                     .then((res) => {
                         if (res.data.result === "success") {
                             // alert("메일 전송에 성공하였습니다.")
@@ -469,7 +469,19 @@ function MainInfoTemplate(props) {
             setIsOpen(false);
 
         } else if (e.target.name === "add_schedule") {
-            setIsScheduleOpen(true);
+            console.log(clickedAgent.agent_id=== undefined);
+            if (clickedAgent.agent_id=== undefined ) {
+                console.log("clicked")
+                // Swal.fire({
+                //     icon: "warning",
+                //     title: "세션이 만료되었습니다.",
+                //     text: "다시 로그인 해주세요.",
+                //     confirmButtonText: "확인",
+                //     confirmButtonColor: Style.color2
+                // });
+            } else {
+                setIsScheduleOpen(true);
+            }
         } else if (e.target.name === "schedule_save") {
             // Swal.fire({
             //     title: '저장하시겠습니까?',
@@ -536,7 +548,7 @@ function MainInfoTemplate(props) {
                 <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
                     <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
                                   color={Style.color1}
-                                  backgroundColor={Style.color2} content="일정 추가" onClick={onClick}/>
+                                  backgroundColor={Style.color2} content="일정 추가" fontSize={"25px"} onClick={onClick}/>
                 </div>
                 <Modal
                     open={isScheduleOpen}
@@ -577,7 +589,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: 99vh;
-  width: 670px;
+  width: 850px;
   overflow: auto;
   margin-top: 30px;
 
