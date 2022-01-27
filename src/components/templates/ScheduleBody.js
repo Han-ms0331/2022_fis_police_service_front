@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ScheduleTable from "../organisms/ScheduleTable";
 import {useRecoilValue} from "recoil";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
@@ -10,8 +10,7 @@ import styled from 'styled-components';
 작성내용: 스케줄 바디에 해당하는 부분
 */
 
-
-const ScheduleBody = () => {
+const ScheduleBody = ({loading}) => {
     const resultRows = useRecoilValue(dateSelectedRows);
     // const backgroundColor = 'rgba(255, 212, 0, 0.5)';
     const backgroundColor = Style.color2;
@@ -19,9 +18,12 @@ const ScheduleBody = () => {
     const backgroundColor3 = Style.color2;
     const fontColor = 'white';
     const fontColor2 = 'black';
+
+
+
     return (
         <Container>
-            <ScheduleTable headerColor={backgroundColor} headerFontColor={fontColor} bodyColor={backgroundColor2} buttonColor={backgroundColor3} rows={resultRows}/>
+            <ScheduleTable headerColor={backgroundColor} headerFontColor={fontColor} bodyColor={backgroundColor2} buttonColor={backgroundColor3} rows={resultRows} loading={loading}/>
             {/*테이블 헤더 색깔 여기에 넣으면 됩니다.*/}
         </Container>
     );

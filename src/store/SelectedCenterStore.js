@@ -30,3 +30,16 @@ export const SelectedCenterList=atom({
     key:'SelectedCenterList',
     default: []
 })
+
+export const CenterList=atom({
+    key:'CenterList',
+    default: []
+})
+
+export const CenterLocation=atom({
+    key:'CenterLocation',
+    default: []
+})
+
+
+

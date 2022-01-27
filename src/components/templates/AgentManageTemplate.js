@@ -10,6 +10,10 @@ import AgentManageInputForm from "../organisms/AgentManageInputForm";
 import {Style} from "../../Style";
 import axios from "axios";
 import NetworkConfig from "../../configures/NetworkConfig";
+import Swal from "sweetalert2";
+import '../atoms/swal.css'
+import {useSetRecoilState} from "recoil";
+import {isLoginedState} from "../../store/LoginStore";
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -33,15 +37,22 @@ const AgentManageTemplate = () => {
             a_status: ""
         });
         const [modify, setModify] = useState();
-
+        const setIsLogined = useSetRecoilState(isLoginedState)
         const showData = async () => {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/agent`, {withCredentials: true})
                 .then((res) => {
-                    console.log(res.data.data)
                     let tmp = [];
                     let a, b;
 
-                    res.data.data.forEach((list) => {
+                    const receivedData=(res.data.data);
+                    receivedData.sort((a,b)=>{
+                        if(a.a_status === false){
+                            return 1;
+                        }
+                        else return -1;
+                    })
+
+                    receivedData.forEach((list) => {
                         list.a_hasCar ? a = "자차" : a = "도보"
                         list.a_status ? b = "재직" : b = "퇴사"
                         tmp.push({
@@ -58,11 +69,30 @@ const AgentManageTemplate = () => {
                     })
                     setContents(tmp)
                 })
+                .catch((err) => {
+                    if (err.response.status === 401) {
+                        Swal.fire({
+                            icon: "warning",
+                            title: "세션이 만료되었습니다.",
+                            text: "다시 로그인 해주세요.",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: Style.color2
+                        });
+                        setIsLogined(false);
+                    }else{
+                        Swal.fire({
+                            icon: "warning",
+                            title: "서버오류입니다.",
+                            text: "잠시 후 재시도해주세요.",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: Style.color2
+                        })
+                    }
+                })
         }
 
         useEffect(() => { //처음 렌더링시에만 데이터 요청
             showData().then((res) => {
-                console.log("done")
             })
         }, []);
 
@@ -74,7 +104,6 @@ const AgentManageTemplate = () => {
             setOpen(false)
         };
         const handleInputFormChange = (e) => {
-            // console.log(e);
             const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
             setCurrentInfo({
                 ...currentInfo,
@@ -84,71 +113,144 @@ const AgentManageTemplate = () => {
 
 
         const handleClickSave = async () => { //정보 수정,추가 요청
-            const emptyOrNot = ()=>{
+            const emptyOrNot = () => {
                 let a = 1;
-                for(const key in currentInfo){
-                    if(key==='agent_id'){
+                for (const key in currentInfo) {
+                    if (key === 'agent_id') {
                         continue;
                     }
-                    if(currentInfo[key]===""){
-                        console.log('hi')
+                    if (currentInfo[key] === "") {
                         a = 0;          // empty면 0으로 체크
                         break;
                     }
                 }
-                if(a === 0){
+                if (a === 0) {
                     return true;       // a가 0이면 empty, true 리턴
-                }else{
+                } else {
                     return false;
                 }
             }
-
-            if (emptyOrNot() ===false && modify == true) {
-                await axios.patch(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
-                    .then((res) => {
-                        console.log(res.status)
-                        alert("수정 되었습니다.")
-                        showData();
-                        handleClose();
-                    }).catch((err) => {
-                        if (err.response.status === 400) {
-                            alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
-                        } else if (err.response.status === 401) {
-                            alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
-                        } else if (err.response.status === 402) {
-                            alert("폼을 모두 입력해주세요.")
-                        } else if (err.response.status === 500) {
-                            alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
-                        }
+            const showErrorMessage = (err) =>{
+                if (err.response.status === 400) {
+                    // alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '이미 있는 현장요원 코드 입니다.',
+                        text: '현장 요원 코드를 다시 입력해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
                     })
-            } else if(emptyOrNot() === false && modify === false) {
-                console.log(currentInfo);
-                await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
+                }
+                else if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                    setIsLogined(false);
+                }
+                else if (err.response.status === 600) {
+                    // alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '잘못된 주소를 입력하셨습니다.',
+                        text: '올바른 주소를 입력해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                }
+                else {
+                    // alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '서버 오류입니다.',
+                        text: '잠시 후 재시도 해주세요.',
+                        confirmButtonColor: Style.color2,
+                        confirmButtonText: '확인',
+                    })
+                }
+            }
+
+            if (emptyOrNot() === false && modify == true) {
+                Swal.fire({
+                    icon: "question",
+                    title: '수정하시겠습니까?',
+                    showCancelButton: true,
+                    confirmButtonText: '확인',
+                    cancelButtonText: '취소',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        await axios.patch(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
+                            .then((res) => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '수정되었습니다.',
+                                    confirmButtonColor: Style.color2,
+                                    confirmButtonText: '확인',
+                                })
+                                showData();
+                                handleClose();
+                            }).catch((err) => {
+                               showErrorMessage(err);
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                })
+
+            } else if (emptyOrNot() === false && modify === false) {
+              /*  await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
                     .then(() => {
-                            alert("추가 되었습니다.")
+                            Swal.fire({
+                                icon: 'success',
+                                title: '추가되었습니다.',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
                             showData();
                             handleClose();
                         }
                     ).catch((err) => {
-                        if (err.response.status === 400) {
-                            alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
-                        } else if (err.response.status === 401) {
-                            alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
-                        } else if (err.response.status === 402) {
-                            alert("폼을 모두 입력해주세요.")
-                        } else if (err.response.status === 500) {
-                            alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
-                        }
-                    })
-            }else{
-                alert("모든 폼을 입력해주세요.")
+                       showErrorMessage(err);
+                    })*/
+                Swal.fire({
+                    icon: "question",
+                    title: '추가하시겠습니까?',
+                    showCancelButton: true,
+                    confirmButtonText: '확인',
+                    cancelButtonText: '취소',
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {
+                        await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
+                            .then((res) => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '추가되었습니다.',
+                                    confirmButtonColor: Style.color2,
+                                    confirmButtonText: '확인',
+                                })
+                                showData();
+                                handleClose();
+                            }).catch((err) => {
+                                showErrorMessage(err);
+                            })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                })
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '폼을 모두 입력해주세요.',
+                    confirmButtonColor: Style.color2,
+                    confirmButtonText: '확인',
+                });
             }
         };
 
         const handleModifyButtonClick = (e) => {
             // button이 관리페이지의 정보 수정 버튼일 시...
             setModify(true)
-            console.log(e.target.name);
             const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
             if (changeContent['a_hasCar'] === "자차") {
                 changeContent['a_hasCar'] = true
@@ -167,8 +269,6 @@ const AgentManageTemplate = () => {
             }
             setCurrentInfo(changeContent);
             handleOpen();
-            console.log(changeContent);
-            console.log(currentInfo);
         }
         const handleAddButtonClick = (e) => {
             setModify(false)
@@ -193,6 +293,7 @@ const AgentManageTemplate = () => {
                     open={open}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
+                    style={{zIndex: 2}}
                 >
                     <Box sx={style}>
                         <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo}

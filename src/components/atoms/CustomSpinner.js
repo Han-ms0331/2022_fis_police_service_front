@@ -10,9 +10,9 @@ import styled from "styled-components";
 import {Style} from "../../Style";
 const CustomSpinner = (props) => {
     return (
-        <Container width={props.width}>
+        <Container className="spinner" width={props.width}>
             <h2>Loading</h2>
-            <ClipLoader size="62px" color={Style.color2}/>
+            <ClipLoader size="62px" color="rgba(46, 60, 126,0.3)"/>
         </Container>
     );
 };
@@ -21,7 +21,8 @@ const Container = styled.div`
 display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${Style.color2};
+  justify-content: center;
+  color: rgba(46, 60, 126,0.3);
   & h2{
     font-size: 45px;
     font-weight: 500;

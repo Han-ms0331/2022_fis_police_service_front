@@ -1,5 +1,5 @@
 .apply_field_name {
-    margin-right: 0.5vw;
+    margin-right: 3%;
     color: rgba(0,0,0,0.5);
 }
 
@@ -19,15 +19,21 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-content: center;
-    width: 5vw;
-    border-left: 1px solid #6D5A00;
-    border-top: 1px solid #6D5A00;
-    border-right: 1px solid #6D5A00;
+    width: 25%;
+    border-left: 2px solid white;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    background-color: white;
+    box-shadow: 3px 3px #dadada;
+    border-radius: 15px;
     padding: 1%;
     text-align: center;
 }
 
 .apply_info_container {
-    border: 1px solid #6D5A00;
-    padding: 0.5vw;
+    border: 2px solid white;
+    background-color: white;
+    box-shadow: 3px 3px #dadada;
+    border-radius: 15px;
+    padding: 3%;
 }

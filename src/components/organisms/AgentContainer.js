@@ -8,22 +8,39 @@ import React from 'react';
 import AgentSchedule from "../molecules/AgentSchedule";
 import styled from "styled-components";
 import {Style} from "../../Style";
+import question from "../media/question.png";
+import {ClipLoader} from "react-spinners";
+import {createStyles} from "@mui/material";
 
-const tempAgent = [
-    {id: 1, Name: "가산1 김철수" , Color: "#4cd137"},
-    {id: 2, Name: "가산2 박철수" , Color: "#e55039"},
-    {id: 3, Name: "가산3 최철수" , Color: "#4cd137"},
-    {id: 4, Name: "가산4 이철수" , Color: "#e55039"},
-];
- // tempAgent - 더미 데이터
+const styles = createStyles({
+    button: {
+        // main styles,
+        "&:focus": {
+            color: "red"
+        }
+    }
+});
 
-function AgentContainer({content=tempAgent, width=266, height=400}) {
+function AgentContainer({content= null, width=266, height=400, loading}) {
     // content - 요원 정보가 담긴 배열을 받음. width와 height으로 컨테이너 크기 조절..
     return (
         <Container style={{ overflowY: 'auto', margin: '0 0 20px 20px' }} width={width} height={height}>
             <center>
-                <div>주변 현장요원</div>
-                <AgentSchedule content={content} width={width} height={height} />
+                <div style={{ fontSize: 20, margin: 8 }}>주변 현장요원</div>
+                {
+                    loading ?
+                        <div style={{ marginTop: 145 }} >
+                            <ClipLoader color={Style.color2} />
+                        </div>
+                        :
+                        content === null ?
+                    <div style={{ marginTop: 110 }}>
+                        <p style={{ fontSize: 20, fontWeight: 300, color: 'grey' }}>날짜를 선택해 주세요!</p>
+                        <img style={{ width: 70, height: 70 }} src={question} alt={'?'}></img>
+                    </div>
+                    :
+                    <AgentSchedule content={content} width={width} height={height} loading={loading} />
+                }
             </center>
         </Container>
     );

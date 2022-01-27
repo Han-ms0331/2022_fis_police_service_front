@@ -7,7 +7,7 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {isLoginedState, userAuthority} from "./store/LoginStore";
 import axios from "axios";
 import NetworkConfig from "./configures/NetworkConfig";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 
 
 function App() {
@@ -18,15 +18,13 @@ function App() {
     */
     const [isLogined, setIsLgoined] = useRecoilState(isLoginedState);
     const [authority, setAuthority] = useRecoilState(userAuthority);
-    const [isLoading, setIsLoading] = useState(false);
-    console.log(`authority:${authority}`);
+
 
     /*
         날짜: 2022/01/19 3:42 오후
         작성자: 한명수
         작성내용:   새로고침 되었을 때 로그인 상태를 유지하는 함수
     */
-
 
     const LoginStateInitialization = async () => {
         console.log("initializating")
@@ -44,15 +42,16 @@ function App() {
                     setAuthority("");
                 }
 
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err);
                 setIsLgoined(false);
                 setAuthority("");
             })
     };
+    useEffect(() => {
+        LoginStateInitialization();
+    },[])
 
-
-    LoginStateInitialization();
     return (
         <div className="App">
             {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
