@@ -29,10 +29,8 @@ const SendMessage = ({setMsgsent,msgsent}) => {
     function wsEvt() {
         ws.onopen = function (data) {
             //소켓이 열리면 초기화 세팅하기
-            console.log("web socket opened");
+            // console.log("web socket opened");
             ws.send(curmsg);
-            console.log(`${curmsg} sent`);
-            // setMessages((prevMsg)=>[...prevMsg,])
         }
         ws.onmessage = function (data) {
             console.log(data.data);
@@ -42,7 +40,6 @@ const SendMessage = ({setMsgsent,msgsent}) => {
 
     const handleSend = (e) => { /*보내기 버튼을 눌렀을 때 실행되는 함수*/
         e.preventDefault();
-        console.log(`${curmsg} message sent`);
         openSocket();
         e.target.reset();
     }
@@ -57,9 +54,9 @@ const SendMessage = ({setMsgsent,msgsent}) => {
 
     const time = new Date().getHours()+':'+new Date().getMinutes(); // 수정요청사항을 보내는 시간
 
-    useEffect(()=>{ //메시지 확인
-        console.log(curmsg);
-    },[curmsg])
+    // useEffect(()=>{ //메시지 확인
+    //     console.log(curmsg);
+    // },[curmsg])
 
     return (
         <Main>

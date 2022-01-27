@@ -40,7 +40,6 @@ const UserManageTemplate = () => {
                         let tmp = [];
                         let a;
                         let receivedList = res.data;
-                        console.log(receivedList)
                     /*
                     날짜: 2022/01/27 5:44 PM
                     작성자: 정도식
