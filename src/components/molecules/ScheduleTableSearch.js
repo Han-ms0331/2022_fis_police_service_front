@@ -23,7 +23,6 @@ function ScheduleTableSearch() {
     const [keyword, setKeyword] = useRecoilState(searchKeyword) // atom의 default값을 default 설정
     const handleChange = (event) => { // 검색창에 무언가 입력하면 키워드를 담아줌.
         const target = event.target.value;
-        console.log(event.target.id);
         setKeyword((prev) => ({...prev, [event.target.id]: target}));
     }
 

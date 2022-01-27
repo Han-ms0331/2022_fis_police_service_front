@@ -47,7 +47,6 @@ function ScheduleModifyInputForm(props) {
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${input.visit_date}`, {withCredentials: true})
             .then((res) => {
-                console.log(res.data.data);
                 setRows(res.data.data);
             })
     }
@@ -80,7 +79,6 @@ function ScheduleModifyInputForm(props) {
                     total_etc: input.total_etc
                 }, {withCredentials: true})
                     .then((res) => {
-                            console.log(res.data)
                             onData();
                             props.onClickFunction();
                             // alert('저장되었습니다.');
@@ -123,7 +121,6 @@ function ScheduleModifyInputForm(props) {
                 setInput(() => input);
                 await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
                     .then((res) => {
-                            console.log(res.data)
                             onData();
                             props.onClickFunction();
                             Swal.fire({
@@ -151,13 +148,11 @@ function ScheduleModifyInputForm(props) {
 
 
     const onChange = (e) => {
-        // console.log(e);
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
         setInput({
             ...input, // 기존의 input 객체를 복사한 뒤
             [name]: value, // name 키를 가진 값을 value 로 설정
         });
-        console.log(input);
         if (name === "call_check") {
             if (value === "통화완료" || value === "미완료") {
                 setDisable({
@@ -179,13 +174,11 @@ function ScheduleModifyInputForm(props) {
     };
 
     const onClick = (e) => {
-        // console.dir(e.target)
         const {checked, name} = e.target;
         setCheckBoxInput({
             ...checkboxInput, // 기존의 input 객체를 복사한 뒤
             [name]: checked // name 키를 가진 값을 value 로 설정
         });
-        // console.log(checkboxInput)
     }
 
 
