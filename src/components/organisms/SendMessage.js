@@ -14,32 +14,35 @@ import {Messages} from "../../store/Message";
 수정요청사항을 서버에 보냄
  */
 
-const SendMessage = () => {
-    const [message, setMessage] = useState('');
+const SendMessage = ({setMsgsent,msgsent}) => {
+    const [curmsg, setCurmsg] = useState('');
+    const [messages,setMessages] = useRecoilState(Messages);
     let ws;
 
     function openSocket() {
-        ws = new WebSocket("ws://" + "54.175.8.114:8080" + "/messenger/websocket");
+        ws = new WebSocket(`ws://localhost:8080/messenger/websocket`);
         wsEvt();
         ws.addEventListener('error', (event) =>{
             console.log(event);
         })
     }
     function wsEvt() {
-        console.log("socket opened");
         ws.onopen = function (data) {
             //소켓이 열리면 초기화 세팅하기
-            console.log("opened");
+            console.log("web socket opened");
+            ws.send(curmsg);
+            console.log(`${curmsg} sent`);
+            // setMessages((prevMsg)=>[...prevMsg,])
         }
         ws.onmessage = function (data) {
             console.log(data.data);
         }
-        ws.send(message);
+
     }
 
     const handleSend = (e) => { /*보내기 버튼을 눌렀을 때 실행되는 함수*/
         e.preventDefault();
-        console.log(`${message} message sent`);
+        console.log(`${curmsg} message sent`);
         openSocket();
         e.target.reset();
     }
@@ -49,9 +52,14 @@ const SendMessage = () => {
         e.target.style.height = (20 + e.target.scrollHeight) + "px";
     }
     const handleChange = (e) => { /*메시지를 설정하는 함수*/
-        setMessage(e.target.value);
+        setCurmsg(e.target.value);
     }
+
     const time = new Date().getHours()+':'+new Date().getMinutes(); // 수정요청사항을 보내는 시간
+
+    useEffect(()=>{ //메시지 확인
+        console.log(curmsg);
+    },[curmsg])
 
     return (
         <Main>

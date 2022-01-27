@@ -48,11 +48,9 @@ function TimeList({content, setCurrentTime=0}) {
             })
     const Content = () => {
         return (
-          <div style={{width: 200}}>
-              <div>
-                  {content.a_code} {content.a_name}
-              </div>
               <div style={{display:"flex", justifyContent:"center"}} >
+                  {content.a_code} {content.a_name}
+              <div>
                   <CircleButton name={clickedAgent.a_code+'1'} bgColor={using[0] ? red : green} />
                   <CircleButton name={clickedAgent.a_code+'2'} bgColor={using[1] ? red : green} />
                   <CircleButton name={clickedAgent.a_code+'3'} bgColor={using[2] ? red : green} />

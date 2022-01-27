@@ -5,6 +5,7 @@ import ListContainer from "../organisms/ListContainer";
 import axios from "axios";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {
+    CenterList, CenterLocation,
     SelectedCenterCallList,
     SelectedCenterId,
     SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo,
@@ -29,8 +30,8 @@ function MainBodyTemplate(props) {
         c_address: "",
         c_ph: ""
     });
-    const [centerList, setCenterList] = useState([])    //검색 결과로 나온 시설들의 리스트를 담는 state
-    const [centerLocation, setCenterLocation] = useState([]);   //선택된 시설의 위 경도 정보
+    const [centerList, setCenterList] = useRecoilState(CenterList); //검색 결과로 나온 시설들의 리스트를 담는 state
+    const [centerLocation, setCenterLocation] = useRecoilState(CenterLocation);   //선택된 시설의 위 경도 정보
     const [selectedCenterId, setSelectedCenterId] = useRecoilState(SelectedCenterId);
     const [selectedCenterInfo, setSelectedCenterInfo] = useRecoilState(SelectedCenterInfo);
     const [selectedCenterCallList, setSelectedCenterCallList] = useRecoilState(SelectedCenterCallList);
@@ -43,6 +44,8 @@ function MainBodyTemplate(props) {
     const [buttonLoading, setButtonLoading] = useState(null);
     const [selectedLoading, setSelectedLoading] = useState(null);
 
+    const [isSearched, setIsSearched] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(false);
     const [date, setDate] = useRecoilState(SelectedDateState);
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
@@ -55,13 +58,13 @@ function MainBodyTemplate(props) {
                 console.log(res.data)
                 setSelectedAgentInfo(() => res.data.data);
                 setLoading(false);
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err)
             })
     }
 
     useEffect(() => {
-        if (selectedCenterId !== ""){
+        if (selectedCenterId !== "") {
             onData(); // 날짜를 선택한 경우에 함수 실행
         }
     }, [date])
@@ -131,11 +134,28 @@ function MainBodyTemplate(props) {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
                     console.log(res.data.data)
-                    setCenterList(res.data.data);
-                    setIsSelected(false);
                     setButtonLoading(false);
+                    if (res.data.data.length === 0) {
+                        setIsSearched(true);
+                        setIsEmpty(true);
+                    } else {
+                        setIsEmpty(false);
+                        setCenterList(res.data.data);
+                        setIsSelected(false);
+                        setIsSearched(true);
+                    }
                 })
                 .catch((err) => {
+                    console.log(err.response.status === 500)
+                    if (err.response.status === 301) {
+                        Swal.fire({
+                            icon: "warning",
+                            title: "세션이 만료되었습니다.",
+                            text: "다시 로그인 해주세요.",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: Style.color2
+                        });
+                    }
                     Swal.fire({
                         icon: "warning",
                         title: "서버오류입니다.",
@@ -210,4 +230,19 @@ const Right = styled.div`
   align-items: center;
 `;
 
+const BodyContainer = styled.div`
+  min-height: 100%;
+  width: 646px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #a8a8a8;
+
+  & img {
+    width: 75px;
+    color: #a8a8a8;
+  }
+`;
 export default MainBodyTemplate;

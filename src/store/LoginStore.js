@@ -6,7 +6,7 @@ import {atom, selector} from "recoil";
 */
 export const isLoginedState = atom({
     key: 'isLoginedState',
-    default: false,
+    default: true,
 });
 
 export const userAuthority = atom({

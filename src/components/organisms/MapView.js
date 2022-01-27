@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React,{useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
-import {SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo} from "../../store/SelectedCenterStore";
+import {SelectedCenterInfo, SelectedCenterList} from "../../store/SelectedCenterStore";
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
 import { MdGpsFixed } from "react-icons/md";
@@ -11,11 +11,11 @@ import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStor
 function MapView(props) {
 
     const [range, setRange] = useState(2);// 지도의 비율 설정
-    const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
-    const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
-    const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
-    const [centerInfo,setCenterInfo] = useState([])
-    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo);
+    const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList); //선택된 시설의 주변 시설 리스트
+    const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo); //클릭된 현장요원 정보
+    const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo); // 선택된 날짜의 주변 현장 요원들 정보
+    const [centerInfo,setCenterInfo] = useState([]) // 선택된 센터의 확대 비율 별 주변 시설 리스트
+    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo); // 선택된 센터의 정보
 
     const center = [ //선택된 시설의 좌표를 mainbodytemp에서 props로 받아옴
         {
@@ -23,22 +23,18 @@ function MapView(props) {
             lng: props.thisCenterLocation[1],
         }
     ]
-    console.log("selAgent")
-    console.log(selectedAgentInfo)
-    console.log("clickedAgent")
-    console.log(clickedAgent)
-    let centerList=[]
 
+    let centerList=[] // 확대 비율에 따른 주변 시설 리스트 저장 => setCenterInfo를 이용해 set하여 centerInfo를 props로 넘겨줌
     let modifiedSelectedCenter= selectedCenterList.filter((el,idx)=>{
         return el.c_name!==selCenterInfo.c_name;
-    }) // 선택된 센터는 주변시설 리스트에서 제외
+    }) // 선택된 센터를 주변시설 리스트에서 제외하는 부분
 
 
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
         if (e.target.textContent === "250m") {
             setRange(2)
             console.log('250m');
-            modifiedSelectedCenter.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{ // 선택된 센터를 제외시킨 리스트로 centerList 구성
                if (0<arr.distance<=250){
                     centerList.push({
                         ...arr,
@@ -57,7 +53,7 @@ function MapView(props) {
         else if (e.target.textContent === "500m") {
             setRange(3)
             console.log('500m')
-            modifiedSelectedCenter.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{ // 선택된 센터를 제외시킨 리스트로 centerList 구성
                 if (arr.distance<=500){
                     centerList.push({
                         ...arr,
@@ -76,7 +72,7 @@ function MapView(props) {
         else if (e.target.textContent === "1km") {
             setRange(4)
             console.log('1000m')
-            modifiedSelectedCenter.forEach((arr,index,buf)=>{
+            modifiedSelectedCenter.forEach((arr,index,buf)=>{ // 선택된 센터를 제외시킨 리스트로 centerList 구성
                 if (arr.distance<=1000){
                     centerList.push({
                         ...arr,
