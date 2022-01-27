@@ -85,6 +85,7 @@ function CustomMap(props) {
         modifiedAround=modifiedAround.filter((e) => e.c_name!== value.c_name)
     }) // 선택된 현장요원의 스케줄리스트에 있는 센터는 주변시설 리스트에서 제외
 
+
     return (
         <Container>
             <Map // 지도를 표시할 Container
@@ -102,13 +103,18 @@ function CustomMap(props) {
                     height: "880px",
                 }}
                 level={props.level} // 지도의 확대 레벨
-                onCenterChanged={(map) => setPosition({ // 드래그로 인해 바뀌는 지도의 센터 값 추적
+                onDragEnd={(map) => setPosition({ // 드래그로 인해 바뀌는 지도의 센터 값 추적
                     center: {
                         lat: map.getCenter().getLat(),
                         lng: map.getCenter().getLng(),
                     }
-                })}
-                onCenterChanged={(map)=>setDraggable("false")}정 // 지도의 센터 변경 즉 지도를 드래그하면 draggable변수를 false로 set
+                })
+                }
+                onCenterChanged={(map) => {
+                    setDraggable(false);
+                }}
+
+
 
             >
                 {/*return 버튼*/}
