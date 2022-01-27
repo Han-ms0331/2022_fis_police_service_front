@@ -12,7 +12,7 @@ const CustomSpinner = (props) => {
     return (
         <Container class="spinner" width={props.width}>
             <h2>Loading</h2>
-            <ClipLoader size="62px" color="#495ec4"/>
+            <ClipLoader size="62px" color="rgba(46, 60, 126,0.3)"/>
         </Container>
     );
 };
@@ -22,7 +22,7 @@ display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #495ec4;
+  color: rgba(46, 60, 126,0.3);
   & h2{
     font-size: 45px;
     font-weight: 500;
