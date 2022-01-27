@@ -23,6 +23,7 @@ import {SelectedDateState} from "../../store/SelectedDateStore";
 import Swal from "sweetalert2";
 import CustomSpinner from "../atoms/CustomSpinner";
 import {center} from "../../store/dummy-data/center";
+import {isLoginedState} from "../../store/LoginStore";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -40,7 +41,7 @@ function MainBodyTemplate(props) {
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
     const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
-
+    const setIsLogined = useSetRecoilState(isLoginedState)
     const [loading, setLoading] = useState(null);
     const [buttonLoading, setButtonLoading] = useState(null);
     const [selectedLoading, setSelectedLoading] = useState(null);
@@ -154,6 +155,7 @@ function MainBodyTemplate(props) {
                             confirmButtonText: "확인",
                             confirmButtonColor: Style.color2
                         });
+                        setIsLogined(false);
                     }else{
                     Swal.fire({
                         icon: "warning",
