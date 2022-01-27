@@ -14,11 +14,15 @@ import CustomSpinner from "../atoms/CustomSpinner";
 
 
 const Div = styled.div` // css
-  border: 3px solid #eee;
-  padding: 5px;
-  background-color: White;
-  border-radius: 10px;
-  margin: 5px;
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  &:active {
+    box-shadow: 0px 0px 0 rgb(0, 0, 0, 0.5);
+    position: relative;
+    top: 1px;
+  }
 `;
 
 
@@ -31,6 +35,7 @@ function TimeList({content, setCurrentTime=0}) {
         setClickedAgent(content);
         console.log(content);
     }
+
 
     const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
     content.scheduleList.map(
@@ -61,19 +66,20 @@ function TimeList({content, setCurrentTime=0}) {
     }
 
     return (
-        <CustomButton
-            fontWeight='normal'
-            type='reverse'
-            content={<Content />}
-            margin='5px' padding='5px' border='3px solid #eee'
-            color='black' backgroundColor='White' borderRadius='10px'
-            width='225px' height='70px' fontSize='18px'
-            onClick={handleClick}
-        >
+        <Div>
+            <CustomButton
+                fontWeight='normal'
+                type='reverse'
+                content={<Content />}
+                margin='5px' padding='5px' border='3px solid #eee'
+                color='black' backgroundColor='White' borderRadius='10px'
+                width='225px' height='70px' fontSize='18px'
+                onClick={handleClick}
+            >
+                {/*현장 요원 스케줄에 따른 버튼*/}
+            </CustomButton>
+        </Div>
 
-
-            {/*현장 요원 스케줄에 따른 버튼*/}
-        </CustomButton>
 
     );
 }

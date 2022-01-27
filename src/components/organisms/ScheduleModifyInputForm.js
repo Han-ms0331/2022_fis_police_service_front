@@ -6,12 +6,15 @@ import {Box, Container} from "@mui/material";
 import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
-import {useRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {dateSelectedRows, rowCount} from "../../store/DateSelectedRowsStore";
 import Swal from "sweetalert2";
+import {userAuthority} from "../../store/LoginStore";
 
 
 function ScheduleModifyInputForm(props) {
+
+    const authority = useRecoilValue(userAuthority);
 
     const [input, setInput] = useState({
         ...props.defaultInput
@@ -202,10 +205,10 @@ function ScheduleModifyInputForm(props) {
                                     setValueFunction={onChange}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="현장요원코드: " inputName="a_code" inputType="text" width="300px"
-                                    rows="1"
-                                    defaultValue={input.a_code}
-                                    setValueFunction={onChange}/>
+                    {authority==="ADMIN" && <InputContainer labelContent="현장요원코드: " inputName="a_code" inputType="text" width="300px"
+                                                            rows="1"
+                                                            defaultValue={input.a_code}
+                                                            setValueFunction={onChange}/>}
                 </div>
 
                 <div style={{marginBottom: "20px"}}>
@@ -268,8 +271,8 @@ function ScheduleModifyInputForm(props) {
                 {/*</div>*/}
 
                 <div style={{marginTop: "30px", display: 'flex', justifyContent: 'center'}}>
-                    <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
-                                  borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>
+                    {authority==="ADMIN" && <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
+                                                          borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>}
                 </div>
 
                 <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>

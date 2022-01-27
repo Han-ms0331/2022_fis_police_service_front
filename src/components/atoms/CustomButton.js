@@ -10,6 +10,7 @@ import {Button} from "@mui/material";
              onClick 어케 함
 */
 
+
 function CustomButton(props) {
 //type(normal/reverse)을 props로 받아서 조건부 랜더링
     if (props.type === 'normal') {
@@ -27,7 +28,7 @@ function CustomButton(props) {
                         fontSize:props.fontSize,
                         boxSizing:"border-box",
                         padding:props.padding,
-                        margin:props.margin
+                        margin:props.margin,
                     }}
                     onClick={props.onClick}
             >{props.content}

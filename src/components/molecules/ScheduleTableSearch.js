@@ -27,19 +27,20 @@ function ScheduleTableSearch() {
         setKeyword((prev) => ({...prev, [event.target.id]: target}));
     }
 
+    const columnWidth = ['5%', '8%', '24%', '24%', '24%', '8%', '5%'];
     const tmp = useRecoilValue(searchKeyword);
     return (
             <TableHead>
                 <TableRow>
-                    <TableCell><SearchIcon fontSize="large" style={{ color: '#2E3C7E' }} /></TableCell>
-                    <TableCell align="left"></TableCell>
-                    <TableCell align="right"><TextField value={keyword.a_name} size="small" id="a_name" label="현장요원" variant="outlined" onChange={handleChange}/></TableCell>
-                    <TableCell align="right"><TextField value={keyword.c_name} size="small" id="c_name" label="시설정보" variant="outlined" onChange={handleChange}/></TableCell>
-                    <TableCell align="right"><TextField value={keyword.total_etc} size="small" id="total_etc" label="특이사항" variant="outlined" onChange={handleChange}/></TableCell>
-                    <TableCell align="right"><TextField value={keyword.modified_info} size="small" id="modified_info" label="변경 사항" variant="outlined" onChange={handleChange}/></TableCell>
-                    <TableCell align="right"><TextField value={keyword.call_check} size="small" id="call_check" label="통화 이력" variant="outlined" onChange={handleChange}/></TableCell>
+                    <TableCell style={{ width:'2%'}} ><SearchIcon fontSize="large" style={{ color: '#2E3C7E' }} /></TableCell>
+                    <TableCell style={{ width: columnWidth[0] }} align="left"></TableCell>
+                    <TableCell style={{ width: columnWidth[1] }} align="right"><TextField value={keyword.a_name} size="small" id="a_name" label="현장요원" variant="outlined" onChange={handleChange}/></TableCell>
+                    <TableCell style={{ width: columnWidth[2] }} align="right"><TextField value={keyword.c_name} size="small" id="c_name" label="시설정보" variant="outlined" onChange={handleChange}/></TableCell>
+                    <TableCell style={{ width: columnWidth[3] }} align="right"><TextField value={keyword.total_etc} size="small" id="total_etc" label="특이사항" variant="outlined" onChange={handleChange}/></TableCell>
+                    <TableCell style={{ width: columnWidth[4] }} align="right"><TextField value={keyword.modified_info} size="small" id="modified_info" label="변경 사항" variant="outlined" onChange={handleChange}/></TableCell>
+                    <TableCell style={{ width: columnWidth[5] }} align="right"><TextField value={keyword.call_check} size="small" id="call_check" label="통화 이력" variant="outlined" onChange={handleChange}/></TableCell>
                     {/*<TableCell align="right"><TextField size="small" id="notice" label="일정 공지" variant="outlined" onChange={handleChange}/></TableCell>*/}
-                    <TableCell />
+                    <TableCell style={{ width: columnWidth[6] }} />
                 </TableRow>
             </TableHead>
     );
