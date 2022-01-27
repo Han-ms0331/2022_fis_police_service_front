@@ -37,7 +37,7 @@ function CustomInput(props) {
             {/*<InputLabel id="demo-simple-select-label">{props.labelContent}</InputLabel>*/}
             <Select
                 name={props.name}
-                defaultValue={props.defaultValue}
+                value={props.defaultValue}
                 onChange={props.setValueFunction}
             >
                 {props.contents.map((content) => {
