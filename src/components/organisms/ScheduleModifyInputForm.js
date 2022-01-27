@@ -236,10 +236,7 @@ function ScheduleModifyInputForm(props) {
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="통화이력: " inputName="call_check" inputType="select" width="300px"
                                     defaultValue={input.call_check}
-                                    contents={[{show: "미완료", value: "미완료"}, {show: "통화완료", value: "통화완료"}, {
-                                        show: "부재중",
-                                        value: "부재중"
-                                    }, {show: "통화오류", value: "통화오류"}]} setValueFunction={onChange}
+                                    contents={[{show: "미완료", value: "미완료"}, {show: "통화완료", value: "통화완료"}, {show: "부재중", value: "부재중"}, {show: "통화오류", value: "통화오류"}]} setValueFunction={onChange}
                     />
                 </div>
 

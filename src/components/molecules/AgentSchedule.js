@@ -14,11 +14,6 @@ import {Style} from "../../Style";
 function AgentSchedule({content, width, height, loading}) {
     console.log(loading);
     return (
-        loading ?
-            <div style={{ marginTop: 145 }} >
-                <ClipLoader color={Style.color2} />
-            </div>
-            :
             <div>
                 {content!==null && content.map(item => {
                     return <TimeList key={item.agent_id} content={item} setCurrentTime={0} loading={loading}/>;

@@ -48,7 +48,7 @@ function TimeList({content, setCurrentTime=0}) {
             })
     const Content = () => {
         return (
-          <div style={{width: 200}}>
+              <div style={{display:"flex", justifyContent:"center"}} >
                   {content.a_code} {content.a_name}
               <div>
                   <CircleButton name={clickedAgent.a_code+'1'} bgColor={using[0] ? red : green} />
@@ -67,7 +67,7 @@ function TimeList({content, setCurrentTime=0}) {
             content={<Content />}
             margin='5px' padding='5px' border='3px solid #eee'
             color='black' backgroundColor='White' borderRadius='10px'
-            width='225px' height='65px' fontSize='18px'
+            width='225px' height='70px' fontSize='18px'
             onClick={handleClick}
         >
 

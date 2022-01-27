@@ -2,6 +2,7 @@ import React from 'react';
 import CustomButton from "../atoms/CustomButton";
 import styled from 'styled-components';
 import {Style} from "../../Style";
+import {ClipLoader} from "react-spinners";
 
 function List(props) {
     let element
@@ -42,6 +43,7 @@ function List(props) {
                 })
             }
             <div style={{display: "flex", justifyContent: "center"}} name={props.keyValue} onClick={props.onClickFunction}>
+
                 <CustomButton name={props.keyValue} type="normal" width="auto" height="38px" color={Style.color1}
                               backgroundColor={Style.color2} borderRadius="10px" content={props.buttonContent}
                               onClick={props.onClickFunction}/>

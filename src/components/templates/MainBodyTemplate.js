@@ -21,6 +21,7 @@ import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
 import Swal from "sweetalert2";
+import CustomSpinner from "../atoms/CustomSpinner";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -38,9 +39,13 @@ function MainBodyTemplate(props) {
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
     const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
+
+    const [loading, setLoading] = useState(null);
+    const [buttonLoading, setButtonLoading] = useState(null);
+    const [selectedLoading, setSelectedLoading] = useState(null);
+
     const [isSearched, setIsSearched] = useState(false);
     const [isEmpty, setIsEmpty] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [date, setDate] = useRecoilState(SelectedDateState);
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
@@ -65,7 +70,7 @@ function MainBodyTemplate(props) {
     }, [date])
 
     useEffect(() => {
-        setSelectedAgentInfo([]);
+        setSelectedAgentInfo(null);
     }, [selectedCenterInfo])
 
     const headerContent = ["시설명", "주소", "전화번호", "연락기록", "방문여부"]     //리스트 헤더
@@ -76,7 +81,8 @@ function MainBodyTemplate(props) {
         작성내용: 검색 결과로 나온 시설 리스트중 하나를 선택했을 때 작동하는 함수
     */
     const onSelect = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`, {withCredentials: true})
+        setSelectedLoading(true);
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
             .then((res) => {
                 console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -93,6 +99,7 @@ function MainBodyTemplate(props) {
                 setSelectedCenterList(res.data.data.ceterList);
                 setClickedAgent({});
                 setIsSelected(true);
+                setSelectedLoading(false);
             })
     }
     /*
@@ -123,9 +130,11 @@ function MainBodyTemplate(props) {
                 confirmButtonColor: Style.color2,
             })
         } else {
+            setButtonLoading(true);
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
                     console.log(res.data.data)
+                    setButtonLoading(false);
                     if (res.data.data.length === 0) {
                         setIsSearched(true);
                         setIsEmpty(true);
@@ -153,7 +162,8 @@ function MainBodyTemplate(props) {
                         text: "잠시 후 재시도해주세요.",
                         confirmButtonText: "확인",
                         confirmButtonColor: Style.color2
-                    });
+                    })
+                    setButtonLoading(false);
                 })
         }
 
@@ -163,35 +173,29 @@ function MainBodyTemplate(props) {
     return (
         <Main>
             <div style={{width: "100%", margin: "30px 0px 40px 75px"}}>
-                <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange}/>
+                <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange} loading={buttonLoading}/>
             </div>
-            {isSelected ?
-                <Container>
-                    <Left>
-                        <CustomCalendar className="calendar" setDate={setDate}/>
-                        <AgentContainer content={selectedAgentInfo} loading={loading}/>
-                    </Left>
-                    <Right>
-                        <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}
-                                 thisCenterLocation={centerLocation}/>
-                    </Right>
-                </Container>
-                :
-                <div style={{display: "flex", justifyContent: "center"}}>
-                    {isSearched ?
-                        isEmpty ?
-                            <BodyContainer>검색 결과가 없습니다</BodyContainer>
-                            :
-                            <ListContainer width="1500px" height="1000px" headerContents={headerContent}
-                                           contents={centerList}
-                                           gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
-                                           onClickFunction={onSelect}/>
-                        :
-                        <BodyContainer>시설을 검색해 주세요</BodyContainer>
-
-                    }
-
-                </div>
+            {
+                selectedLoading ?
+                    <div><CustomSpinner /></div>
+                    :
+                    isSelected ?
+                    <Container>
+                        <Left>
+                            <CustomCalendar className="calendar" setDate={setDate}/>
+                            <AgentContainer content={selectedAgentInfo} loading={loading}/>
+                        </Left>
+                        <Right>
+                            <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}
+                                     thisCenterLocation={centerLocation}/>
+                        </Right>
+                    </Container>
+                    :
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <ListContainer width="1500px" height="1000px" headerContents={headerContent} contents={centerList}
+                                       gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
+                                       onClickFunction={onSelect}/>
+                    </div>
             }
         </Main>
 
