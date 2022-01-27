@@ -60,8 +60,6 @@ function CenterManageTemp(props) {
                 })
                 setContents(tmp);
                 setLoading(false);
-                // console.log(tmp);
-                // console.log(contents);
             })
             .catch((err) => {
                 if (err.response.status === 401) {
@@ -112,24 +110,20 @@ function CenterManageTemp(props) {
             ...searchInput,
             [name]: value
         });
-        console.log(searchInput);
     }
 
 // inputForm의 입력창에 글씨가 바뀌면, 위에서 정의한 currentInfo 상태에 입력창에 적힌 글씨를 저장하는 함수 정의
     const handleInputFormChange = (e) => {
-        // console.log(e);
         const {value, name} = e.target;
         setCurrentInfo({
             ...currentInfo,
             [name]: value
         });
-        console.log(currentInfo);
     }
 
 // 정보 수정 버튼을 누르면 inputForm의 input으로 시설아이디, 시설이름, 전화번호, 시설주소 가져오는 함수
     const handleModifyButtonClick = (e) => {
         setModify(true);
-        console.log(e.target.getAttribute("name"))
         setCurrentInfo(contents[e.target.getAttribute("name")])
         handleOpen();
     }
@@ -205,6 +199,7 @@ function CenterManageTemp(props) {
                                     confirmButtonColor: Style.color2
                                 })
                             }
+
                         })
                 },
                 allowOutsideClick: () => !Swal.isLoading()
@@ -249,6 +244,7 @@ function CenterManageTemp(props) {
                                     confirmButtonColor: Style.color2
                                 })
                             }
+
                         })
                 },
                 allowOutsideClick: () => !Swal.isLoading()

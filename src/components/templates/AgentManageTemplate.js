@@ -39,7 +39,6 @@ const AgentManageTemplate = () => {
         const showData = async () => {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/agent`, {withCredentials: true})
                 .then((res) => {
-                    console.log(res.data.data)
                     let tmp = [];
                     let a, b;
 
@@ -83,7 +82,6 @@ const AgentManageTemplate = () => {
 
         useEffect(() => { //처음 렌더링시에만 데이터 요청
             showData().then((res) => {
-                console.log("done")
             })
         }, []);
 
@@ -95,7 +93,6 @@ const AgentManageTemplate = () => {
             setOpen(false)
         };
         const handleInputFormChange = (e) => {
-            // console.log(e);
             const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
             setCurrentInfo({
                 ...currentInfo,
@@ -112,7 +109,6 @@ const AgentManageTemplate = () => {
                         continue;
                     }
                     if (currentInfo[key] === "") {
-                        console.log('hi')
                         a = 0;          // empty면 0으로 체크
                         break;
                     }
@@ -174,7 +170,6 @@ const AgentManageTemplate = () => {
                                 showData();
                                 handleClose();
                             }).catch((err) => {
-                                console.log(err);
                                showErrorMessage(err);
                             })
                     },
@@ -215,7 +210,6 @@ const AgentManageTemplate = () => {
                                 showData();
                                 handleClose();
                             }).catch((err) => {
-                                console.log(err);
                                 showErrorMessage(err);
                             })
                     },
@@ -234,7 +228,6 @@ const AgentManageTemplate = () => {
         const handleModifyButtonClick = (e) => {
             // button이 관리페이지의 정보 수정 버튼일 시...
             setModify(true)
-            console.log(e.target.name);
             const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
             if (changeContent['a_hasCar'] === "자차") {
                 changeContent['a_hasCar'] = true
@@ -253,8 +246,6 @@ const AgentManageTemplate = () => {
             }
             setCurrentInfo(changeContent);
             handleOpen();
-            console.log(changeContent);
-            console.log(currentInfo);
         }
         const handleAddButtonClick = (e) => {
             setModify(false)

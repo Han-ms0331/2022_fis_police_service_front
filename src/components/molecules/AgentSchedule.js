@@ -12,7 +12,6 @@ import {Style} from "../../Style";
 
 
 function AgentSchedule({content, width, height, loading}) {
-    console.log(loading);
     return (
             <div>
                 {content!==null && content.map(item => {

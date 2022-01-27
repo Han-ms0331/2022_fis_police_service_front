@@ -23,6 +23,7 @@ import {SelectedDateState} from "../../store/SelectedDateStore";
 import Swal from "sweetalert2";
 import CustomSpinner from "../atoms/CustomSpinner";
 import {center} from "../../store/dummy-data/center";
+import {isLoginedState} from "../../store/LoginStore";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -40,7 +41,7 @@ function MainBodyTemplate(props) {
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
     const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
-
+    const setIsLogined = useSetRecoilState(isLoginedState)
     const [loading, setLoading] = useState(null);
     const [buttonLoading, setButtonLoading] = useState(null);
     const [selectedLoading, setSelectedLoading] = useState(null);
@@ -55,7 +56,6 @@ function MainBodyTemplate(props) {
         setLoading(true);
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
-                console.log(res.data)
                 setSelectedAgentInfo(() => res.data.data);
                 setLoading(false);
             }).catch((err) => {
@@ -84,7 +84,6 @@ function MainBodyTemplate(props) {
         setSelectedLoading(true);
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
             .then((res) => {
-                console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
                     center_id: res.data.data.center_id,
@@ -139,7 +138,6 @@ function MainBodyTemplate(props) {
         작성내용: 시설을 검색하였을때 작동하는 함수
     */
     const onSearch = async (e) => {
-        console.log(currentInfo);
         e.preventDefault();
         if (currentInfo.c_name == "" && currentInfo.c_address == "" && currentInfo.c_ph == "") {
             Swal.fire({
@@ -152,7 +150,6 @@ function MainBodyTemplate(props) {
             setButtonLoading(true);
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
-                    console.log(res.data.data)
                     setButtonLoading(false);
                     if (res.data.data.length === 0) {
                         setIsSearched(true);
@@ -173,6 +170,7 @@ function MainBodyTemplate(props) {
                             confirmButtonText: "확인",
                             confirmButtonColor: Style.color2
                         });
+                        setIsLogined(false);
                     }else{
                     Swal.fire({
                         icon: "warning",

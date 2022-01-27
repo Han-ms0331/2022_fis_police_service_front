@@ -29,7 +29,6 @@ function TimeList({content, setCurrentTime=0}) {
     let using = [false, false, false, false];
     const handleClick = () => {
         setClickedAgent(content);
-        console.log(content);
     }
 
     const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
