@@ -38,7 +38,8 @@ function MainBodyTemplate(props) {
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
     const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
-
+    const [isSearched, setIsSearched] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(false);
     const [loading, setLoading] = useState(true);
     const [date, setDate] = useRecoilState(SelectedDateState);
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
@@ -52,13 +53,13 @@ function MainBodyTemplate(props) {
                 console.log(res.data)
                 setSelectedAgentInfo(() => res.data.data);
                 setLoading(false);
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err)
             })
     }
 
     useEffect(() => {
-        if (selectedCenterId !== ""){
+        if (selectedCenterId !== "") {
             onData(); // 날짜를 선택한 경우에 함수 실행
         }
     }, [date])
@@ -75,7 +76,7 @@ function MainBodyTemplate(props) {
         작성내용: 검색 결과로 나온 시설 리스트중 하나를 선택했을 때 작동하는 함수
     */
     const onSelect = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`, {withCredentials: true})
             .then((res) => {
                 console.log(res.data.data);
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -125,17 +126,34 @@ function MainBodyTemplate(props) {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
                     console.log(res.data.data)
-                    setCenterList(res.data.data);
-                    setIsSelected(false);
+                    if (res.data.data.length === 0) {
+                        setIsSearched(true);
+                        setIsEmpty(true);
+                    } else {
+                        setIsEmpty(false);
+                        setCenterList(res.data.data);
+                        setIsSelected(false);
+                        setIsSearched(true);
+                    }
                 })
                 .catch((err) => {
+                    console.log(err.response.status === 500)
+                    if (err.response.status === 301) {
+                        Swal.fire({
+                            icon: "warning",
+                            title: "세션이 만료되었습니다.",
+                            text: "다시 로그인 해주세요.",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: Style.color2
+                        });
+                    }
                     Swal.fire({
                         icon: "warning",
                         title: "서버오류입니다.",
                         text: "잠시 후 재시도해주세요.",
                         confirmButtonText: "확인",
                         confirmButtonColor: Style.color2
-                    })
+                    });
                 })
         }
 
@@ -160,9 +178,19 @@ function MainBodyTemplate(props) {
                 </Container>
                 :
                 <div style={{display: "flex", justifyContent: "center"}}>
-                    <ListContainer width="1500px" height="1000px" headerContents={headerContent} contents={centerList}
-                                   gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
-                                   onClickFunction={onSelect}/>
+                    {isSearched ?
+                        isEmpty ?
+                            <BodyContainer>검색 결과가 없습니다</BodyContainer>
+                            :
+                            <ListContainer width="1500px" height="1000px" headerContents={headerContent}
+                                           contents={centerList}
+                                           gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
+                                           onClickFunction={onSelect}/>
+                        :
+                        <BodyContainer>시설을 검색해 주세요</BodyContainer>
+
+                    }
+
                 </div>
             }
         </Main>
@@ -198,4 +226,19 @@ const Right = styled.div`
   align-items: center;
 `;
 
+const BodyContainer = styled.div`
+  min-height: 100%;
+  width: 646px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #a8a8a8;
+
+  & img {
+    width: 75px;
+    color: #a8a8a8;
+  }
+`;
 export default MainBodyTemplate;
