@@ -39,7 +39,26 @@ const UserManageTemplate = () => {
                 .then((res) => {
                         let tmp = [];
                         let a;
-                        res.data.forEach((list) => {
+                        let receivedList = res.data;
+                        console.log(receivedList)
+                    /*
+                    날짜: 2022/01/27 5:44 PM
+                    작성자: 정도식
+                    작성내용: 관리자 -> 일반직원 -> 퇴사자 순으로 정렬
+                    */
+                        receivedList.sort((a, b) => {
+                            if (a.u_auth >b.u_auth) {
+                                return -1;
+                            }
+                            else return 1;
+                        });
+                        receivedList.sort((a, b) => {
+                            if (a.u_auth !=="FIRED") {
+                                return -1;
+                            }
+                            else return 1;
+                        });
+                        receivedList.forEach((list) => {
                             if (list.u_auth === "ADMIN") {
                                 a = "관리자"
                             } else if (list.u_auth === "USER") {
@@ -72,7 +91,7 @@ const UserManageTemplate = () => {
                             confirmButtonColor: Style.color2
                         });
                         setIsLogined(false);
-                    }else{
+                    } else {
                         Swal.fire({
                             icon: "warning",
                             title: "서버오류입니다.",
@@ -124,8 +143,7 @@ const UserManageTemplate = () => {
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
-                }
-                else if (err.response.status === 401) {
+                } else if (err.response.status === 401) {
                     Swal.fire({
                         icon: "warning",
                         title: "세션이 만료되었습니다.",
@@ -134,8 +152,7 @@ const UserManageTemplate = () => {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
-                }
-                else {
+                } else {
                     Swal.fire({
                         icon: 'warning',
                         title: '서버 오류입니다.',
