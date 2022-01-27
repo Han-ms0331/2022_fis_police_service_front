@@ -22,6 +22,7 @@ import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
 import Swal from "sweetalert2";
 import CustomSpinner from "../atoms/CustomSpinner";
+import {center} from "../../store/dummy-data/center";
 
 function MainBodyTemplate(props) {
     const {isSelected, setIsSelected} = props;
@@ -49,7 +50,6 @@ function MainBodyTemplate(props) {
     const [date, setDate] = useRecoilState(SelectedDateState);
     const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
-
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         setLoading(true);
@@ -192,9 +192,18 @@ function MainBodyTemplate(props) {
                     </Container>
                     :
                     <div style={{display: "flex", justifyContent: "center"}}>
-                        <ListContainer width="1500px" height="1000px" headerContents={headerContent} contents={centerList}
-                                       gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
-                                       onClickFunction={onSelect}/>
+                        {isSearched ?
+                            isEmpty ?
+                                <BodyContainer>검색 결과가 없습니다</BodyContainer>
+                                :
+                                <ListContainer width="1500px" height="1000px" headerContents={headerContent}
+                                               contents={centerList}
+                                               gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
+                                               onClickFunction={onSelect}/>
+                            :
+                            <BodyContainer>시설을 검색해 주세요</BodyContainer>
+
+                        }
                     </div>
             }
         </Main>
