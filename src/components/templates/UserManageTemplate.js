@@ -10,6 +10,8 @@ import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
 import '../atoms/swal.css'
+import {useSetRecoilState} from "recoil";
+import {isLoginedState} from "../../store/LoginStore";
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -31,7 +33,7 @@ const UserManageTemplate = () => {
             u_nickname: "", u_name: "", u_pwd: "", u_sDate: "", u_ph: "", u_auth: ""
         })
         const [modify, setModify] = useState();
-
+        const setIsLogined = useSetRecoilState(isLoginedState)
         const showData = async () => {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/user`, {withCredentials: true})
                 .then((res) => {
@@ -62,6 +64,26 @@ const UserManageTemplate = () => {
                         setContents(tmp);
                     }
                 )
+                .catch((err) => {
+                    if (err.response.status === 401) {
+                        Swal.fire({
+                            icon: "warning",
+                            title: "세션이 만료되었습니다.",
+                            text: "다시 로그인 해주세요.",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: Style.color2
+                        });
+                        setIsLogined(false);
+                    }else{
+                        Swal.fire({
+                            icon: "warning",
+                            title: "서버오류입니다.",
+                            text: "잠시 후 재시도해주세요.",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: Style.color2
+                        })
+                    }
+                })
         }
 
         useEffect(() => {
@@ -104,7 +126,18 @@ const UserManageTemplate = () => {
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
-                } else {
+                }
+                else if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                    setIsLogined(false);
+                }
+                else {
                     Swal.fire({
                         icon: 'warning',
                         title: '서버 오류입니다.',

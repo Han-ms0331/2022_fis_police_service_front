@@ -133,7 +133,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
         return false;
     }
 
-    const columnWidth = ['150px', '500px', '900px', '900px', '1100px', '500px', '500px', '150px'];
+    const columnWidth = ['5%', '8%', '24%', '24%', '24%', '8%', '5%'];
 
     const ScheduleList = (row, index) => { // Schedule List를 띄워주는 함수
         // const isItemSelected = isSelected(row.No);
@@ -151,7 +151,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                 key={row.schedule_id}
                 // selected={isItemSelected}
             >
-                <TableCell padding="checkbox">
+                <TableCell style={{ width:'2%'}} padding="checkbox">
                     <input
                         key={row.schedule_id}
                         type="checkbox"
@@ -160,24 +160,22 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                         style={{zoom: 2.0, width: '15px'}}
                     />
                 </TableCell>
-                <TableCell style={{ width:'150px', color: headerColor, fontSize: '15pt', padding: '0px 0px' }} component="th" id={labelId} scope="row" padding="none">
+                <TableCell style={{ width:'5%', color: headerColor, fontSize: '15pt', padding: '0px 0px' }} component="th" id={labelId} scope="row" padding="none">
                     {page*rowsPerPage + (index+1)}
                 </TableCell>
-                <TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">{row.a_name}</TableCell>
-                <TableCell style={{ width:'900px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
-                    <details style={{padding:"10px 0"}}>
-                    <summary>{row.c_name}</summary>
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">{row.a_name}</TableCell>
+                <TableCell style={{ width:'24%', color: headerColor, fontSize: '15pt', padding: '10px 16px' }} align="right">
+                    <div>{row.c_name}</div>
                     <div style={{fontSize: '13pt'}}>{row.c_address}</div>
                     <div style={{fontSize: '13pt'}}>{row.c_ph}</div>
                     <div style={{fontSize: '13pt'}}>{row.visit_time}</div>
                     <div style={{fontSize: '13pt'}}>{row.estimate_num}명</div>
-                    </details>
                 </TableCell>
-                <TableCell style={{ width:'900px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
-                <TableCell style={{ width:'1100px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{  margin: 10, padding: '10px 0', overflowY: 'auto', maxHeight: 150 }}>{row.modified_info}</div></TableCell>
-                <TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.call_check}</div></TableCell>
+                <TableCell style={{ width:'24%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
+                <TableCell style={{ width:'24%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{  margin: 10, padding: '10px 0', overflowY: 'auto', maxHeight: 150 }}>{row.modified_info}</div></TableCell>
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.call_check}</div></TableCell>
                 {/*<TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>일정공지여부</div></TableCell>*/}
-                <TableCell style={{ width:'150px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
+                <TableCell style={{ width:'5%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
                     <TransitionsModal defaultInput={row} backgroundColor={buttonColor} />
                 </TableCell>
             </TableRow>
@@ -210,8 +208,16 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     }
 
     const filteredShowList = () => { // 정렬 기능과 함께 검색결과 List를 여러 개 보여주는 함수
-
         count = rows.filter(handleFilter).length; // 사용자가 검색했을 때 전체 rows의 개수를 검색된 결과의 rows 개수로 바꿔줌
+        if (count === 0) {
+            return (
+                    <TableRow>
+                        <TableCell style={{ padding: 30 }} align='center' colSpan={8}>
+                            <div style={{fontSize: 25}}>검색 결과가 없습니다.</div>
+                        </TableCell>
+                    </TableRow>
+            )
+        }
         return (
             stableSort(rows, getComparator(order, orderBy))
                 .filter(handleFilter)
@@ -272,7 +278,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
         return (
             <TableHead className={classes.header}>
                 <TableRow>
-                    <TableCell padding="checkbox">
+                    <TableCell style={{ width:'2%'}} padding="checkbox">
                         {isSearch() ? // 검색창에 무언가 입력되어있는 상태라면 전체 선택용 체크박스가 검색된 결과의 리스트들만 모두 선택함
                             <input
                                 style={{zoom: 2.0, width: '15px'}}
@@ -446,7 +452,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                                 {/*)}*/}
                             </TableBody>
                         }
-
                     </Table>
                     <div>
                         {/*<div style={{margin: '25px'}}>*/}

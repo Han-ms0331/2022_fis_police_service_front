@@ -22,6 +22,7 @@ import ScheduleInputForm from "../organisms/ScheduleInputForm";
 import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
 import Swal from "sweetalert2";
 import '../atoms/swal.css'
+import {isLoginedState} from "../../store/LoginStore";
 
 
 function MainInfoTemplate(props) {
@@ -58,7 +59,7 @@ function MainInfoTemplate(props) {
     const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
     const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
     const {isSelected} = props;
-
+    const setIsLogined = useSetRecoilState(isLoginedState)
     const onRefresh = async (e) => {
         await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${selectedCenterId}`, {withCredentials: true})
             .then((res) => {
@@ -75,6 +76,26 @@ function MainInfoTemplate(props) {
                 setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
                 setSelectedCenterList(res.data.data.ceterList);
                 setClickedAgent({});
+            })
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                    setIsLogined(false);
+                }else{
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
+                }
             })
     }
 
@@ -147,12 +168,24 @@ function MainInfoTemplate(props) {
                         })
                         onRefresh();
                     }).catch(err => {
-                        Swal.fire({
-                            icon: "error",
-                            title: "실패하였습니다.",
-                            confirmButtonColor: Style.color2,
-                            confirmButtonText: "확인"
-                        })
+                        if (err.response.status === 401) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "세션이 만료되었습니다.",
+                                text: "다시 로그인 해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                            setIsLogined(false);
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "실패하였습니다.",
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: "확인"
+                            })
+                        }
                     })
 
 
@@ -213,12 +246,24 @@ function MainInfoTemplate(props) {
                         })
                         onRefresh();
                     }).catch(err => {
-                        Swal.fire({
-                            icon: "error",
-                            title: "실패하였습니다.",
-                            confirmButtonColor: Style.color2,
-                            confirmButtonText: "확인"
-                        })
+                        if (err.response.status === 401) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "세션이 만료되었습니다.",
+                                text: "다시 로그인 해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                            setIsLogined(false);
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "실패하였습니다.",
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: "확인"
+                            })
+                        }
                     })
 
 
@@ -261,13 +306,25 @@ function MainInfoTemplate(props) {
                         }
                     })
                     .catch((err) => {
-                        Swal.fire({
-                            icon: "error",
-                            title: "메일 전송에 실패하였습니다.",
-                            text: "잠시후에 다시 실행해 주세요.",
-                            confirmButtonColor: Style.color2,
-                            confirmButtonText: "확인"
-                        })
+                        if (err.response.status === 401) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "세션이 만료되었습니다.",
+                                text: "다시 로그인 해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                            setIsLogined(false);
+                        }
+                        else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "메일 전송에 실패하였습니다.",
+                                text: "잠시후에 다시 실행해 주세요.",
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: "확인"
+                            })
+                        }
                     })
             }
             ,
