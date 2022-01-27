@@ -45,7 +45,6 @@ const UserManageTemplate = () => {
                             } else {
                                 a = "퇴사"
                             }
-
                             tmp.push({
                                 user_id: list.user_id,
                                 u_name: list.u_name,
@@ -57,6 +56,8 @@ const UserManageTemplate = () => {
                                 averge_call: list.average_call,
                                 today_call_num: list.today_call_num
                             })
+
+
                         })
                         setContents(tmp);
                     }

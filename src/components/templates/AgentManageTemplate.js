@@ -42,7 +42,16 @@ const AgentManageTemplate = () => {
                     let tmp = [];
                     let a, b;
 
-                    res.data.data.forEach((list) => {
+                    const receivedData=(res.data.data);
+                    console.log(receivedData)
+                    receivedData.sort((a,b)=>{
+                        if(a.a_status === false){
+                            return 1;
+                        }
+                        else return -1;
+                    })
+
+                    receivedData.forEach((list) => {
                         list.a_hasCar ? a = "자차" : a = "도보"
                         list.a_status ? b = "재직" : b = "퇴사"
                         tmp.push({

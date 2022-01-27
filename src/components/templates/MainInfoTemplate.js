@@ -338,7 +338,7 @@ function MainInfoTemplate(props) {
                         open={isOpen}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
-                        style={{zIndex: 2}}
+                        style={{zIndex: 3}}
                     >
                         <Box sx={style}>
                             <ModalContainer>
@@ -378,7 +378,7 @@ function MainInfoTemplate(props) {
                     open={isScheduleOpen}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
-                    style={{zIndex: 2}}
+                    style={{zIndex: 3}}
                 >
                     <Box sx={style}>
                         <ModalContainer>
