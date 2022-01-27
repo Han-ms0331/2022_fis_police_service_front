@@ -116,11 +116,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor, loading }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
-    console.log(keywordProps);
     let count = rows.length;
     const [r, setR] = useRecoilState(dateSelectedRows);
 
-    console.log(loading);
 
     useEffect( () => {
         setPage(0);
@@ -187,7 +185,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     }
 
     const showList = () => { // 정렬 기능과 함께 Schedule List 여러 개를 띄워주는 함수
-        console.log(rows);
         return (
             stableSort(rows, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

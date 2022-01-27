@@ -35,7 +35,6 @@ const UserManageTemplate = () => {
         const showData = async () => {
             await axios.get(`http://${NetworkConfig.networkAddress}:8080/user`, {withCredentials: true})
                 .then((res) => {
-                        console.log(res.data);
                         let tmp = [];
                         let a;
                         res.data.forEach((list) => {
@@ -59,20 +58,16 @@ const UserManageTemplate = () => {
                                 today_call_num: list.today_call_num
                             })
                         })
-                        console.log(tmp)
                         setContents(tmp);
                     }
                 )
         }
 
         useEffect(() => {
-            showData().then((res) => {
-                console.log("done")
-            })
+            showData()
         }, [])
 
         const handleInputFormChange = (e) => {
-            // console.log(e);
             const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출
             setCurrentInfo({
                 ...currentInfo,
@@ -89,7 +84,6 @@ const UserManageTemplate = () => {
                         continue;
                     }
                     if (currentInfo[key] === "") {
-                        console.log('hi')
                         a = 0;          // empty면 0으로 체크
                         break;
                     }
@@ -152,14 +146,12 @@ const UserManageTemplate = () => {
                                 showData();
                                 handleClose();
                             }).catch((err) => {
-                                console.log(err);
                                 showErrorMessage(err);
                             })
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 })
             } else if (emptyOrNot() === false && modify === false) {
-                console.log(currentInfo)
                 /*await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true})
                     .then((res) => {
                         Swal.fire({
@@ -192,7 +184,6 @@ const UserManageTemplate = () => {
                                 showData();
                                 handleClose();
                             }).catch((err) => {
-                                console.log(err);
                                 showErrorMessage(err);
                             })
                     },
@@ -216,13 +207,10 @@ const UserManageTemplate = () => {
             delete changeContent['average_call']; /*평균통화건수 제외*/
             let a;
             if (changeContent['u_auth'] === "관리자") {
-                console.log(currentInfo.u_auth)
                 a = "ADMIN"
             } else if (changeContent['u_auth'] === "일반직원") {
-                console.log(currentInfo.u_auth)
                 a = "USER"
             } else {
-                console.log(currentInfo.u_auth)
                 a = "FIRED"
             }
             changeContent['u_auth'] = a;

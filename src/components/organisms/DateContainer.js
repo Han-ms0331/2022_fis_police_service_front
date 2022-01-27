@@ -16,7 +16,6 @@ const DateContainer = (props) => {
     }
     const selectedDate =getSelectedDate();
     const numOfRows = useRecoilValue(rowCount);
-    console.log(numOfRows)
     return (
         <Container>
             <SelectedDate>

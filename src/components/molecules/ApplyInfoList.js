@@ -10,7 +10,6 @@ import './ApplyInfoList.css'
 
 function ApplyInfoList(props) {
     const {u_name, content} = props;
-    console.log(content)
     return (
         <div className={"apply_info_list"} style={{width: "100%", padding: "1vw", fontSize: "0.7vw"}}>
             <div className={"apply_recorder_container"}>

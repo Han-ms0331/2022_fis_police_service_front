@@ -33,7 +33,6 @@ function MapView(props) {
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
         if (e.target.textContent === "250m") {
             setRange(2)
-            console.log('250m');
             modifiedSelectedCenter.forEach((arr,index,buf)=>{ // 선택된 센터를 제외시킨 리스트로 centerList 구성
                if (0<arr.distance<=250){
                     centerList.push({
@@ -52,7 +51,6 @@ function MapView(props) {
         }
         else if (e.target.textContent === "500m") {
             setRange(3)
-            console.log('500m')
             modifiedSelectedCenter.forEach((arr,index,buf)=>{ // 선택된 센터를 제외시킨 리스트로 centerList 구성
                 if (arr.distance<=500){
                     centerList.push({
@@ -71,7 +69,6 @@ function MapView(props) {
         }
         else if (e.target.textContent === "1km") {
             setRange(4)
-            console.log('1000m')
             modifiedSelectedCenter.forEach((arr,index,buf)=>{ // 선택된 센터를 제외시킨 리스트로 centerList 구성
                 if (arr.distance<=1000){
                     centerList.push({
