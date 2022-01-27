@@ -21,32 +21,65 @@ message msw 작업 완료
 */
 
 const MessangerList = () => {
-
+    let ws;
     const [messages, setMessages] = useState([]);
+    const getData = () =>{
+        openSocket();
+    }
+    function openSocket() {
+        ws = new WebSocket(`ws://localhost:8080/messenger/websocket`);
+        wsEvt();
+        ws.addEventListener('error', (event) =>{
+            console.log(event);
+        })
+    }
+    function getTime(stringTime){
+        console.log(stringTime);
+        let month = stringTime.substr(5,2);
+        if (month[0]==='0') month = month.slice(1,); // 앞에 0이 있을 경우 삭제
+        const day = stringTime.substr(8,2);
+        const hour = stringTime.substr(11,2);
+        const minutes = stringTime.substr(14,2);
+        // console.log(hour,minutes);
+        return month+"월 "+day+"일 "+hour+"시 "+minutes+"분";
+    }
 
-    const getData = () => {
-        const ws = new WebSocket(`ws://${NetworkConfig.networkAddress}/messenger/websocket`);
-        ws.onmessage = (data) => {
-            setMessages(data.data);
-            console.log(data.data);
+    function wsEvt() {
+        console.log("socket opened");
+        ws.onopen = function (data) {
+            //소켓이 열리면 초기화 세팅하기
         }
-    };
+        ws.onmessage = function (data) {
+
+            let receivedData = data.data;
+            receivedData=receivedData.split(" ");
+            // console.log(receivedData);
+            let [message,time,agent] = receivedData;
+            setMessages([...messages,{message,time,agent}]);
+        }
+
+    }
 
     useEffect(()=>{ //최초 렌더링시
         getData();
     },[]);
+    // useEffect(()=>{
+    //     console.log(messages)
+    // },[messages]);
 
-    const handleDone = () => { // 수정완료버튼을 눌렀을 경우...
-        console.log("수정완료!")
+    const handleDone = (time) => { // 수정완료버튼을 눌렀을 경우...
+        const newMessages = messages.filter((el,idx)=>{
+            return el.time!==time;
+        })
+        setMessages(newMessages);
+        // console.log(time);
     }
     return (
         <Main>
-            <Message header={"test"} agent={"test user"} content={"메시지 내용"}
-                     handleDone={handleDone}/>
             {messages.map((msg, idx) => {
                 console.log(msg);
-                // return <Message key={idx} header={msg.time} agent={msg.user} content={msg.message}
-                    //                 handleDone={handleDone}/>
+                return <Message key={idx} header={getTime(msg.time)} agent={msg.agent} content={msg.message}
+                                    handleDone={()=>handleDone(msg.time)}/>
                 }
             )}
         </Main>
