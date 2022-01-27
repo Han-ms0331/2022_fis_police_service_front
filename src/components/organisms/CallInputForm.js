@@ -16,6 +16,7 @@ function CallInputForm(props) {
 
     const handleInputFormChange = (e) => {
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
+        console.log(currentInfo);
         if (name === "email_form") {
             if (value !== "직접입력") {
                 setCurrentInfo({
@@ -53,7 +54,7 @@ function CallInputForm(props) {
             dateTime: today // name 키를 가진 값을 value 로 설정
         });
     }, [])
-
+    console.log(data)
     return (
         <Container>
             <div style={{marginBottom: "20px"}}>

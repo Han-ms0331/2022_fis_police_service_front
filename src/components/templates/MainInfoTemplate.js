@@ -50,7 +50,6 @@ function MainInfoTemplate(props) {
     const center_id = useRecoilValue(SelectedCenterId);
     const callList = useRecoilValue(SelectedCenterCallList);
     const scheduleList = useRecoilValue(SelectedCenterScheduleList);
-    const [centerList, setCenterList] = useRecoilState(CenterList); //검색 결과로 나온 시설들의 리스트를 담는 state
     const [centerLocation, setCenterLocation] = useRecoilState(CenterLocation);   //선택된 시설의 위 경도 정보
     const [selectedCenterId, setSelectedCenterId] = useRecoilState(SelectedCenterId);
     const [selectedCenterInfo, setSelectedCenterInfo] = useRecoilState(SelectedCenterInfo);
@@ -166,6 +165,7 @@ function MainInfoTemplate(props) {
                             confirmButtonColor: Style.color2,
                             confirmButtonText: "확인"
                         })
+                        setIsScheduleOpen(false);
                         onRefresh();
                     }).catch(err => {
                         if (err.response.status === 401) {
@@ -244,6 +244,7 @@ function MainInfoTemplate(props) {
                             confirmButtonColor: Style.color2,
                             confirmButtonText: "확인"
                         })
+                        setIsOpen(false);
                         onRefresh();
                     }).catch(err => {
                         if (err.response.status === 401) {
@@ -373,7 +374,7 @@ function MainInfoTemplate(props) {
             })
         } else if (e.target.name === "save") {
             onSaveCall();
-            setIsOpen(false);
+
 
         } else if (e.target.name === "add_schedule") {
             if (clickedAgent.agent_id=== undefined ) {
@@ -388,7 +389,7 @@ function MainInfoTemplate(props) {
             }
         } else if (e.target.name === "schedule_save") {
             onSaveSchedule()
-            setIsScheduleOpen(false);
+
         } else if (e.target.name === "schedule_cancel") {
             setIsScheduleOpen(false);
         }
