@@ -40,8 +40,11 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
         ws.onmessage = function (data) {
             let receivedData = data.data;
             receivedData=receivedData.split(" ");
-            let [message,time,agent,id] = receivedData;
-            setMessages((prevmsg)=>[...prevmsg,{message,time,agent,id}]);
+            const msg = receivedData.slice(0,receivedData.length-3).join(' ');
+            const [time,agent,id] = [receivedData[receivedData.length-3],receivedData[receivedData.length-2],receivedData[receivedData.length-1]];
+            const insertMsg = {msg,time,agent,id}; //삽입해야하는 데이터
+            // console.log(insertMsg)
+            setMessages((prevmsg)=>[...prevmsg,insertMsg]);
         }
         ws.onerror = (err)=>{
             console.log(`err:${err}`);
@@ -80,10 +83,10 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
     }
     return (
         <Main>
-            {messages.map((msg, idx) => {
+            {messages.map((el, idx) => {
                 // console.log(msg);
-                return <Message key={idx} header={getTime(msg.time)} agent={msg.agent} content={msg.message}
-                                    handleDone={()=>handleDone(msg.id)}/>
+                return <Message key={idx} header={getTime(el.time)} agent={el.agent} content={el.msg}
+                                    handleDone={()=>handleDone(el.id)}/>
                 }
             )}
         </Main>
