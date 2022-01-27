@@ -58,6 +58,8 @@ const UserManageTemplate = () => {
                                 averge_call: list.average_call,
                                 today_call_num: list.today_call_num
                             })
+
+
                         })
                         setContents(tmp);
                     }
