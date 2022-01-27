@@ -13,7 +13,18 @@ import CustomButton from "../atoms/CustomButton";
 import CustomSpinner from "../atoms/CustomSpinner";
 
 
-const Div = styled.div` // css
+const Button = styled.button` // css
+  font-weight: normal;
+  margin: 5px;
+  padding: 5px;
+  border: 3px solid #eee;
+  color: black;
+  background-color: White;
+  border-radius: 10px;
+  width: 225px;
+  height: 70px;
+  font-size: 18px;
+  
   &:hover {
     transform: scale(1.1);
     cursor: pointer;
@@ -22,6 +33,9 @@ const Div = styled.div` // css
     box-shadow: 0px 0px 0 rgb(0, 0, 0, 0.5);
     position: relative;
     top: 1px;
+  }
+  &:focus {
+    background-color: orange;
   }
 `;
 
@@ -33,6 +47,7 @@ function TimeList({content, setCurrentTime=0}) {
     let using = [false, false, false, false];
     const handleClick = () => {
         setClickedAgent(content);
+        console.log(content);
     }
 
 
@@ -65,19 +80,11 @@ function TimeList({content, setCurrentTime=0}) {
     }
 
     return (
-        <Div>
-            <CustomButton
-                fontWeight='normal'
-                type='reverse'
-                content={<Content />}
-                margin='5px' padding='5px' border='3px solid #eee'
-                color='black' backgroundColor='White' borderRadius='10px'
-                width='225px' height='70px' fontSize='18px'
-                onClick={handleClick}
-            >
-                {/*현장 요원 스케줄에 따른 버튼*/}
-            </CustomButton>
-        </Div>
+        <div>
+            <Button onClick={handleClick}>
+                <Content />
+            </Button>
+        </div>
 
 
     );
