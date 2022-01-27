@@ -100,6 +100,25 @@ function MainBodyTemplate(props) {
                 setIsSelected(true);
                 setSelectedLoading(false);
             })
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                }else{
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
+                }
+            })
     }
     /*
         날짜: 2022/01/18 5:02 오후
