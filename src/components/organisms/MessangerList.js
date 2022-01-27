@@ -41,8 +41,8 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
             let receivedData = data.data;
             receivedData=receivedData.split(" ");
             console.log(receivedData);
-            let [message,time,agent] = receivedData;
-            setMessages((prevmsg)=>[...prevmsg,{message,time,agent}]);
+            let [message,time,agent,id] = receivedData;
+            setMessages((prevmsg)=>[...prevmsg,{message,time,agent,id}]);
         }
         ws.onerror = (err)=>{
             console.log(`err:${err}`);
@@ -51,12 +51,8 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
             console.log("websocket closed");
         }
     }
-    useEffect(()=>{
-        console.log(messages)
-    },[messages])
 
-    function getTime(stringTime){ // 시간 형태를 바꿔주는 함수
-        // console.log(stringTime);
+    function getTime(stringTime){
         let month = stringTime.substr(5,2);
         if (month[0]==='0') month = month.slice(1,); // 앞에 0이 있을 경우 삭제
         const day = stringTime.substr(8,2);
@@ -64,30 +60,37 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
         const minutes = stringTime.substr(14,2);
         // console.log(hour,minutes);
         return month+"월 "+day+"일 "+hour+"시 "+minutes+"분";
-    }
+    }// 시간 형태를 바꿔주는 함수
 
     useEffect(()=>{ //최초 렌더링시
         openSocket();
         console.log("웹소켓 연결시도")
     },[]);
 
-    const handleDone = (time) => { // 수정완료버튼을 눌렀을 경우...
-        const newMessages = messages.filter((el,idx)=>{
-            return el.time!==time;
-        })
-        // console.log(time);
+    const handleDone = async (id) => { // 수정완료버튼을 눌렀을 경우...
+        const deleteId = parseInt(id); // 형변환
+        await axios.get(`http://${NetworkConfig.networkAddress}:8080/message/${deleteId}`, {withCredentials: true})
+            .then((res) => {
+                const newMessages = messages.filter((el,idx)=>{ //지우고 남은 메시지들
+                    return el.id!==id;
+                })
+                setMessages(newMessages); //지우고 남은 메시지들로 교환
+            }).catch((err) => {
+                console.log(err)
+            })
     }
     return (
         <Main>
             {messages.map((msg, idx) => {
                 // console.log(msg);
                 return <Message key={idx} header={getTime(msg.time)} agent={msg.agent} content={msg.message}
-                                    handleDone={()=>handleDone(msg.time)}/>
+                                    handleDone={()=>handleDone(msg.id)}/>
                 }
             )}
         </Main>
     );
 };
+
 //style
 const Main = styled.div`
   padding: 0 0 10px 0;
