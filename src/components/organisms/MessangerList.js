@@ -35,12 +35,11 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
     function wsEvt() {
         ws.onopen = function (data) {
             //소켓이 열리면 초기화 세팅하기
-            console.log("socket opened");
+            // console.log("socket opened");
         }
         ws.onmessage = function (data) {
             let receivedData = data.data;
             receivedData=receivedData.split(" ");
-            console.log(receivedData);
             let [message,time,agent,id] = receivedData;
             setMessages((prevmsg)=>[...prevmsg,{message,time,agent,id}]);
         }
