@@ -166,7 +166,7 @@ function MainBodyTemplate(props) {
             })
         } else {
             setButtonLoading(true);
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
+            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address}&c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
                     setButtonLoading(false);
                     if (res.data.data.length === 0) {
