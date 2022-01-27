@@ -8,7 +8,7 @@ import {SelectedCenterId, SelectedCenterInfo} from "../../store/SelectedCenterSt
 import {Style} from "../../Style";
 import {MdGpsFixed} from "react-icons/md";
 import styled from "styled-components";
-import CustomButton from "../atoms/CustomButton";
+
 
 
 /*
@@ -19,23 +19,18 @@ import CustomButton from "../atoms/CustomButton";
 */
 
 function CustomMap(props) {
-    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo);
-    const [selectedCenterId, setSelectedCenterId] = useRecoilState(SelectedCenterId);
+    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo); // 선택된 센터의 정보
     const [position, setPosition] = useState(
         {
             center: {lat: props.lat, lng: props.lng},
             isPanto: true,
         }
     ) //선택한 센터의 좌표를 초기 값으로 갖고, 지도의 중앙값을 추적하는 state
-    const [draggable, setDraggable] = useState("true");
+    const [draggable, setDraggable] = useState("true"); // 폴리라인 이동 방지 위해
 
     let aInfo = [] // 현장요원 리스트
     let road = [] // 동선 저장
-    let center = {
-        lat: props.lat,
-        lng: props.lng
-    } // position 은 계속 변화함, 선택한 센터의 중앙값을 고정하여 저장
-    let roadCenter = [] // 동선에 해당하는 center 마커 표시
+    let roadCenter = [] // 동선에 해당하는 center 마커 위치 저장
 
     const handleClick = () => {
         setPosition({
@@ -55,17 +50,17 @@ function CustomMap(props) {
                 type: "agent"
             })
         })
-    } // 현장요원 리스트에 타입과 latlng 형식 추가
+    } // 서버로부터 전달받은 데이터에 마커 표시에 필요한 마커타입과 위치 지정을 위한 latlng 형식 추가
 
 
     if (props.clickedAdata != null) {
-        aInfo.forEach((arr, index, buf) => {
+        aInfo.forEach((arr) => {
             if (props.clickedAdata.agent_id === arr.agent_id) {
                 arr.type = "agentSelected"
             }
-        }) // 만약 선택된 햔장요원과 현장요원 리스트에 있는 agent_id가 같을 경우 현장요원 리스트의 해당하는 현장요원 타입을 agentSelected로 변경
+        }) // 만약 선택된 햔장요원과 현장요원 리스트에 있는 agent_id가 같을 경우 현장요원 리스트의 해당하는 현장요원 타입을 agentSelected로 변경하여 구분된 마커 표시 가능
         if (props.clickedAdata.scheduleList != null) {
-            props.clickedAdata.scheduleList.forEach((list, index, buf) => {
+            props.clickedAdata.scheduleList.forEach((list) => {
                 road.push({
                     ...list,
                     schedule_id:list.schedule_id,
