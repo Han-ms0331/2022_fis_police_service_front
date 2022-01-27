@@ -3,6 +3,8 @@ import CustomButton from "../atoms/CustomButton";
 import InputContainer from "../molecules/InputContainer";
 import {Style} from "../../Style";
 import {Button, TextField} from "@mui/material";
+import {ClipLoader} from "react-spinners";
+
 
 function SearchForm(props) {
     return (
@@ -51,9 +53,8 @@ function SearchForm(props) {
                             backgroundColor: `${Style.color2}`,
                             color: `${Style.color1}`,
                             borderRadius: "10px"
-                        }}
-                >검색</Button>
-
+                }}
+                >{props.loading ? <ClipLoader color='#495ec4' /> : '검색'}</Button>
             </div>
         </form>
 

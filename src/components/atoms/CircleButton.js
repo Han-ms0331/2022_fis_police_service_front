@@ -15,6 +15,9 @@ const Button = styled.div` // css
   //padding: 5%;
   box-shadow: 0.1px 0.1px 0 rgb(0, 0, 0, 0.5);
   margin: 1px;
+  width: 20px;
+  height: 20px;
+  border: 0px solid black;
   &:hover {
     transform: scale(1.1);
     cursor: pointer;
