@@ -63,7 +63,7 @@ function ScheduleInputForm(props) {
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="예상 인원: " inputName="estimate_num" inputType="text" width="200px" row="1"
+                <InputContainer labelContent="예상 인원: " inputName="estimate_num" inputType="number" width="200px" row="1"
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
