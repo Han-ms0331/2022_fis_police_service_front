@@ -45,7 +45,6 @@ const AgentManageTemplate = () => {
                     let a, b;
 
                     const receivedData=(res.data.data);
-                    console.log(receivedData)
                     receivedData.sort((a,b)=>{
                         if(a.a_status === false){
                             return 1;
