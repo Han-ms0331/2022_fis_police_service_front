@@ -16,20 +16,10 @@ function CallInputForm(props) {
 
     const handleInputFormChange = (e) => {
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
-        console.log(currentInfo);
-        if (name === "email_form") {
-            if (value !== "직접입력") {
-                setCurrentInfo({
-                    ...currentInfo,
-                    m_email: currentInfo.m_email + "@" + value    //직접입력이 아닌 미리 입력된 이메일 폼 사용시 더함
-                })
-            }
-        } else {
             setCurrentInfo({
                 ...currentInfo, // 기존의 input 객체를 복사한 뒤
                 [name]: value // name 키를 가진 값을 value 로 설정
-            });
-        }
+        })
     };
 
     let mail
@@ -39,6 +29,8 @@ function CallInputForm(props) {
         if (mail[1] !== "naver.com" && mail[1] !== "google.com" && mail[1] !== "hanmail.com") {     //사용 mail주소가 미리 입력된 메일이 아닐 경우 직접입력으로 사용
             mail[0] = mail[0] + "@" + mail[1];
             mail[1] = "직접입력"
+        } else {
+            console.log(mail);
         }
     }
     /*
@@ -61,7 +53,7 @@ function CallInputForm(props) {
                 <InputContainer labelContent="인/아웃바운드:  " inputName="in_out" inputType="select"
                                 contents={[{show: "인", value: "IN"}, {show: "아웃", value: "OUT"}]}
                                 width="100px" marginLeft={"2px"} marginrow="1"
-                                defaultValue={data === undefined ? "" : data.in_out}
+                                value={data === undefined ? "" : data.in_out}
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
@@ -75,7 +67,7 @@ function CallInputForm(props) {
                                     value: "PARTICIPATION"
                                 }, {show: "보류", value: "HOLD"}, {show: "거부", value: "REJECT"}]}
                                 width="100px" row="1"
-                                defaultValue={data === undefined ? "" : data.participation}
+                                value={data === undefined ? "" : data.participation}
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
@@ -90,12 +82,14 @@ function CallInputForm(props) {
                 <div style={{margin: "0px 5px"}}>@</div>
                 <CustomInput inputName={"email_form"} type={"select"}
                              name={"email_form"}
-                             contents={[{show: "naver.com", value: "naver.com"}, {
-                                 show: "google.com",
-                                 value: "google.com"
-                             }, {show: "hanmail.com", value: "hanmail.com"}, {show: "직접입력", value: "직접입력"}]}
+                             contents={[
+                                 {show: "naver.com", value: "naver.com"},
+                                 {show: "google.com", value: "google.com"},
+                                 {show: "hanmail.com", value: "hanmail.com"},
+                                 {show: "직접입력", value: "직접입력"}
+                             ]}
                              width={"150px"} row={"1"}
-                             defaultValue={mail === undefined ? mail : mail[1]}
+                             value={mail === undefined ? mail : mail[1]}
                              setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
@@ -123,7 +117,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 550px;
+  width: 646px;
   height: 530px;
   padding: 0;
   font-size: 20px;

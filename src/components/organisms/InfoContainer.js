@@ -44,7 +44,8 @@ const Container1 = styled.div`
   padding: 1vw;
   width: 610px;
   text-align: center;
-  height: 300px;
+  min-height: 300px;
+  max-height: 300px;
   overflow: auto;
 `
 
@@ -59,7 +60,8 @@ const Container2 = styled.div`
   padding: 1vw;
   width: 610px;
   text-align: center;
-  height: 350px;
+  min-height: 350px;
+  max-height: 350px;
   overflow: auto;
 `
 export default InfoContainer;

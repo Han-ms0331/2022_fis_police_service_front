@@ -9,7 +9,7 @@ function InputContainer(props) {
             <CustomInput name={props.inputName} type={props.inputType} width={props.width} height={props.height}
                          rows={props.rows}
                          contents={props.contents} setValueFunction={props.setValueFunction}
-                         defaultValue={props.defaultValue} disabled={props.disabled}
+                         defaultValue={props.defaultValue} disabled={props.disabled} value={props.value}
             />
         </div>);
 }
