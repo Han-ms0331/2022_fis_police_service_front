@@ -71,7 +71,8 @@ function CustomMap(props) {
                     schedule_id:list.schedule_id,
                     latlng: {lat: list.center.a_latitude, lng: list.center.a_longitude},
                     c_name: list.center.c_name,
-                    c_people: list.estimate_num
+                    c_people: list.estimate_num,
+                    visit_time:list.visit_time
                 }) // 센터 표시를 해야하는 위치, 해당 센터의 이름과 예상인원 저장
             })
 
@@ -161,6 +162,7 @@ function CustomMap(props) {
                                     <div>{index + 1}</div>
                                     <div>시설이름 : {center.c_name}</div>
                                     <div>예상인원: {center.c_people} 명</div>
+                                    <div>방문예정시간: {center.visit_time}</div>
                                 </div>
                             }
                         />
