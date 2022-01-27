@@ -21,7 +21,7 @@ const CustomCalendar = ({setDate}) => {
                     // onData(); 여기에 넣으면 setState가 늦게 되어버림..
                 }}
                 value={value}
-                calendarType="ISO 8601"
+                calendarType="US"
                 locale="en"
                 formatMonth = {(locale, date) => ['1월', '2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월',][date.getMonth()]}
                 formatShortWeekday = {(locale, date) => ['일', '월', '화', '수', '목', '금', '토'][date.getDay()]}
