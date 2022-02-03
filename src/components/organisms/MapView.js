@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import RangeController from "../molecules/RangeController";
 import CustomMap from "../molecules/CustomMap";
 import {SelectedCenterInfo, SelectedCenterList} from "../../store/SelectedCenterStore";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import styled from "styled-components";
 import { MdGpsFixed } from "react-icons/md";
 import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
@@ -11,11 +11,11 @@ import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStor
 function MapView(props) {
 
     const [range, setRange] = useState(2);// 지도의 비율 설정
-    const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList); //선택된 시설의 주변 시설 리스트
-    const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo); //클릭된 현장요원 정보
-    const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo); // 선택된 날짜의 주변 현장 요원들 정보
+    const selectedCenterList= useRecoilValue(SelectedCenterList); //선택된 시설의 주변 시설 리스트
+    const clickedAgent= useRecoilValue(ClickedAgentInfo); //클릭된 현장요원 정보
+    const selectedAgentInfo = useRecoilValue(SelectedAgentInfo); // 선택된 날짜의 주변 현장 요원들 정보
     const [centerInfo,setCenterInfo] = useState([]) // 선택된 센터의 확대 비율 별 주변 시설 리스트
-    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo); // 선택된 센터의 정보
+    const selCenterInfo = useRecoilValue(SelectedCenterInfo); // 선택된 센터의 정보
 
     const center = [ //선택된 시설의 좌표를 mainbodytemp에서 props로 받아옴
         {
