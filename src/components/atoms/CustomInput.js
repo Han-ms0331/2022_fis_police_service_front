@@ -36,6 +36,7 @@ function CustomInput(props) {
             <Select
                 name={props.name}
                 value={props.defaultValue}
+                defaultValue={props.value}
                 onChange={props.setValueFunction}
             >
                 {props.contents.map((content) => {

@@ -85,6 +85,12 @@ function CustomMap(props) {
         modifiedAround=modifiedAround.filter((e) => e.c_name!== value.c_name)
     }) // 선택된 현장요원의 스케줄리스트에 있는 센터는 주변시설 리스트에서 제외
 
+    let modifiedRoadCenter=roadCenter;
+    roadCenter.forEach((value, index)=>{
+        modifiedRoadCenter=modifiedRoadCenter.filter((e)=>e.c_name!==selCenterInfo.c_name)
+    })
+
+
 
     return (
         <Container>
@@ -155,11 +161,18 @@ function CustomMap(props) {
                         key={index}
                         type={position.type}
                         position={position.latlng} // 마커를 표시할 위치
+                        content={
+                            <div>
+                                <div>이름: {position.a_name}</div>
+                                <div>전화번호: {position.a_ph}</div>
+                                <div>주소: {position.a_address}</div>
+                            </div>
+                        }
                     />
                 ))} {/*선택된 현장 요원과 주변 현장 요원 표시*/}
 
                 {
-                    roadCenter.map((center, index) => (
+                    modifiedRoadCenter.map((center, index) => (
                         <CustomMarker
                             key={index}
                             type={"centerSelected"}

@@ -16,18 +16,18 @@ import {GoChevronLeft, GoChevronRight} from "react-icons/go"; // 접을 때 필�
 */
 
 const SchedulePage = (props) => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [issidebaropen, setIssidebaropen] = useState(true);
     const [loading, setLoading] = useState(() => true);
     const toggleSideBar = () => { /*사이드바 토글 함수*/
-        setIsSidebarOpen(!isSidebarOpen);
+        setIssidebaropen(!issidebaropen);
     }
 
     return (
-        <Main isSidebarOpen={isSidebarOpen}>
+        <Main isSidebarOpen={issidebaropen}>
             <Navigation/>
-            <div className="sidebar">
-                <ScheduleSidebar isSidebarOpen={isSidebarOpen} setLoading={setLoading}/>
-                {isSidebarOpen ? <GoChevronLeft className="icon" onClick={toggleSideBar}/> :
+            <div className="sidebar" isSidebarOpen={issidebaropen}>
+                <ScheduleSidebar isSidebarOpen={issidebaropen} setLoading={setLoading}/>
+                {issidebaropen ? <GoChevronLeft className="icon" onClick={toggleSideBar}/> :
                     <GoChevronRight className="icon" onClick={toggleSideBar}/>}
             </div>
             <ScheduleBody loading={loading}/>

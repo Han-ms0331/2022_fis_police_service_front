@@ -28,6 +28,7 @@ function CustomButton(props) {
                         padding:props.padding,
                         margin:props.margin,
                     }}
+                    disabled={props.disabled}
                     onClick={props.onClick}
             >{props.content}
                 </Button>
@@ -49,6 +50,7 @@ function CustomButton(props) {
                         margin:props.margin,
                         fontWeight: props.fontWeight,
                     }}
+                    disabled={props.disabled}
                     onClick={props.onClick}
             >
                 <div>

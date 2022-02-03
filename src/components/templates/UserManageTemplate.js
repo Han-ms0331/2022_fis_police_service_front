@@ -35,7 +35,7 @@ const UserManageTemplate = () => {
         const [modify, setModify] = useState();
         const setIsLogined = useSetRecoilState(isLoginedState)
         const showData = async () => {
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/user`, {withCredentials: true})
+            await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/user`, {withCredentials: true})
                 .then((res) => {
                         let tmp = [];
                         let a;
@@ -165,7 +165,7 @@ const UserManageTemplate = () => {
             }
 
             if (emptyOrNot() === false && modify === true) {
-                /*await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true}).then((res) => {
+                /*await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/user`, currentInfo, {withCredentials: true}).then((res) => {
                     Swal.fire({
                         icon: 'success',
                         title: '수정되었습니다.',
@@ -185,7 +185,7 @@ const UserManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true})
+                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/user`, currentInfo, {withCredentials: true})
                             .then((res) => {
                                 Swal.fire({
                                     icon: 'success',
@@ -210,7 +210,7 @@ const UserManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true})
+                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/user`, currentInfo, {withCredentials: true})
                             .then((res) => {
                                 Swal.fire({
                                     icon: 'success',

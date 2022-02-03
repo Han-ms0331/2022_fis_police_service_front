@@ -21,7 +21,7 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
     const [messages,setMessages]=useState([]); //렌더링될 때 빈 배열로 초기화됨.
 
     function openSocket() { // 처음 렌더링 될 때 소켓을 연다.
-        ws = new WebSocket(`ws://localhost:8080/messenger/websocket`);
+        ws = new WebSocket(`ws://${process.env.REACT_APP_IP_ADDRESS}:8080/messenger/websocket`);
         wsEvt();
         ws.addEventListener('error', (event) =>{
             console.log(event);
@@ -31,14 +31,16 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
     function wsEvt() {
         ws.onopen = function (data) {
             //소켓이 열리면 초기화 세팅하기
-            console.log("socket opened");
+            // console.log("socket opened");
         }
         ws.onmessage = function (data) {
             let receivedData = data.data;
             receivedData=receivedData.split(" ");
-            console.log(receivedData);
-            let [message,time,agent,id] = receivedData;
-            setMessages((prevmsg)=>[...prevmsg,{message,time,agent,id}]);
+            const msg = receivedData.slice(0,receivedData.length-3).join(' ');
+            const [time,agent,id] = [receivedData[receivedData.length-3],receivedData[receivedData.length-2],receivedData[receivedData.length-1]];
+            const insertMsg = {msg,time,agent,id}; //삽입해야하는 데이터
+            // console.log(insertMsg)
+            setMessages((prevmsg)=>[...prevmsg,insertMsg]);
         }
         ws.onerror = (err)=>{
             console.log(`err:${err}`);
@@ -65,7 +67,7 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
 
     const handleDone = async (id) => { // 수정완료버튼을 눌렀을 경우...
         const deleteId = parseInt(id); // 형변환
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/message/${deleteId}`, {withCredentials: true})
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/message/${deleteId}`, {withCredentials: true})
             .then((res) => {
                 const newMessages = messages.filter((el,idx)=>{ //지우고 남은 메시지들
                     return el.id!==id;
@@ -77,10 +79,10 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
     }
     return (
         <Main>
-            {messages.map((msg, idx) => {
+            {messages.map((el, idx) => {
                 // console.log(msg);
-                return <Message key={idx} header={getTime(msg.time)} agent={msg.agent} content={msg.message}
-                                    handleDone={()=>handleDone(msg.id)}/>
+                return <Message key={idx} header={getTime(el.time)} agent={el.agent} content={el.msg}
+                                    handleDone={()=>handleDone(el.id)}/>
                 }
             )}
         </Main>

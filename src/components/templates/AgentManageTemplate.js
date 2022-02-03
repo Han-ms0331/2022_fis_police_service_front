@@ -36,7 +36,7 @@ const AgentManageTemplate = () => {
         const [modify, setModify] = useState();
         const setIsLogined = useSetRecoilState(isLoginedState)
         const showData = async () => {
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/agent`, {withCredentials: true})
+            await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {withCredentials: true})
                 .then((res) => {
                     let tmp = [];
                     let a, b;
@@ -176,7 +176,7 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        await axios.patch(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
+                        await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
                             .then((res) => {
                                 Swal.fire({
                                     icon: 'success',
@@ -202,7 +202,7 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
+                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
                             .then((res) => {
                                 Swal.fire({
                                     icon: 'success',

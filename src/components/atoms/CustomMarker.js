@@ -43,7 +43,7 @@ function CustomMarker(props) {
             <MapMarker
                 position={props.position}
                 image={{
-                    src: "https://ifh.cc/g/mO7w5C.png",
+                    src: "https://ifh.cc/g/VyEmoZ.png",
                     size: {
                         width: 70,
                         height: 70,
@@ -99,20 +99,42 @@ function CustomMarker(props) {
                         height: 40,
                     },
                 }}
-            />
+                clickable={true}
+                onMouseOver={
+                    ()=>setIsOpen(true)
+                }
+                onMouseOut={
+                    ()=>setIsOpen(false)
+                }
+                >
+                {isOpen && <div style={{padding: "3px", color: "#000" }}>
+                    {props.content}
+                </div>}
+            </MapMarker>
         )
     } else if (props.type === 'agentSelected') {
         return (
             <MapMarker
                 position={props.position}
                 image={{
-                    src: "https://ifh.cc/g/p5RFAR.png",
+                    src: "https://ifh.cc/g/HDUkhx.png",
                     size: {
                         width: 70,
                         height: 70,
                     },
                 }}
-            />
+                clickable={true}
+                onMouseOver={
+                    ()=>setIsOpen(true)
+                }
+                onMouseOut={
+                    ()=>setIsOpen(false)
+                }
+                >
+                {isOpen && <div style={{padding: "3px", color: "#000" }}>
+                    {props.content}
+                </div>}
+            </MapMarker>
         )
     }
 }
