@@ -36,6 +36,7 @@ function RangeController(props) {
 
             <TabsUnstyled defaultValue={0} style={{zIndex: 3}}>
                 <TabsList>
+                    <Tab onClick={props.onClickFunc}>Remove</Tab>
                     <Tab onClick={props.onClickFunc}>250m</Tab>
                     <Tab onClick={props.onClickFunc}>500m</Tab>
                     <Tab onClick={props.onClickFunc}>1km</Tab>
