@@ -88,6 +88,9 @@ function MapView(props) {
             })
             setCenterInfo(centerList)
         }
+        else if (e.target.textContent === "Remove") {
+            setCenterInfo([])
+        }
     }
 
     return (
