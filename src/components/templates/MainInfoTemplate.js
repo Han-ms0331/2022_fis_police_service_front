@@ -36,7 +36,7 @@ function MainInfoTemplate(props) {
         c_manager: "",
         m_ph: "",
         m_email: "",
-        email_form:"",
+        email_form: "",
         center_etc: "",
         agent_etc: ""
     })
@@ -61,7 +61,7 @@ function MainInfoTemplate(props) {
     const {isSelected} = props;
     const setIsLogined = useSetRecoilState(isLoginedState)
     const onRefresh = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${selectedCenterId}`, {withCredentials: true})
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/select?center_id=${selectedCenterId}`, {withCredentials: true})
             .then((res) => {
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
@@ -108,7 +108,7 @@ function MainInfoTemplate(props) {
             c_manager: "",
             m_ph: "",
             m_email: "",
-            email_form:"",
+            email_form: "",
             num: "",
             center_etc: "",
             agent_etc: ""
@@ -123,7 +123,6 @@ function MainInfoTemplate(props) {
             agent_etc: ""
         })
     }, [props.isSelected])
-
 
     /*
         날짜: 2022/01/24 2:12 오후
@@ -142,7 +141,7 @@ function MainInfoTemplate(props) {
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
             preConfirm: async () => {
-                await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule`, {
                     center_id: center_id,
                     agent_id: clickedAgentInfo.agent_id,
                     receipt_date: currentScheduleInfo.receipt_date,
@@ -214,7 +213,7 @@ function MainInfoTemplate(props) {
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
             preConfirm: async () => {
-                await axios.post(`http://${NetworkConfig.networkAddress}:8080/call`, {
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/call`, {
                     center_id: center_id,
                     u_name: currentInfo.u_name,
                     in_out: currentInfo.in_out,
@@ -235,7 +234,7 @@ function MainInfoTemplate(props) {
                             c_manager: "",
                             m_ph: "",
                             m_email: "",
-                            email_form:"",
+                            email_form: "",
                             num: "",
                             center_etc: "",
                             agent_etc: ""
@@ -293,19 +292,14 @@ function MainInfoTemplate(props) {
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
             preConfirm: async () => {
-                await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`, {withCredentials: true})
+                await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/${center_id}/sendmail`, {withCredentials: true})
                     .then((res) => {
-                        if (res.data.result === "success") {
-                            // alert("메일 전송에 성공하였습니다.")
-                            Swal.fire({
-                                icon: "success",
-                                title: "메일 전송에 성공하였습니다.",
-                                confirmButtonColor: Style.color2,
-                                confirmButtonText: "확인"
-                            })
-                        } else {
-                            // alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
-                        }
+                        Swal.fire({
+                            icon: "success",
+                            title: "메일 전송에 성공하였습니다.",
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: "확인"
+                        })
                     })
                     .catch((err) => {
                         if (err.response.status === 401) {
@@ -340,6 +334,8 @@ function MainInfoTemplate(props) {
         작성내용: onClick- 각 버튼들이 클릭되었을 때 실행하는 로직을 담고있음
     */
     const onClick = (e) => {
+        console.log("onclick inside");
+        console.log(e.target.name);
         if (e.target.name === "open") {
             if (callList[0] !== undefined) {
                 let mail = callList[0].m_email.split("@");
@@ -376,20 +372,8 @@ function MainInfoTemplate(props) {
             })
         } else if (e.target.name === "save") {
             onSaveCall();
-
-
-        } else if (e.target.name === "add_schedule") {
-            if (clickedAgent.agent_id === undefined) {
-                Swal.fire({
-                    icon: "warning",
-                    title: "현장요원을 선택해주세요.",
-                    confirmButtonText: "확인",
-                    confirmButtonColor: Style.color2
-                });
-            } else {
-                setIsScheduleOpen(true);
-            }
-        } else if (e.target.name === "schedule_save") {
+        }
+         else if (e.target.name === "schedule_save") {
             onSaveSchedule()
 
         } else if (e.target.name === "schedule_cancel") {
@@ -442,7 +426,18 @@ function MainInfoTemplate(props) {
                 <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
                     <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
                                   color={Style.color1}
-                                  backgroundColor={Style.color2} content="일정 추가" fontSize={"25px"} onClick={onClick}/>
+                                  backgroundColor={Style.color2} content="일정 추가" fontSize={"25px"} onClick={() => {
+                        if (clickedAgent.agent_id === undefined) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "현장요원을 선택해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                        } else {
+                            setIsScheduleOpen(true);
+                        }
+                    }}/>
                 </div>
                 <Modal
                     open={isScheduleOpen}

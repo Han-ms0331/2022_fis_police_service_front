@@ -39,7 +39,7 @@ function CallInputForm(props) {
         작성내용: 현재 입력하는 날짜 세팅
     */
     const date = new Date()
-    const today = date.getFullYear() + '-' + date.getMonth() + 1 + '-' + date.getDate() + "T" + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2);
+    const today = date.getFullYear() + '-' + String(Number(date.getMonth()) + 1) + '-' + date.getDate() + "T" + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2);
     useEffect(() => {
         setCurrentInfo({
             ...currentInfo, // 기존의 input 객체를 복사한 뒤

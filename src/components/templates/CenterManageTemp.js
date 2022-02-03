@@ -51,7 +51,7 @@ function CenterManageTemp(props) {
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     async function apiGetCall(c_name, c_address, c_ph) {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
                 if(res.data.data.length === 0){
 
@@ -183,7 +183,7 @@ function CenterManageTemp(props) {
                 cancelButtonText: '취소',
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
-                    await axios.patch(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
+                    await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center`, currentInfo, {withCredentials: true})
                         .then((res) => {
                             const {c_name, c_address, c_ph} = searchInput;
                             apiGetCall(c_name, c_address, c_ph);
@@ -228,7 +228,7 @@ function CenterManageTemp(props) {
                 cancelButtonText: '취소',
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
-                    await axios.post(`http://${NetworkConfig.networkAddress}:8080/center`, currentInfo, {withCredentials: true})
+                    await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center`, currentInfo, {withCredentials: true})
                         .then((res) => {
                             const {c_name, c_address, c_ph} = searchInput;
                             apiGetCall(c_name, c_address, c_ph);
