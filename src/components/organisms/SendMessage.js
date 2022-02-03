@@ -20,7 +20,7 @@ const SendMessage = ({setMsgsent,msgsent}) => {
     let ws;
 
     function openSocket() {
-        ws = new WebSocket(`ws://localhost:8080/messenger/websocket`);
+        ws = new WebSocket(`ws://${NetworkConfig.networkAddress}:8080/messenger/websocket`);
         wsEvt();
         ws.addEventListener('error', (event) =>{
             console.log(event);

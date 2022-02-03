@@ -25,7 +25,7 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
     const [messages,setMessages]=useState([]); //렌더링될 때 빈 배열로 초기화됨.
 
     function openSocket() { // 처음 렌더링 될 때 소켓을 연다.
-        ws = new WebSocket(`ws://localhost:8080/messenger/websocket`);
+        ws = new WebSocket(`ws://${NetworkConfig.networkAddress}:8080/messenger/websocket`);
         wsEvt();
         ws.addEventListener('error', (event) =>{
             console.log(event);
