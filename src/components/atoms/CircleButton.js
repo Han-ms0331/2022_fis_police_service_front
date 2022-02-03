@@ -18,18 +18,6 @@ const Button = styled.div` // css
   width: 20px;
   height: 20px;
   border: 0px solid black;
-  //&:hover {
-  //  transform: scale(1.1);
-  //  cursor: pointer;
-  //}
-  //&:active {
-  //  box-shadow: 0px 0px 0 rgb(0, 0, 0, 0.5);
-  //  position: relative;
-  //  top: 1px;
-  //}
-  //&:focus {
-  //  background-color: orange;
-  //}
 `;
 
 export default function CircleButton({name, bgColor, handleClick}) { // bgColor로 버튼 색 props 받음.

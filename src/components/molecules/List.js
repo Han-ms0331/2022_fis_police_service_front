@@ -2,7 +2,6 @@ import React from 'react';
 import CustomButton from "../atoms/CustomButton";
 import styled from 'styled-components';
 import {Style} from "../../Style";
-import {ClipLoader} from "react-spinners";
 
 function List(props) {
     let element

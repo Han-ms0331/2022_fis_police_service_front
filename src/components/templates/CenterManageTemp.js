@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CenterManageInputForm from "../organisms/CenterManageInputForm";
 import CustomButton from "../atoms/CustomButton";
-import {center} from "../../store/dummy-data/center";
 import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";

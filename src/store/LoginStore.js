@@ -1,4 +1,4 @@
-import {atom, selector} from "recoil";
+import {atom} from "recoil";
 /*
     날짜: 2022/01/11 10:59 오전
     작성자: 한명수

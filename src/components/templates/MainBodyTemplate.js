@@ -8,21 +8,19 @@ import {
     CenterList, CenterLocation,
     SelectedCenterCallList,
     SelectedCenterId,
-    SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo,
+    SelectedCenterInfo, SelectedCenterList,
     SelectedCenterScheduleList
 } from "../../store/SelectedCenterStore";
 import CustomCalendar from "../atoms/CustomCalendar";
 import AgentContainer from "../organisms/AgentContainer";
 import styled from "styled-components";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
-import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
 import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
 import Swal from "sweetalert2";
 import CustomSpinner from "../atoms/CustomSpinner";
-import {center} from "../../store/dummy-data/center";
 import {isLoginedState} from "../../store/LoginStore";
 
 function MainBodyTemplate(props) {
@@ -49,7 +47,6 @@ function MainBodyTemplate(props) {
     const [isSearched, setIsSearched] = useState(false);
     const [isEmpty, setIsEmpty] = useState(false);
     const [date, setDate] = useRecoilState(SelectedDateState);
-    const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수

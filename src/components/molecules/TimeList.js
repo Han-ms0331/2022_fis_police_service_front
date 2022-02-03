@@ -4,13 +4,11 @@
     작성내용: 현장 요원 이름 + 스케줄표(CircleButton으로 시각화)
 */
 
-import React, {useRef} from 'react';
+import React from 'react';
 import CircleButton from "../atoms/CircleButton";
 import styled from "styled-components";
 import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
 import {useRecoilState} from "recoil";
-import CustomButton from "../atoms/CustomButton";
-import CustomSpinner from "../atoms/CustomSpinner";
 import {Style} from "../../Style";
 
 
@@ -20,7 +18,6 @@ const Button = styled.button` // css
   padding: 5px;
   border: 3px solid #eee;
   color: black;
-  //background-color: White;
   background-color: ${(props) => props.bgColor};
   border-radius: 10px;
   width: 225px;
@@ -42,7 +39,6 @@ const Button = styled.button` // css
 function TimeList({content, setCurrentTime=0, selected, setSelected}) {
     const red = '#e55039';
     const green = '#4cd137';
-    const date = new Date().getHours();
     let using = [false, false, false, false];
     const handleClick = () => {
         setClickedAgent(content);

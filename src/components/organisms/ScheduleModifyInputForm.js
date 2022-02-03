@@ -1,13 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import InputContainer from "../molecules/InputContainer";
-import CheckboxContainer from "../molecules/CheckboxContainer";
 import CustomButton from "../atoms/CustomButton";
-import {Box, Container} from "@mui/material";
 import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {dateSelectedRows, rowCount} from "../../store/DateSelectedRowsStore";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import Swal from "sweetalert2";
 import {isLoginedState} from "../../store/LoginStore";
 import {userAuthority} from "../../store/LoginStore";

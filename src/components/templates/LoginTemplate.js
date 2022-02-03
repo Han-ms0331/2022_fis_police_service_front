@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import LoginForm from "../organisms/LoginForm";
 import axios from "axios";
 import {useRecoilState} from "recoil";
