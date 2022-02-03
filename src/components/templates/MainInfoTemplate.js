@@ -13,7 +13,6 @@ import {
 } from "../../store/SelectedCenterStore";
 import {Style} from "../../Style";
 import Box from "@mui/material/Box";
-import UserManageInputForm from "../organisms/UserManageInputForm";
 import Modal from "@mui/material/Modal";
 import styled from "styled-components";
 import question from '../media/question.png';
@@ -467,7 +466,7 @@ function MainInfoTemplate(props) {
             :
             <RightContainer>
                 <p>시설을 선택해 주세요!</p>
-                <img src={question} alt={'?'}></img>
+                <img src={question} alt={'?'}/>
             </RightContainer>
 
     );

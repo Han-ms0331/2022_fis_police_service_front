@@ -1,10 +1,10 @@
 /*global kakao */
-import React, {useEffect, useState} from "react";
-import {Map, MapMarker} from "react-kakao-maps-sdk";
+import React, {useState} from "react";
+import {Map} from "react-kakao-maps-sdk";
 import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
-import {useRecoilState} from "recoil";
-import {SelectedCenterId, SelectedCenterInfo} from "../../store/SelectedCenterStore";
+import {useRecoilValue} from "recoil";
+import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
 import {Style} from "../../Style";
 import {MdGpsFixed} from "react-icons/md";
 import styled from "styled-components";
@@ -19,7 +19,7 @@ import styled from "styled-components";
 */
 
 function CustomMap(props) {
-    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo); // 선택된 센터의 정보
+    const selCenterInfo = useRecoilValue(SelectedCenterInfo); // 선택된 센터의 정보
     const [position, setPosition] = useState(
         {
             center: {lat: props.lat, lng: props.lng},
@@ -84,6 +84,12 @@ function CustomMap(props) {
     roadCenter.forEach((value,index)=>{
         modifiedAround=modifiedAround.filter((e) => e.c_name!== value.c_name)
     }) // 선택된 현장요원의 스케줄리스트에 있는 센터는 주변시설 리스트에서 제외
+
+    let modifiedRoadCenter=roadCenter;
+    roadCenter.forEach((value, index)=>{
+        modifiedRoadCenter=modifiedRoadCenter.filter((e)=>e.c_name!==selCenterInfo.c_name)
+    })
+
 
 
     return (
@@ -155,11 +161,18 @@ function CustomMap(props) {
                         key={index}
                         type={position.type}
                         position={position.latlng} // 마커를 표시할 위치
+                        content={
+                            <div>
+                                <div>이름: {position.a_name}</div>
+                                <div>전화번호: {position.a_ph}</div>
+                                <div>주소: {position.a_address}</div>
+                            </div>
+                        }
                     />
                 ))} {/*선택된 현장 요원과 주변 현장 요원 표시*/}
 
                 {
-                    roadCenter.map((center, index) => (
+                    modifiedRoadCenter.map((center, index) => (
                         <CustomMarker
                             key={index}
                             type={"centerSelected"}

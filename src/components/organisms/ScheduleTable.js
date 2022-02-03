@@ -8,8 +8,7 @@
 
 import React, {useCallback, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,14 +18,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableHead from "@mui/material/TableHead";
 import ScheduleTableSearch from "../molecules/ScheduleTableSearch";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {useRecoilValue} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import TransitionsModal from "./TransitionModal";
-import CustomButton from "../atoms/CustomButton";
-import CheckboxContainer from "../molecules/CheckboxContainer";
-import {FormControlLabel, lighten, Switch, TableSortLabel} from "@mui/material";
-import axios from "axios";
-import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
+import {TableSortLabel} from "@mui/material";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Spinner = () => {
@@ -117,8 +112,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor, loading }) {
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
     let count = rows.length;
-    const [r, setR] = useRecoilState(dateSelectedRows);
-
 
     useEffect( () => {
         setPage(0);
@@ -270,7 +263,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     );
 
     function EnhancedTableHead(props) { // 테이블 헤더 컴포넌트 (전체 선택용 체크박스 기능)
-        const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+        const { classes, order, orderBy, onRequestSort } = props;
         const createSortHandler = (property) => (event) => {
             onRequestSort(event, property);
         };
@@ -335,9 +328,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
 
     EnhancedTableHead.propTypes = {
         classes: PropTypes.object.isRequired,
-        numSelected: PropTypes.number.isRequired,
         onRequestSort: PropTypes.func.isRequired,
-        onSelectAllClick: PropTypes.func.isRequired,
         order: PropTypes.oneOf(['asc', 'desc']).isRequired,
         orderBy: PropTypes.string.isRequired,
         rowCount: PropTypes.number.isRequired,
@@ -347,9 +338,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     const classes = useStyles(colorVariable);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
-    const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleRequestSort = (event, property) => {
@@ -357,37 +346,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
-
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
-
-    // MUI에 있는 체크박스 선택 기능 함수들 - 사용하지 않음
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -400,14 +358,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
 
     // 페이지 변경 함수, 페이지 하나 당 row 개수 변경 함수
 
-    const handleChangeDense = (event) => { // 간격 붙이는 DensePadding 기능
-        setDense(event.target.checked);
-    };
-
-
-    const isSelected = (name) => selected.indexOf(name) !== -1;
-
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     return (
         <div className={classes.root} style={{margin: '15px'}}>
@@ -416,16 +366,14 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+                        size='medium'
                         aria-label="enhanced table"
                     >
                         <ScheduleTableSearch />
                         <EnhancedTableHead
                             classes={classes}
-                            numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick} // 사용하지 않는 기능
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
@@ -445,11 +393,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                                     :
                                     showList()
                                 }
-                                {/*{emptyRows > 0 && (*/}
-                                {/*    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>*/}
-                                {/*        <TableCell colSpan={6} />*/}
-                                {/*    </TableRow>*/}
-                                {/*)}*/}
                             </TableBody>
                         }
                     </Table>

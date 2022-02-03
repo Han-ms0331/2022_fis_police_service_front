@@ -7,8 +7,6 @@
 
 import React, {useState} from 'react';
 import TimeList from "./TimeList";
-import {ClipLoader} from "react-spinners";
-import {Style} from "../../Style";
 
 
 function AgentSchedule({content, width, height, loading}) {

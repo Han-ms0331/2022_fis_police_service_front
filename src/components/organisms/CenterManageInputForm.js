@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import InputContainer from "../molecules/InputContainer";
 import CustomButton from "../atoms/CustomButton";
-import styled from 'styled-components';
-import Box from '@mui/material/Box';
 import {Style} from "../../Style";
 
 
@@ -15,13 +13,7 @@ function CenterManageInputForm(props) {
             alignItems: "center",
             justifyContent: "center",
         }}>
-            {/*<div style={{marginBottom: "20px"}}>*/}
-            {/*    <InputContainer labelContent="시설 아이디: " inputName="center_id" inputType="text" width="300px" rows="1"*/}
-            {/*                    setValueFunction={props.handleInputFormChange}*/}
-            {/*                    defaultValue={props.currentInfo['center_id']} disabled={true}*/}
 
-            {/*    />*/}
-            {/*</div>*/}
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="시설 이름: " inputName="c_name" inputType="text" width="300px" rows="2"
                                 setValueFunction={props.handleInputFormChange}
@@ -56,12 +48,3 @@ function CenterManageInputForm(props) {
 }
 
 export default CenterManageInputForm;
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-};
