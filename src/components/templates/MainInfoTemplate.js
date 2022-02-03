@@ -61,7 +61,7 @@ function MainInfoTemplate(props) {
     const {isSelected} = props;
     const setIsLogined = useSetRecoilState(isLoginedState)
     const onRefresh = async (e) => {
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${selectedCenterId}`, {withCredentials: true})
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/select?center_id=${selectedCenterId}`, {withCredentials: true})
             .then((res) => {
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
@@ -142,7 +142,7 @@ function MainInfoTemplate(props) {
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
             preConfirm: async () => {
-                await axios.post(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule`, {
                     center_id: center_id,
                     agent_id: clickedAgentInfo.agent_id,
                     receipt_date: currentScheduleInfo.receipt_date,
@@ -214,7 +214,7 @@ function MainInfoTemplate(props) {
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
             preConfirm: async () => {
-                await axios.post(`http://${NetworkConfig.networkAddress}:8080/call`, {
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/call`, {
                     center_id: center_id,
                     u_name: currentInfo.u_name,
                     in_out: currentInfo.in_out,
@@ -293,7 +293,7 @@ function MainInfoTemplate(props) {
             confirmButtonColor: Style.color2,
             cancelButtonColor: "#e55039",
             preConfirm: async () => {
-                await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${center_id}/sendmail`, {withCredentials: true})
+                await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/${center_id}/sendmail`, {withCredentials: true})
                     .then((res) => {
                         if (res.data.result === "success") {
                             // alert("메일 전송에 성공하였습니다.")
@@ -376,8 +376,6 @@ function MainInfoTemplate(props) {
             })
         } else if (e.target.name === "save") {
             onSaveCall();
-
-
         } else if (e.target.name === "add_schedule") {
             if (clickedAgent.agent_id === undefined) {
                 Swal.fire({

@@ -42,7 +42,7 @@ const ScheduleSidebar = ({ setLoading }) => {
     const setIsLogined = useSetRecoilState(isLoginedState)
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         setLoading(true);
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${visit_date}`, {withCredentials: true})
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
                 setRows(res.data.data);
                 setLoading(false);
