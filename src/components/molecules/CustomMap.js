@@ -1,10 +1,10 @@
 /*global kakao */
-import React, {useEffect, useState} from "react";
-import {Map, MapMarker} from "react-kakao-maps-sdk";
+import React, {useState} from "react";
+import {Map} from "react-kakao-maps-sdk";
 import CustomPolyLine from "../atoms/CustomPolyLine";
 import CustomMarker from "../atoms/CustomMarker";
-import {useRecoilState} from "recoil";
-import {SelectedCenterId, SelectedCenterInfo} from "../../store/SelectedCenterStore";
+import {useRecoilValue} from "recoil";
+import {SelectedCenterInfo} from "../../store/SelectedCenterStore";
 import {Style} from "../../Style";
 import {MdGpsFixed} from "react-icons/md";
 import styled from "styled-components";
@@ -19,7 +19,7 @@ import styled from "styled-components";
 */
 
 function CustomMap(props) {
-    const [selCenterInfo, setSelCenterInfo] = useRecoilState(SelectedCenterInfo); // 선택된 센터의 정보
+    const selCenterInfo = useRecoilValue(SelectedCenterInfo); // 선택된 센터의 정보
     const [position, setPosition] = useState(
         {
             center: {lat: props.lat, lng: props.lng},

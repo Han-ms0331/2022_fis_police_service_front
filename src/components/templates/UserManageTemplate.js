@@ -202,19 +202,6 @@ const UserManageTemplate = () => {
                     allowOutsideClick: () => !Swal.isLoading()
                 })
             } else if (emptyOrNot() === false && modify === false) {
-                /*await axios.post(`http://${NetworkConfig.networkAddress}:8080/user`, currentInfo, {withCredentials: true})
-                    .then((res) => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '추가되었습니다.',
-                            confirmButtonColor: Style.color2,
-                            confirmButtonText: '확인',
-                        })
-                        showData()
-                        handleClose();
-                    }).catch((err) => {
-                        showErrorMessage(err);
-                    })*/
                 Swal.fire({
                     icon: "question",
                     title: '추가하시겠습니까?',

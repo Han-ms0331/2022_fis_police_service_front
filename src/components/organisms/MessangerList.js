@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import CallEndOutlinedIcon from '@mui/icons-material/CallEndOutlined';
 import axios from "axios";
-import CustomButton from "../atoms/CustomButton";
 import {Style} from "../../Style";
-import {useRecoilValue} from "recoil";
-import {Messages} from "../../store/Message";
 import {Message} from "../molecules/Message";
 import NetworkConfig from "../../configures/NetworkConfig";
 /*

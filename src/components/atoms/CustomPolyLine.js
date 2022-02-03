@@ -1,6 +1,5 @@
 import React from 'react';
 import {Polyline} from "react-kakao-maps-sdk";
-import {Style} from "../../Style";
 
 /*
     날짜 : 2022/01/12 4:48 PM

@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import InputContainer from "../molecules/InputContainer";
-import CustomInput from "../atoms/CustomInput";
 import {useRecoilValue} from "recoil";
-import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
+import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
 import {SelectedDateState} from "../../store/SelectedDateStore";
 import styled from "styled-components";
 

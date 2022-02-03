@@ -1,6 +1,4 @@
 import React from 'react';
-import CustomLabel from "../atoms/CustomLabel";
-import CustomButton from "../atoms/CustomButton";
 import {Style} from "../../Style";
 import {
     buttonUnstyledClasses,
@@ -10,9 +8,6 @@ import {
     TabUnstyled,
     tabUnstyledClasses
 } from "@mui/material";
-import UserManageTemplate from "../templates/UserManageTemplate";
-import AgentManageTemplate from "../templates/AgentManageTemplate";
-import CenterManageTemp from "../templates/CenterManageTemp";
 import styled from "styled-components";
 
 /*

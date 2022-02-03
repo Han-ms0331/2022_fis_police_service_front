@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import ScheduleTable from "../organisms/ScheduleTable";
 import {useRecoilValue} from "recoil";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
@@ -12,12 +12,10 @@ import styled from 'styled-components';
 
 const ScheduleBody = ({loading}) => {
     const resultRows = useRecoilValue(dateSelectedRows);
-    // const backgroundColor = 'rgba(255, 212, 0, 0.5)';
     const backgroundColor = Style.color2;
     const backgroundColor2 = Style.color1;
     const backgroundColor3 = Style.color2;
     const fontColor = 'white';
-    const fontColor2 = 'black';
 
 
 

@@ -3,7 +3,7 @@ import MainPage from "./components/pages/MainPage";
 import SchedulePage from "./components/pages/SchedulePage";
 import ManagePage from "./components/pages/ManagePage";
 import ThisLoginPage from "./components/pages/ThisLoginPage";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {useRecoilState} from "recoil";
 import {isLoginedState, userAuthority} from "./store/LoginStore";
 import axios from "axios";
 import NetworkConfig from "./configures/NetworkConfig";

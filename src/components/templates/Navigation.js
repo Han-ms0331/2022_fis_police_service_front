@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Link, Redirect} from "react-router-dom";
+import React from 'react';
+import {Link} from "react-router-dom";
 import styled from 'styled-components';
 import HomeIcon from '@mui/icons-material/Home';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';

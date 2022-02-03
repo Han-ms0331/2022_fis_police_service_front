@@ -4,9 +4,6 @@ import Navigation from "../templates/Navigation";
 import ScheduleBody from "../templates/ScheduleBody";
 import ScheduleSidebar from "../templates/ScheduleSidebar";
 import {GoChevronLeft, GoChevronRight} from "react-icons/go"; // 접을 때 필요한 아이콘
-import {Redirect} from "react-router-dom";
-import {isLoginedState} from "../../store/LoginStore";
-import {useRecoilValue} from "recoil";
 /*
 날짜: 2022/01/12 11:51 AM
 작성자: 정도식
@@ -28,7 +25,7 @@ const SchedulePage = (props) => {
     return (
         <Main isSidebarOpen={isSidebarOpen}>
             <Navigation/>
-            <div className="sidebar" isSidebarOpen={isSidebarOpen}>
+            <div className="sidebar">
                 <ScheduleSidebar isSidebarOpen={isSidebarOpen} setLoading={setLoading}/>
                 {isSidebarOpen ? <GoChevronLeft className="icon" onClick={toggleSideBar}/> :
                     <GoChevronRight className="icon" onClick={toggleSideBar}/>}

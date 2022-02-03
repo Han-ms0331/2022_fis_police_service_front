@@ -4,7 +4,6 @@ import CustomMap from "../molecules/CustomMap";
 import {SelectedCenterInfo, SelectedCenterList} from "../../store/SelectedCenterStore";
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
-import { MdGpsFixed } from "react-icons/md";
 import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
 
 

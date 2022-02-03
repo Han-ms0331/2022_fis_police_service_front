@@ -1,13 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Navigation from "../templates/Navigation";
-import {Redirect} from "react-router-dom";
 import CenterManageTemp from "../templates/CenterManageTemp";
-import CustomButton from "../atoms/CustomButton";
 import UserManageTemplate from "../templates/UserManageTemplate";
 import AgentManageTemplate from "../templates/AgentManageTemplate";
-import {useRecoilValue} from "recoil";
-import {isLoginedState} from "../../store/LoginStore";
 
 import {Style} from "../../Style";
 import {
@@ -30,7 +26,6 @@ function ManagePage(props) {
     return (
                 <Main>
                     <Navigation/>
-                    {/*<Container>*/}
                     <TabsUnstyled defaultValue={0}>
                             <TabsList>
                                 <Tab>콜직원관리</Tab>
@@ -42,7 +37,6 @@ function ManagePage(props) {
                             <TabPanel value={2}><CenterManageTemp/></TabPanel>
 
                     </TabsUnstyled>
-                    {/*</Container>*/}
                 </Main>
     );
 

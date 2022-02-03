@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {agent} from "../../store/dummy-data/agent";
 import ListContainer from "../organisms/ListContainer";
 import styled from "styled-components";
 import CustomButton from "../atoms/CustomButton";
 import Box from "@mui/material/Box";
-import UserManageInputForm from "../organisms/UserManageInputForm";
 import Modal from "@mui/material/Modal";
 import AgentManageInputForm from "../organisms/AgentManageInputForm";
 import {Style} from "../../Style";
@@ -23,7 +21,6 @@ import {isLoginedState} from "../../store/LoginStore";
 const AgentManageTemplate = () => {
         const [open, setOpen] = useState(false);
         const [contents, setContents] = useState("");
-        /*const contents = agent;*/
         const headerContent = ["이름", "현장요원코드", "전화번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜", "퇴사 여부"]
         const [currentInfo, setCurrentInfo] = useState({
             agent_id: "",
@@ -132,7 +129,6 @@ const AgentManageTemplate = () => {
             }
             const showErrorMessage = (err) =>{
                 if (err.response.status === 400) {
-                    // alert("이미 있는 현장요원 코드 입니다. 현장 요원 코드를 다시 입력해주세요.")
                     Swal.fire({
                         icon: 'warning',
                         title: '이미 있는 현장요원 코드 입니다.',
@@ -152,7 +148,6 @@ const AgentManageTemplate = () => {
                     setIsLogined(false);
                 }
                 else if (err.response.status === 600) {
-                    // alert("잘못된 주소를 입력하셨습니다. 올바른 주소를 입력해주세요.")
                     Swal.fire({
                         icon: 'warning',
                         title: '잘못된 주소를 입력하셨습니다.',
@@ -162,7 +157,6 @@ const AgentManageTemplate = () => {
                     })
                 }
                 else {
-                    // alert("서버 오류입니다. 잠시 후 재시도 해주세요.")
                     Swal.fire({
                         icon: 'warning',
                         title: '서버 오류입니다.',
@@ -173,7 +167,7 @@ const AgentManageTemplate = () => {
                 }
             }
 
-            if (emptyOrNot() === false && modify == true) {
+            if (emptyOrNot() === false && modify === true) {
                 Swal.fire({
                     icon: "question",
                     title: '수정하시겠습니까?',
@@ -200,20 +194,6 @@ const AgentManageTemplate = () => {
                 })
 
             } else if (emptyOrNot() === false && modify === false) {
-              /*  await axios.post(`http://${NetworkConfig.networkAddress}:8080/agent`, currentInfo, {withCredentials: true})
-                    .then(() => {
-                            Swal.fire({
-                                icon: 'success',
-                                title: '추가되었습니다.',
-                                confirmButtonColor: Style.color2,
-                                confirmButtonText: '확인',
-                            })
-                            showData();
-                            handleClose();
-                        }
-                    ).catch((err) => {
-                       showErrorMessage(err);
-                    })*/
                 Swal.fire({
                     icon: "question",
                     title: '추가하시겠습니까?',

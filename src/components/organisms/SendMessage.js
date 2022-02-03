@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import CustomButton from "../atoms/CustomButton";
-import axios from "axios";
 import {Style} from "../../Style";
-import NetworkConfig from "../../configures/NetworkConfig";
-import {useRecoilState} from "recoil";
-import {Messages} from "../../store/Message";
 
 /*
 날짜: 2022/01/21 1:35 PM
@@ -16,7 +12,6 @@ import {Messages} from "../../store/Message";
 
 const SendMessage = ({setMsgsent,msgsent}) => {
     const [curmsg, setCurmsg] = useState('');
-    const [messages,setMessages] = useRecoilState(Messages);
     let ws;
 
     function openSocket() {

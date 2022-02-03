@@ -2,8 +2,6 @@ import React, {useEffect} from 'react';
 import InputContainer from "../molecules/InputContainer";
 import CustomInput from "../atoms/CustomInput";
 import styled from "styled-components";
-import CustomButton from "../atoms/CustomButton";
-import {Style} from "../../Style";
 
 /*
     날짜: 2022/01/18 3:38 오후
@@ -126,13 +124,5 @@ const Container = styled.div`
   padding: 0;
   font-size: 20px;
 `;
-const BtnContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 550px;
-  &>button{
-    margin: 20px 60px;
-  }
-`;
+
 export default CallInputForm;
