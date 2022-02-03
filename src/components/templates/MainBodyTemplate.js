@@ -14,9 +14,7 @@ import {
 import CustomCalendar from "../atoms/CustomCalendar";
 import AgentContainer from "../organisms/AgentContainer";
 import styled from "styled-components";
-import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
-import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
 import Swal from "sweetalert2";
