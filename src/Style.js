@@ -26,5 +26,6 @@ const colors = {
 export const Style = {
     color1: colors.option1.color1,
     color2: colors.option1.color2,
-    color3: colors.option1.color3
+    color3: colors.option1.color3,
+    font: "OTWelcomeRA"
 };

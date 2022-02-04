@@ -62,7 +62,7 @@ function TimeList({content, setCurrentTime=0, selected, setSelected}) {
             })
     const Content = () => {
         return (
-            <div>
+            <div style={{fontFamily: Style.font}}>
                   {content.a_code} {content.a_name}
               <div style={{display:"flex", justifyContent:"center"}} >
                   <CircleButton name={clickedAgent.a_code+'1'} bgColor={using[0] ? red : green} />

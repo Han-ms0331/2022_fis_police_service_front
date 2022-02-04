@@ -60,6 +60,9 @@ const Tab = styled(TabUnstyled)`
   justify-content: center;
   align-self: flex-end;
   margin-right: 5px;
+  font-family: ${Style.font};
+  font-weight: bolder;
+
 
   &:hover {
     background-color: ${Style.color3};

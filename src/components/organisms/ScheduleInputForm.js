@@ -73,7 +73,7 @@ function ScheduleInputForm(props) {
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="현장요원 특이사항: " inputName="agent_etc" inputType="text" width="420px" rows="3"
+                <InputContainer labelContent={"현장요원 특이사항:"} inputName="agent_etc" inputType="text" width="420px" rows="3"
                                 setValueFunction={handleInputFormChange}/>
             </div>
         </Container>
@@ -89,6 +89,6 @@ const Container = styled.div`
   width: 550px;
   height: 400px;
   padding: 0;
-  font-size: 20px;
+  font-size: 16px;
 `;
 export default ScheduleInputForm;
