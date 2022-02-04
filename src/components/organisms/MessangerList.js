@@ -32,6 +32,7 @@ const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지
         }
         ws.onmessage = (data) => {
             let receivedData = data.data;
+            console.log(receivedData)
             receivedData=receivedData.split(" ");
             const msg = receivedData.slice(0,receivedData.length-3).join(' ');
             const [time,agent,id] = [receivedData[receivedData.length-3],receivedData[receivedData.length-2],receivedData[receivedData.length-1]];

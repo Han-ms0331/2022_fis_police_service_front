@@ -35,7 +35,7 @@ function MainInfoTemplate(props) {
         c_manager: "",
         m_ph: "",
         m_email: "",
-        email_form:"",
+        email_form: "",
         center_etc: "",
         agent_etc: ""
     })
@@ -107,7 +107,7 @@ function MainInfoTemplate(props) {
             c_manager: "",
             m_ph: "",
             m_email: "",
-            email_form:"",
+            email_form: "",
             num: "",
             center_etc: "",
             agent_etc: ""
@@ -122,7 +122,6 @@ function MainInfoTemplate(props) {
             agent_etc: ""
         })
     }, [props.isSelected])
-
 
     /*
         날짜: 2022/01/24 2:12 오후
@@ -234,7 +233,7 @@ function MainInfoTemplate(props) {
                             c_manager: "",
                             m_ph: "",
                             m_email: "",
-                            email_form:"",
+                            email_form: "",
                             num: "",
                             center_etc: "",
                             agent_etc: ""
@@ -294,17 +293,12 @@ function MainInfoTemplate(props) {
             preConfirm: async () => {
                 await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/${center_id}/sendmail`, {withCredentials: true})
                     .then((res) => {
-                        if (res.data.result === "success") {
-                            // alert("메일 전송에 성공하였습니다.")
-                            Swal.fire({
-                                icon: "success",
-                                title: "메일 전송에 성공하였습니다.",
-                                confirmButtonColor: Style.color2,
-                                confirmButtonText: "확인"
-                            })
-                        } else {
-                            // alert("메일 전송에 실패하였습니다. 잠시후에 다시 실행해 주세요.")
-                        }
+                        Swal.fire({
+                            icon: "success",
+                            title: "메일 전송에 성공하였습니다.",
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: "확인"
+                        })
                     })
                     .catch((err) => {
                         if (err.response.status === 401) {
@@ -339,6 +333,8 @@ function MainInfoTemplate(props) {
         작성내용: onClick- 각 버튼들이 클릭되었을 때 실행하는 로직을 담고있음
     */
     const onClick = (e) => {
+        console.log("onclick inside");
+        console.log(e.target.name);
         if (e.target.name === "open") {
             if (callList[0] !== undefined) {
                 let mail = callList[0].m_email.split("@");
@@ -375,18 +371,8 @@ function MainInfoTemplate(props) {
             })
         } else if (e.target.name === "save") {
             onSaveCall();
-        } else if (e.target.name === "add_schedule") {
-            if (clickedAgent.agent_id === undefined) {
-                Swal.fire({
-                    icon: "warning",
-                    title: "현장요원을 선택해주세요.",
-                    confirmButtonText: "확인",
-                    confirmButtonColor: Style.color2
-                });
-            } else {
-                setIsScheduleOpen(true);
-            }
-        } else if (e.target.name === "schedule_save") {
+        }
+         else if (e.target.name === "schedule_save") {
             onSaveSchedule()
 
         } else if (e.target.name === "schedule_cancel") {
@@ -439,7 +425,18 @@ function MainInfoTemplate(props) {
                 <div style={{margin: "30px 0px", display: "flex", justifyContent: "space-around"}}>
                     <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
                                   color={Style.color1}
-                                  backgroundColor={Style.color2} content="일정 추가" fontSize={"25px"} onClick={onClick}/>
+                                  backgroundColor={Style.color2} content="일정 추가" fontSize={"25px"} onClick={() => {
+                        if (clickedAgent.agent_id === undefined) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "현장요원을 선택해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                        } else {
+                            setIsScheduleOpen(true);
+                        }
+                    }}/>
                 </div>
                 <Modal
                     open={isScheduleOpen}
@@ -489,11 +486,11 @@ const Container = styled.div`
     margin-top: 30px;
   }
 `;
-const style = { //모당창 스타일
+const style = { //모딜창 스타일
     position: 'absolute',
     top: '50%',
     left: '50%',
-    height: '750px',
+    height: '600px',
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'background.paper',
     boxShadow: 24,
