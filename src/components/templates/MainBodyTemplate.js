@@ -208,7 +208,7 @@ function MainBodyTemplate(props) {
             </div>
             {
                 selectedLoading ?
-                    <div><CustomSpinner /></div>
+                    <Spinner><CustomSpinner /></Spinner>
                     :
                     isSelected ?
                     <Container>
@@ -245,7 +245,15 @@ function MainBodyTemplate(props) {
 
 const Main = styled.div`
   border-right: 2px solid #eee;
+  position: relative;
 `;
+
+const Spinner = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 42%;
+`
 
 const Container = styled.div`
   display: grid;
