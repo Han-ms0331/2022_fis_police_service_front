@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
 
 :root {
---option-color-1:#FCF6F5;
---option-color-2:#2E3C7E;
+    --option-color-1: #FCF6F5;
+    --option-color-2: #2E3C7E;
+    --font: "OTWelcomeRA";
 }
 
 .react-calendar {
@@ -11,8 +12,11 @@
     border: 2px solid var(--option-color-2);
     /*box-shadow: 3px 3px #dadada;*/
     border-radius: 15px;
-    font-family: 'Noto Sans KR', sans-serif;;
+    /*font-family: 'Noto Sans KR', sans-serif;;*/
+    font-family: var(--font);
+    text-underline: none;
     line-height: 10px;
+
 }
 
 .react-calendar--doubleView {
@@ -73,21 +77,21 @@
     transform: scale(1.25);
 
 }
+
 /*네이게이션 월이 표시되는 부분*/
-.react-calendar__navigation__label{
+.react-calendar__navigation__label {
     font-size: 23px;
+    font-family: var(--font);
 }
 
 /*달을 넘기는 부분*/
 .react-calendar__navigation__next-button,
-.react-calendar__navigation__prev-button
-{
+.react-calendar__navigation__prev-button {
     font-size: 32px;
 }
 
 .react-calendar__navigation__next2-button,
-.react-calendar__navigation__prev2-button
-{
+.react-calendar__navigation__prev2-button {
     display: none;
 }
 
@@ -127,7 +131,7 @@
 
 .react-calendar__month-view__days__day--neighboringMonth {
     color: #8a8a8a;
- }
+}
 
 .react-calendar__year-view .react-calendar__tile,
 .react-calendar__decade-view .react-calendar__tile,
