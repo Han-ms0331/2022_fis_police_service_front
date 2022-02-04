@@ -29,7 +29,6 @@ function List(props) {
                 width: props.width,
                 height: props.height,
                 gridTemplateColumns: props.gridRatio,
-                borderRadius: props.borderRadius,
                 backgroundColor: Object.values(props.contents).includes("퇴사")?Style.color3: Style.color1,
                 opacity: Object.values(props.contents).includes("퇴사")?"0.4": "1"
             }}
