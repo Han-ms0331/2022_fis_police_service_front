@@ -11,7 +11,7 @@ function CallInfoList(props) {
     const {u_name, content} = props;
 
     return (
-        <div className={"info_list"} style={{width: "100%", padding: "1vw", fontSize: "0.7vw"}}>
+        <div className={"info_list"} style={{width: "100%", padding: "10px", fontSize: "17px"}}>
             <div className={"recorder_container"}>
                 <div>기록자</div>
                 <div>{content.user.user_name}</div>

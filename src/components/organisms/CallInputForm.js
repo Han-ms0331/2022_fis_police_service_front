@@ -116,7 +116,7 @@ const Container = styled.div`
   width: 646px;
   height: 530px;
   padding: 0;
-  font-size: 20px;
+  font-size: 15px;
 `;
 
 export default CallInputForm;
