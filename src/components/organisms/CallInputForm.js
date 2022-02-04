@@ -22,13 +22,10 @@ function CallInputForm(props) {
 
     let mail
     if (data !== undefined) {
-        console.log(data.m_email)
         mail = data.m_email.split("@");
         if (mail[1] !== "naver.com" && mail[1] !== "google.com" && mail[1] !== "hanmail.com") {     //사용 mail주소가 미리 입력된 메일이 아닐 경우 직접입력으로 사용
             mail[0] = mail[0] + "@" + mail[1];
             mail[1] = "직접입력"
-        } else {
-            console.log(mail);
         }
     }
     /*
@@ -37,14 +34,15 @@ function CallInputForm(props) {
         작성내용: 현재 입력하는 날짜 세팅
     */
     const date = new Date()
-    const today = date.getFullYear() + '-' + String(Number(date.getMonth()) + 1) + '-' + date.getDate() + "T" + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2);
+    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    let day = ('0' + date.getDate()).slice(-2);
+    const today = date.getFullYear() + '-' + month+ '-' + day + "ㅤ" + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
     useEffect(() => {
         setCurrentInfo({
             ...currentInfo, // 기존의 input 객체를 복사한 뒤
             dateTime: today // name 키를 가진 값을 value 로 설정
         });
     }, [])
-    console.log(data)
     return (
         <Container>
             <div style={{marginBottom: "20px"}}>

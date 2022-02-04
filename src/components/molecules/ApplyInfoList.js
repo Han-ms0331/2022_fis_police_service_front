@@ -9,7 +9,6 @@ import './ApplyInfoList.css'
 
 function ApplyInfoList(props) {
     const {u_name, content} = props;
-    console.log(content.agent)
     return (
         <div className={"apply_info_list"} style={{width: "100%", padding: "1vw", fontSize: "0.7vw"}}>
             <div className={"apply_recorder_container"}>
@@ -21,7 +20,7 @@ function ApplyInfoList(props) {
                     <div style={{textAlign: "start"}}>
                         <div className={"apply_field_container"}>
                             <div className={"apply_field_name"}>현장요원</div>
-                            <div className={"apply_field_value"}>{content.agent.agent_id+content.agent.agent_name}</div>
+                            <div className={"apply_field_value"}>{content.agent.agent_code+content.agent.agent_name}</div>
                         </div>
                         <br/>
                         <div className={"apply_field_container"}>
@@ -36,7 +35,7 @@ function ApplyInfoList(props) {
                         <br/>
                         <div className={"apply_field_container"}>
                             <div className={"apply_field_name"}>방문 예정 시간</div>
-                            <div className={"apply_field_value"}>{content.visit_time}</div>
+                            <div className={"apply_field_value"}>{content.visit_time.slice(0,5)}</div>
                         </div>
                         <br/>
                         <div className={"apply_field_container"}>
@@ -45,7 +44,7 @@ function ApplyInfoList(props) {
                         </div>
                         <br/>
                         <div className={"apply_field_container"}>
-                            <div className={"apply_field_name"}>현장요원 특이사항</div>
+                            <div className={"apply_field_name"}>현장요원 <br/>특이사항</div>
                             <div className={"apply_field_value"}>{content.agent_etc}</div>
                         </div>
                     </div>

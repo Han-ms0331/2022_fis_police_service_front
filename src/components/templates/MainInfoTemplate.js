@@ -486,11 +486,11 @@ const Container = styled.div`
     margin-top: 30px;
   }
 `;
-const style = { //모당창 스타일
+const style = { //모딜창 스타일
     position: 'absolute',
     top: '50%',
     left: '50%',
-    height: '750px',
+    height: '600px',
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'background.paper',
     boxShadow: 24,

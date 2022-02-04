@@ -26,7 +26,11 @@ function CallInfoList(props) {
                         <br/>
                         <div className={"field_container"}>
                             <div className={"field_name"}>연락일자</div>
-                            <div className={"field_value"}>{content.dateTime}</div>
+                            <div className={"field_value"}>{content.dateTime.slice(0,10)}</div>
+                        </div>
+                        <div className={"field_container"}>
+                            <div className={"field_name"}>연락시간</div>
+                            <div className={"field_value"}>{content.dateTime.slice(10)}</div>
                         </div>
                         <br/>
                         <div className={"field_container"}>
