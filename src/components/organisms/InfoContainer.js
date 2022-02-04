@@ -41,12 +41,13 @@ const Container1 = styled.div`
   border-radius: 15px;
   box-shadow: 3px 3px #dadada;
   background-color: ${Style.color1};
-  padding: 1vw;
+  padding: 20px;
   width: 610px;
   text-align: center;
   min-height: 300px;
   max-height: 300px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 `
 
 const Container2 = styled.div`
@@ -57,11 +58,12 @@ const Container2 = styled.div`
   border-radius: 15px;
   box-shadow: 3px 3px #dadada;
   background-color: ${Style.color1};
-  padding: 1vw;
+  padding: 20px;
   width: 610px;
   text-align: center;
   min-height: 350px;
   max-height: 350px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 `
 export default InfoContainer;
