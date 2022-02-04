@@ -9,12 +9,12 @@ import React, {useState} from 'react';
 import TimeList from "./TimeList";
 
 
-function AgentSchedule({content, width, height, loading}) {
+function AgentSchedule({content, width, height}) {
     const [selected, setSelected] = useState(null);
     return (
             <div>
                 {content!==null && content.map(item => {
-                    return <TimeList key={item.agent_id} content={item} setCurrentTime={0} loading={loading} selected={selected} setSelected={setSelected} />;
+                    return <TimeList key={item.agent_id} content={item} setCurrentTime={0} selected={selected} setSelected={setSelected} />;
                 })}
                 {/*Array의 map함수를 통해 요원 스케쥴 데이터를 나열함.*/}
             </div>

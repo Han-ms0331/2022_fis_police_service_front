@@ -5,7 +5,7 @@
     검색 버튼 없이 키워드 입력 시 바로 결과가 나옴. 검색 버튼은 삭제할 예정
 */
 
-import React from 'react';
+import  React from 'react';
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
