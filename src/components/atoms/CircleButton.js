@@ -20,10 +20,10 @@ const Button = styled.div` // css
   border: 0px solid black;
 `;
 
-export default function CircleButton({name, bgColor, handleClick}) { // bgColor로 버튼 색 props 받음.
-    const [bcolor, setBcolor] = useState(bgColor);
+export default function CircleButton(props) { // bgColor로 버튼 색 props 받음.
+    const {name, bgColor, handleClick} = props;
 
-    return (<Button name={name} bgColor={bcolor} onClick={handleClick} ></Button>
+    return (<Button name={name} bgColor={bgColor} onClick={handleClick} ></Button>
                 // 초록색 버튼일 경우 Click Event 활성화
     );
 }
