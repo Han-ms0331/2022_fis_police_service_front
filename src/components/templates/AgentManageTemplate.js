@@ -147,7 +147,7 @@ const AgentManageTemplate = () => {
                     });
                     setIsLogined(false);
                 }
-                else if (err.response.status === 600) {
+                else if (err.response.status === 403) {
                     Swal.fire({
                         icon: 'warning',
                         title: '잘못된 주소를 입력하셨습니다.',
