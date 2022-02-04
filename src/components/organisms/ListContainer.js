@@ -8,7 +8,6 @@ function ListContainer(props) {
         <div style={{
             width: props.width,
             height: props.height,
-            borderRadius: props.borderRadius,
             overflowX: "hidden"
         }}>
             <List type="listHeader" contents={props.headerContents}

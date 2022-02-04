@@ -15,7 +15,7 @@ function CustomInput(props) {
                              multiline
                              size="small"
                              rows={props.rows}
-                             defaultValue={props.defaultValue} placeholder={props.placeholder} disabled={props.disabled}
+                             defaultValue={props.defaultValue} placeholder={props.placeholder}
                              onChange={props.setValueFunction}
                              id="outlined-basic"
                              variant="outlined"/>
