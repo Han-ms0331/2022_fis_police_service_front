@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import CustomButton from "../atoms/CustomButton";
-import axios from "axios";
 import {Style} from "../../Style";
-import NetworkConfig from "../../configures/NetworkConfig";
-import {useRecoilState} from "recoil";
-import {Messages} from "../../store/Message";
 
 /*
 날짜: 2022/01/21 1:35 PM
@@ -16,26 +12,22 @@ import {Messages} from "../../store/Message";
 
 const SendMessage = ({setMsgsent,msgsent}) => {
     const [curmsg, setCurmsg] = useState('');
-    const [messages,setMessages] = useRecoilState(Messages);
     let ws;
 
     function openSocket() {
-        ws = new WebSocket(`ws://localhost:8080/messenger/websocket`);
+        ws = new WebSocket(`ws://${process.env.REACT_APP_IP_ADDRESS}:8080/messenger/websocket`);
         wsEvt();
-        ws.addEventListener('error', (event) =>{
-            console.log(event);
-        })
     }
+
     function wsEvt() {
         ws.onopen = function (data) {
             //소켓이 열리면 초기화 세팅하기
-            // console.log("web socket opened");
+            console.log("web socket opened");
             ws.send(curmsg);
         }
         ws.onmessage = function (data) {
             console.log(data.data);
         }
-
     }
 
     const handleSend = (e) => { /*보내기 버튼을 눌렀을 때 실행되는 함수*/
@@ -51,12 +43,14 @@ const SendMessage = ({setMsgsent,msgsent}) => {
     const handleChange = (e) => { /*메시지를 설정하는 함수*/
         setCurmsg(e.target.value);
     }
-
-    const time = new Date().getHours()+':'+new Date().getMinutes(); // 수정요청사항을 보내는 시간
-
-    // useEffect(()=>{ //메시지 확인
-    //     console.log(curmsg);
-    // },[curmsg])
+    const numFormat = (time)=>{
+        let temp=time;
+        if(time.length==1 && Number(time)<10){
+            temp = "0"+temp;
+        }
+        return temp;
+    }
+    const time = numFormat(new Date().getHours()) +':'+numFormat(new Date().getMinutes()); // 수정요청사항을 보내는 시간
 
     return (
         <Main>

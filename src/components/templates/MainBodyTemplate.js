@@ -8,21 +8,17 @@ import {
     CenterList, CenterLocation,
     SelectedCenterCallList,
     SelectedCenterId,
-    SelectedCenterInfo, SelectedCenterList, SelectedCenterListInfo,
+    SelectedCenterInfo, SelectedCenterList,
     SelectedCenterScheduleList
 } from "../../store/SelectedCenterStore";
 import CustomCalendar from "../atoms/CustomCalendar";
 import AgentContainer from "../organisms/AgentContainer";
 import styled from "styled-components";
-import {searchKeyword} from "../../store/ScheduleSearchKeyword";
-import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
-import NetworkConfig from "../../configures/NetworkConfig";
 import {Style} from "../../Style";
 import {SelectedDateState} from "../../store/SelectedDateStore";
 import Swal from "sweetalert2";
 import CustomSpinner from "../atoms/CustomSpinner";
-import {center} from "../../store/dummy-data/center";
 import {isLoginedState} from "../../store/LoginStore";
 
 function MainBodyTemplate(props) {
@@ -49,12 +45,11 @@ function MainBodyTemplate(props) {
     const [isSearched, setIsSearched] = useState(false);
     const [isEmpty, setIsEmpty] = useState(false);
     const [date, setDate] = useRecoilState(SelectedDateState);
-    const [searchInput, setSearchInput] = useRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         setLoading(true);
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
                 setSelectedAgentInfo(() => res.data.data);
                 setLoading(false);
@@ -81,6 +76,7 @@ function MainBodyTemplate(props) {
     }
 
     useEffect(() => {
+        setClickedAgent({});
         if (selectedCenterId !== "") {
             onData(); // 날짜를 선택한 경우에 함수 실행
         }
@@ -99,7 +95,7 @@ function MainBodyTemplate(props) {
     */
     const onSelect = async (e) => {
         setSelectedLoading(true);
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/select?center_id=${centerList[e.target.getAttribute('name')].center_id}`,{withCredentials:true})
             .then((res) => {
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
                 setSelectedCenterInfo({ //centerInfo에 들어갈 내용 저장(이름, 주소, 전화번호)
@@ -166,7 +162,7 @@ function MainBodyTemplate(props) {
             })
         } else {
             setButtonLoading(true);
-            await axios.get(`http://${NetworkConfig.networkAddress}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address}&c_ph=${currentInfo.c_ph}`, {withCredentials: true})
+            await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
                     setButtonLoading(false);
                     if (res.data.data.length === 0) {

@@ -1,13 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import InputContainer from "../molecules/InputContainer";
-import CheckboxContainer from "../molecules/CheckboxContainer";
 import CustomButton from "../atoms/CustomButton";
-import {Box, Container} from "@mui/material";
 import axios from "axios";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {dateSelectedRows, rowCount} from "../../store/DateSelectedRowsStore";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import Swal from "sweetalert2";
 import {isLoginedState} from "../../store/LoginStore";
 import {userAuthority} from "../../store/LoginStore";
@@ -50,7 +48,7 @@ function ScheduleModifyInputForm(props) {
     const setRows = useSetRecoilState(dateSelectedRows);
     const setIsLogined = useSetRecoilState(isLoginedState)
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule?date=${input.visit_date}`, {withCredentials: true})
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule?date=${input.visit_date}`, {withCredentials: true})
             .then((res) => {
                 setRows(res.data.data);
             })
@@ -88,7 +86,7 @@ function ScheduleModifyInputForm(props) {
             cancelButtonColor: "#e55039",
             preConfirm: async () => {
                 setInput(() => input);
-                await axios.patch(`http://${NetworkConfig.networkAddress}:8080/schedule`, {
+                await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule`, {
                     schedule_id: input.schedule_id,
                     a_code: input.a_code,
                     center_id: input.center_id,
@@ -156,7 +154,7 @@ function ScheduleModifyInputForm(props) {
             showLoaderOnConfirm: true,
             preConfirm: async () => {
                 setInput(() => input);
-                await axios.get(`http://${NetworkConfig.networkAddress}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
+                await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule/cancel?schedule_id=${input.schedule_id}`, {withCredentials: true})
                     .then((res) => {
                             onData();
                             props.onClickFunction();

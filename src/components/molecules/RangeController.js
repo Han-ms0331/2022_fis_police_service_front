@@ -1,6 +1,4 @@
 import React from 'react';
-import CustomLabel from "../atoms/CustomLabel";
-import CustomButton from "../atoms/CustomButton";
 import {Style} from "../../Style";
 import {
     buttonUnstyledClasses,
@@ -10,9 +8,6 @@ import {
     TabUnstyled,
     tabUnstyledClasses
 } from "@mui/material";
-import UserManageTemplate from "../templates/UserManageTemplate";
-import AgentManageTemplate from "../templates/AgentManageTemplate";
-import CenterManageTemp from "../templates/CenterManageTemp";
 import styled from "styled-components";
 
 /*
@@ -36,6 +31,7 @@ function RangeController(props) {
 
             <TabsUnstyled defaultValue={0} style={{zIndex: 3}}>
                 <TabsList>
+                    <Tab onClick={props.onClickFunc}>Remove</Tab>
                     <Tab onClick={props.onClickFunc}>250m</Tab>
                     <Tab onClick={props.onClickFunc}>500m</Tab>
                     <Tab onClick={props.onClickFunc}>1km</Tab>

@@ -1,3 +1,9 @@
+/*
+    작성시간: 2022/02/03 3:19 PM
+    이름: 이창윤
+    작성내용: MUI Modal 사용
+*/
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -5,7 +11,6 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ScheduleModifyInputForm from "./ScheduleModifyInputForm";
 import CustomButton from "../atoms/CustomButton";
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     modal: {

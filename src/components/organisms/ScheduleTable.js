@@ -8,8 +8,7 @@
 
 import React, {useCallback, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,20 +18,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableHead from "@mui/material/TableHead";
 import ScheduleTableSearch from "../molecules/ScheduleTableSearch";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {useRecoilValue} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import TransitionsModal from "./TransitionModal";
-import CustomButton from "../atoms/CustomButton";
-import CheckboxContainer from "../molecules/CheckboxContainer";
-import {FormControlLabel, lighten, Switch, TableSortLabel} from "@mui/material";
-import axios from "axios";
-import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
+import {TableSortLabel} from "@mui/material";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Spinner = () => {
     return <ClipLoader height="32" width="160" color="#2E3C7E" radius="8" />;
 };
-
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -63,14 +57,14 @@ function stableSort(array, comparator) {
 // MUI 정렬 기능
 
 const headCells = [
-    { id: 'index', numeric: false, disablePadding: true, label: 'No.' },
-    { id: 'a_code', numeric: true, disablePadding: false, label: '현장요원' },
-    { id: 'c_name', numeric: true, disablePadding: false, label: '시설정보' },
-    { id: 'total_etc', numeric: true, disablePadding: false, label: '특이사항' },
-    { id: 'modified_info', numeric: true, disablePadding: false, label: '변경 사항' },
-    { id: 'call_check', numeric: true, disablePadding: false, label: '통화 이력' },
+    { id: 'index', numeric: false, disablePadding: true, label: 'No.', sortLabel: false },
+    { id: 'a_code', numeric: true, disablePadding: false, label: '현장요원', sortLabel: true },
+    { id: 'c_name', numeric: true, disablePadding: false, label: '시설정보', sortLabel: true },
+    { id: 'total_etc', numeric: true, disablePadding: false, label: '특이사항', sortLabel: true },
+    { id: 'modified_info', numeric: true, disablePadding: false, label: '변경 사항', sortLabel: true },
+    { id: 'call_check', numeric: true, disablePadding: false, label: '통화 이력', sortLabel: true },
     // { id: 'notice', numeric: true, disablePadding: false, label: '일정 공지' },
-    { id: 'edit', numeric: true, disablePadding: false, label: '' },
+    { id: 'edit', numeric: true, disablePadding: false, label: '', sortLabel: false },
 ];
 
 // 테이블 헤더 정보
@@ -113,12 +107,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// 테이블 Style 정의
 
-export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColor, headerFontColor, loading }) {
+export default function ScheduleTable(props) {
+    const { rows, headerColor, bodyColor, buttonColor, headerFontColor, loading } = props;
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
     let count = rows.length;
-    const [r, setR] = useRecoilState(dateSelectedRows);
-
 
     useEffect( () => {
         setPage(0);
@@ -138,18 +132,12 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     const ScheduleList = (row, index) => { // Schedule List를 띄워주는 함수
         // const isItemSelected = isSelected(row.No);
         const labelId = `enhanced-table-checkbox-${index}`;
-        // setR((prev) => ({
-        //     ...prev,
-        //     ['No'] = 100
-        // }))
         return (
             <TableRow
                 hover
                 role="checkbox"
-                // aria-checked={isItemSelected}
                 tabIndex={-1}
                 key={row.schedule_id}
-                // selected={isItemSelected}
             >
                 <TableCell style={{ width:'2%'}} padding="checkbox">
                     <input
@@ -192,7 +180,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
 
     const handleFilter = (el) => { // 검색 키워드 필터링해주는 함수
         return (
-            (el.a_name !== null ? el.a_name.includes(keywordProps.a_name) : keywordProps.a_name === "") && // No 검색 필터 구현해야함
+            (el.a_name !== null ? el.a_name.includes(keywordProps.a_name) : keywordProps.a_name === "") &&
             (el.c_name !== null ?
                 (el.c_name.includes(keywordProps.c_name) ||
                 el.c_address.includes(keywordProps.c_name) ||
@@ -270,7 +258,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     );
 
     function EnhancedTableHead(props) { // 테이블 헤더 컴포넌트 (전체 선택용 체크박스 기능)
-        const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+        const { classes, order, orderBy, onRequestSort } = props;
         const createSortHandler = (property) => (event) => {
             onRequestSort(event, property);
         };
@@ -312,20 +300,25 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                             padding={headCell.disablePadding ? 'none' : 'normal'}
                             sortDirection={orderBy === headCell.id ? order : false}
                         >
-                            <TableSortLabel
-                                active={orderBy === headCell.id}
-                                classes={{ root: classes.root, active: classes.active, icon: classes.icon}}
-                                direction={orderBy === headCell.id ? order : 'asc'}
-                                onClick={createSortHandler(headCell.id)}
-                                style={{ color: '#fff', alignContent: 'center' }}
-                            >
-                                {headCell.label}
-                                {orderBy === headCell.id ? (
-                                    <span className={classes.visuallyHidden}>
+                            {headCell.sortLabel ? // SortLabel true이면 정렬 버튼 활성화 false이면 그냥 텍스트
+                                <TableSortLabel
+                                    active={orderBy === headCell.id}
+                                    classes={{ root: classes.root, active: classes.active, icon: classes.icon}}
+                                    direction={orderBy === headCell.id ? order : 'asc'}
+                                    onClick={createSortHandler(headCell.id)}
+                                    style={{ color: '#fff', alignContent: 'center' }}
+                                >
+                                    {headCell.label}
+                                    {orderBy === headCell.id ? (
+                                        <span className={classes.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </span>
-                                ) : null}
-                            </TableSortLabel>
+                                    ) : null}
+                                </TableSortLabel>
+                                :
+                                headCell.label
+                            }
+
                         </TableCell>
                     ))}
                 </TableRow>
@@ -335,9 +328,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
 
     EnhancedTableHead.propTypes = {
         classes: PropTypes.object.isRequired,
-        numSelected: PropTypes.number.isRequired,
         onRequestSort: PropTypes.func.isRequired,
-        onSelectAllClick: PropTypes.func.isRequired,
         order: PropTypes.oneOf(['asc', 'desc']).isRequired,
         orderBy: PropTypes.string.isRequired,
         rowCount: PropTypes.number.isRequired,
@@ -347,9 +338,7 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
     const classes = useStyles(colorVariable);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
-    const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleRequestSort = (event, property) => {
@@ -357,37 +346,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
-
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
-
-    // MUI에 있는 체크박스 선택 기능 함수들 - 사용하지 않음
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -400,14 +358,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
 
     // 페이지 변경 함수, 페이지 하나 당 row 개수 변경 함수
 
-    const handleChangeDense = (event) => { // 간격 붙이는 DensePadding 기능
-        setDense(event.target.checked);
-    };
-
-
-    const isSelected = (name) => selected.indexOf(name) !== -1;
-
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     return (
         <div className={classes.root} style={{margin: '15px'}}>
@@ -416,16 +366,14 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+                        size='medium'
                         aria-label="enhanced table"
                     >
                         <ScheduleTableSearch />
                         <EnhancedTableHead
                             classes={classes}
-                            numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick} // 사용하지 않는 기능
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
@@ -445,11 +393,6 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                                     :
                                     showList()
                                 }
-                                {/*{emptyRows > 0 && (*/}
-                                {/*    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>*/}
-                                {/*        <TableCell colSpan={6} />*/}
-                                {/*    </TableRow>*/}
-                                {/*)}*/}
                             </TableBody>
                         }
                     </Table>
@@ -471,9 +414,16 @@ export default function ScheduleTable({ rows, headerColor, bodyColor, buttonColo
                         {/*    />*/}
                         {/*</div>*/}
                         <TablePagination
-                            rowsPerPageOptions={[10, 25]}
+                            size='large'
+                            rowsPerPageOptions={[{value: 10, label: '10개 보기'}, {value: 25, label: '25개 보기'}]}
                             component="div"
                             count={count}
+                            showFirstButton={true}
+                            showLastButton={true}
+                            labelDisplayedRows={({from, to, count}) => {
+                                return `총 ${count !== -1 ? count : `more than ${to}`}개 결과 중 ${from}–${to}`
+                            }}
+                            labelRowsPerPage="페이지당 줄 개수: "
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}

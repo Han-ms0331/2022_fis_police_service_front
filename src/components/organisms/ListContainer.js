@@ -1,7 +1,5 @@
 import React from 'react';
 import List from "../molecules/List";
-import InputContainer from "../molecules/InputContainer";
-import CustomButton from "../atoms/CustomButton";
 import CustomSpinner from "../atoms/CustomSpinner";
 
 function ListContainer(props) {

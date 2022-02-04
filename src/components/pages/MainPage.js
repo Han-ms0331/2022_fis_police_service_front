@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import Navigation from "../templates/Navigation";
-import {Redirect} from "react-router-dom";
 import MainInfoTemplate from "../templates/MainInfoTemplate";
 import MainBodyTemplate from "../templates/MainBodyTemplate";
 

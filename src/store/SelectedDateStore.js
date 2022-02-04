@@ -1,4 +1,4 @@
-import {atom, selector} from "recoil";
+import {atom} from "recoil";
 
 /*
     날짜: 2022/01/24 1:19 오후

@@ -10,16 +10,6 @@ import styled from "styled-components";
 import {Style} from "../../Style";
 import question from "../media/question.png";
 import {ClipLoader} from "react-spinners";
-import {createStyles} from "@mui/material";
-
-const styles = createStyles({
-    button: {
-        // main styles,
-        "&:focus": {
-            color: "red"
-        }
-    }
-});
 
 function AgentContainer({content= null, width=266, height=400, loading}) {
     // content - 요원 정보가 담긴 배열을 받음. width와 height으로 컨테이너 크기 조절..
@@ -36,7 +26,7 @@ function AgentContainer({content= null, width=266, height=400, loading}) {
                         content === null ?
                     <div style={{ marginTop: 110 }}>
                         <p style={{ fontSize: 20, fontWeight: 300, color: 'grey' }}>날짜를 선택해 주세요!</p>
-                        <img style={{ width: 70, height: 70 }} src={question} alt={'?'}></img>
+                        <img style={{ width: 70, height: 70 }} src={question} alt={'?'} />
                     </div>
                     :
                     <AgentSchedule content={content} width={width} height={height} loading={loading} />

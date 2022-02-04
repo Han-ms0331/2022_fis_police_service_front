@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import InputContainer from "../molecules/InputContainer";
-import CustomInput from "../atoms/CustomInput";
 import {useRecoilValue} from "recoil";
-import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
+import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
 import {SelectedDateState} from "../../store/SelectedDateStore";
 import styled from "styled-components";
 
@@ -20,11 +19,11 @@ function ScheduleInputForm(props) {
 
     const handleInputFormChange = (e) => {
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
-            setCurrentInfo({
-                ...currentInfo, // 기존의 input 객체를 복사한 뒤
-                [name]: value // name 키를 가진 값을 value 로 설정
-            });
-        }
+        setCurrentInfo({
+            ...currentInfo, // 기존의 input 객체를 복사한 뒤
+            [name]: value // name 키를 가진 값을 value 로 설정
+        });
+    }
 
     /*
         날짜: 2022/01/18 3:38 오후
@@ -32,14 +31,16 @@ function ScheduleInputForm(props) {
         작성내용: 현재 입력하는 날짜 세팅
     */
     const date = new Date()
-    const today = date.getFullYear() + '-' + date.getMonth() + 1 + '-' + date.getDate()
-    useEffect(()=>{
+    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    let day = ('0' + date.getDate()).slice(-2);
+    const today = date.getFullYear() + '-' + month + '-' + day
+    useEffect(() => {
         setCurrentInfo({
             ...currentInfo,
             receipt_date: today,
-            visit_date: selectedDate.getFullYear()+"-"+selectedDate.getMonth()+1+"-"+selectedDate.getDate()
+            visit_date: selectedDate.getFullYear() + "-" + ('0' + (selectedDate.getMonth() + 1)).slice(-2) + "-" + ('0' + selectedDate.getDate()).slice(-2)
         });
-    },[])
+    }, [])
 
     return (
         <Container>
@@ -53,8 +54,9 @@ function ScheduleInputForm(props) {
                                 defaultValue={today} disabled={true} setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
-                <InputContainer labelContent="방문 예정 일자: " marginLeft="20px"inputName="visit_date" inputType="text" width="200px" row="1"
-                                defaultValue={selectedDate.getFullYear()+"-"+selectedDate.getMonth()+1+"-"+selectedDate.getDate()}
+                <InputContainer labelContent="방문 예정 일자: " marginLeft="20px" inputName="visit_date" inputType="text"
+                                width="200px" row="1"
+                                defaultValue={selectedDate.getFullYear() + "-" + ('0' + (selectedDate.getMonth() + 1)).slice(-2) + "-" + ('0' + selectedDate.getDate()).slice(-2)}
                                 disabled={true} setValueFunction={handleInputFormChange}
                 />
             </div>
@@ -77,6 +79,7 @@ function ScheduleInputForm(props) {
         </Container>
     );
 }
+
 //style
 
 const Container = styled.div`
@@ -84,7 +87,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: start;
   width: 550px;
-  height: 530px;
+  height: 400px;
   padding: 0;
   font-size: 20px;
 `;

@@ -18,24 +18,12 @@ const Button = styled.div` // css
   width: 20px;
   height: 20px;
   border: 0px solid black;
-  //&:hover {
-  //  transform: scale(1.1);
-  //  cursor: pointer;
-  //}
-  //&:active {
-  //  box-shadow: 0px 0px 0 rgb(0, 0, 0, 0.5);
-  //  position: relative;
-  //  top: 1px;
-  //}
-  //&:focus {
-  //  background-color: orange;
-  //}
 `;
 
-export default function CircleButton({name, bgColor, handleClick}) { // bgColor로 버튼 색 props 받음.
-    const [bcolor, setBcolor] = useState(bgColor);
+export default function CircleButton(props) { // bgColor로 버튼 색 props 받음.
+    const {name, bgColor, handleClick} = props;
 
-    return (<Button name={name} bgColor={bcolor} onClick={handleClick} ></Button>
+    return (<Button name={name} bgColor={bgColor} onClick={handleClick} ></Button>
                 // 초록색 버튼일 경우 Click Event 활성화
     );
 }
