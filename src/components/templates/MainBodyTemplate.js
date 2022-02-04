@@ -110,7 +110,7 @@ function MainBodyTemplate(props) {
                 setSelectedCenterCallList(res.data.data.callList.reverse())//callList에서 뜰 리스트 저장
                 setSelectedCenterScheduleList(res.data.data.scheduleList.reverse())//scheduleList에서 뜰 내용 저장
                 setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
-                setSelectedCenterList(res.data.data.ceterList);
+                setSelectedCenterList(res.data.data.centerList);
                 setClickedAgent({});
                 setIsSelected(true);
                 setSelectedLoading(false);
