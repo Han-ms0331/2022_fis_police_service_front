@@ -140,7 +140,8 @@ const UserManageTemplate = () => {
                     // alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
                     Swal.fire({
                         icon: 'warning',
-                        title: '이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.',
+                        title: '이미 있는 아이디입니다.',
+                        text: '다시 입력해주시길 바랍니다.',
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
