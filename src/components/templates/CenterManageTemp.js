@@ -56,11 +56,21 @@ function CenterManageTemp(props) {
                     setIsEmpty(true);
                 } else {
                     let tmp = [];
+                    let a;
                     res.data.data.forEach((list) => {
+                        if(list.participation === "PARTICIPATION"){
+                           a = "참여"
+                        } else if(list.participation === "REJECT"){
+                            a = "거부"
+                        }else if(list.participation === "HOLD"){
+                            a = "보류"
+                        }else{
+                           a = "없음"
+                        }
                         tmp.push({
                             center_id: list.center_id,
                             c_name: list.c_name,
-                            participation: list.participation,
+                            participation: a,
                             c_ph: list.c_ph,
                             c_address: list.c_address
                         })
