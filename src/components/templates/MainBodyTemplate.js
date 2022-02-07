@@ -164,12 +164,13 @@ function MainBodyTemplate(props) {
             setButtonLoading(true);
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
+                    console.log(res.data);
                     setButtonLoading(false);
                     if (res.data.data.length === 0) {
                         setIsSearched(true);
                         setIsEmpty(true);
                     } else {
-
+                        setIsEmpty(false);
                         setCenterList(res.data.data);
                         setIsSelected(false);
                         setIsSearched(true);

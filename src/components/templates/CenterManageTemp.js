@@ -53,7 +53,6 @@ function CenterManageTemp(props) {
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
                 if(res.data.data.length === 0){
-
                     setIsEmpty(true);
                 } else {
                     let tmp = [];

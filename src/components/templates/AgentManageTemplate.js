@@ -202,6 +202,7 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
+                        console.log(currentInfo);
                         await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
                             .then((res) => {
                                 Swal.fire({
