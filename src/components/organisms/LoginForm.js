@@ -5,6 +5,7 @@ import {BiUser} from "react-icons/bi";
 import {RiLockPasswordLine} from "react-icons/ri"
 import CustomButton from "../atoms/CustomButton";
 import {Style} from "../../Style";
+import {ClipLoader} from "react-spinners";
 
 /*
     날짜: 2022/01/11 10:44 오전
@@ -31,7 +32,7 @@ const LoginForm = (props) => {
                         <input name="u_pwd" id="password" type="password" placeholder="비밀번호" onChange={props.onChangeFunction}/>
                     </InputRow>
                     <CustomButton type="normal" width="100%" height="40px" backgroundColor={Style.color2}
-                    color={Style.color1} borderRadius={"10px"} content={"로그인"} submitType={"submit"}/>
+                    color={Style.color1} borderRadius={"10px"} content={props.loading ? <ClipLoader color='#495ec4' /> : "로그인"} submitType={"submit"}/>
                 </form>
             </Container>
         </Main>

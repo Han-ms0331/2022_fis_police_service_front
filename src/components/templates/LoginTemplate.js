@@ -21,6 +21,7 @@ function LoginTemplate(props) {
 
     const [isLogined, setIsLogined] = useRecoilState(isLoginedState);
     const [authority, setAuthority] = useRecoilState(userAuthority);
+    const [loading, setLoading] = useState(null);
 
     const handleInputFormChange = (e) => {
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
@@ -38,9 +39,10 @@ function LoginTemplate(props) {
 
     const onLogin = async (e) => {   //서버와 로그인 통신을 하는 부분
         e.preventDefault();
+        setLoading(true);
         await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/login`, loginInfo, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
             .then((res) => {
-                setAuthority(res.data.u_auth); // user 권한을 설정
+                setAuthority(res.data.u_auth); // user 권한을 설정x
                 if (res.data.sc === "success") {   //로그인 결과가 실패가 아니라면
                     setIsLogined(true);     //setIsLogined를 true로 바꾸고
                     localStorage.setItem("login-state", "true");    //localStorage에 login-state를 true로 저장함
@@ -63,13 +65,14 @@ function LoginTemplate(props) {
                         confirmButtonText: '확인',
                     })
                 }
+                setLoading(false);
             })
     }
 
 
     return (
         <div>
-            <LoginForm onClickFunction={onLogin} onChangeFunction={handleInputFormChange}/>
+            <LoginForm onClickFunction={onLogin} onChangeFunction={handleInputFormChange} loading={loading}/>
         </div>
     );
 }
