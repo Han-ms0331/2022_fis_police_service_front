@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
@@ -38,12 +38,13 @@ function CenterManageTemp(props) {
         center_id: "",
         c_name: "",
         c_ph: "",
-        c_address: ""
+        c_address: "",
+        participation: ""
     })
 
     //정보 수정 버튼 눌렀을 때는 true로, 시설 추가 눌렀을 때는 false로 set하는 modify 상태에 대한 정의
     const [modify, setModify] = useState();
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const setIsLogined = useSetRecoilState(isLoginedState)
 
 
@@ -52,20 +53,20 @@ function CenterManageTemp(props) {
     async function apiGetCall(c_name, c_address, c_ph) {
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
-                if(res.data.data.length === 0){
+                if (res.data.data.length === 0) {
                     setIsEmpty(true);
                 } else {
                     let tmp = [];
                     let a;
                     res.data.data.forEach((list) => {
-                        if(list.participation === "PARTICIPATION"){
-                           a = "참여"
-                        } else if(list.participation === "REJECT"){
+                        if (list.participation === "PARTICIPATION") {
+                            a = "참여"
+                        } else if (list.participation === "REJECT") {
                             a = "거부"
-                        }else if(list.participation === "HOLD"){
+                        } else if (list.participation === "HOLD") {
                             a = "보류"
-                        }else{
-                           a = "없음"
+                        } else {
+                            a = "없음"
                         }
                         tmp.push({
                             center_id: list.center_id,
@@ -91,7 +92,7 @@ function CenterManageTemp(props) {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
-                }else{
+                } else {
                     Swal.fire({
                         icon: "warning",
                         title: "서버오류입니다.",
@@ -161,6 +162,7 @@ function CenterManageTemp(props) {
         handleOpen();
     }
 
+
 // inputForm에서 저장버튼 눌렀을 때에 대한 함수 정의
     const handleClickSave = async () => {
         const emptyOrNot = () => {
@@ -191,7 +193,12 @@ function CenterManageTemp(props) {
                 cancelButtonText: '취소',
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
-                    await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center`, currentInfo, {withCredentials: true})
+                    await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center`, {
+                        center_id: currentInfo.center_id,
+                        c_name: currentInfo.c_name,
+                        c_ph: currentInfo.c_ph,
+                        c_address: currentInfo.c_address
+                    }, {withCredentials: true})
                         .then((res) => {
                             const {c_name, c_address, c_ph} = searchInput;
                             apiGetCall(c_name, c_address, c_ph);
@@ -212,7 +219,7 @@ function CenterManageTemp(props) {
                                     confirmButtonColor: Style.color2
                                 });
                                 setIsLogined(false);
-                            }else{
+                            } else {
                                 Swal.fire({
                                     icon: "warning",
                                     title: "서버오류입니다.",
@@ -257,7 +264,7 @@ function CenterManageTemp(props) {
                                     confirmButtonColor: Style.color2
                                 });
                                 setIsLogined(false);
-                            }else{
+                            } else {
                                 Swal.fire({
                                     icon: "warning",
                                     title: "서버오류입니다.",
