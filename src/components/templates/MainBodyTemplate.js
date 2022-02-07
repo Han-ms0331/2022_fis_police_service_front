@@ -164,12 +164,13 @@ function MainBodyTemplate(props) {
             setButtonLoading(true);
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address} &c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
+                    console.log(res.data);
                     setButtonLoading(false);
                     if (res.data.data.length === 0) {
                         setIsSearched(true);
                         setIsEmpty(true);
                     } else {
-
+                        setIsEmpty(false);
                         setCenterList(res.data.data);
                         setIsSelected(false);
                         setIsSearched(true);
@@ -208,7 +209,7 @@ function MainBodyTemplate(props) {
             </div>
             {
                 selectedLoading ?
-                    <div><CustomSpinner /></div>
+                    <Spinner><CustomSpinner /></Spinner>
                     :
                     isSelected ?
                     <Container>
@@ -245,7 +246,15 @@ function MainBodyTemplate(props) {
 
 const Main = styled.div`
   border-right: 2px solid #eee;
+  position: relative;
 `;
+
+const Spinner = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 42%;
+`
 
 const Container = styled.div`
   display: grid;

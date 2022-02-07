@@ -1,3 +1,7 @@
+:root{
+    --font: "OTWelcomeRA";
+}
+
 .swal2-container {
     position: fixed;
     left: 0;
@@ -5,6 +9,7 @@
     top: 0;
     bottom: 0;
     z-index: 3;
+    font-family: var(--font);
 }
 
 .swal2-popup {
@@ -14,4 +19,9 @@
     text-align: center;
     position: fixed;
     z-index: 3;
+}
+
+.swal2-styled.swal2-confirm,
+.swal2-styled.swal2-cancel{
+    font-family: var(--font);
 }

@@ -15,7 +15,7 @@ import NetworkConfig from "../../configures/NetworkConfig";
 작성내용:
 message msw 작업 완료
 */
-const MessangerList = ({msgsent}) => { //관리자 페이지에 뜨는 메시지 리스트
+const MessangerList = () => { //관리자 페이지에 뜨는 메시지 리스트
     let ws;
     const containerRef = useRef();
     const [messages,setMessages]=useState([]); //렌더링될 때 빈 배열로 초기화됨.

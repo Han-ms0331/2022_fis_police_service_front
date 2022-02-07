@@ -24,20 +24,20 @@ import {
 function ManagePage(props) {
 
     return (
-                <Main>
-                    <Navigation/>
-                    <TabsUnstyled defaultValue={0}>
-                            <TabsList>
-                                <Tab>콜직원관리</Tab>
-                                <Tab>현장요원관리</Tab>
-                                <Tab>시설정보수정</Tab>
-                            </TabsList>
-                            <TabPanel value={0}><UserManageTemplate/></TabPanel>
-                            <TabPanel value={1}><AgentManageTemplate/></TabPanel>
-                            <TabPanel value={2}><CenterManageTemp/></TabPanel>
+        <Main>
+            <Navigation/>
+            <TabsUnstyled defaultValue={0}>
+                <TabsList>
+                    <Tab>콜직원관리</Tab>
+                    <Tab>현장요원관리</Tab>
+                    <Tab>시설정보수정</Tab>
+                </TabsList>
+                <TabPanel value={0}><UserManageTemplate/></TabPanel>
+                <TabPanel value={1}><AgentManageTemplate/></TabPanel>
+                <TabPanel value={2}><CenterManageTemp/></TabPanel>
 
-                    </TabsUnstyled>
-                </Main>
+            </TabsUnstyled>
+        </Main>
     );
 
 }
@@ -56,7 +56,6 @@ const Main = styled.div`
 const Tab = styled(TabUnstyled)`
   color: ${Style.color2};
   cursor: pointer;
-  font-weight: bold;
   background-color: ${Style.color1};
   width: 150px;
   padding: 12px 16px;
@@ -65,6 +64,9 @@ const Tab = styled(TabUnstyled)`
   display: flex;
   justify-content: center;
   align-self: flex-end;
+  font-family: ${Style.font};
+  font-weight: bolder;
+
 
   &:hover {
     background-color: ${Style.color3};
@@ -95,7 +97,6 @@ const TabsList = styled(TabsListUnstyled)`
   padding-left: 10px;
   margin-bottom: 30px;
 `;
-
 
 
 export default ManagePage;

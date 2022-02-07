@@ -8,6 +8,9 @@ import {isLoginedState, userAuthority} from "./store/LoginStore";
 import axios from "axios";
 import NetworkConfig from "./configures/NetworkConfig";
 import {useEffect} from "react";
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {Style} from "./Style";
+
 
 function App() {
     /*
@@ -46,21 +49,28 @@ function App() {
     };
     useEffect(() => {
         LoginStateInitialization();
-    },[])
+    }, [])
 
     return (
-        <div className="App">
-            {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
-            <Switch>
-                <Route exact path="/login" component={ThisLoginPage}/>
-                <Route exact path="/main" component={MainPage}/>
-                <Route exact path="/schedule" component={SchedulePage}/>
-                <Route exact path="/manage">
-                    {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}
-                </Route>
-            </Switch>
-        </div>
+        <ThemeProvider theme={THEME}>
+            <div className="App">
+                {isLogined ? <Redirect to={"/main"}/> : <Redirect to={"/login"}/>}
+                <Switch>
+                    <Route exact path="/login" component={ThisLoginPage}/>
+                    <Route exact path="/main" component={MainPage}/>
+                    <Route exact path="/schedule" component={SchedulePage}/>
+                    <Route exact path="/manage">
+                        {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}
+                    </Route>
+                </Switch>
+            </div>
+        </ThemeProvider>
     );
 }
 
+const THEME = createTheme({
+    typography: {
+        "fontFamily": Style.font,
+    }
+})
 export default App;

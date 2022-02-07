@@ -11,17 +11,15 @@ import styled from 'styled-components';
 */
 
 const ScheduleBody = ({loading}) => {
-    const resultRows = useRecoilValue(dateSelectedRows);
     const backgroundColor = Style.color2;
     const backgroundColor2 = Style.color1;
     const backgroundColor3 = Style.color2;
     const fontColor = 'white';
 
-
-
     return (
         <Container>
-            <ScheduleTable headerColor={backgroundColor} headerFontColor={fontColor} bodyColor={backgroundColor2} buttonColor={backgroundColor3} rows={resultRows} loading={loading}/>
+            <ScheduleTable headerColor={backgroundColor} headerFontColor={fontColor} bodyColor={backgroundColor2}
+                           buttonColor={backgroundColor3} loading={loading}/>
             {/*테이블 헤더 색깔 여기에 넣으면 됩니다.*/}
         </Container>
     );

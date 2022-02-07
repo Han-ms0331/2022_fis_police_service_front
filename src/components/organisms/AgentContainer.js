@@ -20,7 +20,7 @@ function AgentContainer({content= null, width=266, height=400, loading}) {
                 {
                     loading ?
                         <div style={{ marginTop: 145 }} >
-                            <ClipLoader color={Style.color2} />
+                            <ClipLoader color="rgba(46, 60, 126,0.3)" />
                         </div>
                         :
                         content === null ?
@@ -29,7 +29,7 @@ function AgentContainer({content= null, width=266, height=400, loading}) {
                         <img style={{ width: 70, height: 70 }} src={question} alt={'?'} />
                     </div>
                     :
-                    <AgentSchedule content={content} width={width} height={height} loading={loading} />
+                    <AgentSchedule content={content} width={width} height={height} />
                 }
             </center>
         </Container>
