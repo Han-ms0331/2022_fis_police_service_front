@@ -170,8 +170,20 @@ function MainBodyTemplate(props) {
                         setIsSearched(true);
                         setIsEmpty(true);
                     } else {
+                        let buffer = res.data.data
+                        res.data.data.map((o,i) => {
+                            if(o.participation === "PARTICIPATION"){
+                                buffer[i].participation = "참여"
+                            } else if(o.participation === "REJECT"){
+                                buffer[i].participation = "거부"
+                            }else if(o.participation === "HOLD"){
+                                buffer[i].participation = "보류"
+                            }else{
+                                buffer[i].participation = "없음"
+                            }
+                        })
                         setIsEmpty(false);
-                        setCenterList(res.data.data);
+                        setCenterList(buffer);
                         setIsSelected(false);
                         setIsSearched(true);
                     }
