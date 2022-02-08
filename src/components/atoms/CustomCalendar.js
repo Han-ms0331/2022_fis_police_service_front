@@ -31,6 +31,6 @@ const CustomCalendar = ({setDate}) => {
     );
 };
 const Container = styled.div`
-width: 280px;
+width: 300px;
 `;
 export default CustomCalendar;

@@ -32,7 +32,8 @@ const MessangerContainer = () => {
 const Announcement = styled.div`
   //background: #F8EFBA;
   background: ${Style.color1};
-  width: 262px;
+  width: 300px;
+  box-sizing: border-box;
   margin: 10px 0;
   border-radius: 10px;
   padding: 3px 7px;
