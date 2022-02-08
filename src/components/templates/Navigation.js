@@ -101,7 +101,7 @@ const Navigation = () => {
 //style
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 345px auto;
+  grid-template-rows: 380px auto;
   border-right: 2px solid #eee;
   padding: 0px;
 
@@ -121,7 +121,7 @@ const Upper = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   justify-self: center;
-  margin-top: 50px;
+  margin-top: 70px;
 `;
 
 const Bottom = styled.div`

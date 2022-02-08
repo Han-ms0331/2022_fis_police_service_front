@@ -38,8 +38,8 @@ const SchedulePage = (props) => {
 // ===========style===========
 const Main = styled.div`
   display: grid;
-  grid-template-columns: ${(props)=>props.isSidebarOpen===true?'67px 320px auto':'67px 0px auto'};
-  height: 100vh;
+  grid-template-columns: ${(props)=>props.isSidebarOpen===true?'67px 350px auto':'67px 0px auto'};
+  min-height: 100vh;
   transition: 1s;
   & .sidebar{ //Sidebar
     border-right: ${(props)=> props.isSidebarOpen===true?'2px solid #eee':'none'};

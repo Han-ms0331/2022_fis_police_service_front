@@ -216,7 +216,7 @@ function MainBodyTemplate(props) {
 
     return (
         <Main>
-            <div style={{width: "100%", margin: "30px 0px 40px 75px"}}>
+            <div style={{width: "100%", margin: "30px 0px 40px 90px"}}>
                 <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange} loading={buttonLoading}/>
             </div>
             {
@@ -270,7 +270,7 @@ const Spinner = styled.div`
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 320px auto;
+  grid-template-columns: 350px auto;
 `;
 
 const Left = styled.div`

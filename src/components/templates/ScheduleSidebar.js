@@ -40,6 +40,7 @@ const ScheduleSidebar = ({ setLoading }) => {
     const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`;
     const setRows = useSetRecoilState(dateSelectedRows); // 날짜를 선택하기 전인 경우이므로 맨 처음 여기서 default로 dateSelectedRows에 오늘 날짜의 Rows를 설정해줘야한다. -> onChange에 넣지말고 useEffect?
     const setIsLogined = useSetRecoilState(isLoginedState)
+
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         setLoading(true);
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule?date=${visit_date}`, {withCredentials: true})
@@ -103,18 +104,8 @@ const ScheduleSidebar = ({ setLoading }) => {
 };
 
 // style
-const Items = styled.div` //sidebar를 담는 컨테이너
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 35px;
-  &> div{
-    margin-top: 20px;
-  }
-`;
-
 const Container = styled.div`
-  padding: 0 15px;
+  //padding: 0 2px;
   position: relative;
   transition: 1s ease-out;
 
@@ -131,5 +122,18 @@ const Container = styled.div`
     cursor: pointer;
   }
 `;
+
+const Items = styled.div` //sidebar를 담는 컨테이너
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 45px;
+  &> div{
+    margin-top: 20px;
+  }
+`;
+
+
 
 export default ScheduleSidebar;
