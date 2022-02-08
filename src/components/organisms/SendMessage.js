@@ -45,12 +45,12 @@ const SendMessage = ({setMsgsent,msgsent}) => {
     }
     const numFormat = (time)=>{
         let temp=time;
-        if(time.length==1 && Number(time)<10){
+        if(String(time).length==1 && time<10){
             temp = "0"+temp;
         }
         return temp;
     }
-    const time = numFormat(new Date().getHours()) +':'+numFormat(new Date().getMinutes()); // 수정요청사항을 보내는 시간
+    const time = numFormat(new Date().getHours()) +' : '+numFormat(new Date().getMinutes()); // 수정요청사항을 보내는 시간
 
     return (
         <Main>
