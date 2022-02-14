@@ -45,7 +45,7 @@ function MainInfoTemplate(props) {
         visit_time: "",
         estimate_num: "",
         center_etc: "",
-        agent_etc: ""
+        agent_etc: "",
     })
     const center_id = useRecoilValue(SelectedCenterId);
     const callList = useRecoilValue(SelectedCenterCallList);

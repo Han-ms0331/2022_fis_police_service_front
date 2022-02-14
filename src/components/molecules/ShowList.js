@@ -42,7 +42,7 @@ function ShowList(props) {
     if (rows.length === 0) {
         return (
             <TableRow>
-                <TableCell style={{ padding: 30 }} align='center' colSpan={8}>
+                <TableCell style={{ padding: 30 }} align='center' colSpan={9}>
                     <div style={{fontSize: 25}}>검색 결과가 없습니다.</div>
                 </TableCell>
             </TableRow>
@@ -72,15 +72,16 @@ function ShowList(props) {
                     {page*rowsPerPage + (index+1)}
                 </TableCell>
                 <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">{row.a_name}</TableCell>
-                <TableCell style={{ width:'24%', color: headerColor, fontSize: '15pt', padding: '10px 16px' }} align="right">
+                <TableCell style={{ width:'22%', color: headerColor, fontSize: '15pt', padding: '10px 16px' }} align="right">
                     <div>{row.c_name}</div>
                     <div style={{fontSize: '13pt'}}>{row.c_address}</div>
                     <div style={{fontSize: '13pt'}}>{row.c_ph}</div>
                     <div style={{fontSize: '13pt'}}>{row.visit_time}</div>
                     <div style={{fontSize: '13pt'}}>{row.estimate_num}명</div>
                 </TableCell>
-                <TableCell style={{ width:'24%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
-                <TableCell style={{ width:'24%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{  margin: 10, padding: '10px 0', overflowY: 'auto', maxHeight: 150 }}>{row.modified_info}</div></TableCell>
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.accept==="TBD"?"미확인":row.accept==="accept"?"수락":"거절"}</div></TableCell>
+                <TableCell style={{ width:'21%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
+                <TableCell style={{ width:'21%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{  margin: 10, padding: '10px 0', overflowY: 'auto', maxHeight: 150 }}>{row.modified_info}</div></TableCell>
                 <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.call_check}</div></TableCell>
                 {/*<TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>일정공지여부</div></TableCell>*/}
                 <TableCell style={{ width:'5%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
