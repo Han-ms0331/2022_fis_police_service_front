@@ -45,7 +45,9 @@ const ScheduleSidebar = ({ setLoading }) => {
         setLoading(true);
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
-                setRows(res.data.data);
+                console.log(res.data.data)
+                let datas = res.data.data;
+                setRows(datas);
                 setLoading(false);
             })
             .catch((err) => {

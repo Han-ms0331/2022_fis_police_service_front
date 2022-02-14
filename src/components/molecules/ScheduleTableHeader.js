@@ -24,6 +24,7 @@ function ScheduleTableHeader(props) { // 테이블 헤더 컴포넌트 (전체 �
         { id: 'index', numeric: false, disablePadding: true, label: 'No.', sortLabel: false },
         { id: 'a_code', numeric: true, disablePadding: false, label: '현장요원', sortLabel: true },
         { id: 'c_name', numeric: true, disablePadding: false, label: '시설정보', sortLabel: true },
+        { id: 'accept', numeric: true, disablePadding: false, label: '수락/거절', sortLabel: true },
         { id: 'total_etc', numeric: true, disablePadding: false, label: '특이사항', sortLabel: true },
         { id: 'modified_info', numeric: true, disablePadding: false, label: '변경 사항', sortLabel: true },
         { id: 'call_check', numeric: true, disablePadding: false, label: '통화 이력', sortLabel: true },
@@ -32,7 +33,7 @@ function ScheduleTableHeader(props) { // 테이블 헤더 컴포넌트 (전체 �
     ];
     // 테이블 헤더 정보
 
-    const columnWidth = ['5%', '8%', '24%', '24%', '24%', '8%', '5%'];
+    const columnWidth = ['5%', '8%', '22%', '8%',  '21%', '21%', '8%', '5%'];
 
 
     return (
