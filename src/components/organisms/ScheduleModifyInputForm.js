@@ -300,7 +300,6 @@ function ScheduleModifyInputForm(props) {
                                     setValueFunction={onChange}/>
                 </div>
 
-
                 {/*<div style={{marginLeft: "80px"}}>*/}
                 {/*    <CheckboxContainer name="applicationForm" setCheckboxInputFunction={onClick} content="신청서 완료"/>*/}
                 {/*    <CheckboxContainer name="placeArrangement" setCheckboxInputFunction={onClick} content="장소 마련 완료"/>*/}
