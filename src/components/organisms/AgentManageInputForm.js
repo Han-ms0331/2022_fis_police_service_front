@@ -2,6 +2,16 @@ import React from 'react';
 import InputContainer from "../molecules/InputContainer";
 import CustomButton from "../atoms/CustomButton";
 import {Style} from "../../Style";
+import {styled} from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import Stack from '@mui/material/Stack';
+import CustomLabel from "../atoms/CustomLabel";
+
+const Input = styled('input')({
+    display: 'none',
+});
 
 function AgentManageInputForm(props) {
     return (
@@ -52,9 +62,15 @@ function AgentManageInputForm(props) {
             </div>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="퇴사여부: " inputName="a_status" inputType="select" width="300px" contents={[{
-                    show: "재직", value: true}, {show: "퇴사", value: false}]}
+                    show: "재직", value: true
+                }, {show: "퇴사", value: false}]}
                                 setValueFunction={props.handleInputFormChange}
                                 defaultValue={props.currentInfo['a_status']}/>
+            </div>
+            <div style={{marginBottom: "20px", display: "flex", alignItems: "center"}}>
+                <CustomLabel content={"사진 업로드: "} fontSize={props.fontSize} width={"auto"}/>
+                <input type="file" id="chooseFile" name="file" accept="image/*" onChange={props.handleInputFormChange} style={{width: "300px"}} />
+
             </div>
 
             <div style={{display: "flex", marginTop: "20px"}}>
