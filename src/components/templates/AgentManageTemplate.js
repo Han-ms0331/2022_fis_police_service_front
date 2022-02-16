@@ -106,7 +106,7 @@ const AgentManageTemplate = () => {
             if (e.target.name === "file") {
                 setCurrentInfo({
                     ...currentInfo,
-                    file: files
+                    file: files[0]
                 })
             } else {
                 setCurrentInfo({
@@ -171,6 +171,17 @@ const AgentManageTemplate = () => {
                     })
                 }
             }
+            const pictureRequest = async () => {
+                let formData = new FormData();
+                formData.append('agent_id', currentInfo.agent_id);
+                formData.append('file', currentInfo.file);
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture`, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }, {withCredentials: true})
+
+            }
 
             if (emptyOrNot() === false && modify === true) {
                 Swal.fire({
@@ -181,17 +192,42 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
+                        // await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
+                        //     .then((res) => {
+                        //         console.log(currentInfo)
+                        //         Swal.fire({
+                        //             icon: 'success',
+                        //             title: '수정되었습니다.',
+                        //             confirmButtonColor: Style.color2,
+                        //             confirmButtonText: '확인',
+                        //         })
+                        //         showData();
+                        //         handleClose();
+                        //     }).catch((err) => {
+                        //         showErrorMessage(err);
+                        //     })
+                        //
+                        //
+                        // let formData = new FormData();
+                        // formData.append(
+                        //     "file",
+                        //     currentInfo.file,
+                        //     currentInfo.file.name
+                        // )
+                        // await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture`, formData, {withCredentials: true})
+                        //     .then((res)=>{})
                         await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
                             .then((res) => {
-                                console.log(currentInfo)
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: '수정되었습니다.',
-                                    confirmButtonColor: Style.color2,
-                                    confirmButtonText: '확인',
-                                })
-                                showData();
-                                handleClose();
+                                pictureRequest().then((res) => {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: '수정되었습니다.',
+                                        confirmButtonColor: Style.color2,
+                                        confirmButtonText: '확인',
+                                    })
+                                    showData();
+                                    handleClose();
+                                }).catch((err) => {showErrorMessage(err);})
                             }).catch((err) => {
                                 showErrorMessage(err);
                             })
