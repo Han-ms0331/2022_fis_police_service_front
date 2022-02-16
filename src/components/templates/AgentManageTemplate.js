@@ -31,7 +31,8 @@ const AgentManageTemplate = () => {
             a_address: "",
             a_equipment: "",
             a_receiveDate: "",
-            a_status: ""
+            a_status: "",
+            file: "",
         });
         const [modify, setModify] = useState();
         const setIsLogined = useSetRecoilState(isLoginedState)
@@ -41,12 +42,11 @@ const AgentManageTemplate = () => {
                     let tmp = [];
                     let a, b;
 
-                    const receivedData=(res.data.data);
-                    receivedData.sort((a,b)=>{
-                        if(a.a_status === false){
+                    const receivedData = (res.data.data);
+                    receivedData.sort((a, b) => {
+                        if (a.a_status === false) {
                             return 1;
-                        }
-                        else return -1;
+                        } else return -1;
                     })
 
                     receivedData.forEach((list) => {
@@ -76,7 +76,7 @@ const AgentManageTemplate = () => {
                             confirmButtonColor: Style.color2
                         });
                         setIsLogined(false);
-                    }else{
+                    } else {
                         Swal.fire({
                             icon: "warning",
                             title: "서버오류입니다.",
@@ -100,12 +100,20 @@ const AgentManageTemplate = () => {
         const handleClose = () => {
             setOpen(false)
         };
+
         const handleInputFormChange = (e) => {
-            const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
-            setCurrentInfo({
-                ...currentInfo,
-                [name]: value
-            })
+            const {value, name, files} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
+            if (e.target.name === "file") {
+                setCurrentInfo({
+                    ...currentInfo,
+                    file: files
+                })
+            } else {
+                setCurrentInfo({
+                    ...currentInfo,
+                    [name]: value
+                })
+            }
         };
 
 
@@ -127,7 +135,7 @@ const AgentManageTemplate = () => {
                     return false;
                 }
             }
-            const showErrorMessage = (err) =>{
+            const showErrorMessage = (err) => {
                 if (err.response.status === 400) {
                     Swal.fire({
                         icon: 'warning',
@@ -136,8 +144,7 @@ const AgentManageTemplate = () => {
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
-                }
-                else if (err.response.status === 401) {
+                } else if (err.response.status === 401) {
                     Swal.fire({
                         icon: "warning",
                         title: "세션이 만료되었습니다.",
@@ -146,8 +153,7 @@ const AgentManageTemplate = () => {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
-                }
-                else if (err.response.status === 403) {
+                } else if (err.response.status === 403) {
                     Swal.fire({
                         icon: 'warning',
                         title: '잘못된 주소를 입력하셨습니다.',
@@ -155,8 +161,7 @@ const AgentManageTemplate = () => {
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
-                }
-                else {
+                } else {
                     Swal.fire({
                         icon: 'warning',
                         title: '서버 오류입니다.',
@@ -178,6 +183,7 @@ const AgentManageTemplate = () => {
                     preConfirm: async () => {
                         await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
                             .then((res) => {
+                                console.log(currentInfo)
                                 Swal.fire({
                                     icon: 'success',
                                     title: '수정되었습니다.',
@@ -187,7 +193,7 @@ const AgentManageTemplate = () => {
                                 showData();
                                 handleClose();
                             }).catch((err) => {
-                               showErrorMessage(err);
+                                showErrorMessage(err);
                             })
                     },
                     allowOutsideClick: () => !Swal.isLoading()
