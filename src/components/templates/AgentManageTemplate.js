@@ -175,11 +175,17 @@ const AgentManageTemplate = () => {
                 let formData = new FormData();
                 formData.append('agent_id', currentInfo.agent_id);
                 formData.append('file', currentInfo.file);
+                console.log(formData)
                 await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture`, {
+
+                }, {
+                    withCredentials: true,
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
-                }, {withCredentials: true})
+                }).then((res) => {
+                    console.log(res)
+                })
 
             }
 
@@ -227,7 +233,9 @@ const AgentManageTemplate = () => {
                                     })
                                     showData();
                                     handleClose();
-                                }).catch((err) => {showErrorMessage(err);})
+                                }).catch((err) => {
+                                    showErrorMessage(err);
+                                })
                             }).catch((err) => {
                                 showErrorMessage(err);
                             })
