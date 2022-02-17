@@ -36,6 +36,8 @@ const AgentManageTemplate = () => {
         });
         const [modify, setModify] = useState();
         const setIsLogined = useSetRecoilState(isLoginedState)
+    const [img, setImg] = useState();
+
         const showData = async () => {
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {withCredentials: true})
                 .then((res) => {
@@ -176,13 +178,11 @@ const AgentManageTemplate = () => {
                 formData.append('agent_id', currentInfo.agent_id);
                 formData.append('file', currentInfo.file);
                 console.log(formData)
-                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture`, {
-
-                }, {
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture`, formData, {
                     withCredentials: true,
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
+                    // headers: {
+                    //     'Content-Type': 'multipart/form-data'
+                    // }
                 }).then((res) => {
                     console.log(res)
                 })
@@ -279,6 +279,7 @@ const AgentManageTemplate = () => {
             }
         };
 
+
         const handleModifyButtonClick = (e) => {
             // button이 관리페이지의 정보 수정 버튼일 시...
             setModify(true)
@@ -300,8 +301,10 @@ const AgentManageTemplate = () => {
             }
             setCurrentInfo(changeContent);
             handleOpen();
+            console.log("inside")
         }
         const handleAddButtonClick = (e) => {
+
             setModify(false)
             setCurrentInfo({
                 a_name: "",
@@ -314,6 +317,7 @@ const AgentManageTemplate = () => {
                 a_status: ""
             });
             handleOpen()
+
         }
         return (
             <Main>
@@ -329,7 +333,9 @@ const AgentManageTemplate = () => {
                     <Box sx={style}>
                         <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo}
                                               handleInputFormChange={handleInputFormChange}
-                                              handleClickSave={handleClickSave}/>
+                                              handleClickSave={handleClickSave}
+                                              agent_id={currentInfo.agent_id}
+                        />
                     </Box>
                 </Modal>
 
