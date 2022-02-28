@@ -21,12 +21,14 @@ import {isLoginedState} from "../../store/LoginStore";
 const AgentManageTemplate = () => {
         const [open, setOpen] = useState(false);
         const [contents, setContents] = useState("");
-        const headerContent = ["이름", "현장요원코드", "전화번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜", "퇴사 여부"]
+        const headerContent = ["이름", "현장요원코드", "전화번호", "아이디", "비밀번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜", "퇴사 여부"]
         const [currentInfo, setCurrentInfo] = useState({
             agent_id: "",
             a_name: "",
             a_code: "",
             a_ph: "",
+            a_nickname: "",
+            a_pwd: "",
             a_hasCar: "",
             a_address: "",
             a_equipment: "",
@@ -36,7 +38,6 @@ const AgentManageTemplate = () => {
         });
         const [modify, setModify] = useState();
         const setIsLogined = useSetRecoilState(isLoginedState)
-    const [img, setImg] = useState();
 
         const showData = async () => {
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {withCredentials: true})
@@ -51,6 +52,7 @@ const AgentManageTemplate = () => {
                         } else return -1;
                     })
 
+                    console.log(res.data.data)
                     receivedData.forEach((list) => {
                         list.a_hasCar ? a = "자차" : a = "도보"
                         list.a_status ? b = "재직" : b = "퇴사"
@@ -59,6 +61,8 @@ const AgentManageTemplate = () => {
                             a_name: list.a_name,
                             a_code: list.a_code,
                             a_ph: list.a_ph,
+                            a_nickname: list.a_nickname,
+                            a_pwd: list.a_pwd,
                             a_hasCar: a,
                             a_address: list.a_address,
                             a_equipment: list.a_equipment,
@@ -95,6 +99,9 @@ const AgentManageTemplate = () => {
             })
         }, []);
 
+        useEffect(() => {
+            console.log(currentInfo)
+        }, [currentInfo])
 
         const handleOpen = () => {
             setOpen(true)
@@ -186,7 +193,6 @@ const AgentManageTemplate = () => {
                 }).then((res) => {
                     console.log(res)
                 })
-
             }
 
             if (emptyOrNot() === false && modify === true) {
@@ -198,33 +204,15 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        // await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
-                        //     .then((res) => {
-                        //         console.log(currentInfo)
-                        //         Swal.fire({
-                        //             icon: 'success',
-                        //             title: '수정되었습니다.',
-                        //             confirmButtonColor: Style.color2,
-                        //             confirmButtonText: '확인',
-                        //         })
-                        //         showData();
-                        //         handleClose();
-                        //     }).catch((err) => {
-                        //         showErrorMessage(err);
-                        //     })
-                        //
-                        //
-                        // let formData = new FormData();
-                        // formData.append(
-                        //     "file",
-                        //     currentInfo.file,
-                        //     currentInfo.file.name
-                        // )
-                        // await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture`, formData, {withCredentials: true})
-                        //     .then((res)=>{})
-                        await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
+                        await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {...currentInfo,nickname: currentInfo.a_nickname, pwd: currentInfo.a_pwd}, {withCredentials: true})
                             .then((res) => {
-                                pictureRequest().then((res) => {
+                                // pictureRequest().then((res) => {
+                                //     Swal.fire({
+                                //         icon: 'success',
+                                //         title: '수정되었습니다.',
+                                //         confirmButtonColor: Style.color2,
+                                //         confirmButtonText: '확인',
+                                //     })
                                     Swal.fire({
                                         icon: 'success',
                                         title: '수정되었습니다.',
@@ -233,9 +221,9 @@ const AgentManageTemplate = () => {
                                     })
                                     showData();
                                     handleClose();
-                                }).catch((err) => {
-                                    showErrorMessage(err);
-                                })
+                                // }).catch((err) => {
+                                //     console.log(err);
+                                // })
                             }).catch((err) => {
                                 showErrorMessage(err);
                             })
@@ -253,7 +241,7 @@ const AgentManageTemplate = () => {
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
                         console.log(currentInfo);
-                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
+                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {...currentInfo,nickname: currentInfo.a_nickname, pwd: currentInfo.a_pwd}, {withCredentials: true})
                             .then((res) => {
                                 Swal.fire({
                                     icon: 'success',
@@ -307,9 +295,12 @@ const AgentManageTemplate = () => {
 
             setModify(false)
             setCurrentInfo({
+                agent_id: "",
                 a_name: "",
                 a_code: "",
                 a_ph: "",
+                a_nickname: "",
+                a_pwd: "",
                 a_hasCar: "",
                 a_address: "",
                 a_equipment: "",
@@ -322,7 +313,7 @@ const AgentManageTemplate = () => {
         return (
             <Main>
                 <ListContainer width="1800px" headerContents={headerContent} contents={contents}
-                               gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
+                               gridRatio="1fr 1fr 1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/>
                 <Modal
                     open={open}
