@@ -206,7 +206,7 @@ const AgentManageTemplate = () => {
                     preConfirm: async () => {
                         await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {...currentInfo,nickname: currentInfo.a_nickname, pwd: currentInfo.a_pwd}, {withCredentials: true})
                             .then((res) => {
-                                // pictureRequest().then((res) => {
+                                pictureRequest().then((res) => {
                                 //     Swal.fire({
                                 //         icon: 'success',
                                 //         title: '수정되었습니다.',
@@ -221,9 +221,9 @@ const AgentManageTemplate = () => {
                                     })
                                     showData();
                                     handleClose();
-                                // }).catch((err) => {
-                                //     console.log(err);
-                                // })
+                                }).catch((err) => {
+                                    console.log(err);
+                                })
                             }).catch((err) => {
                                 showErrorMessage(err);
                             })
