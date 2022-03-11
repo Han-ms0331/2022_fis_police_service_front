@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import styled from 'styled-components';
 import HomeIcon from '@mui/icons-material/Home';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -88,6 +89,7 @@ const Navigation = () => {
         <Container>
             <Upper>
                 <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
+                <Link to={"/hope"}> <ListAltIcon className="icon"/> </Link> {/*시설관리*/}
                 <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
                 {authority === 'ADMIN' ? <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> : null} {/*관리자*/}
             </Upper>

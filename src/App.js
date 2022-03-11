@@ -10,6 +10,7 @@ import NetworkConfig from "./configures/NetworkConfig";
 import {useEffect} from "react";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Style} from "./Style";
+import HopeListPage from "./components/pages/HopeListPage";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
                 <Switch>
                     <Route exact path="/login" component={ThisLoginPage}/>
                     <Route exact path="/main" component={MainPage}/>
+                    <Route exact path="/hope" component={HopeListPage}/>
                     <Route exact path="/schedule" component={SchedulePage}/>
                     <Route exact path="/manage">
                         {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}
