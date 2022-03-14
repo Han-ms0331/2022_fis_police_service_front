@@ -196,6 +196,7 @@ const AgentManageTemplate = () => {
             }
 
             if (emptyOrNot() === false && modify === true) {
+
                 Swal.fire({
                     icon: "question",
                     title: '수정하시겠습니까?',
@@ -204,15 +205,14 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {...currentInfo,nickname: currentInfo.a_nickname, pwd: currentInfo.a_pwd}, {withCredentials: true})
+                        await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {
+                            ...currentInfo,
+                            nickname: currentInfo.a_nickname,
+                            pwd: currentInfo.a_pwd
+                        }, {withCredentials: true})
                             .then((res) => {
-                                pictureRequest().then((res) => {
-                                //     Swal.fire({
-                                //         icon: 'success',
-                                //         title: '수정되었습니다.',
-                                //         confirmButtonColor: Style.color2,
-                                //         confirmButtonText: '확인',
-                                //     })
+                                console.log(currentInfo.file)
+                                if (currentInfo.file === undefined) {
                                     Swal.fire({
                                         icon: 'success',
                                         title: '수정되었습니다.',
@@ -221,9 +221,21 @@ const AgentManageTemplate = () => {
                                     })
                                     showData();
                                     handleClose();
-                                }).catch((err) => {
-                                    console.log(err);
-                                })
+                                } else {
+                                    pictureRequest().then((res) => {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: '수정되었습니다.',
+                                            confirmButtonColor: Style.color2,
+                                            confirmButtonText: '확인',
+                                        })
+                                        showData();
+                                        handleClose();
+                                    }).catch((err) => {
+                                      console.log(err)
+                                        // showErrorMessage(err)
+                                    })
+                                }
                             }).catch((err) => {
                                 showErrorMessage(err);
                             })
@@ -240,8 +252,11 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        console.log(currentInfo);
-                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {...currentInfo,nickname: currentInfo.a_nickname, pwd: currentInfo.a_pwd}, {withCredentials: true})
+                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {
+                            ...currentInfo,
+                            nickname: currentInfo.a_nickname,
+                            pwd: currentInfo.a_pwd
+                        }, {withCredentials: true})
                             .then((res) => {
                                 Swal.fire({
                                     icon: 'success',
