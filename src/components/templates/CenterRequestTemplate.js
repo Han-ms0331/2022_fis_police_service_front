@@ -138,7 +138,7 @@ function CenterRequestTemplate(props) {
 
     return (
         <Container>
-            <AppliedCenterTable loading={loading} columns={columns} rows={contents}/>
+            <AppliedCenterTable loading={loading} columns={columns} rows={contents} headerBG={Style.color2}/>
         </Container>
     );
 }
