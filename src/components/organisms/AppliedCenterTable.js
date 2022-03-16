@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {DataGrid, koKR} from '@mui/x-data-grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import {Style} from "../../Style";
 
 const useStyles = makeStyles(() => ({
