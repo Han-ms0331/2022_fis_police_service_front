@@ -162,7 +162,12 @@ const AgentManageTemplate = () => {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
+<<<<<<< HEAD
                 } else if (err.response.status === 403) {
+=======
+                }
+                else if (err.response.status === 403) {
+>>>>>>> 1617b4858e801d2f60dc4f419fce35ae310744db
                     Swal.fire({
                         icon: 'warning',
                         title: '잘못된 주소를 입력하셨습니다.',
