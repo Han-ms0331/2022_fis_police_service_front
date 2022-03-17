@@ -93,7 +93,7 @@ function AgentManageInputForm(props) {
                                     setValueFunction={props.handleInputFormChange}
                                     defaultValue={props.currentInfo['a_status']}/>
                 </div>
-                <div style={{display: "flex", alignItems: "center"}}>
+                <div style={{display: !props.modify?"none":"flex", alignItems: "center"}}>
                     <CustomLabel content={"사진 업로드: "} fontSize={props.fontSize} width={"auto"}/>
                     <input type="file" id="chooseFile" name="a_picture" accept="image/*"
                            onChange={(e)=>{
@@ -101,7 +101,7 @@ function AgentManageInputForm(props) {
                                props.handleInputFormChange(e)
                            }} style={{width: "200px"}}/>
                 </div>
-                <div style={{marginLeft: 125}}>
+                <div style={{display: !props.modify?"none":"block", marginLeft: 125}}>
                     <CheckboxContainer name="deletePicture" clickFunction={props.clickCheckboxFunction} content="사진삭제" />
                     <div style={{ marginLeft: 10}}>
                         <img src={selectedImage===null?`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/show?agent_id=${props.currentInfo.agent_id}&time=${new Date().getTime()}`:URL.createObjectURL(selectedImage)}

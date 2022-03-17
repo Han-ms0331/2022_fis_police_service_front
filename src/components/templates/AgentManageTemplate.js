@@ -243,7 +243,6 @@ const AgentManageTemplate = () => {
                             .then((res) => {
                                 console.log(res)
                                 if (checkbox) {
-                                    console.log("hihihihihihihihihihihihi")
                                     deleteRequest()
                                 } else {
                                     Swal.fire({
@@ -332,7 +331,6 @@ const AgentManageTemplate = () => {
         const handleAddButtonClick = (e) => {
             setModify(false)
             setCurrentInfo({
-                agent_id: "",
                 a_name: "",
                 a_code: "",
                 a_ph: "",
@@ -343,7 +341,6 @@ const AgentManageTemplate = () => {
                 a_equipment: "",
                 a_receiveDate: "",
                 a_status: "",
-                a_picture: null
             });
             handleOpen()
         }
@@ -363,7 +360,7 @@ const AgentManageTemplate = () => {
                         <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo}
                                               handleInputFormChange={handleInputFormChange}
                                               handleClickSave={handleClickSave}
-                                              clickCheckboxFunction={clickCheckboxFunction}/>
+                                              clickCheckboxFunction={clickCheckboxFunction} modify={modify}/>
                     </Box>
                 </Modal>
 
