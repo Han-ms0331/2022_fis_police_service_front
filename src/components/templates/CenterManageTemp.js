@@ -14,6 +14,8 @@ import '../atoms/swal.css'
 import CustomSpinner from "../atoms/CustomSpinner";
 import {useSetRecoilState} from "recoil";
 import {isLoginedState} from "../../store/LoginStore";
+import {ClipLoader} from "react-spinners";
+import {Button} from "@mui/material";
 
 
 function CenterManageTemp(props) {
@@ -46,7 +48,7 @@ function CenterManageTemp(props) {
     const [modify, setModify] = useState();
     const [loading, setLoading] = useState(false);
     const setIsLogined = useSetRecoilState(isLoginedState)
-
+    const [file, setFile] = useState(null);
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
@@ -289,12 +291,56 @@ function CenterManageTemp(props) {
 
     }
 
+    const fileUpload = (e) => {
+        Swal.fire({
+            icon: "question",
+            title: `${e.target.files[0].name} 파일을\n 업로드 하시겠습니까?`,
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            confirmButtonColor: Style.color2,
+            cancelButtonText: '취소',
+            cancelButtonColor: "#e55039",
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                let formData = new FormData();
+                formData.append("excelFile", e.target.files[0]);
+
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/excel/read`, formData, {withCredentials: true})
+                    .then((res) => console.log(res))
+                    .catch((err) => console.log(err))
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+
+    }
+
     return (
         <Main>
-            <div style={{margin: "20px 0px 30px 0px"}}>
+            <div style={{margin: "20px 0px 30px 0px", display: "flex"}}>
                 <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
                             height="100%"/> {/*시설정보를 검색하는 부분*/}
+                <div style={{marginLeft: 20}}>
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{
+                            width: "130px",
+                            height: "42px",
+                            backgroundColor: `${Style.color2}`,
+                            color: `${Style.color1}`,
+                            borderRadius: "10px"
+                        }}
+                    >
+                        파일업로드
+                        <input
+                            type="file"
+                            hidden
+                            onChange={fileUpload}
+                        />
+                    </Button>
+                </div>
             </div>
+
 
             {loading === true ? <CustomSpinner/>
                 :
