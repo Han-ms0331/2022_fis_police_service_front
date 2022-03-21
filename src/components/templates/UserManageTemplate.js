@@ -140,7 +140,8 @@ const UserManageTemplate = () => {
                     // alert("이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.")
                     Swal.fire({
                         icon: 'warning',
-                        title: '이미 있는 아이디입니다. 다시 입력해주시길 바랍니다.',
+                        title: '이미 있는 아이디입니다.',
+                        text: '다시 입력해주시길 바랍니다.',
                         confirmButtonColor: Style.color2,
                         confirmButtonText: '확인',
                     })
@@ -240,6 +241,7 @@ const UserManageTemplate = () => {
             // 콜직원 수정버튼 클릭시
             setModify(true);
             const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
+            console.log(changeContent);
             delete changeContent['today_call_num']; /*오늘통화건수 제외*/
             delete changeContent['average_call']; /*평균통화건수 제외*/
             let a;

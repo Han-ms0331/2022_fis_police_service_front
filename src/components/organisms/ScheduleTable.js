@@ -187,7 +187,7 @@ export default function ScheduleTable(props) {
                         <TableBody style={{ backgroundColor: bodyColor }} className={classes.body}>
                         {loading ?
                                 <TableRow>
-                                    <TableCell style={{ padding: 30 }} align='center' colSpan={8}>
+                                    <TableCell style={{ padding: 30 }} align='center' colSpan={9}>
                                         <Spinner/>
                                     </TableCell>
                                 </TableRow>

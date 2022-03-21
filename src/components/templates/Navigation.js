@@ -11,7 +11,7 @@ import {isLoginedState, userAuthority} from "../../store/LoginStore";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
-
+import ListAltIcon from '@mui/icons-material/ListAlt';
 /*
     날짜: 2022/01/10 3:59 오후
     작성자: 한명수
@@ -88,6 +88,7 @@ const Navigation = () => {
         <Container>
             <Upper>
                 <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
+                <Link to={"/hope"}> <ListAltIcon className="icon"/> </Link> {/*시설관리*/}
                 <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
                 {authority === 'ADMIN' ? <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> : null} {/*관리자*/}
             </Upper>
@@ -101,7 +102,7 @@ const Navigation = () => {
 //style
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 345px auto;
+  grid-template-rows: 380px auto;
   border-right: 2px solid #eee;
   padding: 0px;
 
@@ -121,7 +122,7 @@ const Upper = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   justify-self: center;
-  margin-top: 50px;
+  margin-top: 70px;
 `;
 
 const Bottom = styled.div`

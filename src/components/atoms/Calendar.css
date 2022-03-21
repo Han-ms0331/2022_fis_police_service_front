@@ -8,11 +8,11 @@
 
 .react-calendar {
     min-width: 100%;
+    min-height: 325px;
     background: var(--option-color-1);
     border: 2px solid var(--option-color-2);
     /*box-shadow: 3px 3px #dadada;*/
     border-radius: 15px;
-    /*font-family: 'Noto Sans KR', sans-serif;;*/
     font-family: var(--font);
     text-underline: none;
     line-height: 10px;
@@ -55,6 +55,8 @@
 
 .react-calendar__navigation {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     height: auto;
     padding: 10px 0;
     margin-bottom: 20px;
@@ -65,6 +67,7 @@
 /*.react-calendar__navigation>button:hover {*/
 /*transform: scale(1.25);*/
 /*}*/
+
 .react-calendar__navigation button {
     width: 45px;
     background: none;
@@ -75,19 +78,19 @@
 .react-calendar__navigation button:enabled:focus {
     /*background-color: #e6e6e6;*/
     transform: scale(1.25);
-
 }
 
 /*네이게이션 월이 표시되는 부분*/
 .react-calendar__navigation__label {
-    font-size: 23px;
+    font-size: 25px;
     font-family: var(--font);
 }
 
 /*달을 넘기는 부분*/
 .react-calendar__navigation__next-button,
 .react-calendar__navigation__prev-button {
-    font-size: 32px;
+    font-size: 42px;
+    flex-grow: 1;
 }
 
 .react-calendar__navigation__next2-button,
@@ -103,24 +106,23 @@
 /*메뉴 아래부분 */
 /*===================================================*/
 
-.react-calendar__month-view__weekdays {
+.react-calendar__month-view__weekdays {  /*월 화 수...*/
     text-align: center;
     text-transform: uppercase;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 20px;
     text-underline: none;
 }
 
 .react-calendar__month-view__weekdays__weekday {
     padding: 10px;
+    font-size: 21px;
 }
 
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
     /*padding: calc(0.75vw / 0.75) calc(0.7vw / 0.75);*/
     padding: 20px 17px;
 }
@@ -143,7 +145,6 @@
 .react-calendar__year-view .react-calendar__tile:hover,
 .react-calendar__decade-view .react-calendar__tile:hover,
 .react-calendar__century-view .react-calendar__tile:hover {
-    /*background: #F8EFBA;*/
     background: var(--option-color-2);
     color: #fff;
 }
