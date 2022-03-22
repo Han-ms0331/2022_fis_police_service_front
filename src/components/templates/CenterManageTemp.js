@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
@@ -291,6 +291,8 @@ function CenterManageTemp(props) {
 
     }
 
+    const inputEl = useRef(null)
+
     const fileUpload = (e) => {
         Swal.fire({
             icon: "question",
@@ -306,10 +308,30 @@ function CenterManageTemp(props) {
                 formData.append("excelFile", e.target.files[0]);
 
                 await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/excel/read`, formData, {withCredentials: true})
-                    .then((res) => console.log(res))
-                    .catch((err) => console.log(err))
+                    .then((res) =>{
+                        Swal.fire({
+                            icon: "success",
+                            title: `파일 업로드에 성공하였습니다.`,
+                            confirmButtonText: '확인',
+                            confirmButtonColor: Style.color2,
+                        })
+                        }
+                    )
+                    .catch((err) => {
+                        console.log(err);
+                        Swal.fire({
+                            icon:"error",
+                            title: `파일 업로드에 실패하였습니다.`,
+                            text: "다시 시도해주세요",
+                            confirmButtonText: '확인',
+                            confirmButtonColor: Style.color2,
+                        })
+                    })
             },
             allowOutsideClick: () => !Swal.isLoading()
+        }).then((result)=>{
+            console.log("hi")
+            inputEl.current.value=null;
         })
 
     }
@@ -333,9 +355,11 @@ function CenterManageTemp(props) {
                     >
                         파일업로드
                         <input
+                            ref={inputEl}
                             type="file"
                             hidden
                             onChange={fileUpload}
+
                         />
                     </Button>
                 </div>
