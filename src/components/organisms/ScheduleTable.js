@@ -242,7 +242,7 @@ export default function ScheduleTable(props) {
                                             const url = window.URL.createObjectURL(new Blob([res.data]));
                                             const link = document.createElement('a');
                                             link.href = url;
-                                            link.setAttribute('download', '목록.xlsx');
+                                            link.setAttribute('download', '스케쥴목록.xlsx');
                                             document.body.appendChild(link);
                                             link.click();
                                             document.body.removeChild(link);

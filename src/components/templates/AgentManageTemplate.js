@@ -236,7 +236,9 @@ const AgentManageTemplate = () => {
                     title: '수정하시겠습니까?',
                     showCancelButton: true,
                     confirmButtonText: '확인',
+                    confirmButtonColor: Style.color2,
                     cancelButtonText: '취소',
+                    cancelButtonColor: "#e55039",
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
                         await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, formData, {withCredentials: true})
