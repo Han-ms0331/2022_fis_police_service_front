@@ -238,14 +238,15 @@ const AgentManageTemplate = () => {
                     title: '수정하시겠습니까?',
                     showCancelButton: true,
                     confirmButtonText: '확인',
+                    confirmButtonColor: Style.color2,
                     cancelButtonText: '취소',
+                    cancelButtonColor: "#e55039",
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
                         await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, formData, {withCredentials: true})
                             .then((res) => {
                                 console.log(res)
                                 if (checkbox) {
-                                    console.log("hihihihihihihihihihihihi")
                                     deleteRequest()
                                 } else {
                                     Swal.fire({
@@ -334,7 +335,6 @@ const AgentManageTemplate = () => {
         const handleAddButtonClick = (e) => {
             setModify(false)
             setCurrentInfo({
-                agent_id: "",
                 a_name: "",
                 a_code: "",
                 a_ph: "",
@@ -345,7 +345,6 @@ const AgentManageTemplate = () => {
                 a_equipment: "",
                 a_receiveDate: "",
                 a_status: "",
-                a_picture: null
             });
             handleOpen()
         }
@@ -365,7 +364,7 @@ const AgentManageTemplate = () => {
                         <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo}
                                               handleInputFormChange={handleInputFormChange}
                                               handleClickSave={handleClickSave}
-                                              clickCheckboxFunction={clickCheckboxFunction}/>
+                                              clickCheckboxFunction={clickCheckboxFunction} modify={modify}/>
                     </Box>
                 </Modal>
 
