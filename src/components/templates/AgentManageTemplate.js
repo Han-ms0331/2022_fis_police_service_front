@@ -21,7 +21,7 @@ import {isLoginedState} from "../../store/LoginStore";
 const AgentManageTemplate = () => {
         const [open, setOpen] = useState(false);
         const [contents, setContents] = useState("");
-        const headerContent = ["이름", "현장요원코드", "전화번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜", "퇴사 여부"]
+        const headerContent = ["이름", "현장요원코드", "전화번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜", "퇴사 여부", "사진"]
         const [currentInfo, setCurrentInfo] = useState({
             agent_id: "",
             a_name: "",
@@ -36,7 +36,6 @@ const AgentManageTemplate = () => {
         });
         const [modify, setModify] = useState();
         const setIsLogined = useSetRecoilState(isLoginedState)
-    const [img, setImg] = useState();
 
         const showData = async () => {
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {withCredentials: true})
@@ -64,6 +63,7 @@ const AgentManageTemplate = () => {
                             a_equipment: list.a_equipment,
                             a_receiveDate: list.a_receiveDate,
                             a_status: b,
+                            a_picture: list.a_picture === null ? "없음" : "있음"
                         })
                     })
                     setContents(tmp)
@@ -198,30 +198,6 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        // await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
-                        //     .then((res) => {
-                        //         console.log(currentInfo)
-                        //         Swal.fire({
-                        //             icon: 'success',
-                        //             title: '수정되었습니다.',
-                        //             confirmButtonColor: Style.color2,
-                        //             confirmButtonText: '확인',
-                        //         })
-                        //         showData();
-                        //         handleClose();
-                        //     }).catch((err) => {
-                        //         showErrorMessage(err);
-                        //     })
-                        //
-                        //
-                        // let formData = new FormData();
-                        // formData.append(
-                        //     "file",
-                        //     currentInfo.file,
-                        //     currentInfo.file.name
-                        // )
-                        // await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture`, formData, {withCredentials: true})
-                        //     .then((res)=>{})
                         await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, currentInfo, {withCredentials: true})
                             .then((res) => {
                                 pictureRequest().then((res) => {
@@ -322,7 +298,7 @@ const AgentManageTemplate = () => {
         return (
             <Main>
                 <ListContainer width="1800px" headerContents={headerContent} contents={contents}
-                               gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
+                               gridRatio="1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/>
                 <Modal
                     open={open}

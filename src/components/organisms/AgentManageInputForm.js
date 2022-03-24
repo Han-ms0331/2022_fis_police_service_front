@@ -8,12 +8,15 @@ import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import CustomLabel from "../atoms/CustomLabel";
+import noimage from '../media/noimage.gif'
+import axios from "axios";
 
 const Input = styled('input')({
     display: 'none',
 });
 
 function AgentManageInputForm(props) {
+
     return (
         <div style={{
             padding: "30px 0px",
@@ -73,8 +76,13 @@ function AgentManageInputForm(props) {
 
             </div>
 
-            <div>
-                <img src={`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/show?agent_id=${props.agent_id}`} style={{width:"100px", height:"100px"}}/>
+            <div style={{display:"flex", alignItems:"center"}}>
+                <img
+                     src={`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/show?agent_id=${props.agent_id}`}
+                     style={{width:"100px", height:"100px", marginRight:"20px"}}
+                    onError={(e)=>{e.target.src = noimage}}
+                />
+                <CustomButton type="normal" content="삭제" width="50px" height="20px" backgroundColor={Style.color2} onClick={props.deletePicture}/>
             </div>
 
             <div style={{display: "flex", marginTop: "20px"}}>
