@@ -48,6 +48,7 @@ function App() {
             })
     };
     useEffect(() => {
+        console.log("inside")
         LoginStateInitialization();
     }, [])
 
