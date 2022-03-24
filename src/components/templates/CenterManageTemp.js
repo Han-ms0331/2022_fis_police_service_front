@@ -55,32 +55,29 @@ function CenterManageTemp(props) {
     async function apiGetCall(c_name, c_address, c_ph) {
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
-                if (res.data.data.length === 0) {
-                    setIsEmpty(true);
-                } else {
-                    let tmp = [];
-                    let a;
-                    res.data.data.forEach((list) => {
-                        if (list.participation === "PARTICIPATION") {
-                            a = "참여"
-                        } else if (list.participation === "REJECT") {
-                            a = "거부"
-                        } else if (list.participation === "HOLD") {
-                            a = "보류"
-                        } else {
-                            a = "없음"
-                        }
-                        tmp.push({
-                            center_id: list.center_id,
-                            c_name: list.c_name,
-                            participation: a,
-                            c_ph: list.c_ph,
-                            c_address: list.c_address
-                        })
+
+                let tmp = [];
+                let a;
+                res.data.data.forEach((list) => {
+                    if (list.participation === "PARTICIPATION") {
+                        a = "참여"
+                    } else if (list.participation === "REJECT") {
+                        a = "거부"
+                    } else if (list.participation === "HOLD") {
+                        a = "보류"
+                    } else {
+                        a = "없음"
+                    }
+                    tmp.push({
+                        center_id: list.center_id,
+                        c_name: list.c_name,
+                        participation: a,
+                        c_ph: list.c_ph,
+                        c_address: list.c_address
                     })
-                    setContents(tmp);
-                    setIsEmpty(false);
-                }
+                })
+                setContents(tmp);
+                setIsEmpty(false);
                 setIsSearched(true);
                 setLoading(false);
             })
@@ -94,6 +91,10 @@ function CenterManageTemp(props) {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
+                } else if (err.response.status === 400) {
+                    setIsEmpty(true);
+                    setIsSearched(true);
+                    setLoading(false);
                 } else {
                     Swal.fire({
                         icon: "warning",
@@ -308,19 +309,19 @@ function CenterManageTemp(props) {
                 formData.append("excelFile", e.target.files[0]);
 
                 await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/excel/read`, formData, {withCredentials: true})
-                    .then((res) =>{
-                        Swal.fire({
-                            icon: "success",
-                            title: `파일 업로드에 성공하였습니다.`,
-                            confirmButtonText: '확인',
-                            confirmButtonColor: Style.color2,
-                        })
+                    .then((res) => {
+                            Swal.fire({
+                                icon: "success",
+                                title: `파일 업로드에 성공하였습니다.`,
+                                confirmButtonText: '확인',
+                                confirmButtonColor: Style.color2,
+                            })
                         }
                     )
                     .catch((err) => {
                         console.log(err);
                         Swal.fire({
-                            icon:"error",
+                            icon: "error",
                             title: `파일 업로드에 실패하였습니다.`,
                             text: "다시 시도해주세요",
                             confirmButtonText: '확인',
@@ -329,9 +330,9 @@ function CenterManageTemp(props) {
                     })
             },
             allowOutsideClick: () => !Swal.isLoading()
-        }).then((result)=>{
+        }).then((result) => {
             console.log("hi")
-            inputEl.current.value=null;
+            inputEl.current.value = null;
         })
 
     }
