@@ -21,38 +21,38 @@ import {isLoginedState} from "../../store/LoginStore";
 const AgentManageTemplate = () => {
         const [open, setOpen] = useState(false);
         const [contents, setContents] = useState("");
+        const [listContents, setListContents] = useState("")
         const headerContent = ["이름", "현장요원코드", "전화번호", "아이디", "비밀번호", "차량여부", "자택주소", "장비번호", "장비 수령날짜", "퇴사 여부"]
-        const [currentInfo, setCurrentInfo] = useState({
-            agent_id: "",
-            a_name: "",
-            a_code: "",
-            a_ph: "",
-            a_nickname: "",
-            a_pwd: "",
-            a_hasCar: "",
-            a_address: "",
-            a_equipment: "",
-            a_receiveDate: "",
-            a_status: "",
-            file: "",
-        });
+        const [currentInfo, setCurrentInfo] = useState();
         const [modify, setModify] = useState();
-        const setIsLogined = useSetRecoilState(isLoginedState)
+        const [checkbox, setCheckbox] = useState(false)
+
+        const clickCheckboxFunction = (e) => {
+            console.log(e.target.checked)
+            setCheckbox(e.target.checked);
+        }
+
+        useEffect(() => {
+            console.log(checkbox)
+        }, [checkbox])
+
+        const setIsLogined = useSetRecoilState(isLoginedState);
+
 
         const showData = async () => {
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {withCredentials: true})
                 .then((res) => {
+                    console.log(res.data)
                     let tmp = [];
                     let a, b;
 
                     const receivedData = (res.data.data);
-                    receivedData.sort((a, b) => {
+                    receivedData.sort((a) => {
                         if (a.a_status === false) {
                             return 1;
                         } else return -1;
                     })
 
-                    console.log(res.data.data)
                     receivedData.forEach((list) => {
                         list.a_hasCar ? a = "자차" : a = "도보"
                         list.a_status ? b = "재직" : b = "퇴사"
@@ -68,9 +68,17 @@ const AgentManageTemplate = () => {
                             a_equipment: list.a_equipment,
                             a_receiveDate: list.a_receiveDate,
                             a_status: b,
+                            a_picture: null,
                         })
                     })
                     setContents(tmp)
+                    let copiedTmp = [];
+                    tmp.map((data) => {
+                        let item = Object.assign({}, data);
+                        delete item['a_picture'];
+                        copiedTmp.push(item);
+                    })
+                    setListContents(copiedTmp)
                 })
                 .catch((err) => {
                     if (err.response.status === 401) {
@@ -94,14 +102,16 @@ const AgentManageTemplate = () => {
                 })
         }
 
+
         useEffect(() => { //처음 렌더링시에만 데이터 요청
-            showData().then((res) => {
-            })
+            showData()
         }, []);
+
 
         useEffect(() => {
             console.log(currentInfo)
         }, [currentInfo])
+
 
         const handleOpen = () => {
             setOpen(true)
@@ -112,10 +122,11 @@ const AgentManageTemplate = () => {
 
         const handleInputFormChange = (e) => {
             const {value, name, files} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
-            if (e.target.name === "file") {
+            if (e.target.name === "a_picture") {
+                console.log(files.type)
                 setCurrentInfo({
                     ...currentInfo,
-                    file: files[0]
+                    a_picture: files[0],
                 })
             } else {
                 setCurrentInfo({
@@ -180,20 +191,44 @@ const AgentManageTemplate = () => {
                     })
                 }
             }
-            const pictureRequest = async () => {
-                let formData = new FormData();
-                formData.append('agent_id', currentInfo.agent_id);
-                formData.append('file', currentInfo.file);
-                console.log(formData)
-                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture`, formData, {
-                    withCredentials: true,
-                    // headers: {
-                    //     'Content-Type': 'multipart/form-data'
-                    // }
-                }).then((res) => {
-                    console.log(res)
-                })
+            const deleteRequest = async () => {
+                await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture/delete?agent_id=${currentInfo.agent_id}`, {withCredentials: true})
+                    .then((res) => {
+                            console.log(res)
+                            Swal.fire({
+                                icon: 'success',
+                                title: '수정되었습니다.',
+                                confirmButtonColor: Style.color2,
+                                confirmButtonText: '확인',
+                            })
+                            showData();
+                            handleClose();
+                        }
+                    ).catch((err) => {
+                        console.log(err)
+                        showErrorMessage(err);
+
+                    })
             }
+
+            const newBlob = new Blob([new Uint8Array(null)]);
+            const newFile = new File([newBlob], null)
+            let formData = new FormData();
+
+            for (let key in currentInfo) {
+                if (currentInfo[key] === null && key === "a_picture") {
+                    formData.append("a_picture", newFile);
+                } else if (currentInfo[key] === null) {
+                    formData.append(key, null);
+                } else if (key === "a_nickname") {
+                    formData.append("nickname", currentInfo[key]);
+                } else if (key === "a_pwd") {
+                    formData.append("pwd", currentInfo[key]);
+                } else {
+                    formData.append(key, currentInfo[key])
+                }
+            }
+
 
             if (emptyOrNot() === false && modify === true) {
                 Swal.fire({
@@ -201,18 +236,17 @@ const AgentManageTemplate = () => {
                     title: '수정하시겠습니까?',
                     showCancelButton: true,
                     confirmButtonText: '확인',
+                    confirmButtonColor: Style.color2,
                     cancelButtonText: '취소',
+                    cancelButtonColor: "#e55039",
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {...currentInfo,nickname: currentInfo.a_nickname, pwd: currentInfo.a_pwd}, {withCredentials: true})
+                        await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, formData, {withCredentials: true})
                             .then((res) => {
-                                pictureRequest().then((res) => {
-                                //     Swal.fire({
-                                //         icon: 'success',
-                                //         title: '수정되었습니다.',
-                                //         confirmButtonColor: Style.color2,
-                                //         confirmButtonText: '확인',
-                                //     })
+                                console.log(res)
+                                if (checkbox) {
+                                    deleteRequest()
+                                } else {
                                     Swal.fire({
                                         icon: 'success',
                                         title: '수정되었습니다.',
@@ -221,10 +255,9 @@ const AgentManageTemplate = () => {
                                     })
                                     showData();
                                     handleClose();
-                                }).catch((err) => {
-                                    console.log(err);
-                                })
+                                }
                             }).catch((err) => {
+                                console.log(err)
                                 showErrorMessage(err);
                             })
                     },
@@ -240,8 +273,11 @@ const AgentManageTemplate = () => {
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true,
                     preConfirm: async () => {
-                        console.log(currentInfo);
-                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {...currentInfo,nickname: currentInfo.a_nickname, pwd: currentInfo.a_pwd}, {withCredentials: true})
+                        await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {
+                            ...currentInfo,
+                            nickname: currentInfo.a_nickname,
+                            pwd: currentInfo.a_pwd
+                        }, {withCredentials: true})
                             .then((res) => {
                                 Swal.fire({
                                     icon: 'success',
@@ -270,8 +306,10 @@ const AgentManageTemplate = () => {
 
         const handleModifyButtonClick = (e) => {
             // button이 관리페이지의 정보 수정 버튼일 시...
+
             setModify(true)
             const changeContent = {...contents[parseInt(e.target.getAttribute("name"))]};
+
             if (changeContent['a_hasCar'] === "자차") {
                 changeContent['a_hasCar'] = true
             } else {
@@ -287,15 +325,14 @@ const AgentManageTemplate = () => {
                 let date = changeContent['a_receiveDate'].replaceAll('/', '-');
                 changeContent['a_receiveDate'] = date;
             }
+
             setCurrentInfo(changeContent);
             handleOpen();
-            console.log("inside")
         }
-        const handleAddButtonClick = (e) => {
 
+        const handleAddButtonClick = (e) => {
             setModify(false)
             setCurrentInfo({
-                agent_id: "",
                 a_name: "",
                 a_code: "",
                 a_ph: "",
@@ -305,14 +342,14 @@ const AgentManageTemplate = () => {
                 a_address: "",
                 a_equipment: "",
                 a_receiveDate: "",
-                a_status: ""
+                a_status: "",
             });
             handleOpen()
-
         }
+
         return (
             <Main>
-                <ListContainer width="1800px" headerContents={headerContent} contents={contents}
+                <ListContainer width="1800px" headerContents={headerContent} contents={listContents}
                                gridRatio="1fr 1fr 1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/>
                 <Modal
@@ -325,8 +362,7 @@ const AgentManageTemplate = () => {
                         <AgentManageInputForm handleClose={handleClose} currentInfo={currentInfo}
                                               handleInputFormChange={handleInputFormChange}
                                               handleClickSave={handleClickSave}
-                                              agent_id={currentInfo.agent_id}
-                        />
+                                              clickCheckboxFunction={clickCheckboxFunction} modify={modify}/>
                     </Box>
                 </Modal>
 

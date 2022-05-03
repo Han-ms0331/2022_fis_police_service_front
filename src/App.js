@@ -13,6 +13,7 @@ import {Style} from "./Style";
 import HopeListPage from "./components/pages/HopeListPage";
 
 
+
 function App() {
     /*
         날짜: 2022/01/19 3:40 오후
@@ -48,6 +49,7 @@ function App() {
             })
     };
     useEffect(() => {
+        console.log("inside")
         LoginStateInitialization();
     }, [])
 
@@ -59,6 +61,7 @@ function App() {
                     <Route exact path="/login" component={ThisLoginPage}/>
                     <Route exact path="/main" component={MainPage}/>
                     <Route exact path="/hope" component={HopeListPage}/>
+
                     <Route exact path="/schedule" component={SchedulePage}/>
                     <Route exact path="/manage">
                         {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}

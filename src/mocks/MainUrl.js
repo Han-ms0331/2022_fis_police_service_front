@@ -19,7 +19,7 @@ export const mainHandlers = [
             })
         )
     }),
-    rest.get('/main/center/search?c_name={value}&c_address={value} &c_ph={value}', async (req, res, ctx) => {
+    rest.get('/main/?c_name={value}&c_address={value} &c_ph={value}', async (req, res, ctx) => {
         return res(
             ctx.json({
                 lists: [
