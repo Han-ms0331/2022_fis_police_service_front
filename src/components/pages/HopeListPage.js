@@ -1,16 +1,13 @@
 import React from 'react';
 import Navigation from "../templates/Navigation";
-import ScheduleSidebar from "../templates/ScheduleSidebar";
-import {GoChevronLeft, GoChevronRight} from "react-icons/go";
-import ScheduleBody from "../templates/ScheduleBody";
 import styled from "styled-components";
-import HopeBodyTemplate from "../templates/HopeBodyTemplate";
+import CenterRequestTemplate from "../templates/CenterRequestTemplate";
 
 function HopeListPage(props) {
     return (
         <Main>
             <Navigation/>
-            <HopeBodyTemplate/>
+            <CenterRequestTemplate />
         </Main>    );
 }
 

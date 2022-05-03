@@ -1,13 +1,14 @@
 import React from 'react';
 import {Style} from "../../Style";
-import {
-    buttonUnstyledClasses,
-    TabPanelUnstyled,
-    TabsListUnstyled,
-    TabsUnstyled,
-    TabUnstyled,
-    tabUnstyledClasses
-} from "@mui/material";
+// import {
+//     // buttonUnstyledClasses,
+//     // TabsListUnstyled,
+//     // TabsUnstyled,
+//     // TabUnstyled,
+//     // tabUnstyledClasses
+// } from "@mui/material";
+import { TabsUnstyled, TabUnstyled, TabsListUnstyled, buttonUnstyledClasses, tabUnstyledClasses } from '@mui/base';
+
 import styled from "styled-components";
 
 /*
@@ -33,7 +34,7 @@ function RangeController(props) {
                 <TabsList>
                     <Tab onClick={props.onClickFunc}>Remove</Tab>
                     <Tab onClick={props.onClickFunc}>250m</Tab>
-                    <Tab onClick={props.onClickFunc}>500m</Tab>
+                    <Tab o nClick={props.onClickFunc}>500m</Tab>
                     <Tab onClick={props.onClickFunc}>1km</Tab>
                 </TabsList>
 

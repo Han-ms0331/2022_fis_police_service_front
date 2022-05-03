@@ -185,6 +185,7 @@ function MainBodyTemplate(props) {
                     setIsSearched(true);
                 })
                 .catch((err) => {
+                    console.log(err.response.status)
                     if (err.response.status === 401) {
                         Swal.fire({
                             icon: "warning",

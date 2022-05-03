@@ -12,7 +12,6 @@ import {isLoginedState, userAuthority} from "../../store/LoginStore";
 import {Style} from "../../Style";
 import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
-import ListAltIcon from '@mui/icons-material/ListAlt';
 /*
     날짜: 2022/01/10 3:59 오후
     작성자: 한명수
