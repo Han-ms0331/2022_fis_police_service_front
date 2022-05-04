@@ -11,6 +11,7 @@ import {useEffect} from "react";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Style} from "./Style";
 import HopeListPage from "./components/pages/HopeListPage";
+import React, {useState} from 'react';
 
 
 
@@ -22,7 +23,6 @@ function App() {
     */
     const [isLogined, setIsLgoined] = useRecoilState(isLoginedState);
     const [authority, setAuthority] = useRecoilState(userAuthority);
-
     /*
         날짜: 2022/01/19 3:42 오후
         작성자: 한명수
@@ -75,6 +75,6 @@ function App() {
 const THEME = createTheme({
     typography: {
         "fontFamily": Style.font,
-    }
+    },
 })
 export default App;

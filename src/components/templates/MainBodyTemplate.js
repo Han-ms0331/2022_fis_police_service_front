@@ -218,7 +218,7 @@ function MainBodyTemplate(props) {
 
     return (
         <Main>
-            <div style={{width: "100%", margin: "30px 0px 40px 90px"}}>
+            <div style={{display:"flex", justifyContent:"center", margin: "30px"}}>
                 <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange} loading={buttonLoading}/>
             </div>
             {
@@ -242,9 +242,9 @@ function MainBodyTemplate(props) {
                                 isEmpty ?
                                     <BodyContainer>검색 결과가 없습니다</BodyContainer>
                                     :
-                                    <ListContainer width="1500px" height="1000px" headerContents={headerContent}
+                                    <ListContainer width="1400px" height="1000px" headerContents={headerContent}
                                                    contents={centerList}
-                                                   gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
+                                                   gridRatio="1.5fr 3.5fr 1.8fr 1fr 1fr 1fr" buttonContent="선택"
                                                    onClickFunction={onSelect}/>
                                 :
                                 <BodyContainer>시설을 검색해 주세요</BodyContainer>
@@ -279,18 +279,14 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -28px;
-
-  & > div {
-    margin-left: 20px;
-    margin-bottom: 20px;
-  }
+  justify-content:center;
 `;
 
 const Right = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  
 `;
 
 const BodyContainer = styled.div`

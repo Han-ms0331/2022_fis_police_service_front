@@ -105,8 +105,8 @@ function CustomMap(props) {
                 }
                 style={{
                     // 지도의 크기
-                    width: "1200px",
-                    height: "880px",
+                    width: "800px",
+                    height: "800px",
                 }}
                 level={props.level} // 지도의 확대 레벨
                 onDragEnd={(map) => setPosition({ // 드래그로 인해 바뀌는 지도의 센터 값 추적
@@ -197,7 +197,7 @@ function CustomMap(props) {
 const Container = styled.div`
   position: relative;
   z-index: 1;
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
 
   & > div { /*지도*/
     z-index: 2;

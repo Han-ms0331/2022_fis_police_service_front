@@ -11,10 +11,10 @@ import {Style} from "../../Style";
 import question from "../media/question.png";
 import {ClipLoader} from "react-spinners";
 
-function AgentContainer({content= null, width=266, height=400, loading}) {
+function AgentContainer({content= null, width=300, height=400, loading}) {
     // content - 요원 정보가 담긴 배열을 받음. width와 height으로 컨테이너 크기 조절..
     return (
-        <Container style={{ overflowY: 'auto', margin: '0 0 20px 20px' }} width={width} height={height}>
+        <Container style={{ overflowY: 'auto'}} width={width} height={height}>
             <center>
                 <div style={{ fontSize: 20, margin: 8 }}>주변 현장요원</div>
                 {
@@ -37,6 +37,7 @@ function AgentContainer({content= null, width=266, height=400, loading}) {
 }
 
 const Container = styled.div`
+  box-sizing: border-box;
   border: 2px solid ${Style.color2};
   padding: 5px;
   background-color: ${Style.color1};

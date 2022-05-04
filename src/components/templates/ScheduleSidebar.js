@@ -132,9 +132,7 @@ const Items = styled.div` //sidebar를 담는 컨테이너
   align-items: center;
   justify-content: center;
   margin-top: 45px;
-  &> div{
-    margin-top: 20px;
-  }
+  
 `;
 
 

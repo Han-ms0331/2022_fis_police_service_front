@@ -108,12 +108,11 @@ const MapContainer = styled.div`
   &>div:nth-child(1){
     position: absolute;
     right: 10px;
-    top: -10px;
+    top: 10px;
     z-index: 3;
-    margin-top: -7px;
   }
   &>div:nth-child(2){
-    margin-top: -28px;
+    //margin-top: -28px;
     z-index: 2;
   }
 `;

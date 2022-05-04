@@ -257,7 +257,7 @@ export default function ScheduleTable(props) {
                         </div>
                         <TablePagination
                             size='large'
-                            rowsPerPageOptions={[{value: 10, label: '10개 보기'}, {value: 25, label: '25개 보기'}]}
+                            rowsPerPageOptions={[{value: 5, label: '5개 보기'}, {value: 10, label: '10개 보기'}, {value: 10, label: '20개 보기'}]}
                             component="div"
                             count={count}
                             showFirstButton={true}
