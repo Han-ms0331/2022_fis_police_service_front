@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {DataGrid, koKR} from '@mui/x-data-grid';
-import { makeStyles } from '@mui/styles';
+import {makeStyles} from '@mui/styles';
 import {Style} from "../../Style";
 
 const useStyles = makeStyles(() => ({
@@ -8,14 +8,14 @@ const useStyles = makeStyles(() => ({
         "& .MuiDataGrid-iconSeparator": {
             width: 0,
             height: 0,
-        },'&.MuiDataGrid-root .MuiDataGrid-cell:focus': {
+        }, '&.MuiDataGrid-root .MuiDataGrid-cell:focus': {
             outline: 'none',
-        },'&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus': {
+        }, '&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus': {
             outline: 'none',
-        },'&.MuiDataGrid-root .MuiDataGrid-sortIcon': {
+        }, '&.MuiDataGrid-root .MuiDataGrid-sortIcon': {
             color: "white"
-        },'.css-ptiqhd-MuiSvgIcon-root':{
-            color:"white"
+        }, '.css-ptiqhd-MuiSvgIcon-root': {
+            color: "white"
         }
 
     },
@@ -33,26 +33,27 @@ const useStyles = makeStyles(() => ({
 
 export default function AppliedCenterTable({columns, rows, loading}) {
     const classes = useStyles();
+    const [pageSize, setPageSize] = React.useState(15);
 
     return (
-        <div style={{width: "100%", height: "auto", minHeight: 400}}>
-            <DataGrid
-                classes={{
-                    root: classes.root,
-                    columnHeader: classes.header,
-                    cell: classes.cell,
-                }}
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                loading={loading}
-                hideFooterSelectedRowCount={true}
-                disableSelectionOnClick={true}
-                localeText={koKR.components.MuiDataGrid.defaultProps.localeText}
+        <DataGrid
+            classes={{
+                root: classes.root,
+                columnHeader: classes.header,
+                cell: classes.cell,
+            }}
+            rows={rows}
+            columns={columns}
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            rowsPerPageOptions={[5, 15, 20]}
+            pagination
+            loading={loading}
+            hideFooterSelectedRowCount={true}
+            disableSelectionOnClick={true}
+            localeText={koKR.components.MuiDataGrid.defaultProps.localeText}
 
-            />
-        </div>
+        />
 
     );
 }

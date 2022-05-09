@@ -30,8 +30,6 @@ function MapView(props) {
 
 
     const changeRange = (e) => { //range comtrol tab이 눌릴 때마다 정보 받아와서 centerInfo에 set
-        console.log(e.target.textContent)
-
         if (e.target.textContent === "250m") {
             setCenterInfo([])
             setRange(2)

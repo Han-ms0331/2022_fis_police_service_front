@@ -144,10 +144,10 @@ function CustomMap(props) {
                     }
                 /> {/*선택된 센터 표시*/}
 
-                {modifiedAround.map((position, index) => (
+                {modifiedAround.map((position) => (
                     <>
                         <CustomMarker
-                            key={index}
+                            key={position.center_id}
                             type={position.type}
                             position={position.latlng} // 마커를 표시할 위치
                             content={position.contents}
@@ -156,9 +156,9 @@ function CustomMap(props) {
                     </>
                 ))} {/*선택된 센터의 주변 시설 정보 표시*/}
 
-                {aInfo.map((position, index) => (
+                {aInfo.map((position) => (
                     <CustomMarker
-                        key={index}
+                        key={position.agent_id}
                         type={position.type}
                         position={position.latlng} // 마커를 표시할 위치
                         content={

@@ -12,12 +12,12 @@ import MainBodyTemplate from "../templates/MainBodyTemplate";
 
 function MainPage(props) {
     const [isSelected, setIsSelected] = useState(false);
-
+    const [agentListLoading, setAgentListLoading] = useState(null)
     return (
                 <Main>
                     <Navigation/>
-                    <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected}/>
-                    <MainInfoTemplate isSelected={isSelected}/>
+                    <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected} setAgentListLoading={setAgentListLoading} agentListLoading={agentListLoading}/>
+                    <MainInfoTemplate isSelected={isSelected} setAgentListLoading={setAgentListLoading}/>
                 </Main>
     );
 }

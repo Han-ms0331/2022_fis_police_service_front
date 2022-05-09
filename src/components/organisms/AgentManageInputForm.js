@@ -13,7 +13,6 @@ function AgentManageInputForm(props) {
 
     // This function will be triggered when the file field change
     const imageChange = (e) => {
-        console.log("hi")
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage(e.target.files[0]);
         }

@@ -18,10 +18,11 @@ import styled from "styled-components";
 import question from '../media/question.png';
 import NetworkConfig from "../../configures/NetworkConfig";
 import ScheduleInputForm from "../organisms/ScheduleInputForm";
-import {ClickedAgentInfo} from "../../store/SelectedAgentStore";
+import {ClickedAgentInfo, SelectedAgentInfo} from "../../store/SelectedAgentStore";
 import Swal from "sweetalert2";
 import '../atoms/swal.css'
 import {isLoginedState} from "../../store/LoginStore";
+import {SelectedDateState} from "../../store/SelectedDateStore";
 
 
 function MainInfoTemplate(props) {
@@ -55,11 +56,46 @@ function MainInfoTemplate(props) {
     const [selectedCenterInfo, setSelectedCenterInfo] = useRecoilState(SelectedCenterInfo);
     const [selectedCenterCallList, setSelectedCenterCallList] = useRecoilState(SelectedCenterCallList);
     const [selectedCenterScheduleList, setSelectedCenterScheduleList] = useRecoilState(SelectedCenterScheduleList);
-    const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList);
+    const [selectedCenterList, setSelectedCenterList] = useRecoilState(SelectedCenterList)
     const [clickedAgent, setClickedAgent] = useRecoilState(ClickedAgentInfo);
     const {isSelected} = props;
+    const [date, setDate] = useRecoilState(SelectedDateState);
+    const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
+
     const setIsLogined = useSetRecoilState(isLoginedState)
+
+    const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
+        let visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
+        await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
+            .then((res) => {
+                // console.log(res.data)
+                setSelectedAgentInfo(() => res.data.data);
+                props.setAgentListLoading(false);
+
+            }).catch((err) => {
+                if (err.response.status === 401) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "세션이 만료되었습니다.",
+                        text: "다시 로그인 해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    });
+                    setIsLogined(false);
+                } else {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "서버오류입니다.",
+                        text: "잠시 후 재시도해주세요.",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: Style.color2
+                    })
+                }
+            })
+    }
+
     const onRefresh = async (e) => {
+        props.setAgentListLoading(true);
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/select?center_id=${selectedCenterId}`, {withCredentials: true})
             .then((res) => {
                 setSelectedCenterId(res.data.data.center_id)//현재 선택된 시설의 아이디 전역으로 저장
@@ -70,11 +106,12 @@ function MainInfoTemplate(props) {
                     c_ph: res.data.data.c_ph,
                     c_people: res.data.data.c_people
                 })
-                setSelectedCenterCallList(res.data.data.callList.reverse())//callList에서 뜰 리스트 저장
+                // setSelectedCenterCallList(res.data.data.callList.reverse())//callList에서 뜰 리스트 저장
                 setSelectedCenterScheduleList(res.data.data.scheduleList.reverse())//scheduleList에서 뜰 내용 저장
-                setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
-                setSelectedCenterList(res.data.data.centerList);
+                // setCenterLocation([res.data.data.c_latitude, res.data.data.c_longitude]);
+                // setSelectedCenterList(res.data.data.centerList);
                 setClickedAgent({});
+                onData();
             })
             .catch((err) => {
                 if (err.response.status === 401) {
@@ -282,50 +319,50 @@ function MainInfoTemplate(props) {
 
     const
         sendMail = () => {
-        Swal.fire({
-            icon: "question",
-            title: '메일을 보내시겠습니까?',
-            showCancelButton: true,
-            confirmButtonText: '확인',
-            cancelButtonText: '취소',
-            showLoaderOnConfirm: true,
-            confirmButtonColor: Style.color2,
-            cancelButtonColor: "#e55039",
-            preConfirm: async () => {
-                await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/${center_id}/sendmail`, {withCredentials: true})
-                    .then((res) => {
-                        Swal.fire({
-                            icon: "success",
-                            title: "메일 전송에 성공하였습니다.",
-                            confirmButtonColor: Style.color2,
-                            confirmButtonText: "확인"
-                        })
-                    })
-                    .catch((err) => {
-                        if (err.response.status === 401) {
+            Swal.fire({
+                icon: "question",
+                title: '메일을 보내시겠습니까?',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                showLoaderOnConfirm: true,
+                confirmButtonColor: Style.color2,
+                cancelButtonColor: "#e55039",
+                preConfirm: async () => {
+                    await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/${center_id}/sendmail`, {withCredentials: true})
+                        .then((res) => {
                             Swal.fire({
-                                icon: "warning",
-                                title: "세션이 만료되었습니다.",
-                                text: "다시 로그인 해주세요.",
-                                confirmButtonText: "확인",
-                                confirmButtonColor: Style.color2
-                            });
-                            setIsLogined(false);
-                        } else {
-                            Swal.fire({
-                                icon: "error",
-                                title: "메일 전송에 실패하였습니다.",
-                                text: "잠시후에 다시 실행해 주세요.",
+                                icon: "success",
+                                title: "메일 전송에 성공하였습니다.",
                                 confirmButtonColor: Style.color2,
                                 confirmButtonText: "확인"
                             })
-                        }
-                    })
-            }
-            ,
-            allowOutsideClick: () => !Swal.isLoading()
-        })
-    }
+                        })
+                        .catch((err) => {
+                            if (err.response.status === 401) {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "세션이 만료되었습니다.",
+                                    text: "다시 로그인 해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                });
+                                setIsLogined(false);
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "메일 전송에 실패하였습니다.",
+                                    text: "잠시후에 다시 실행해 주세요.",
+                                    confirmButtonColor: Style.color2,
+                                    confirmButtonText: "확인"
+                                })
+                            }
+                        })
+                }
+                ,
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
 
 
     /*
@@ -334,7 +371,6 @@ function MainInfoTemplate(props) {
         작성내용: onClick- 각 버튼들이 클릭되었을 때 실행하는 로직을 담고있음
     */
     const onClick = (e) => {
-        console.log("onclick inside");
         console.log(e.target.name);
         if (e.target.name === "open") {
             if (callList[0] !== undefined) {
@@ -372,8 +408,7 @@ function MainInfoTemplate(props) {
             })
         } else if (e.target.name === "save") {
             onSaveCall();
-        }
-         else if (e.target.name === "schedule_save") {
+        } else if (e.target.name === "schedule_save") {
             onSaveSchedule()
 
         } else if (e.target.name === "schedule_cancel") {
@@ -384,85 +419,95 @@ function MainInfoTemplate(props) {
     return (
         isSelected ?
             <Container>
-                    <CenterInfo/>
-                    <InfoContainer type={"call"} content={callList} u_name={localStorage.getItem("userName")}/>
-                    {isOpen ?
-                        // <Modal // 연락기록 추가를 눌렀을 경우에 나타나는 모달창
-                        //     open={isOpen}
-                        //     aria-labelledby="modal-modal-title"
-                        //     aria-describedby="modal-modal-description"
-                        //     style={{zIndex: 3}}
-                        // >
-                        //     <Box sx={style}>
-                        //         <ModalContainer>
-                        <div style={{width: "610px", boxShadow: "3px 3px #dadada"}}>
-                            <CallInputForm data={callList[0]} currentInfo={currentInfo}
-                                           setCurrentInfo={setCurrentInfo}/>
-                            <div style={{width: "610px", margin: "50px 0px", display: "flex", justifyContent: "space-around"}}>
-                                <CustomButton name="cancel" type="normal" width="150px" height="35px"
+                <CenterInfo/>
+                <InfoContainer type={"call"} content={callList} u_name={localStorage.getItem("userName")}/>
+                {isOpen ?
+                    // <Modal // 연락기록 추가를 눌렀을 경우에 나타나는 모달창
+                    //     open={isOpen}
+                    //     aria-labelledby="modal-modal-title"
+                    //     aria-describedby="modal-modal-description"
+                    //     style={{zIndex: 3}}
+                    // >
+                    //     <Box sx={style}>
+                    //         <ModalContainer>
+                    <div style={{width: "610px", boxShadow: "3px 3px #dadada"}}>
+                        <CallInputForm data={callList[0]} currentInfo={currentInfo}
+                                       setCurrentInfo={setCurrentInfo}/>
+                        <div style={{
+                            width: "610px",
+                            margin: "50px 0px",
+                            display: "flex",
+                            justifyContent: "space-around"
+                        }}>
+                            <CustomButton name="cancel" type="normal" width="150px" height="35px"
+                                          borderRadius="3px"
+                                          color={Style.color1}
+                                          backgroundColor={Style.color2} content="취소" onClick={onClick}/>
+                            <CustomButton name="save" type="normal" width="150px" height="35px"
+                                          borderRadius="3px"
+                                          color={Style.color1}
+                                          backgroundColor={Style.color2} content="저장" onClick={onClick}/>
+                        </div>
+                    </div>
+                    //         </ModalContainer>
+                    //     </Box>
+                    // </Modal>
+                    :
+                    <div style={{width: "610px", display: "flex", justifyContent: "space-around"}}>
+                        <CustomButton name="open" type="normal" width="150px" height="35px" borderRadius="3px"
+                                      color={Style.color1}
+                                      backgroundColor={Style.color2} content="연락기록 추가" onClick={onClick}/>
+                        <CustomButton name="mail" type="normal" width="150px" height="35px" borderRadius="3px"
+                                      color={Style.color1}
+                                      backgroundColor={Style.color2} content="메일 전송" onClick={onClick}/>
+                    </div>
+                }
+                <InfoContainer type={"apply"} content={scheduleList}/>
+                <div style={{
+                    width: "610px",
+                    margin: "30px 0px 0px 0px",
+                    display: "flex",
+                    justifyContent: "space-around"
+                }}>
+                    <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
+                                  color={Style.color1}
+                                  backgroundColor={Style.color2} content="일정 추가" fontSize={"25px"} onClick={() => {
+                        if (clickedAgent.agent_id === undefined) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "현장요원을 선택해주세요.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                        } else {
+                            setIsScheduleOpen(true);
+                        }
+                    }}/>
+                </div>
+                <Modal
+                    open={isScheduleOpen}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    style={{zIndex: 3}}
+                >
+                    <Box sx={style}>
+                        <ModalContainer>
+                            <ScheduleInputForm data={callList[0]} currentInfo={currentScheduleInfo}
+                                               setCurrentInfo={setCurrentScheduleInfo}/>
+                            <div style={{margin: "150px 0px", display: "flex", justifyContent: "space-around"}}>
+                                <CustomButton name="schedule_cancel" type="normal" width="150px" height="35px"
                                               borderRadius="3px"
                                               color={Style.color1}
                                               backgroundColor={Style.color2} content="취소" onClick={onClick}/>
-                                <CustomButton name="save" type="normal" width="150px" height="35px"
+                                <CustomButton name="schedule_save" type="normal" width="150px" height="35px"
                                               borderRadius="3px"
                                               color={Style.color1}
                                               backgroundColor={Style.color2} content="저장" onClick={onClick}/>
-                            </div>
-                        </div>
-                        //         </ModalContainer>
-                        //     </Box>
-                        // </Modal>
-                        :
-                        <div style={{width: "610px", display: "flex", justifyContent: "space-around"}}>
-                            <CustomButton name="open" type="normal" width="150px" height="35px" borderRadius="3px"
-                                          color={Style.color1}
-                                          backgroundColor={Style.color2} content="연락기록 추가" onClick={onClick}/>
-                            <CustomButton name="mail" type="normal" width="150px" height="35px" borderRadius="3px"
-                                          color={Style.color1}
-                                          backgroundColor={Style.color2} content="메일 전송" onClick={onClick}/>
-                        </div>
-                    }
-                    <InfoContainer type={"apply"} content={scheduleList}/>
-                    <div style={{width: "610px", margin: "30px 0px 0px 0px", display: "flex", justifyContent: "space-around"}}>
-                        <CustomButton name="add_schedule" type="reverse" width="300px" height="50px" borderRadius="3px"
-                                      color={Style.color1}
-                                      backgroundColor={Style.color2} content="일정 추가" fontSize={"25px"} onClick={() => {
-                            if (clickedAgent.agent_id === undefined) {
-                                Swal.fire({
-                                    icon: "warning",
-                                    title: "현장요원을 선택해주세요.",
-                                    confirmButtonText: "확인",
-                                    confirmButtonColor: Style.color2
-                                });
-                            } else {
-                                setIsScheduleOpen(true);
-                            }
-                        }}/>
-                    </div>
-                    <Modal
-                        open={isScheduleOpen}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                        style={{zIndex: 3}}
-                    >
-                        <Box sx={style}>
-                            <ModalContainer>
-                                <ScheduleInputForm data={callList[0]} currentInfo={currentScheduleInfo}
-                                                   setCurrentInfo={setCurrentScheduleInfo}/>
-                                <div style={{margin: "150px 0px", display: "flex", justifyContent: "space-around"}}>
-                                    <CustomButton name="schedule_cancel" type="normal" width="150px" height="35px"
-                                                  borderRadius="3px"
-                                                  color={Style.color1}
-                                                  backgroundColor={Style.color2} content="취소" onClick={onClick}/>
-                                    <CustomButton name="schedule_save" type="normal" width="150px" height="35px"
-                                                  borderRadius="3px"
-                                                  color={Style.color1}
-                                                  backgroundColor={Style.color2} content="저장" onClick={onClick}/>
 
-                                </div>
-                            </ModalContainer>
-                        </Box>
-                    </Modal>
+                            </div>
+                        </ModalContainer>
+                    </Box>
+                </Modal>
             </Container>
             :
             <RightContainer>
@@ -485,9 +530,9 @@ const Container = styled.div`
     margin-top: 30px;
     box-sizing: border-box;
   }
-  
-  & > div:first-child{
-    margin-top :0px;
+
+  & > div:first-child {
+    margin-top: 0px;
   }
 `;
 const style = { //모딜창 스타일
