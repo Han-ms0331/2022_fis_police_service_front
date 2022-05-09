@@ -67,6 +67,11 @@ function CenterRequestTemplate(props) {
                     </strong>
                 )
             },
+            sortComparator: (v1, v2) => {
+                let a = v1.complete===null?"null":v1.complete;
+                let b= v2.complete===null?"null":v2.complete;
+                return a.localeCompare(b)
+            },
             disableClickEventBubbling: true,
 
         }
@@ -120,6 +125,11 @@ function CenterRequestTemplate(props) {
                             complete: data.complete
                         }
                     })
+                })
+                tmp.sort((a) => {
+                    if (a.hope.complete !== null) {
+                        return 1;
+                    } else return -1;
                 })
                 setContents(tmp);
                 setLoading(false)
