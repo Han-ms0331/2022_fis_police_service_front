@@ -11,6 +11,7 @@ import {useEffect} from "react";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Style} from "./Style";
 import HopeListPage from "./components/pages/HopeListPage";
+import React, {useState} from 'react';
 
 
 
@@ -22,7 +23,6 @@ function App() {
     */
     const [isLogined, setIsLgoined] = useRecoilState(isLoginedState);
     const [authority, setAuthority] = useRecoilState(userAuthority);
-
     /*
         날짜: 2022/01/19 3:42 오후
         작성자: 한명수
@@ -32,7 +32,6 @@ function App() {
     const LoginStateInitialization = async () => {
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/checkLogin`, {withCredentials: true})       //http가 보안 취약하다고 하는거 무시, withCredential:true는 모든 api에 추가 get은 url바로뒤에 ,찍고 post patch는 body뒤에
             .then((res) => {
-                console.log(res.data);   // sc: "success", u_auth:"ADMIN"
                 const [sc, u_auth] = [res.data.sc, res.data.u_auth];
                 if (sc === "success") {
                     setAuthority(u_auth);
@@ -43,13 +42,11 @@ function App() {
                 }
 
             }).catch((err) => {
-                console.log(err);
                 setIsLgoined(false);
                 setAuthority("");
             })
     };
     useEffect(() => {
-        console.log("inside")
         LoginStateInitialization();
     }, [])
 
@@ -75,6 +72,6 @@ function App() {
 const THEME = createTheme({
     typography: {
         "fontFamily": Style.font,
-    }
+    },
 })
 export default App;

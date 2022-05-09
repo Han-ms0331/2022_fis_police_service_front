@@ -38,7 +38,6 @@ function MainBodyTemplate(props) {
     const [selectedAgentInfo, setSelectedAgentInfo] = useRecoilState(SelectedAgentInfo);
     const setClickedAgent = useSetRecoilState(ClickedAgentInfo);
     const setIsLogined = useSetRecoilState(isLoginedState)
-    const [loading, setLoading] = useState(null);
     const [buttonLoading, setButtonLoading] = useState(null);
     const [selectedLoading, setSelectedLoading] = useState(null);
 
@@ -48,11 +47,11 @@ function MainBodyTemplate(props) {
     const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
 
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
-        setLoading(true);
+        props.setAgentListLoading(true);
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/${selectedCenterId}/date?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
                 setSelectedAgentInfo(() => res.data.data);
-                setLoading(false);
+                props.setAgentListLoading(false);
             }).catch((err) => {
                 if (err.response.status === 401) {
                     Swal.fire({
@@ -75,12 +74,14 @@ function MainBodyTemplate(props) {
             })
     }
 
+
     useEffect(() => {
         setClickedAgent({});
         if (selectedCenterId !== "") {
             onData(); // 날짜를 선택한 경우에 함수 실행
         }
     }, [date])
+
 
     useEffect(() => {
         setSelectedAgentInfo(null);
@@ -164,7 +165,6 @@ function MainBodyTemplate(props) {
             setButtonLoading(true);
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${currentInfo.c_name}&c_address=${currentInfo.c_address}&c_ph=${currentInfo.c_ph}`, {withCredentials: true})
                 .then((res) => {
-                    console.log(res.data);
                     setButtonLoading(false);
 
                     let buffer = res.data.data
@@ -218,7 +218,7 @@ function MainBodyTemplate(props) {
 
     return (
         <Main>
-            <div style={{width: "100%", margin: "30px 0px 40px 90px"}}>
+            <div style={{display: "flex", justifyContent: "center", margin: "30px"}}>
                 <SearchForm onSubmitFunction={onSearch} setSearch={handleSearchInputChange} loading={buttonLoading}/>
             </div>
             {
@@ -229,7 +229,7 @@ function MainBodyTemplate(props) {
                         <Container>
                             <Left>
                                 <CustomCalendar className="calendar" setDate={setDate}/>
-                                <AgentContainer content={selectedAgentInfo} loading={loading}/>
+                                <AgentContainer content={selectedAgentInfo} loading={props.agentListLoading}/>
                             </Left>
                             <Right>
                                 <MapView thisCenter={onSearch} thisCenterInfo={selectedCenterInfo}
@@ -242,9 +242,9 @@ function MainBodyTemplate(props) {
                                 isEmpty ?
                                     <BodyContainer>검색 결과가 없습니다</BodyContainer>
                                     :
-                                    <ListContainer width="1500px" height="1000px" headerContents={headerContent}
+                                    <ListContainer width="1100px" height="1000px" headerContents={headerContent}
                                                    contents={centerList}
-                                                   gridRatio="1fr 3fr 2fr 1fr 1fr 1fr" buttonContent="선택"
+                                                   gridRatio="1.8fr 3.5fr 1.5fr 0.7fr 0.7fr 1fr" buttonContent="선택"
                                                    onClickFunction={onSelect}/>
                                 :
                                 <BodyContainer>시설을 검색해 주세요</BodyContainer>
@@ -279,18 +279,14 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -28px;
-
-  & > div {
-    margin-left: 20px;
-    margin-bottom: 20px;
-  }
+  justify-content: center;
 `;
 
 const Right = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
 `;
 
 const BodyContainer = styled.div`

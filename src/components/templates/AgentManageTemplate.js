@@ -28,13 +28,10 @@ const AgentManageTemplate = () => {
         const [checkbox, setCheckbox] = useState(false)
 
         const clickCheckboxFunction = (e) => {
-            console.log(e.target.checked)
+            // console.log(e.target.checked)
             setCheckbox(e.target.checked);
         }
 
-        useEffect(() => {
-            console.log(checkbox)
-        }, [checkbox])
 
         const setIsLogined = useSetRecoilState(isLoginedState);
 
@@ -42,7 +39,7 @@ const AgentManageTemplate = () => {
         const showData = async () => {
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {withCredentials: true})
                 .then((res) => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     let tmp = [];
                     let a, b;
 
@@ -109,7 +106,7 @@ const AgentManageTemplate = () => {
 
 
         useEffect(() => {
-            console.log(currentInfo)
+            // console.log(currentInfo)
         }, [currentInfo])
 
 
@@ -123,7 +120,7 @@ const AgentManageTemplate = () => {
         const handleInputFormChange = (e) => {
             const {value, name, files} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
             if (e.target.name === "a_picture") {
-                console.log(files.type)
+                // console.log(files.type)
                 setCurrentInfo({
                     ...currentInfo,
                     a_picture: files[0],
