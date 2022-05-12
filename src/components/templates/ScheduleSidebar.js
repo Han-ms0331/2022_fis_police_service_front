@@ -5,12 +5,13 @@ import DateContainer from "../organisms/DateContainer";
 import MessangerContainer from "../organisms/MessangerContainer";
 import {Style} from "../../Style";
 import axios from "axios";
-import {useSetRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
 import {isLoginedState} from "../../store/LoginStore";
+import {SelectedDateScheduleStore} from "../../store/SelectedDateScheduleStore";
 
 /*
 날짜: 2022/01/11 3:59 PM
@@ -35,7 +36,7 @@ import {isLoginedState} from "../../store/LoginStore";
 */
 
 const ScheduleSidebar = ({ setLoading }) => {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useRecoilState(SelectedDateScheduleStore);
     const setSearchInput = useSetRecoilState(searchKeyword);
     const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`;
     const setRows = useSetRecoilState(dateSelectedRows); // 날짜를 선택하기 전인 경우이므로 맨 처음 여기서 default로 dateSelectedRows에 오늘 날짜의 Rows를 설정해줘야한다. -> onChange에 넣지말고 useEffect?

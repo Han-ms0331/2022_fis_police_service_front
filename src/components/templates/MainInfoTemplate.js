@@ -280,7 +280,8 @@ function MainInfoTemplate(props) {
         작성내용: sendMail - 서버와 메일전송 통신을 하는 부분
     */
 
-    const sendMail = () => {
+    const
+        sendMail = () => {
         Swal.fire({
             icon: "question",
             title: '메일을 보내시겠습니까?',

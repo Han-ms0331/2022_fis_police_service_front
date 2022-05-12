@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
@@ -14,6 +14,8 @@ import '../atoms/swal.css'
 import CustomSpinner from "../atoms/CustomSpinner";
 import {useSetRecoilState} from "recoil";
 import {isLoginedState} from "../../store/LoginStore";
+import {ClipLoader} from "react-spinners";
+import {Button} from "@mui/material";
 
 
 function CenterManageTemp(props) {
@@ -46,39 +48,36 @@ function CenterManageTemp(props) {
     const [modify, setModify] = useState();
     const [loading, setLoading] = useState(false);
     const setIsLogined = useSetRecoilState(isLoginedState)
-
+    const [file, setFile] = useState(null);
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     async function apiGetCall(c_name, c_address, c_ph) {
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
-                if (res.data.data.length === 0) {
-                    setIsEmpty(true);
-                } else {
-                    let tmp = [];
-                    let a;
-                    res.data.data.forEach((list) => {
-                        if (list.participation === "PARTICIPATION") {
-                            a = "참여"
-                        } else if (list.participation === "REJECT") {
-                            a = "거부"
-                        } else if (list.participation === "HOLD") {
-                            a = "보류"
-                        } else {
-                            a = "없음"
-                        }
-                        tmp.push({
-                            center_id: list.center_id,
-                            c_name: list.c_name,
-                            participation: a,
-                            c_ph: list.c_ph,
-                            c_address: list.c_address
-                        })
+
+                let tmp = [];
+                let a;
+                res.data.data.forEach((list) => {
+                    if (list.participation === "PARTICIPATION") {
+                        a = "참여"
+                    } else if (list.participation === "REJECT") {
+                        a = "거부"
+                    } else if (list.participation === "HOLD") {
+                        a = "보류"
+                    } else {
+                        a = "없음"
+                    }
+                    tmp.push({
+                        center_id: list.center_id,
+                        c_name: list.c_name,
+                        participation: a,
+                        c_ph: list.c_ph,
+                        c_address: list.c_address
                     })
-                    setContents(tmp);
-                    setIsEmpty(false);
-                }
+                })
+                setContents(tmp);
+                setIsEmpty(false);
                 setIsSearched(true);
                 setLoading(false);
             })
@@ -92,6 +91,10 @@ function CenterManageTemp(props) {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
+                } else if (err.response.status === 400) {
+                    setIsEmpty(true);
+                    setIsSearched(true);
+                    setLoading(false);
                 } else {
                     Swal.fire({
                         icon: "warning",
@@ -289,12 +292,80 @@ function CenterManageTemp(props) {
 
     }
 
+    const inputEl = useRef(null)
+
+    const fileUpload = (e) => {
+        Swal.fire({
+            icon: "question",
+            title: `${e.target.files[0].name} 파일을\n 업로드 하시겠습니까?`,
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            confirmButtonColor: Style.color2,
+            cancelButtonText: '취소',
+            cancelButtonColor: "#e55039",
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                let formData = new FormData();
+                formData.append("excelFile", e.target.files[0]);
+
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/excel/read`, formData, {withCredentials: true})
+                    .then((res) => {
+                            Swal.fire({
+                                icon: "success",
+                                title: `파일 업로드에 성공하였습니다.`,
+                                confirmButtonText: '확인',
+                                confirmButtonColor: Style.color2,
+                            })
+                        }
+                    )
+                    .catch((err) => {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: `파일 업로드에 실패하였습니다.`,
+                            text: "다시 시도해주세요",
+                            confirmButtonText: '확인',
+                            confirmButtonColor: Style.color2,
+                        })
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            console.log("hi")
+            inputEl.current.value = null;
+        })
+
+    }
+
     return (
         <Main>
-            <div style={{margin: "20px 0px 30px 0px"}}>
+            <div style={{margin: "20px 0px 30px 0px", display: "flex"}}>
                 <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
                             height="100%"/> {/*시설정보를 검색하는 부분*/}
+                <div style={{marginLeft: 20}}>
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{
+                            width: "130px",
+                            height: "42px",
+                            backgroundColor: `${Style.color2}`,
+                            color: `${Style.color1}`,
+                            borderRadius: "10px"
+                        }}
+                    >
+                        파일업로드
+                        <input
+                            ref={inputEl}
+                            type="file"
+                            hidden
+                            onChange={fileUpload}
+
+                        />
+                    </Button>
+                </div>
             </div>
+
 
             {loading === true ? <CustomSpinner/>
                 :

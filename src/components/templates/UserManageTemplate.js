@@ -283,6 +283,7 @@ const UserManageTemplate = () => {
             // 콜직원 수정버튼 클릭시
             setModify(true);
             const changeContent = {...contents[parseInt(e.target.getAttribute('name'))]};
+            console.log(changeContent);
             delete changeContent['today_call_num']; /*오늘통화건수 제외*/
             delete changeContent['average_call']; /*평균통화건수 제외*/
             let a;
