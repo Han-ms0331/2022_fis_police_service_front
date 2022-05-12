@@ -47,6 +47,7 @@ export const viewResultRows = selector({
                     (String(el.estimate_num) + '명').includes(keywordProps.c_name)
                     : keywordProps.c_name === "") &&
                 // c_name, c_address, c_ph, visit_time, estimate_num 통합 검색
+                // (el.accept !== null ? el.accept.includes(keywordProps.accept) : keywordProps.accept === "") &&
                 (el.total_etc !== null ? el.total_etc.includes(keywordProps.total_etc) : keywordProps.total_etc === "") &&
                 (el.modified_info !== null ? el.modified_info.includes(keywordProps.modified_info) : keywordProps.modified_info === "") &&
                 (el.call_check !== null ? el.call_check.includes(keywordProps.call_check) : keywordProps.call_check === "")

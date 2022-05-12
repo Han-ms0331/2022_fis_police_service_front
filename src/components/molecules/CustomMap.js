@@ -105,8 +105,8 @@ function CustomMap(props) {
                 }
                 style={{
                     // 지도의 크기
-                    width: "1200px",
-                    height: "880px",
+                    width: "800px",
+                    height: "800px",
                 }}
                 level={props.level} // 지도의 확대 레벨
                 onDragEnd={(map) => setPosition({ // 드래그로 인해 바뀌는 지도의 센터 값 추적
@@ -144,10 +144,10 @@ function CustomMap(props) {
                     }
                 /> {/*선택된 센터 표시*/}
 
-                {modifiedAround.map((position, index) => (
+                {modifiedAround.map((position) => (
                     <>
                         <CustomMarker
-                            key={index}
+                            key={position.center_id}
                             type={position.type}
                             position={position.latlng} // 마커를 표시할 위치
                             content={position.contents}
@@ -156,9 +156,9 @@ function CustomMap(props) {
                     </>
                 ))} {/*선택된 센터의 주변 시설 정보 표시*/}
 
-                {aInfo.map((position, index) => (
+                {aInfo.map((position) => (
                     <CustomMarker
-                        key={index}
+                        key={position.agent_id}
                         type={position.type}
                         position={position.latlng} // 마커를 표시할 위치
                         content={
@@ -197,7 +197,7 @@ function CustomMap(props) {
 const Container = styled.div`
   position: relative;
   z-index: 1;
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
 
   & > div { /*지도*/
     z-index: 2;

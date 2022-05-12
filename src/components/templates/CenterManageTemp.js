@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import SearchForm from "../organisms/SearchForm";
 import ListContainer from "../organisms/ListContainer";
@@ -14,6 +14,8 @@ import '../atoms/swal.css'
 import CustomSpinner from "../atoms/CustomSpinner";
 import {useSetRecoilState} from "recoil";
 import {isLoginedState} from "../../store/LoginStore";
+import {ClipLoader} from "react-spinners";
+import {Button} from "@mui/material";
 
 
 function CenterManageTemp(props) {
@@ -38,36 +40,44 @@ function CenterManageTemp(props) {
         center_id: "",
         c_name: "",
         c_ph: "",
-        c_address: ""
+        c_address: "",
+        participation: ""
     })
 
     //정보 수정 버튼 눌렀을 때는 true로, 시설 추가 눌렀을 때는 false로 set하는 modify 상태에 대한 정의
     const [modify, setModify] = useState();
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const setIsLogined = useSetRecoilState(isLoginedState)
-
+    const [file, setFile] = useState(null);
 
     // 여기서 부터 함수 정의
     // 검색 버튼 눌렀을 때 list를 보여주는 함수 정의
     async function apiGetCall(c_name, c_address, c_ph) {
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center/search?c_name=${c_name}&c_address=${c_address}&c_ph=${c_ph}`, {withCredentials: true})
             .then((res) => {
-                if(res.data.data.length === 0){
-                    setIsEmpty(true);
-                } else {
-                    let tmp = [];
-                    res.data.data.forEach((list) => {
-                        tmp.push({
-                            center_id: list.center_id,
-                            c_name: list.c_name,
-                            participation: list.participation,
-                            c_ph: list.c_ph,
-                            c_address: list.c_address
-                        })
+
+                let tmp = [];
+                let a;
+                res.data.data.forEach((list) => {
+                    if (list.participation === "PARTICIPATION") {
+                        a = "참여"
+                    } else if (list.participation === "REJECT") {
+                        a = "거부"
+                    } else if (list.participation === "HOLD") {
+                        a = "보류"
+                    } else {
+                        a = "없음"
+                    }
+                    tmp.push({
+                        center_id: list.center_id,
+                        c_name: list.c_name,
+                        participation: a,
+                        c_ph: list.c_ph,
+                        c_address: list.c_address
                     })
-                    setContents(tmp);
-                    setIsEmpty(false);
-                }
+                })
+                setContents(tmp);
+                setIsEmpty(false);
                 setIsSearched(true);
                 setLoading(false);
             })
@@ -81,7 +91,11 @@ function CenterManageTemp(props) {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
-                }else{
+                } else if (err.response.status === 400) {
+                    setIsEmpty(true);
+                    setIsSearched(true);
+                    setLoading(false);
+                } else {
                     Swal.fire({
                         icon: "warning",
                         title: "서버오류입니다.",
@@ -151,6 +165,7 @@ function CenterManageTemp(props) {
         handleOpen();
     }
 
+
 // inputForm에서 저장버튼 눌렀을 때에 대한 함수 정의
     const handleClickSave = async () => {
         const emptyOrNot = () => {
@@ -181,7 +196,12 @@ function CenterManageTemp(props) {
                 cancelButtonText: '취소',
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
-                    await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center`, currentInfo, {withCredentials: true})
+                    await axios.patch(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center`, {
+                        center_id: currentInfo.center_id,
+                        c_name: currentInfo.c_name,
+                        c_ph: currentInfo.c_ph,
+                        c_address: currentInfo.c_address
+                    }, {withCredentials: true})
                         .then((res) => {
                             const {c_name, c_address, c_ph} = searchInput;
                             apiGetCall(c_name, c_address, c_ph);
@@ -202,7 +222,7 @@ function CenterManageTemp(props) {
                                     confirmButtonColor: Style.color2
                                 });
                                 setIsLogined(false);
-                            }else{
+                            } else {
                                 Swal.fire({
                                     icon: "warning",
                                     title: "서버오류입니다.",
@@ -247,7 +267,7 @@ function CenterManageTemp(props) {
                                     confirmButtonColor: Style.color2
                                 });
                                 setIsLogined(false);
-                            }else{
+                            } else {
                                 Swal.fire({
                                     icon: "warning",
                                     title: "서버오류입니다.",
@@ -272,12 +292,79 @@ function CenterManageTemp(props) {
 
     }
 
+    const inputEl = useRef(null)
+
+    const fileUpload = (e) => {
+        Swal.fire({
+            icon: "question",
+            title: `${e.target.files[0].name} 파일을\n 업로드 하시겠습니까?`,
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            confirmButtonColor: Style.color2,
+            cancelButtonText: '취소',
+            cancelButtonColor: "#e55039",
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                let formData = new FormData();
+                formData.append("excelFile", e.target.files[0]);
+
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/excel/read`, formData, {withCredentials: true})
+                    .then((res) => {
+                            Swal.fire({
+                                icon: "success",
+                                title: `파일 업로드에 성공하였습니다.`,
+                                confirmButtonText: '확인',
+                                confirmButtonColor: Style.color2,
+                            })
+                        }
+                    )
+                    .catch((err) => {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: `파일 업로드에 실패하였습니다.`,
+                            text: "다시 시도해주세요",
+                            confirmButtonText: '확인',
+                            confirmButtonColor: Style.color2,
+                        })
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            inputEl.current.value = null;
+        })
+
+    }
+
     return (
         <Main>
-            <div style={{margin: "20px 0px 30px 0px"}}>
+            <div style={{margin: "20px 0px 30px 0px", display: "flex"}}>
                 <SearchForm onSubmitFunction={showList} setSearch={handleSearchInputChange} width="100%"
                             height="100%"/> {/*시설정보를 검색하는 부분*/}
+                <div style={{marginLeft: 20}}>
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{
+                            width: "130px",
+                            height: "42px",
+                            backgroundColor: `${Style.color2}`,
+                            color: `${Style.color1}`,
+                            borderRadius: "10px"
+                        }}
+                    >
+                        파일업로드
+                        <input
+                            ref={inputEl}
+                            type="file"
+                            hidden
+                            onChange={fileUpload}
+
+                        />
+                    </Button>
+                </div>
             </div>
+
 
             {loading === true ? <CustomSpinner/>
                 :

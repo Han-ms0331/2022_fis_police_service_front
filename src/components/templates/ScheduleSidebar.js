@@ -5,12 +5,13 @@ import DateContainer from "../organisms/DateContainer";
 import MessangerContainer from "../organisms/MessangerContainer";
 import {Style} from "../../Style";
 import axios from "axios";
-import {useSetRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import {dateSelectedRows} from "../../store/DateSelectedRowsStore";
 import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
 import {isLoginedState} from "../../store/LoginStore";
+import {SelectedDateScheduleStore} from "../../store/SelectedDateScheduleStore";
 
 /*
 날짜: 2022/01/11 3:59 PM
@@ -34,17 +35,33 @@ import {isLoginedState} from "../../store/LoginStore";
         - onData in useEffect
 */
 
-const ScheduleSidebar = ({ setLoading }) => {
-    const [date, setDate] = useState(new Date());
+const ScheduleSidebar = ({setLoading}) => {
+    const [date, setDate] = useRecoilState(SelectedDateScheduleStore);
     const setSearchInput = useSetRecoilState(searchKeyword);
-    const visit_date = `${date.getFullYear()}-${date.getMonth()+1<10 ? `0${date.getMonth()+1}` : date.getMonth()+1}-${date.getDate()<10 ? `0${date.getDate()}` : date.getDate()}`;
+    const visit_date = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
     const setRows = useSetRecoilState(dateSelectedRows); // 날짜를 선택하기 전인 경우이므로 맨 처음 여기서 default로 dateSelectedRows에 오늘 날짜의 Rows를 설정해줘야한다. -> onChange에 넣지말고 useEffect?
     const setIsLogined = useSetRecoilState(isLoginedState)
+
+    useEffect(() => {
+        return () => {
+            setDate(new Date())
+        }
+    }, [])
+
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         setLoading(true);
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule?date=${visit_date}`, {withCredentials: true})
             .then((res) => {
-                setRows(res.data.data);
+                console.log(res.data.data)
+                let datas = res.data.data;
+                let tmp = [];
+                res.data.data.forEach((list) => {
+                    tmp.push({
+                        ...list,
+                        total_etc: `${list.agent_etc}, ${list.center_etc}`
+                    })
+                })
+                setRows(tmp);
                 setLoading(false);
             })
             .catch((err) => {
@@ -57,7 +74,7 @@ const ScheduleSidebar = ({ setLoading }) => {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
-                }else{
+                } else {
                     Swal.fire({
                         icon: "warning",
                         title: "서버오류입니다.",
@@ -94,31 +111,21 @@ const ScheduleSidebar = ({ setLoading }) => {
     return (
         <Container>
             <Items>
-            <CustomCalendar className="calendar" setDate={setDate} />
-            <DateContainer date={date}/>
-            <MessangerContainer/>
+                <CustomCalendar className="calendar" setDate={setDate}/>
+                <DateContainer date={date}/>
+                <MessangerContainer/>
             </Items>
         </Container>
     );
 };
 
 // style
-const Items = styled.div` //sidebar를 담는 컨테이너
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 35px;
-  &> div{
-    margin-top: 20px;
-  }
-`;
-
 const Container = styled.div`
-  padding: 0 15px;
+  //padding: 0 2px;
   position: relative;
   transition: 1s ease-out;
 
-  & .icon {    /*화살표 아이콘*/
+  & .icon { /*화살표 아이콘*/
     color: #999999;
     font-size: 29px;
     position: absolute;
@@ -131,5 +138,15 @@ const Container = styled.div`
     cursor: pointer;
   }
 `;
+
+const Items = styled.div` //sidebar를 담는 컨테이너
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 45px;
+
+`;
+
 
 export default ScheduleSidebar;

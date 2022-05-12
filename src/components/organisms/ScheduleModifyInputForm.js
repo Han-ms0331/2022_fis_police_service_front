@@ -50,7 +50,8 @@ function ScheduleModifyInputForm(props) {
     const onData = async () => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수
         await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/schedule?date=${input.visit_date}`, {withCredentials: true})
             .then((res) => {
-                setRows(res.data.data);
+                let datas = res.data.data;
+                setRows(datas);
             })
             .catch((err) => {
                 if (err.response.status === 401) {
@@ -62,7 +63,7 @@ function ScheduleModifyInputForm(props) {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
-                }else{
+                } else {
                     Swal.fire({
                         icon: "warning",
                         title: "서버오류입니다.",
@@ -99,7 +100,8 @@ function ScheduleModifyInputForm(props) {
                     estimate_num: input.estimate_num,
                     modified_info: input.modified_info,
                     call_check: input.call_check,
-                    total_etc: input.total_etc
+                    total_etc: input.total_etc,
+                    accept: input.accept,
                 }, {withCredentials: true})
                     .then((res) => {
                             onData();
@@ -114,24 +116,24 @@ function ScheduleModifyInputForm(props) {
                         }
                     )
                     .catch((err) => {
-                        if (err.response.status === 401) {
-                            Swal.fire({
-                                icon: "warning",
-                                title: "세션이 만료되었습니다.",
-                                text: "다시 로그인 해주세요.",
-                                confirmButtonText: "확인",
-                                confirmButtonColor: Style.color2
-                            });
-                            setIsLogined(false);
-                        }else{
-                            Swal.fire({
-                                icon: "warning",
-                                title: "서버오류입니다.",
-                                text: "잠시 후 재시도해주세요.",
-                                confirmButtonText: "확인",
-                                confirmButtonColor: Style.color2
-                            })
-                        }
+                            if (err.response.status === 401) {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "세션이 만료되었습니다.",
+                                    text: "다시 로그인 해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                });
+                                setIsLogined(false);
+                            } else {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "서버오류입니다.",
+                                    text: "잠시 후 재시도해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                })
+                            }
                         }
                     )
 
@@ -167,24 +169,24 @@ function ScheduleModifyInputForm(props) {
                         }
                     )
                     .catch((err) => {
-                        if (err.response.status === 401) {
-                            Swal.fire({
-                                icon: "warning",
-                                title: "세션이 만료되었습니다.",
-                                text: "다시 로그인 해주세요.",
-                                confirmButtonText: "확인",
-                                confirmButtonColor: Style.color2
-                            });
-                            setIsLogined(false);
-                        }else{
-                            Swal.fire({
-                                icon: "warning",
-                                title: "서버오류입니다.",
-                                text: "잠시 후 재시도해주세요.",
-                                confirmButtonText: "확인",
-                                confirmButtonColor: Style.color2
-                            })
-                        }
+                            if (err.response.status === 401) {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "세션이 만료되었습니다.",
+                                    text: "다시 로그인 해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                });
+                                setIsLogined(false);
+                            } else {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "서버오류입니다.",
+                                    text: "잠시 후 재시도해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                })
+                            }
                         }
                     )
             }
@@ -242,10 +244,11 @@ function ScheduleModifyInputForm(props) {
                                     setValueFunction={onChange}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
-                    {authority==="ADMIN" && <InputContainer labelContent="현장요원코드: " inputName="a_code" inputType="text" width="300px"
-                                                            rows="1"
-                                                            defaultValue={input.a_code}
-                                                            setValueFunction={onChange}/>}
+                    {authority === "ADMIN" &&
+                        <InputContainer labelContent="현장요원코드: " inputName="a_code" inputType="text" width="300px"
+                                        rows="1"
+                                        defaultValue={input.a_code}
+                                        setValueFunction={onChange}/>}
                 </div>
 
                 <div style={{marginBottom: "20px"}}>
@@ -276,7 +279,10 @@ function ScheduleModifyInputForm(props) {
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="통화이력: " inputName="call_check" inputType="select" width="300px"
                                     defaultValue={input.call_check}
-                                    contents={[{show: "미완료", value: "미완료"}, {show: "통화완료", value: "통화완료"}, {show: "부재중", value: "부재중"}, {show: "통화오류", value: "통화오류"}]} setValueFunction={onChange}
+                                    contents={[{show: "미완료", value: "미완료"}, {show: "통화완료", value: "통화완료"}, {
+                                        show: "부재중",
+                                        value: "부재중"
+                                    }, {show: "통화오류", value: "통화오류"}]} setValueFunction={onChange}
                     />
                 </div>
 
@@ -300,6 +306,15 @@ function ScheduleModifyInputForm(props) {
                                     setValueFunction={onChange}/>
                 </div>
 
+                <div style={{marginBottom: "20px"}}>
+                    <InputContainer labelContent="수락/거절: " inputName="accept" inputType="select" width="300px"
+                                    defaultValue={input.accept}
+                                    contents={[{show: "수락", value: "accept"}, {
+                                        show: "거절",
+                                        value: "reject"
+                                    }, {show: "미확인", value: "TBD"}]} setValueFunction={onChange}
+                    />
+                </div>
 
                 {/*<div style={{marginLeft: "80px"}}>*/}
                 {/*    <CheckboxContainer name="applicationForm" setCheckboxInputFunction={onClick} content="신청서 완료"/>*/}
@@ -308,8 +323,9 @@ function ScheduleModifyInputForm(props) {
                 {/*</div>*/}
 
                 <div style={{marginTop: "30px", display: 'flex', justifyContent: 'center'}}>
-                    {authority==="ADMIN" && <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
-                                                          borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>}
+                    {authority === "ADMIN" &&
+                        <CustomButton type="normal" width="150px" height="40px" content="일정 취소" color="white"
+                                      borderRadius="15px" backgroundColor={Style.color2} onClick={onCancel}/>}
                 </div>
 
                 <div style={{position: "absolute", bottom: "20px", right: "20px", display: "flex"}}>

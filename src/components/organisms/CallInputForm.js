@@ -44,12 +44,19 @@ function CallInputForm(props) {
         });
     }, [])
     return (
+        // <InputContainer labelContent="권한: " inputName="u_auth" inputType="select" width="300px"
+        //                 contents={[{show: "관리자", value: "ADMIN"}, {show: "일반직원", value: "USER"}, {
+        //                     show: "퇴사",
+        //                     value: "FIRED"
+        //                 }]} setValueFunction={props.handleInputFormChange}
+        //                 defaultValue={props.currentInfo['u_auth']}
+
         <Container>
             <div style={{marginBottom: "20px"}}>
                 <InputContainer labelContent="인/아웃바운드:  " inputName="in_out" inputType="select"
                                 contents={[{show: "인", value: "IN"}, {show: "아웃", value: "OUT"}]}
                                 width="100px" marginLeft={"2px"} marginrow="1"
-                                value={data === undefined ? "" : data.in_out}
+                                defaultValue={data===undefined?"":data.in_out}
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
@@ -63,7 +70,7 @@ function CallInputForm(props) {
                                     value: "PARTICIPATION"
                                 }, {show: "보류", value: "HOLD"}, {show: "거부", value: "REJECT"}]}
                                 width="100px" row="1"
-                                value={data === undefined ? "" : data.participation}
+                                defaultValue={data===undefined?"":data.participation}
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>
@@ -85,7 +92,7 @@ function CallInputForm(props) {
                                  {show: "직접입력", value: "직접입력"}
                              ]}
                              width={"150px"} row={"1"}
-                             value={mail === undefined ? mail : mail[1]}
+                             defaultValue={mail === undefined ? mail : mail[1]}
                              setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px"}}>

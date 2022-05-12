@@ -12,19 +12,19 @@ import MainBodyTemplate from "../templates/MainBodyTemplate";
 
 function MainPage(props) {
     const [isSelected, setIsSelected] = useState(false);
-
+    const [agentListLoading, setAgentListLoading] = useState(null)
     return (
                 <Main>
                     <Navigation/>
-                    <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected}/>
-                    <MainInfoTemplate isSelected={isSelected}/>
+                    <MainBodyTemplate isSelected={isSelected} setIsSelected={setIsSelected} setAgentListLoading={setAgentListLoading} agentListLoading={agentListLoading}/>
+                    <MainInfoTemplate isSelected={isSelected} setAgentListLoading={setAgentListLoading}/>
                 </Main>
     );
 }
 
 const Main = styled.div`
   display: grid;
-  grid-template-columns: 67px 1600px auto;
+  grid-template-columns: 67px 1200px auto;
   height: 100vh;
 `;
 export default MainPage;

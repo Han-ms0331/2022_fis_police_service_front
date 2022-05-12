@@ -7,7 +7,7 @@
 */
 
 import React, {useCallback, useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,15 +16,21 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ScheduleTableSearch from "../molecules/ScheduleTableSearch";
-import {useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {searchKeyword} from "../../store/ScheduleSearchKeyword";
 import ClipLoader from "react-spinners/ClipLoader";
 import ScheduleTableHeader from "../molecules/ScheduleTableHeader";
 import {viewResultRows} from "../../store/DateSelectedRowsStore";
 import ShowList from "../molecules/ShowList";
+import CustomButton from "../atoms/CustomButton";
+import axios from "axios";
+import {SelectedDateState} from "../../store/SelectedDateStore";
+import {SelectedDateScheduleStore} from "../../store/SelectedDateScheduleStore";
+import Swal from "sweetalert2";
+import {Style} from "../../Style";
 
 const Spinner = () => {
-    return <ClipLoader height="32" width="160" color="#2E3C7E" radius="8" />;
+    return <ClipLoader height="32" width="160" color="#2E3C7E" radius="8"/>;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -68,19 +74,21 @@ const useStyles = makeStyles((theme) => ({
 // 테이블 Style 정의
 
 export default function ScheduleTable(props) {
-    const { headerColor, bodyColor, buttonColor, headerFontColor, loading } = props;
+    const {headerColor, bodyColor, buttonColor, headerFontColor, loading} = props;
     const rows = useRecoilValue(viewResultRows);
     const keywordProps = useRecoilValue(searchKeyword); // RecoilValue로 atom에 저장되었던 검색 키워드 값을 불러옴...
     let count = rows.length;
+    const [date, setDate] = useRecoilState(SelectedDateScheduleStore);
 
-    useEffect( () => {
+
+    useEffect(() => {
         setCheckedList([]);
         setPage(0);
     }, [keywordProps, rows]); // 검색창에 키워드 입력하거나, 캘린더에서 다른 날짜를 선택했을 때, 체크박스 초기화하고 Page를 0으로 이동시킨다.
 
     const isSearch = () => { // 사용자가 검색창에 키워드를 입력한 상태인지 검사하는 함수
         for (let value in keywordProps) {
-            if(keywordProps[value] !== ""){
+            if (keywordProps[value] !== "") {
                 return true;
             }
         }
@@ -136,13 +144,13 @@ export default function ScheduleTable(props) {
         [rows]
     )
 
-    const colorVariable = { headerbackgroundColor: headerColor, bodybackgroundColor: bodyColor, activeColor: bodyColor };
+    const colorVariable = {headerbackgroundColor: headerColor, bodybackgroundColor: bodyColor, activeColor: bodyColor};
     const classes = useStyles(colorVariable);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('visit_time');
     // default 방문 시간 기준 오름차순 정렬
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -160,6 +168,7 @@ export default function ScheduleTable(props) {
     };
     // 페이지 변경 함수, 페이지 하나 당 row 개수 변경 함수
 
+
     return (
         <div className={classes.root} style={{margin: '15px'}}>
             <Paper className={classes.paper} style={{backgroundColor: 'white'}}>
@@ -170,7 +179,7 @@ export default function ScheduleTable(props) {
                         size='medium'
                         aria-label="enhanced table"
                     >
-                        <ScheduleTableSearch />
+                        <ScheduleTableSearch/>
                         <ScheduleTableHeader
                             classes={classes}
                             order={order}
@@ -184,48 +193,78 @@ export default function ScheduleTable(props) {
                             onCheckedAll={onCheckedAll}
                             headerFontColor={headerFontColor}
                         />
-                        <TableBody style={{ backgroundColor: bodyColor }} className={classes.body}>
-                        {loading ?
+                        <TableBody style={{backgroundColor: bodyColor}} className={classes.body}>
+                            {loading ?
                                 <TableRow>
-                                    <TableCell style={{ padding: 30 }} align='center' colSpan={8}>
+                                    <TableCell style={{padding: 30}} align='center' colSpan={9}>
                                         <Spinner/>
                                     </TableCell>
                                 </TableRow>
-                            :
+                                :
                                 <ShowList
-                                        rows={rows}
-                                        order={order}
-                                        orderBy={orderBy}
-                                        page={page}
-                                        rowsPerPage={rowsPerPage}
-                                        onCheckedElement={onCheckedElement}
-                                        checkedList={checkedList}
-                                        headerColor={headerColor}
-                                        buttonColor={buttonColor}
+                                    rows={rows}
+                                    order={order}
+                                    orderBy={orderBy}
+                                    page={page}
+                                    rowsPerPage={rowsPerPage}
+                                    onCheckedElement={onCheckedElement}
+                                    checkedList={checkedList}
+                                    headerColor={headerColor}
+                                    buttonColor={buttonColor}
                                 />
-                        }
+                            }
                         </TableBody>
                     </Table>
-                    <div>
-                        {/*<div style={{margin: '25px'}}>*/}
-                        {/*    <CustomButton*/}
-                        {/*        type="normal"*/}
-                        {/*        content="일정공지"*/}
-                        {/*        backgroundColor={buttonColor}*/}
-                        {/*        color='white'*/}
-                        {/*        onClick={ async() => {   //서버로부터 데이터를 받아와 setRows 스테이트에 데이터들을 저장하는 함수*/}
-                        {/*                console.log(checkedList);*/}
-                        {/*                await axios.post('/schedule/announce', {*/}
-                        {/*                    checkedList*/}
-                        {/*                })*/}
-                        {/*                    .then((res) => console.log(res.data))*/}
-                        {/*            }*/}
-                        {/*        }*/}
-                        {/*    />*/}
-                        {/*</div>*/}
+                    <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+                        <div style={{margin: "0px 20px 0px 20px"}}>
+                            <CustomButton
+                                type="normal"
+                                content="엑셀파일 다운로드"
+                                backgroundColor={buttonColor}
+                                color='white'
+                                onClick={async () => {
+                                    let month, day, tmp;
+                                    if ((date.getMonth() + 1) / 10 < 1) {
+                                        month = `0${date.getMonth() + 1}`
+                                    } else {
+                                        month = `${date.getMonth() + 1}`
+                                    }
+                                    if (date.getDate() / 10 < 1) {
+                                        day = `0${date.getDate()}`
+                                    } else {
+                                        day = `${date.getDate()}`
+                                    }
+
+                                    tmp = `${date.getFullYear()}-${month}-${day}`
+
+                                    await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/excel/download?date=${tmp}`, {
+                                        withCredentials: true,
+                                        responseType: 'blob'
+                                    })
+                                        .then((res) => {
+                                            const url = window.URL.createObjectURL(new Blob([res.data]));
+                                            const link = document.createElement('a');
+                                            link.href = url;
+                                            link.setAttribute('download', '스케쥴목록.xlsx');
+                                            document.body.appendChild(link);
+                                            link.click();
+                                            document.body.removeChild(link);
+                                        })
+                                        .catch((err) => {
+                                            console.log(err);
+                                            console.log(err.response.status)
+                                        })
+                                }
+                                }
+
+                            />
+                        </div>
                         <TablePagination
                             size='large'
-                            rowsPerPageOptions={[{value: 10, label: '10개 보기'}, {value: 25, label: '25개 보기'}]}
+                            rowsPerPageOptions={[{value: 5, label: '5개 보기'}, {value: 10, label: '10개 보기'}, {
+                                value: 20,
+                                label: '20개 보기'
+                            }]}
                             component="div"
                             count={count}
                             showFirstButton={true}

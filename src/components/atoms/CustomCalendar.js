@@ -9,12 +9,12 @@ import styled from "styled-components";
 작성내용: 캘린더 UI 수정
 */
 const CustomCalendar = ({setDate}) => {
-    const [value, setValue] = useState(new Date());
+    const [value, setValue] = useState(document.location.pathname === "/schedule" ? new Date() : null);
 
     return (
         <Container>
             <Calendar
-                onChange={(day)=>{
+                onChange={(day) => {
                     setValue(day);
                     setDate(day);
 
@@ -23,14 +23,14 @@ const CustomCalendar = ({setDate}) => {
                 value={value}
                 calendarType="US"
                 locale="en"
-                formatMonth = {(locale, date) => ['1월', '2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월',][date.getMonth()]}
-                formatShortWeekday = {(locale, date) => ['일', '월', '화', '수', '목', '금', '토'][date.getDay()]}
-                formatMonthYear = {(locale, date) => ['1월', '2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월',][date.getMonth()]}
-                />
+                formatMonth={(locale, date) => ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월',][date.getMonth()]}
+                formatShortWeekday={(locale, date) => ['일', '월', '화', '수', '목', '금', '토'][date.getDay()]}
+                formatMonthYear={(locale, date) => ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월',][date.getMonth()]}
+            />
         </Container>
     );
 };
 const Container = styled.div`
-width: 280px;
+  width: 300px;
 `;
 export default CustomCalendar;
