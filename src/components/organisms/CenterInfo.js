@@ -21,8 +21,10 @@ const Container = styled.div`
   background-color: ${Style.color1};
   box-shadow: 3px 3px #dadada;
   border-radius:15px;
-  padding:1vw;
+  padding:10px;
   text-align:center;
+  width: 610px;
+
 `;
 
 export default CenterInfo;

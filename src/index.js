@@ -7,13 +7,11 @@ import {RecoilRoot} from "recoil";
 import './App.css';
 
 ReactDOM.render(
-    <React.StrictMode>
         <RecoilRoot>
             <BrowserRouter>
                 <App/>
             </BrowserRouter>
-        </RecoilRoot>
-    </React.StrictMode>,
+        </RecoilRoot>,
     document.getElementById('root')
 );
 

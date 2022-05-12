@@ -150,7 +150,7 @@ export default function ScheduleTable(props) {
     const [orderBy, setOrderBy] = React.useState('visit_time');
     // default 방문 시간 기준 오름차순 정렬
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -237,7 +237,10 @@ export default function ScheduleTable(props) {
 
                                     tmp = `${date.getFullYear()}-${month}-${day}`
 
-                                    await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/excel/download?date=${tmp}`, {withCredentials: true, responseType: 'blob'})
+                                    await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/excel/download?date=${tmp}`, {
+                                        withCredentials: true,
+                                        responseType: 'blob'
+                                    })
                                         .then((res) => {
                                             const url = window.URL.createObjectURL(new Blob([res.data]));
                                             const link = document.createElement('a');
@@ -249,6 +252,7 @@ export default function ScheduleTable(props) {
                                         })
                                         .catch((err) => {
                                             console.log(err);
+                                            console.log(err.response.status)
                                         })
                                 }
                                 }
@@ -257,7 +261,10 @@ export default function ScheduleTable(props) {
                         </div>
                         <TablePagination
                             size='large'
-                            rowsPerPageOptions={[{value: 10, label: '10개 보기'}, {value: 25, label: '25개 보기'}]}
+                            rowsPerPageOptions={[{value: 5, label: '5개 보기'}, {value: 10, label: '10개 보기'}, {
+                                value: 20,
+                                label: '20개 보기'
+                            }]}
                             component="div"
                             count={count}
                             showFirstButton={true}

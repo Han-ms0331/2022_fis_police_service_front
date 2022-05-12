@@ -36,8 +36,21 @@ function List(props) {
             {
                 Object.values(props.contents).map((value, index) => {
                     return index === 0 ? null :
-                        <div key={index} name={props.keyValue} onClick={props.onClickFunction}
-                             style={{display: "flex", justifyContent: "center"}}>{value}</div>
+                        // '확정'이면 초록, '거부'면 빨강, '참여면' 하늘, '보류'면 노랑, 그 외는 border color x
+                        value === '확정' ? <div key={index} name={props.keyValue} onClick={props.onClickFunction}
+                                              style={{display: "flex", justifyContent: "center", paddingTop: 5,
+                                                  paddingBottom: 5, border: "3px solid #04B45F", borderRadius: 5}}>{value}</div>
+                            : value === '거부' ? <div key={index} name={props.keyValue} onClick={props.onClickFunction}
+                                                    style={{display: "flex", justifyContent: "center", paddingTop: 5,
+                                                        paddingBottom: 5, border: "3px solid #FE2E2E", borderRadius: 5}}>{value}</div>
+                                : value === '참여' ? <div key={index} name={props.keyValue} onClick={props.onClickFunction}
+                                                        style={{display: "flex", justifyContent: "center", paddingTop: 5,
+                                                            paddingBottom: 5, border: "3px solid #58ACFA", borderRadius: 5}}>{value}</div>
+                                    : value === '보류' ? <div key={index} name={props.keyValue} onClick={props.onClickFunction}
+                                                            style={{display: "flex", justifyContent: "center", paddingTop: 5,
+                                                                paddingBottom: 5, border: "3px solid #F7FE2E", borderRadius: 5}}>{value}</div>
+                                        : <div key={index} name={props.keyValue} onClick={props.onClickFunction}
+                                               style={{display: "flex", justifyContent: "center"}}>{value}</div>
                 })
             }
             <div style={{display: "flex", justifyContent: "center"}} name={props.keyValue} onClick={props.onClickFunction}>

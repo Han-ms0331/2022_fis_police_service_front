@@ -46,6 +46,7 @@ function LoginTemplate(props) {
                 if (res.data.sc === "success") {   //로그인 결과가 실패가 아니라면
                     setIsLogined(true);     //setIsLogined를 true로 바꾸고
                     localStorage.setItem("login-state", "true");    //localStorage에 login-state를 true로 저장함
+                    window.location.href = "/main"
                 } else if (res.data.sc === "idFail") {
                     // alert("존재하지않는 아이디 입니다. 다시 시도해 주세요")
                     Swal.fire({

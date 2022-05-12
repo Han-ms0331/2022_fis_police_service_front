@@ -331,7 +331,6 @@ function CenterManageTemp(props) {
             },
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
-            console.log("hi")
             inputEl.current.value = null;
         })
 

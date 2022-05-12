@@ -27,6 +27,5 @@ const ScheduleBody = ({loading}) => {
 
 const Container = styled.div`
 margin: 50px 30px 0 5px;
-  height: 100%;
 `;
 export default ScheduleBody;
