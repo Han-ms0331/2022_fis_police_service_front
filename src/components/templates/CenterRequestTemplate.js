@@ -15,33 +15,6 @@ function CenterRequestTemplate(props) {
     const [isLogined, setIsLogined] = useRecoilState(isLoginedState);
     const [loading, setLoading] = useState()
     const [contents, setContents] = useState([]);
-
-    const requestHope = (hope_id) => {
-        Swal.fire({
-            icon: "question",
-            title: '통화 완료 체크를 하시겠습니까?',
-            showCancelButton: true,
-            confirmButtonText: '확인',
-            cancelButtonText: '취소',
-            showLoaderOnConfirm: true,
-            preConfirm: async () => {
-                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/hope/${hope_id}`, {}, {withCredentials: true})
-                    .then((res) => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '완료되었습니다.',
-                            confirmButtonColor: Style.color2,
-                            confirmButtonText: '확인',
-                        })
-                        showData();
-                    }).catch((err) => {
-                        console.log(err);
-                    })
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-        })
-    }
-
     const columns = [
         {
             field: 'id', headerName: 'No.', flex: 0.1,
@@ -94,11 +67,42 @@ function CenterRequestTemplate(props) {
                     </strong>
                 )
             },
+            sortComparator: (v1, v2) => {
+                let a = v1.complete===null?"null":v1.complete;
+                let b= v2.complete===null?"null":v2.complete;
+                return a.localeCompare(b)
+            },
             disableClickEventBubbling: true,
 
         }
     ];
 
+
+    const requestHope = (hope_id) => {
+        Swal.fire({
+            icon: "question",
+            title: '통화 완료 체크를 하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/hope/${hope_id}`, {}, {withCredentials: true})
+                    .then((res) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '완료되었습니다.',
+                            confirmButtonColor: Style.color2,
+                            confirmButtonText: '확인',
+                        })
+                        showData();
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
 
     const showData = async () => {
         setLoading(true)
@@ -121,6 +125,11 @@ function CenterRequestTemplate(props) {
                             complete: data.complete
                         }
                     })
+                })
+                tmp.sort((a) => {
+                    if (a.hope.complete !== null) {
+                        return 1;
+                    } else return -1;
                 })
                 setContents(tmp);
                 setLoading(false)

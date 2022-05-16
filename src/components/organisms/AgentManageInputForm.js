@@ -3,27 +3,11 @@ import InputContainer from "../molecules/InputContainer";
 import CustomButton from "../atoms/CustomButton";
 import {Style} from "../../Style";
 import CustomLabel from "../atoms/CustomLabel";
-import question from '../media/question.png';
-import {Checkbox} from "@mui/material";
-import CheckboxContainer from "../molecules/CheckboxContainer";
+import noimage from '../media/noimage.gif'
+import axios from "axios";
 
 
 function AgentManageInputForm(props) {
-    const [selectedImage, setSelectedImage] = useState(null);
-
-    // This function will be triggered when the file field change
-    const imageChange = (e) => {
-        console.log("hi")
-        if (e.target.files && e.target.files.length > 0) {
-            setSelectedImage(e.target.files[0]);
-        }
-    };
-
-    const handleImgError = (e) => {
-        e.target.src = question;
-    }
-
-
 
     return (
         <div style={{
@@ -72,42 +56,13 @@ function AgentManageInputForm(props) {
                 </div>
             </div>
 
-            <div>
-                <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="장비번호: " inputName="a_equipment" inputType="text" width="300px"
-                                    rows="1"
-                                    setValueFunction={props.handleInputFormChange}
-                                    defaultValue={props.currentInfo['a_equipment']}/>
-
-                </div>
-                <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="장비수령날짜: " inputName="a_receiveDate" inputType="date" width="300px"
-                                    setValueFunction={props.handleInputFormChange}
-                                    defaultValue={props.currentInfo['a_receiveDate']}/>
-                </div>
-                <div style={{marginBottom: "20px"}}>
-                    <InputContainer labelContent="퇴사여부: " inputName="a_status" inputType="select" width="300px"
-                                    contents={[{
-                                        show: "재직", value: true
-                                    }, {show: "퇴사", value: false}]}
-                                    setValueFunction={props.handleInputFormChange}
-                                    defaultValue={props.currentInfo['a_status']}/>
-                </div>
-                <div style={{display: !props.modify?"none":"flex", alignItems: "center"}}>
-                    <CustomLabel content={"사진 업로드: "} fontSize={props.fontSize} width={"auto"}/>
-                    <input type="file" id="chooseFile" name="a_picture" accept="image/*"
-                           onChange={(e)=>{
-                               imageChange(e);
-                               props.handleInputFormChange(e)
-                           }} style={{width: "200px"}}/>
-                </div>
-                <div style={{display: !props.modify?"none":"block", marginLeft: 125}}>
-                    <CheckboxContainer name="deletePicture" clickFunction={props.clickCheckboxFunction} content="사진삭제" />
-                    <div style={{ marginLeft: 10}}>
-                        <img src={selectedImage===null?`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/show?agent_id=${props.currentInfo.agent_id}&time=${new Date().getTime()}`:URL.createObjectURL(selectedImage)}
-                             onError={handleImgError} style={{width: "100px", height: "100px"}}/>
-                    </div>
-                </div>
+            <div style={{display:"flex", alignItems:"center"}}>
+                <img
+                     src={`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/show?agent_id=${props.agent_id}`}
+                     style={{width:"100px", height:"100px", marginRight:"20px"}}
+                    onError={(e)=>{e.target.src = noimage}}
+                />
+                <CustomButton type="normal" content="삭제" width="50px" height="20px" backgroundColor={Style.color2} onClick={props.deletePicture}/>
             </div>
 
             <div style={{display: "flex", marginTop: "20px", position: "absolute", bottom: 0, right: 0}}>
