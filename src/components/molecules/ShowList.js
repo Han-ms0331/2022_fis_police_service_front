@@ -84,7 +84,7 @@ function ShowList(props) {
                 </TableCell>
                 <TableCell style={{width: '8%', color: headerColor, fontSize: '15pt', padding: '1px 16px'}}
                            align="right">
-                    <div>{row.accept === "WAITING" ? "미확인" : row.accept === "accept" ? "수락" : "거절"}</div>
+                    <div>{row.accept === "WAITING" ? "미확인" : row.accept === "ACCEPT" ? "수락" : "거절"}</div>
                 </TableCell>
                 <TableCell style={{width: '21%', color: headerColor, fontSize: '15pt', padding: '1px 16px'}}
                            align="right">

@@ -309,9 +309,9 @@ function ScheduleModifyInputForm(props) {
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="수락/거절: " inputName="accept" inputType="select" width="300px"
                                     defaultValue={input.accept}
-                                    contents={[{show: "수락", value: "accept"}, {
+                                    contents={[{show: "수락", value: "ACCEPT"}, {
                                         show: "거절",
-                                        value: "reject"
+                                        value: "REJECT"
                                     }, {show: "미확인", value: "WAITING"}]} setValueFunction={onChange}
                     />
                 </div>
