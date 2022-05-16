@@ -312,7 +312,7 @@ function ScheduleModifyInputForm(props) {
                                     contents={[{show: "수락", value: "accept"}, {
                                         show: "거절",
                                         value: "reject"
-                                    }, {show: "미확인", value: "TBD"}]} setValueFunction={onChange}
+                                    }, {show: "미확인", value: "WAITING"}]} setValueFunction={onChange}
                     />
                 </div>
 
