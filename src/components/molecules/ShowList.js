@@ -79,7 +79,7 @@ function ShowList(props) {
                     <div style={{fontSize: '13pt'}}>{row.visit_time}</div>
                     <div style={{fontSize: '13pt'}}>{row.estimate_num}명</div>
                 </TableCell>
-                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.accept==="TBD"?"미확인":row.accept==="accept"?"수락":"거절"}</div></TableCell>
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.accept==="WAITING"?"미확인":row.accept==="ACCEPT"?"수락":"거절"}</div></TableCell>
                 <TableCell style={{ width:'21%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
                 <TableCell style={{ width:'21%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{  margin: 10, padding: '10px 0', overflowY: 'auto', maxHeight: 150 }}>{row.modified_info}</div></TableCell>
                 <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.call_check}</div></TableCell>
