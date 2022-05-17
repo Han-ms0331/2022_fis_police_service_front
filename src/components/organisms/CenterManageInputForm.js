@@ -8,7 +8,7 @@ function CenterManageInputForm(props) {
 
     const sidoList = [
         {show:"서울특별시",value:"서울특별시"},
-        {show:"부산광역시",value:"부산광역"},
+        {show:"부산광역시",value:"부산광역시"},
         {show:"대구광역시",value:"대구광역"},
         {show:"인천광역시",value:"인천광역시"},
         {show:"광주광역시",value:"광주광역시"},
