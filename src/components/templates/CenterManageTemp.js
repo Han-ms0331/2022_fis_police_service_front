@@ -248,7 +248,9 @@ function CenterManageTemp(props) {
                 cancelButtonText: '취소',
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
-                    await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center`, currentInfo, {withCredentials: true})
+                    const reqBody = currentInfo;
+                    delete reqBody.center_id;
+                    await axios.post(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/center`, reqBody, {withCredentials: true})
                         .then((res) => {
                             const {c_name, c_address, c_ph} = searchInput;
                             apiGetCall(c_name, c_address, c_ph);
