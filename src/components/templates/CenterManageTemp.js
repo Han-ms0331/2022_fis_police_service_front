@@ -41,6 +41,8 @@ function CenterManageTemp(props) {
         c_name: "",
         c_ph: "",
         c_address: "",
+        c_sido:"",
+        c_sigungu:"",
         participation: ""
     })
 

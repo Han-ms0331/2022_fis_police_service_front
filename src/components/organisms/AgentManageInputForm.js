@@ -60,7 +60,7 @@ function AgentManageInputForm(props) {
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="차량여부:" inputName="a_hasCar" inputType="select" width="300px"
                                     contents={[{show: "자차", value: true}, {show: "도보", value: false}]}
-                                    setValueFunction={props.handleInputFormChange}
+                                    setValueFunction={props.handleInputFormChange}별
                                     defaultValue={props.currentInfo['a_hasCar']}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
