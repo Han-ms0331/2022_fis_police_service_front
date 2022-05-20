@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import InputContainer from "../molecules/InputContainer";
 import CustomInput from "../atoms/CustomInput";
 import styled from "styled-components";
+import CustomLabel from "../atoms/CustomLabel";
 
 /*
     날짜: 2022/01/18 3:38 오후
@@ -79,16 +80,23 @@ function CallInputForm(props) {
                                 setValueFunction={handleInputFormChange}/>
             </div>
             <div style={{marginBottom: "20px", display: "flex", alignItems: "center"}}>
-                <InputContainer labelContent="담당자 이메일: " inputName="m_email" inputType="text" width="200px" row="1"
-                                defaultValue={data === undefined ? "" : mail[0]}
-                                setValueFunction={handleInputFormChange}/>
+                {/*<InputContainer labelContent="담당자 이메일: " inputName="m_email" inputType="text" width="200px" row="1"*/}
+                {/*                defaultValue={data === undefined ? "" : mail[0]}*/}
+                {/*                setValueFunction={handleInputFormChange}/>*/}
+                <CustomLabel content={"담당자 이메일: "} width={"auto"}/>
+                <CustomInput name={"m_email"} type={"text"} width={""}
+                             rows={"1"}
+                             setValueFunction={handleInputFormChange}
+                             defaultValue={data === undefined ? "" : mail[0]}
+                />
                 <div style={{margin: "0px 5px"}}>@</div>
                 <CustomInput inputName={"email_form"} type={"select"}
                              name={"email_form"}
                              contents={[
                                  {show: "naver.com", value: "naver.com"},
                                  {show: "google.com", value: "google.com"},
-                                 {show: "hanmail.com", value: "hanmail.com"},
+                                 {show: "hanmail.net", value: "hanmail.net"},
+                                 {show: "daum.net", value: "daum.net"},
                                  {show: "직접입력", value: "직접입력"}
                              ]}
                              width={"150px"} row={"1"}
