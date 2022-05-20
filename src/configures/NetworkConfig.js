@@ -4,8 +4,7 @@
     작성내용: NetworkConfig객체
 */
 const NetworkConfig = {
-    networkAddress : "localhost"
-    //networkAddress : "54.175.8.114"
+    networkAddress : "54.175.8.114"
 }
 
 export default NetworkConfig;
