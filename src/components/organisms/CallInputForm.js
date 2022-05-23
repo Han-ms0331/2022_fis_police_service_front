@@ -29,7 +29,7 @@ function CallInputForm(props) {
         mail = data.m_email.split("@");
     }
     useEffect(() => {
-        if (mail[1] !== "naver.com" && mail[1] !== "google.com" && mail[1] !== "hanmail.net" && mail[1] !== "daum.net") {     //사용 mail주소가 미리 입력된 메일이 아닐 경우 직접입력으로 사용
+        if (data !== undefined && mail[1] !== "naver.com" && mail[1] !== "google.com" && mail[1] !== "hanmail.net" && mail[1] !== "daum.net") {     //사용 mail주소가 미리 입력된 메일이 아닐 경우 직접입력으로 사용
             // mail[0] = mail[0] + "@" + mail[1];
             // mail[1] = "직접입력"
             if (mailSelected === false) {
