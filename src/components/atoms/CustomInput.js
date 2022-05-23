@@ -18,7 +18,9 @@ function CustomInput(props) {
                              defaultValue={props.defaultValue} placeholder={props.placeholder}
                              onChange={props.setValueFunction}
                              id="outlined-basic"
-                             variant="outlined"/>
+                             variant="outlined"
+                             disabled={props.disable}
+        />
 
     } else if (props.type === "number") {
         element = <TextField name={props.name} type={props.type} sx={{width: props.width}} size="small"
