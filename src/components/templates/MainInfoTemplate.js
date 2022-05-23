@@ -36,6 +36,7 @@ function MainInfoTemplate(props) {
         c_manager: "",
         m_ph: "",
         m_email: "",
+        m_emailtail: "",
         email_form: "",
         center_etc: "",
         agent_etc: ""
@@ -144,6 +145,7 @@ function MainInfoTemplate(props) {
             c_manager: "",
             m_ph: "",
             m_email: "",
+            m_emailtail: "",
             email_form: "",
             num: "",
             center_etc: "",
@@ -257,7 +259,7 @@ function MainInfoTemplate(props) {
                     participation: currentInfo.participation,
                     c_manager: currentInfo.c_manager,
                     m_ph: currentInfo.m_ph,
-                    m_email: currentInfo.email_form === "직접입력" ? currentInfo.m_email : currentInfo.m_email + "@" + currentInfo.email_form,
+                    m_email: currentInfo.email_form === "직접입력" ? currentInfo.m_email + "@" + currentInfo.m_emailtail : currentInfo.m_email + "@" + currentInfo.email_form,
                     num: "",
                     center_etc: currentInfo.center_etc,
                     agent_etc: currentInfo.agent_etc
@@ -270,6 +272,7 @@ function MainInfoTemplate(props) {
                             c_manager: "",
                             m_ph: "",
                             m_email: "",
+                            m_emailtail: "",
                             email_form: "",
                             num: "",
                             center_etc: "",
