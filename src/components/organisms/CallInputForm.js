@@ -17,7 +17,7 @@ function CallInputForm(props) {
         const {value, name} = e.target; // 우선 e.target 에서 name 과 value 를 추출{
         if(name === "email_form" && value === "직접입력")   //직접 입력시에는 메일 주소를 입력할 수 있는 창이 생김
             setMailSelected(true);
-        else
+        else if(name === "email_form" && value !== "직접입력")
             setMailSelected(false);
         setCurrentInfo({
             ...currentInfo, // 기존의 input 객체를 복사한 뒤
@@ -52,6 +52,8 @@ function CallInputForm(props) {
             dateTime: today // name 키를 가진 값을 value 로 설정
         });
     }, [])
+
+    console.log(mailSelected);
     return (
         // <InputContainer labelContent="권한: " inputName="u_auth" inputType="select" width="300px"
         //                 contents={[{show: "관리자", value: "ADMIN"}, {show: "일반직원", value: "USER"}, {
@@ -105,7 +107,7 @@ function CallInputForm(props) {
                                  defaultValue={data === undefined ? "" : mail[1]}
                     />
                     :
-                    data !== undefined && mail[1] === "직접입력" ?
+                    data !== undefined && mailSelected?
                         <CustomInput name={"m_emailtail"} type={"text"} width={"150px"}
                                      rows={"1"}
                                      setValueFunction={handleInputFormChange}
