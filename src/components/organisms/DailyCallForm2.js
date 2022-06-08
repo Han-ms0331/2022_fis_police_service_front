@@ -15,9 +15,9 @@ const Modal = ({modalClose}) => {
     const [table, setTable] = useState("");
     let visit_date;
 
-    const url = `http://${process.env.REACT_APP_IP_ADDRESS}:8080/call?date=${visit_date}`;
 
     const onData = async () => {
+    const url = `http://${process.env.REACT_APP_IP_ADDRESS}:8080/call?date=${visit_date}`;
         await axios.get(url, {withCredentials: true})
             .then((res) => {
                 console.log(res.data)
