@@ -1,16 +1,17 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import axios from "axios";
 import styled from 'styled-components';
 import HomeIcon from '@mui/icons-material/Home';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
-import axios from "axios";
+import DateRangeIcon from '@mui/icons-material/DateRange';
+
 import {useRecoilState, useRecoilValue} from "recoil";
 import {isLoginedState, userAuthority} from "../../store/LoginStore";
 import {Style} from "../../Style";
-import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
 /*
     날짜: 2022/01/10 3:59 오후
@@ -90,7 +91,8 @@ const Navigation = () => {
                 <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
                 <Link to={"/hope"}> <ListAltIcon className="icon"/> </Link> {/*시설관리*/}
                 <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
-                {authority === 'ADMIN' ? <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> : null} {/*관리자*/}
+                <Link to={"/calendar"}> <DateRangeIcon className="icon"/> </Link> {/*일정조회*/}
+               {authority === 'ADMIN' ? <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> : null} {/*관리자*/}
             </Upper>
 
             <Bottom>
@@ -102,7 +104,7 @@ const Navigation = () => {
 //style
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 380px auto;
+  grid-template-rows: 500px auto;
   border-right: 2px solid #eee;
   padding: 0px;
 
@@ -120,7 +122,7 @@ const Container = styled.div`
 `;
 const Upper = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   justify-self: center;
   margin-top: 70px;
 `;
