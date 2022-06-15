@@ -60,7 +60,7 @@ function AgentManageInputForm(props) {
                 <div style={{marginBottom: "20px"}}>
                     <InputContainer labelContent="차량여부:" inputName="a_hasCar" inputType="select" width="300px"
                                     contents={[{show: "자차", value: true}, {show: "도보", value: false}]}
-                                    setValueFunction={props.handleInputFormChange}
+                                    setValueFunction={props.handleInputFormChange}별
                                     defaultValue={props.currentInfo['a_hasCar']}/>
                 </div>
                 <div style={{marginBottom: "20px"}}>
@@ -113,7 +113,7 @@ function AgentManageInputForm(props) {
                 <div style={{marginRight: "30px"}}>
                     <CustomButton type="reverse" width="150px" height="40px" content="취소" color={Style.color2}
                                   border={`1px solid ${Style.color2}`}
-                                  borderRadius="10px" backgroundColor={Style.color1} onClick={props.handleClose}/>
+                                  borderRadÏius="10px" backgroundColor={Style.color1} onClick={props.handleClose}/>
                 </div>
 
                 <div>

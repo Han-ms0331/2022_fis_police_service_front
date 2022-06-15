@@ -34,8 +34,7 @@ const AgentManageTemplate = () => {
 
 
         const setIsLogined = useSetRecoilState(isLoginedState);
-
-
+        
         const showData = async () => {
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent`, {withCredentials: true})
                 .then((res) => {
@@ -170,7 +169,9 @@ const AgentManageTemplate = () => {
                         confirmButtonColor: Style.color2
                     });
                     setIsLogined(false);
-                } else if (err.response.status === 403) {
+
+                }
+                else if (err.response.status === 403) {
                     Swal.fire({
                         icon: 'warning',
                         title: '잘못된 주소를 입력하셨습니다.',
@@ -346,6 +347,7 @@ const AgentManageTemplate = () => {
 
         return (
             <Main>
+
                 <ListContainer width="1800px" headerContents={headerContent} contents={listContents}
                                gridRatio="1fr 1fr 1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr" buttonContent="정보수정"
                                onClickFunction={handleModifyButtonClick}/>

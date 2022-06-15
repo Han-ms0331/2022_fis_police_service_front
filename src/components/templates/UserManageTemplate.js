@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import '../atoms/swal.css'
 import {useSetRecoilState} from "recoil";
 import {isLoginedState} from "../../store/LoginStore";
+import DailyCallTemplatePage from "../pages/DailyCallTemplatePage";
 
 /*
 날짜: 2022/01/13 4:14 PM
@@ -34,28 +35,70 @@ const UserManageTemplate = () => {
         })
         const [modify, setModify] = useState();
         const setIsLogined = useSetRecoilState(isLoginedState)
+        const deletePicture = () => {
+            console.log("inside");
+            Swal.fire({
+                icon: "question",
+                title: '삭제하시겠습니까?',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/agent/picture/delete?agent_id=${currentInfo.agent_id}`, {withCredentials: true})
+                        .then(res => {
+                            Swal.fire({
+                                icon: "success",
+                                title: "삭제되었습니다.",
+                                confirmButtonText: "확인",
+                                confirmButtonColor: Style.color2
+                            });
+                            showData();
+                            setOpen(false);
+                        })
+                        .catch((err) => {
+                            if (err.response.status === 401) {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "세션이 만료되었습니다.",
+                                    text: "다시 로그인 해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                });
+                                setIsLogined(false);
+                            } else {
+                                Swal.fire({
+                                    icon: "warning",
+                                    title: "서버오류입니다.",
+                                    text: "잠시 후 재시도해주세요.",
+                                    confirmButtonText: "확인",
+                                    confirmButtonColor: Style.color2
+                                })
+                            }
+                        })
+                }
+            })
+        }
         const showData = async () => {
             await axios.get(`http://${process.env.REACT_APP_IP_ADDRESS}:8080/user`, {withCredentials: true})
                 .then((res) => {
                         let tmp = [];
                         let a;
                         let receivedList = res.data;
-                    /*
-                    날짜: 2022/01/27 5:44 PM
-                    작성자: 정도식
-                    작성내용: 관리자 -> 일반직원 -> 퇴사자 순으로 정렬
-                    */
+                        /*
+                        날짜: 2022/01/27 5:44 PM
+                        작성자: 정도식
+                        작성내용: 관리자 -> 일반직원 -> 퇴사자 순으로 정렬
+                        */
                         receivedList.sort((a, b) => {
-                            if (a.u_auth >b.u_auth) {
+                            if (a.u_auth > b.u_auth) {
                                 return -1;
-                            }
-                            else return 1;
+                            } else return 1;
                         });
                         receivedList.sort((a, b) => {
-                            if (a.u_auth !=="FIRED") {
+                            if (a.u_auth !== "FIRED") {
                                 return -1;
-                            }
-                            else return 1;
+                            } else return 1;
                         });
                         receivedList.forEach((list) => {
                             if (list.u_auth === "ADMIN") {
@@ -273,27 +316,30 @@ const UserManageTemplate = () => {
         const handleClose = () => setOpen(false);
 
 
-        return (
-            <Main id={"main"}>
-                <ListContainer width="1800px" headerContents={headerContent} contents={contents}
-                               gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
-                               onClickFunction={handleModifyButtonClick}/>
-                <Modal
-                    open={open}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                    style={{zIndex: 2}}
-                >
-                    <Box sx={style}>
-                        <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
-                                             handleInputFormChange={handleInputFormChange}
-                                             handleClickSave={handleClickSave}/>
-                    </Box>
-                </Modal>
+    return (
+        <Main id={"main"}>
+            <ListContainer width="1800px" headerContents={headerContent} contents={contents}
+                           gridRatio="1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr" buttonContent="정보수정" borderRadius="5px"
+                           onClickFunction={handleModifyButtonClick}/>
+            <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                style={{zIndex: 2}}
+            >
+                <Box sx={style}>
+                    <UserManageInputForm handleClose={handleClose} currentInfo={currentInfo}
+                                         handleInputFormChange={handleInputFormChange}
+                                         handleClickSave={handleClickSave}
+                                         deletePicture={deletePicture}
+                    />
+                </Box>
+            </Modal>
 
-                <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
-                              backgroundColor={Style.color2} content="콜직원 추가 +" onClick={handleAddButtonClick}/>
-            </Main>);
+            <CustomButton type="normal" width="150px" height="45px" borderRadius="15px" color={Style.color1}
+                          backgroundColor={Style.color2} content="콜직원 추가 +" onClick={handleAddButtonClick}/>
+            <DailyCallTemplatePage />
+        </Main>);
     }
 ;
 

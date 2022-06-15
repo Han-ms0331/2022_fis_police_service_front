@@ -59,7 +59,7 @@ function ShowList(props) {
                 tabIndex={-1}
                 key={row.schedule_id}
             >
-                <TableCell style={{ width:'2%'}} padding="checkbox">
+                <TableCell style={{width: '2%'}} padding="checkbox">
                     <input
                         key={row.schedule_id}
                         type="checkbox"
@@ -68,24 +68,28 @@ function ShowList(props) {
                         style={{zoom: 2.0, width: '15px'}}
                     />
                 </TableCell>
-                <TableCell style={{ width:'5%', color: headerColor, fontSize: '15pt', padding: '0px 0px' }} component="th" id={labelId} scope="row" padding="none">
-                    {page*rowsPerPage + (index+1)}
+                <TableCell style={{width: '5%', color: headerColor, fontSize: '15pt', padding: '0px 0px'}}
+                           component="th" id={labelId} scope="row" padding="none">
+                    {page * rowsPerPage + (index + 1)}
                 </TableCell>
-                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">{row.a_name}</TableCell>
-                <TableCell style={{ width:'22%', color: headerColor, fontSize: '15pt', padding: '10px 16px' }} align="right">
+                <TableCell style={{width: '8%', color: headerColor, fontSize: '15pt', padding: '1px 16px'}}
+                           align="right">{row.a_name}</TableCell>
+                <TableCell style={{width: '22%', color: headerColor, fontSize: '15pt', padding: '10px 16px'}}
+                           align="right">
                     <div>{row.c_name}</div>
                     <div style={{fontSize: '13pt'}}>{row.c_address}</div>
                     <div style={{fontSize: '13pt'}}>{row.c_ph}</div>
                     <div style={{fontSize: '13pt'}}>{row.visit_time}</div>
                     <div style={{fontSize: '13pt'}}>{row.estimate_num}명</div>
                 </TableCell>
-                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.accept==="TBD"?"미확인":row.accept==="accept"?"수락":"거절"}</div></TableCell>
+                <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.accept==="WAITING"?"미확인":row.accept==="ACCEPT"?"수락":"거절"}</div></TableCell>
                 <TableCell style={{ width:'21%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.total_etc}</div></TableCell>
                 <TableCell style={{ width:'21%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div style={{  margin: 10, padding: '10px 0', overflowY: 'auto', maxHeight: 150 }}>{row.modified_info}</div></TableCell>
                 <TableCell style={{ width:'8%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>{row.call_check}</div></TableCell>
                 {/*<TableCell style={{ width:'500px', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right"><div>일정공지여부</div></TableCell>*/}
-                <TableCell style={{ width:'5%', color: headerColor, fontSize: '15pt', padding: '1px 16px' }} align="right">
-                    <TransitionsModal defaultInput={row} backgroundColor={buttonColor} />
+                <TableCell style={{width: '5%', color: headerColor, fontSize: '15pt', padding: '1px 16px'}}
+                           align="right">
+                    <TransitionsModal defaultInput={row} backgroundColor={buttonColor}/>
                 </TableCell>
             </TableRow>
         );
