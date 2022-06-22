@@ -1,16 +1,17 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import axios from "axios";
 import styled from 'styled-components';
 import HomeIcon from '@mui/icons-material/Home';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
-import axios from "axios";
+import DateRangeIcon from '@mui/icons-material/DateRange';
+
 import {useRecoilState, useRecoilValue} from "recoil";
 import {isLoginedState, userAuthority} from "../../store/LoginStore";
 import {Style} from "../../Style";
-import NetworkConfig from "../../configures/NetworkConfig";
 import Swal from "sweetalert2";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 /*
@@ -104,7 +105,7 @@ const Navigation = () => {
 //style
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 380px auto;
+  grid-template-rows: 500px auto;
   border-right: 2px solid #eee;
   padding: 0px;
 
@@ -122,7 +123,7 @@ const Container = styled.div`
 `;
 const Upper = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   justify-self: center;
   margin-top: 70px;
 `;
