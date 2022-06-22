@@ -59,7 +59,7 @@ function App() {
                     <Route exact path="/login" component={ThisLoginPage}/>
                     <Route exact path="/main" component={MainPage}/>
                     <Route exact path="/hope" component={HopeListPage}/>
-                    <Route exact path="/schedule/calendar" component={ScheduleCalendarPage}/>
+                    <Route exact path="/calendar" component={ScheduleCalendarPage}/>
                     <Route exact path="/schedule" component={SchedulePage}/>
                     <Route exact path="/manage">
                         {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}
