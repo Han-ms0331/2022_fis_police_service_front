@@ -12,7 +12,9 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Style} from "./Style";
 import HopeListPage from "./components/pages/HopeListPage";
 import React, {useState} from 'react';
-import CalendarPage from "./components/pages/CalendarPage";
+
+import ScheduleCalendarPage from "./components/pages/ScheduleCalendarPage";
+
 
 
 function App() {
@@ -58,7 +60,7 @@ function App() {
                     <Route exact path="/login" component={ThisLoginPage}/>
                     <Route exact path="/main" component={MainPage}/>
                     <Route exact path="/hope" component={HopeListPage}/>
-                    <Route exact path="/calendar" component={CalendarPage }/>
+                    <Route exact path="/calendar" component={ScheduleCalendarPage}/>
                     <Route exact path="/schedule" component={SchedulePage}/>
                     <Route exact path="/manage">
                         {authority === 'ADMIN' ? <ManagePage/> : <Redirect to={"/main"}/>}

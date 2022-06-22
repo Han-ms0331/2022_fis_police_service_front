@@ -13,6 +13,7 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {isLoginedState, userAuthority} from "../../store/LoginStore";
 import {Style} from "../../Style";
 import Swal from "sweetalert2";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 /*
     날짜: 2022/01/10 3:59 오후
     작성자: 한명수
@@ -89,10 +90,10 @@ const Navigation = () => {
         <Container>
             <Upper>
                 <Link to={"/main"}> <HomeIcon className="icon"/> </Link> {/*시설관리*/}
-                <Link to={"/hope"}> <ListAltIcon className="icon"/> </Link> {/*시설관리*/}
+                <Link to={"/calendar"}> <CalendarMonthIcon className="icon"/> </Link> {/*일정조회*/}
                 <Link to={"/schedule"}> <EventAvailableIcon className="icon"/> </Link> {/*일정조회*/}
-                <Link to={"/calendar"}> <DateRangeIcon className="icon"/> </Link> {/*일정조회*/}
-               {authority === 'ADMIN' ? <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> : null} {/*관리자*/}
+                <Link to={"/hope"}> <ListAltIcon className="icon"/> </Link> {/*시설관리*/}
+                {authority === 'ADMIN' ? <Link to={"/manage"}> <PersonIcon className="icon"/> </Link> : null} {/*관리자*/}
             </Upper>
 
             <Bottom>
