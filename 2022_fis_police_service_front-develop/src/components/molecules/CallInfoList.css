@@ -1,0 +1,42 @@
+.field_name {
+    margin-right: 3%;
+    color: rgba(0,0,0,0.5);
+}
+
+.field_value {
+    text-align: start;
+}
+
+.field_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: start;
+}
+
+
+
+.recorder_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    width: 25%;
+    border-left: 2px solid white;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    background-color: white;
+    box-shadow: 3px 3px #dadada;
+    padding: 1%;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.info_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 2px solid white;
+    background-color: white;
+    box-shadow: 3px 3px #dadada;
+    border-radius: 15px;
+    padding: 3%;
+}
